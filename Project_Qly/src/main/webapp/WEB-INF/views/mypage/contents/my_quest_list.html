@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내가 작성한 게시글 목록</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 40px; }
+        h1 { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #f5f5f5; }
+        tr:hover { background: #f9f9f9; }
+        .no-posts { text-align: center; color: #888; padding: 40px 0; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>퀘스트 목록 페이지</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>조회수</th>
+                <th>신청자 수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 게시글이 없을 때 -->
+            <!--
+            <tr>
+                <td colspan="4" class="no-posts">작성한 게시글이 없습니다.</td>
+            </tr>
+            -->
+            <!-- 게시글 목록 예시 -->
+            <tr>
+                <td>1</td>
+                <td><a href="/mypage/contents/view/1">첫 번째 퀘스트 제목</a></td>
+                <td>2024-06-20</td>
+                <td>123</td>
+                <td>1 명</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td><a href="/mypage/contents/view/2">두 번째 퀘스트 제목</a></td>
+                <td>2024-06-18</td>
+                <td>98</td>
+                <td>아직 없어요...</td>
+            </tr>
+            <!-- 반복 영역 끝 -->
+        </tbody>
+    </table>
+</body>
+</html>
