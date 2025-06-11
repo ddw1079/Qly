@@ -1,148 +1,191 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>QLY 메인페이지</title>
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-  
     <style>
-        header {
-            display: flex; /* 수평 */
-            justify-content: space-between; /* 좌우 공간 분리 */
-            padding: 10px;
-            background: #eee;
+        body {
+            margin: 0;
+            padding: 0;
         }
+
+        /* 상단 로고와 사용자 정보 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #f5f5f5;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        
         nav ul {
-            list-style: none; /* 점 없애기 */
+            list-style: none;
             display: flex;
             padding: 0;
             margin: 0;
-            background: #333; /* 네비 배경색 */
-        }
-        nav ul li {
-            margin-right: 20px;
+            background-color: #1a1a1a;
         }
         nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
             display: block;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
         }
-        .search-bar {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center; /* 가운데 정렬 */
-        }
-        .search-bar input {
-            width: 300px;
+
+        /* 검색창 및 해시태그 */
+        .search-section {
+            padding: 20px;
+            text-align: center;
         }
         .tag-list span {
             margin-right: 10px;
             color: gray;
+            font-size: 14px;
         }
-        .section-container {
+
+        /* 콘텐츠 메뉴바 */
+        .main-section {
             display: flex;
+            justify-content: space-between;
             gap: 20px;
-            margin: 20px;
+            padding: 20px;
         }
+
         .quest-section, .region-section {
-            flex: 1; /* 동일한 너비로  */
+            width: 30%;
         }
-        .footer {
+
+        .map-section {
+            width: 40%;
+            text-align: center;
+        }
+
+        .map-section img {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        h3.section-title {
+            background-color: gold;
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        /* 원형 아이콘 */
+        .circle-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .circle-icons div {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ccc;
+        }
+
+        /* 광고 및 하단 */
+        footer {
             display: flex;
             justify-content: space-around;
-            padding: 20px;
             background: #333;
+            color: white;
+            padding: 20px;
+            font-size: 14px;
         }
+
     </style>
 </head>
-
 <body>
-    <%-- 헤더 --%>
+
+  <!-- 헤더 -->
     <header>
-        <div><h1>로고</h1></div>
-        <div>
-            <%-- 로그인된 사용자의 이름과 코인 정보를 출력. 없으면 기본값 출력 --%>
+        <div class="logo">로고</div>
+        <div class="user-info">
             <span>Qlee [<%= request.getAttribute("userName") != null ? request.getAttribute("userName") : "mina" %>]</span>
-            <span>보유 코인: <%= request.getAttribute("Qubit") != null ? request.getAttribute("Qubit") : "100" %></span>
-            <button>로그인</button>
+            <span>보유코인 : <%= request.getAttribute("Qubit") != null ? request.getAttribute("Qubit") : "100" %> Q</span>
+            <button class="btn btn-outline-secondary btn-sm">로그아웃</button>
         </div>
     </header>
 
-    <%-- 메뉴바 --%>
+    <!-- 메뉴바 -->
     <nav>
-        <ul>
+        <ul class="w-100 justify-content-center d-flex">
             <li><a href="intro.jsp">QLY 소개</a></li>
-            <li><a href="questList.jsp">퀘스트</a></li>
-            <li><a href="coin.jsp">Qubit 충전소</a></li>
+            <li><a href="questList.jsp">퀘스트 등록</a></li>
+            <li><a href="coin.jsp">코인 충전소</a></li>
             <li><a href="help.jsp">고객센터</a></li>
         </ul>
     </nav>
 
-    <div class="container">
-        <%-- 검색창 --%>
-        <div class="search-bar">
-            <form action="search.jsp" method="get" class="d-flex">
-                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
-                <button class="btn btn-primary ms-2">검색</button>
-            </form>
-        </div>
-
-        <%-- 해시태그 리스트 --%>
-        <div class="tag-list text-center">
+    <!-- 검색 영역 -->
+    <div class="search-section">
+        <form action="search.jsp" method="get" class="d-flex justify-content-center">
+            <input type="text" name="keyword" class="form-control w-25" placeholder="검색어 입력">
+            <button class="btn btn-dark ms-2">검색</button>
+        </form>
+        <div class="tag-list mt-2">
             <span>#장소</span>
             <span>#이사</span>
             <span>#미션</span>
             <span>#에이전</span>
         </div>
+    </div>
 
-        <%-- 퀘스트(원형 아이콘) --%>
-        <div class="d-flex justify-content-center my-3">
-            <div class="d-flex gap-3">
-                <%-- 반복 가능한 추천 미션 아이콘 --%>
-                <div class="rounded-circle bg-secondary" style="width:50px; height:50px;"></div>
-                <div class="rounded-circle bg-secondary" style="width:50px; height:50px;"></div>
-                <div class="rounded-circle bg-secondary" style="width:50px; height:50px;"></div>
-                <div class="rounded-circle bg-secondary" style="width:50px; height:50px;"></div>
-                <div class="rounded-circle bg-secondary" style="width:50px; height:50px;"></div>
-            </div>
+    <!-- 추천 퀘스트 아이콘 -->
+    <div class="circle-icons">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <div class="main-section">
+        <!-- BEST QUEST -->
+        <div class="quest-section">
+            <h3 class="section-title">BEST QUEST</h3>
+            <ul>
+                <li>퀘스트 1</li>
+                <li>퀘스트 2</li>
+                <li>퀘스트 3</li>
+            </ul>
         </div>
 
-        <div class="section-container">
-            <%-- 인기 퀘스트 목록 --%>
-            <div class="quest-section">
-                <h3 style="background: gold; padding: 5px;">BEST QUEST</h3>
-                <ul>
-                    <li>퀘스트 1</li>
-                    <li>퀘스트 2</li>
-                    <li>퀘스트 3</li>
-                </ul>
-            </div>
+        <!-- 서울지역 -->
+        <div class="region-section">
+            <h3 class="section-title">서울지역 ▼</h3>
+            <ul>
+                <li>강남 퀘스트</li>
+                <li>홍대 퀘스트</li>
+                <li>성수 퀘스트</li>
+            </ul>
+        </div>
 
-            <%-- 지역별 퀘스트 목록 --%>
-            <div class="region-section">
-                <h3>서울지역 ▼</h3>
-                <ul>
-                    <li>강남 퀘스트</li>
-                    <li>홍대 퀘스트</li>
-                    <li>성수 퀘스트</li>
-                </ul>
-            </div>
-
-            <%-- 지도 이미지 --%>
-            <div>
-                <h3>지도</h3>
-                <img src="map-placeholder.png" alt="지도" style="width: 200px;">
-            </div>
+        <!-- 지도 -->
+        <div class="map-section">
+            <h3>지도</h3>
+            <img src="map-placeholder.png" alt="지도">
         </div>
     </div>
 
-    <%-- 광고, 회사정보 --%>
-    <footer class="footer">
+    <!-- 푸터 -->
+    <footer>
         <div>광고1</div>
         <div>광고2</div>
         <div>광고3</div>
@@ -152,5 +195,6 @@
             EMAIL: contact@qly.com
         </div>
     </footer>
+
 </body>
 </html>
