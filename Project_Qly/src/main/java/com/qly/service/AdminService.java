@@ -19,12 +19,12 @@ public class AdminService {
 		return adminMapper.findAllUsers();
 	}
 
-	// 검색
+	// 회원 검색
 	public List<UserDto> searchUsers(String keyword) {
 		return adminMapper.searchUsers(keyword);
 	}
 
-	// 삭제
+	// 회원 삭제
 	public void deleteUser(String userId) {
 		adminMapper.deleteUser(userId);
 	}
@@ -32,5 +32,12 @@ public class AdminService {
 	// 퀘스트 전체 조회
 	public List<QuestDto> getAllQuests() {
 		return adminMapper.getAllQuests();
+	}
+
+	//  퀘스트 검색 추가
+
+	public List<QuestDto> searchQuests(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

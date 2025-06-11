@@ -27,14 +27,28 @@
     </delete>
 
     <!-- 4. 퀘스트 전체 목록 -->
-    <select id="getAllQuests" resultType="com.qly.dto.QuestDto">
-        SELECT 
-            TITLE,
-            REWARD_TOKENS AS rewardTokens,
-            LOCATION,
-            CREATOR_NICKNAME AS creatorNickname
-        FROM QUESTS
-        ORDER BY CREATED_AT DESC
-    </select>
+<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
+    SELECT
+        TITLE,
+        REWARD_TOKENS AS rewardTokens,
+        LOCATION,
+        CREATOR_ID AS creatorNickname  
+    FROM QUESTS
+    ORDER BY CREATED_AT DESC
+</select>
+<!-- 5. 퀘스트 검색 -->
+<select id="searchQuests" resultType="com.qly.dto.QuestDto">
+    SELECT
+        TITLE,
+        REWARD_TOKENS AS rewardTokens,
+        LOCATION,
+        CREATOR_ID AS creatorNickname
+    FROM QUESTS
+    WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+       OR LOWER(LOCATION) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+       OR LOWER(CREATOR_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+    ORDER BY CREATED_AT DESC
+</select>
+
 
 </mapper>

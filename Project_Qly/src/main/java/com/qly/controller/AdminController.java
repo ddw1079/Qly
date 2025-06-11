@@ -42,8 +42,12 @@ public class AdminController {
 	// 퀘스트 목록
 	@RequestMapping(value = "/questList.do")
 	public String showQuestList(@RequestParam(required = false) String keyword, Model model) {
-		List<QuestDto> questList = adminService.getAllQuests();
-		model.addAttribute("questList", questList);
-		return "AdminQuest"; // /WEB-INF/views/AdminQuest.jsp 로 연결
+	    List<QuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
+	        ? adminService.searchQuests(keyword)
+	        : adminService.getAllQuests();
+
+	    model.addAttribute("questList", questList);
+	    return "AdminQuest";
 	}
+
 }

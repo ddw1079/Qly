@@ -5,7 +5,7 @@ public class QuestDto {
     private int rewardTokens;
     private String location;
     private String creatorNickname;
-
+    private String creatorId;
     // Getter / Setter
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -16,6 +16,6 @@ public class QuestDto {
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 
-    public String getCreatorNickname() { return creatorNickname; }
-    public void setCreatorNickname(String creatorNickname) { this.creatorNickname = creatorNickname; }
+    public String getCreatorId() { return creatorId; }
+    public void setCreatorId(String creatorId) { this.creatorId = creatorId; }
 }
