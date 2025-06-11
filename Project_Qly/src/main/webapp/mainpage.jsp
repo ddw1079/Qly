@@ -191,7 +191,7 @@
 
     <!-- 푸터 -->
   <footer class="footer">
-    <div class="ads">
+    
         <div>광고1</div>
         <div>광고2</div>
         <div>광고3</div>
