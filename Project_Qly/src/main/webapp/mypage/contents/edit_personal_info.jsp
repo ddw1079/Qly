@@ -1,8 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>개인정보 수정</title>
+    <title>개인정보 수정</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f7f7f7; margin: 40px; padding: 0; }
         .container { max-width: 500px; margin: 40px auto; background: #fff; padding: 32px 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);}
@@ -21,7 +23,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>개인정보 수정</h2>
+        <h2>개인정보 수정</h2>
         <form method="post" action="/mypage/updatePersonalInfo">
             <div class="form-group">
                 <label for="username">이름</label>
@@ -45,7 +47,7 @@
             </div>
             <div class="btn-group">
                 <button type="submit">저장</button>
-                <button type="button" class="cancel" onclick="window.history.back();">취소</button>
+                <button type="button" class="cancel" onclick="window.history.back();">ì·¨ì</button>
             </div>
         </form>
     </div>
