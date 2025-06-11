@@ -1,0 +1,8 @@
+MyBatis
+
+AdminMember.jsp
+ → AdminController.java
+ → AdminService.java
+ → AdminMapper.java (interface)
+ → AdminMapper.xml (SQL 정의)
+ → USERS 테이블
