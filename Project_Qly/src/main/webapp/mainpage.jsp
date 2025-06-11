@@ -190,16 +190,19 @@
     </div>
 
     <!-- 푸터 -->
-    <footer>
+  <footer class="footer">
+    <div class="ads">
         <div>광고1</div>
         <div>광고2</div>
         <div>광고3</div>
-        <div>
-            주소: 서울시 어딘가<br>
-            FAX: 02-1234-5678<br>
-            EMAIL: contact@qly.com
-        </div>
-    </footer>
+    </div>
+    <div class="company-info mt-4 text-center text-white">
+        주소: 서울시 어딘가<br>
+        FAX: 02-1234-5678<br>
+        EMAIL: contact@qly.com
+    </div>
+</footer>
+
 
 </body>
 </html>
