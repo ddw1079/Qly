@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>QLY 메인페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    
     <style>
         body {
             margin: 0;
@@ -117,8 +119,11 @@
         <div class="logo">로고</div>
         <div class="user-info">
             <span>Qlee [<%= request.getAttribute("userName") != null ? request.getAttribute("userName") : "mina" %>]</span>
-            <span>보유코인 : <%= request.getAttribute("Qubit") != null ? request.getAttribute("Qubit") : "100" %> Q</span>
-            <button class="btn btn-outline-secondary btn-sm">로그아웃</button>
+            <span>보유Qubit : <%= request.getAttribute("Qubit") != null ? request.getAttribute("Qubit") : "100" %> Q</span>
+           <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center p-0 rounded-circle" style="width: 40px; height: 40px;">
+    <i class="bi bi-box-arrow-right"></i>
+</button>
+
         </div>
     </header>
 
@@ -126,8 +131,8 @@
     <nav>
         <ul class="w-100 justify-content-center d-flex">
             <li><a href="intro.jsp">QLY 소개</a></li>
-            <li><a href="questList.jsp">퀘스트 등록</a></li>
-            <li><a href="coin.jsp">코인 충전소</a></li>
+            <li><a href="questList.jsp">퀘스트 </a></li>
+            <li><a href="coin.jsp">Qubit 충전소</a></li>
             <li><a href="help.jsp">고객센터</a></li>
         </ul>
     </nav>
