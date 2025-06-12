@@ -1,208 +1,195 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>QLY 메인페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-    
     <style>
         body {
-            margin: 0;
-            padding: 0;
+            background-color: #f9f9f9;
+            font-family: 'Malgun Gothic', sans-serif;
         }
 
-        /* 상단 로고와 사용자 정보 */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            background: #f5f5f5;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 20px 40px;
+            background-color: #eee;
         }
 
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            padding: 0;
-            margin: 0;
-            background-color: #1a1a1a;
+        .nav-menu {
+            background-color: #000;
         }
-        nav ul li a {
-            display: block;
+
+        .nav-menu a {
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
+            display: inline-block;
             text-decoration: none;
         }
 
-        /* 검색창 및 해시태그 */
+        .nav-menu a:hover {
+            background-color: #444;
+        }
+
+        .slogan-section {
+            text-align: center;
+            padding: 50px 0 30px 0;
+        }
+
+        .slogan-section img {
+            width: 80px;
+        }
+
+        .slogan-text {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
         .search-section {
-            padding: 20px;
             text-align: center;
-        }
-        .tag-list span {
-            margin-right: 10px;
-            color: gray;
-            font-size: 14px;
+            margin-bottom: 30px;
         }
 
-        /* 콘텐츠 메뉴바 */
-        .main-section {
+        .search-bar {
+            width: 500px;
+            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 20px;
         }
 
-        .quest-section, .region-section {
-            width: 30%;
-        }
-
-        .map-section {
-            width: 40%;
-            text-align: center;
-        }
-
-        .map-section img {
-            width: 100%;
-            max-width: 300px;
-        }
-
-        h3.section-title {
-            background-color: gold;
-            padding: 8px;
-            font-weight: bold;
-        }
-
-        /* 원형 아이콘 */
         .circle-icons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 20px 0;
+            margin-top: 20px;
         }
 
-        .circle-icons div {
+        .circle-icons a div {
             width: 50px;
             height: 50px;
+            background-color: #ccc;
             border-radius: 50%;
-            background: #ccc;
+            transition: background 0.3s;
         }
 
-        /* 광고 및 하단 */
-        footer {
+        .circle-icons a div:hover {
+            background-color: #aaa;
+            cursor: pointer;
+        }
+
+        .quest-section {
+            padding: 20px 40px;
+        }
+
+        .quest-section h3 {
+            background-color: #d9ecff;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .ads {
             display: flex;
             justify-content: space-around;
-            background: #333;
-            color: white;
+            background-color: #ddd;
             padding: 20px;
-            font-size: 14px;
+            margin-top: 30px;
         }
 
+        .footer-info {
+            text-align: right;
+            padding: 10px 40px;
+            font-size: 14px;
+            color: gray;
+        }
     </style>
 </head>
 <body>
 
-  <!-- 헤더 -->
+    <!-- 헤더 -->
     <header>
-        <div class="logo">로고</div>
-        <div class="user-info">
-            <span>Qlee [<%= request.getAttribute("userName") != null ? request.getAttribute("userName") : "mina" %>]</span>
-            <span>보유Qubit : <%= request.getAttribute("Qubit") != null ? request.getAttribute("Qubit") : "100" %> Q</span>
-           <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center p-0 rounded-circle" style="width: 40px; height: 40px;">
-    <i class="bi bi-box-arrow-right"></i>
-</button>
-
+        <div><h2>로고</h2></div>
+        <div>
+            <button class="btn btn-outline-primary btn-sm">로그인</button>
+            <button class="btn btn-outline-secondary btn-sm">회원가입</button>
         </div>
     </header>
 
-    <!-- 메뉴바 -->
-    <nav>
-        <ul class="w-100 justify-content-center d-flex">
-            <li><a href="intro.jsp">QLY 소개</a></li>
-            <li><a href="questList.jsp">퀘스트 </a></li>
-            <li><a href="coin.jsp">Qubit 충전소</a></li>
-            <li><a href="help.jsp">고객센터</a></li>
-        </ul>
-    </nav>
+  
+               <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                퀘스트 등록
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">퀘스트 작성</a></li>
+                <li><a class="dropdown-item" href="#">진행 현황</a></li>
+            </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link text-white" href="coin.jsp">코인 충전소</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="help.jsp">고객센터</a></li>
+    </ul>
+</nav>
+    <!-- 슬로건 -->
+    <div class="slogan-section">
+        <img src="resources/images/logo.png" alt="로고">
+        
+    </div>
 
-    <!-- 검색 영역 -->
+    <!-- 검색 -->
     <div class="search-section">
-        <form action="search.jsp" method="get" class="d-flex justify-content-center">
-            <input type="text" name="keyword" class="form-control w-25" placeholder="검색어 입력">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="form-control" placeholder="검색어 입력">
             <button class="btn btn-dark ms-2">검색</button>
-        </form>
-        <div class="tag-list mt-2">
-            <span>#장소</span>
-            <span>#이사</span>
-            <span>#미션</span>
-            <span>#에이전</span>
+        </div>
+        <div class="text-center mt-2 text-secondary small">#장소 #이사 #미션 #에이전</div>
+
+        <div class="circle-icons mt-4">
+            <a href="#"><div title="추천 1"></div></a>
+            <a href="#"><div title="추천 2"></div></a>
+            <a href="#"><div title="추천 3"></div></a>
+            <a href="#"><div title="추천 4"></div></a>
+            <a href="#"><div title="추천 5"></div></a>
         </div>
     </div>
 
-    <!-- 추천 퀘스트 아이콘 -->
-    <div class="circle-icons">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <!-- BEST QUEST -->
+    <div class="quest-section">
+        <h3>BEST QUEST</h3>
+        <table class="table table-bordered">
+            <tbody id="questTable">
+                <tr><td>강남 퀘스트</td></tr>
+                <tr><td>홍대 미션</td></tr>
+                <tr><td>성수 페인트</td></tr>
+                <tr><td>이사 도우미</td></tr>
+                <tr><td>전단지 배포</td></tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- 메인 콘텐츠 -->
-    <div class="main-section">
-        <!-- BEST QUEST -->
-        <div class="quest-section">
-            <h3 class="section-title">BEST QUEST</h3>
-            <ul>
-                <li>퀘스트 1</li>
-                <li>퀘스트 2</li>
-                <li>퀘스트 3</li>
-            </ul>
-        </div>
-
-        <!-- 서울지역 -->
-        <div class="region-section">
-            <h3 class="section-title">서울지역 ▼</h3>
-            <ul>
-                <li>강남 퀘스트</li>
-                <li>홍대 퀘스트</li>
-                <li>성수 퀘스트</li>
-            </ul>
-        </div>
-
-        <!-- 지도 -->
-        <div class="map-section">
-            <h3>지도</h3>
-            <img src="map-placeholder.png" alt="지도">
-        </div>
+    <!-- 광고 -->
+    <div class="ads">
+        <img src="resources/images/ad1.jpg" alt="광고1" width="150">
+        <img src="resources/images/ad2.jpg" alt="광고2" width="150">
+        <img src="resources/images/ad3.jpg" alt="광고3" width="150">
     </div>
 
-    <!-- 푸터 -->
-  <footer class="footer">
-    
-        <div>광고1</div>
-        <div>광고2</div>
-        <div>광고3</div>
+    <!-- 하단 정보 -->
+    <div class="footer-info">
+        주소: 서울시 어딘가 | FAX: 02-1234-5678 | EMAIL: contact@qly.com
     </div>
-    <div class="company-info mt-4 text-center text-white">
-        주소: 서울시 어딘가<br>
-        FAX: 02-1234-5678<br>
-        EMAIL: contact@qly.com
-    </div>
-</footer>
 
+    <!-- 검색 필터 JS -->
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            const keyword = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#questTable tr");
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(keyword) ? "" : "none";
+            });
+        });
+    </script>
 
 </body>
 </html>
