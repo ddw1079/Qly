@@ -6,6 +6,16 @@
   <title>마이 페이지</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+ 
+  $(document).ready(function () {
+    $(".quest-item").on("click", function () {
+      const page = $(this).data("page");
+      $("#mainContainer").load(page); // 해당 JSP 파일을 mainContainer에 삽입
+    });
+  });
+
+  </script>
   <style>
     body {
       background-color: #f8f9fa;
@@ -57,10 +67,10 @@
         <button class="btn btn-outline-secondary w-100 mb-3">해결사</button>
 
         <!-- 기본 메뉴 -->
-       <ul class="list-group">
+<ul class="list-group">
   <li class="list-group-item">정보수정</li>
 
-  <!-- 내 퀘스트 + 하위 메뉴 포함 -->
+  <!-- 내 퀘스트 -->
   <li class="list-group-item p-0 border-0">
     <div class="px-3 py-2 border-bottom"
          data-bs-toggle="collapse"
@@ -70,16 +80,31 @@
          style="cursor: pointer;">
       내 퀘스트
     </div>
-
     <div class="collapse" id="questSubMenu">
-      <ul class="list-group list-group-flush ms-3">
-        <li class="list-group-item">해결내역</li>
+      <ul class="list-group list-group-flush ms-3" style="background-color: #add8e6;">
+        <li class="list-group-item">해결 내역</li>
         <li class="list-group-item">퀘스트 신청 목록</li>
       </ul>
     </div>
   </li>
 
-  <li class="list-group-item">내 코인 보기</li>
+  <!-- 내 코인 보기 -->
+  <li class="list-group-item p-0 border-0">
+    <div class="px-3 py-2 border-bottom"
+         data-bs-toggle="collapse"
+         data-bs-target="#coinSubMenu"
+         aria-expanded="false"
+         aria-controls="coinSubMenu"
+         style="cursor: pointer;">
+      내 코인 보기
+    </div>
+    <div class="collapse" id="coinSubMenu">
+      <ul class="list-group list-group-flush ms-3" style="background-color: #add8e6;">
+        <li class="list-group-item">코인 잔액</li>
+        <li class="list-group-item">충전/출금 내역</li>
+      </ul>
+    </div>
+  </li>
 </ul>
 
 
