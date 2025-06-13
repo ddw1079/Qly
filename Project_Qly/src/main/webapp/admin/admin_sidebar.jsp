@@ -46,10 +46,38 @@
     }
 </style>
 
-<!--  Qly 로고 영역 -->
-<div style="text-align: center; margin-bottom: 30px;">
-    <img src="https://i.postimg.cc/0j1MDRhn/logo.png" alt="Qly 로고" width="250">
+<!-- Qly 로고 영역 -->
+<div style="text-align: center; margin-bottom: 10px;">
+    <img class="w-100" src="https://i.postimg.cc/0j1MDRhn/logo.png" alt="Qly 로고" width="250">
 </div>
+
+<!-- 관리자 로그인 상태 표시 (라운드 배경 + 초록 불빛) -->
+<div style="
+    text-align: center;
+    margin-bottom: 20px;
+">
+    <div style="
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #2f3542;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    ">
+        관리자(admin)님 접속 중
+        <span style="
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #2ecc71; /* 초록색 */
+            border-radius: 50%;
+            margin-left: 8px;
+        " title="활동 중"></span>
+    </div>
+</div>
+
 
 <!--  메뉴 리스트 영역 -->
 <div style="background: white; color: #2f3542; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
