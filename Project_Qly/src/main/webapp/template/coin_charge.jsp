@@ -4,6 +4,7 @@
 <!-- Bootstrap JS CDN (optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Coin Charge Modal -->
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -60,7 +61,10 @@
                             let coinInput = document.getElementById("coinAmount");
                             let currentValue = parseInt(coinInput.value) || 0;
                             coinInput.value = currentValue + amount;
-                            // 총 결제 금액 업데이트
+                            updateTotal(); // 코인 수 변경 시 총 금액 업데이트
+                        }
+                        function updateTotal() {
+                            let coinInput = document.getElementById("coinAmount");
                             let totalAmount = document.getElementById("totalAmount");
 
                             let value = parseInt(coinInput.value) || 0;
@@ -78,6 +82,50 @@
                     </div>
                 </div>
             </form>
+            <script>
+            document.getElementById("chargeCoinForm").addEventListener("submit", async (event) => {
+                event.preventDefault(); // 폼 제출 방지
+
+                // 입력 값 가져오기
+                let coinAmount = document.getElementById("coinAmount").value;
+                let paymentMethod = document.getElementById("paymentMethod").value;
+                let totalAmount = document.getElementById("totalAmount").textContent;
+                // 금액 문자열에서 '원' 제거 및 쉼표 제거 
+                totalAmount = parseInt(totalAmount.replace(/[^0-9]/g, ''));
+                // 유효성 검사
+                if (totalAmount <= 0 || !paymentMethod) {
+                    alert("충전할 코인 수와 결제 방법을 올바르게 선택해주세요.");
+                    return;
+                }
+
+                // 충전 로직 (예: AJAX 요청 등)
+                const IMP = window.IMP;
+                IMP.init('imp15327364'); // 가맹점 식별코드 입력
+                const requestData = {
+                    pg: 'kakaopay', // 결제 수단
+                    pay_method: 'card',
+                    merchant_uid: "order_" + new Date().getTime(), // 주문 고유 ID
+                    amount: totalAmount, // 1 코인 = 10원 가정
+                    name: '퀘스트 코인 충전 - ' + totalAmount + '코인',
+                    buyer_name: '사용자 이름',
+                    buyer_tel: '010-1234-5678',
+                    buyer_email: 'email@email.co.kr',
+                    buyer_addr: '서울특별시 강남구',
+                    buyer_postcode: '12345',
+                };
+                IMP.request_pay(requestData, function(response) {
+                    if (response.success) {
+                        // 결제 성공
+                        alert('결제가 완료되었습니다. 결제 금액: ' + response.paid_amount + '원');
+                        // 모달 닫기
+                        $('#chargeCoinModal').modal('hide');
+                    } else {
+                        // 결제 실패
+                        alert('결제에 실패하였습니다. 에러 메시지: ' + response.error_msg);
+                    }
+                });                
+            });
+            </script>
         </div>
     </div>
 </div>

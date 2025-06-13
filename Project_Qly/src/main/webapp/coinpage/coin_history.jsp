@@ -18,7 +18,7 @@
 <body>
 <div id="modalContainer">
     <!-- Coin Charge Modal -->
-    <jsp:include page="coin_charge.jsp" />
+    <jsp:include page="../template/coin_charge.jsp" />
 </div>
 <div class="container my-5">
     <h2 class="mb-4">코인 정보</h2>
@@ -31,8 +31,6 @@
                 <button class="btn btn-success w-100" onclick="$('#chargeCoinModal').modal('show');">코인 충전하기</button>
             </div>
         </div>
-
-        
         <!-- Bootstrap Tabs -->
         <ul class="nav nav-tabs" id="coinTab" role="tablist">
             <li class="nav-item" role="presentation">
