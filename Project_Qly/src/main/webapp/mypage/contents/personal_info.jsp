@@ -8,20 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f7f7f7; margin: 40px; padding: 0; }
-        .container { max-width: 500px; margin: 40px auto; background: #fff; padding: 32px 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);}
-        h2 { text-align: center; margin-bottom: 24px; }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-weight: bold; }
-        input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;
+        <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        .btn-group { text-align: center; margin-top: 24px; }
-        button { padding: 10px 28px; border: none; border-radius: 4px; background: #1976d2; color: #fff; font-size: 16px; cursor: pointer;}
-        button.cancel { background: #888; margin-left: 10px;}
-        button:hover { background: #1565c0; }
-        button.cancel:hover { background: #555; }
+        .container-inner {
+            padding: 2rem;
+        }
+        .card {
+            border-radius: 0.75rem;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+        }
+        h2 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: 500;
+        }
     </style>
     <title>개인 정보</title>
 </head>
