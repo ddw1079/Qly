@@ -1,0 +1,26 @@
+데이터 베이스 테이블 목록
+
+사용자
+user_id (PK), username, password, email, created_at, last_login, role
+
+퀘스트
+quest_id (PK), title, description, location, tags, created_at, view_count
+
+지역 테이블
+region (
+  region_id (PK), region_name
+)
+
+구 테이블 
+district (
+  district_id (PK), region_id (FK), district_name
+)
+
+
+광고
+ad_id (PK), title, image_url, link_url, position
+
+태그및 추천 키워드
+tag_id (PK), keyword, tag_text
+
+
