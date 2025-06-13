@@ -3,7 +3,7 @@
     // 현재 페이지 파라미터 받아오기, 없으면 기본값으로 회원 관리 페이지로 설정
     String pageParam = request.getParameter("page");
     if (pageParam == null || pageParam.trim().equals("")) {
-        pageParam = "admin_memberList.jsp"; // 기본 페이지
+        pageParam = "../contents/personal_info.jsp"; // 기본 페이지
     }
 %>
 
@@ -27,7 +27,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Qly 관리자 레이아웃</title>
+  <title>Qly 유저 레이아웃</title>
 
   <!--  스타일 및 기능용 외부 CDN -->
   <!-- Bootstrap 5 -->
@@ -75,7 +75,7 @@
   <div class="layout-wrapper">
     <!--  사이드바 영역: 좌측 고정 메뉴 -->
     <div class="sidebar">
-      <%@ include file="admin_sidebar.jsp" %>
+      <%@ include file="user_sidebar.jsp" %>
     </div>
 
     <!--  본문 영역: 동적으로 각 관리 JSP 삽입 -->

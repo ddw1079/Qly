@@ -3,20 +3,25 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
+  const contextPath = "${pageContext.request.contextPath}"; // = /Qly
+
   $(document).ready(function () {
-	$("#mainContainer").load("mypage/contents/personal_info.jsp");
+    $("#mainContainer").load(contextPath + "/mypage/contents/personal_info.jsp");
+
     $(".submenu-link").on("click", function (e) {
-      e.preventDefault(); // 링크 이동 막기
+      e.preventDefault();
       const page = $(this).data("page");
       if (page) {
-        $("#mainContainer").load(page);
+        $("#mainContainer").load(contextPath + "/" + page);
       } else {
         alert("페이지가 아직 연결되지 않았습니다.");
       }
     });
   });
 </script>
+
 
   <meta charset="UTF-8">
   <title>마이 페이지</title>
@@ -55,7 +60,8 @@
 <!-- 상단 헤더 -->
 <nav class="navbar navbar-light bg-light px-3">
   <span class="navbar-brand mb-0 h5">
-    <img src="${pageContext.request.contextPath}/logo.png" alt="로고" width="30" class="me-2">
+<img src="https://i.postimg.cc/Dy7BstrB/logo2.png" alt="Qly 로고" width="50" class="me-2">
+
     세상에 문제는 많지만 해결사는 하나라능~
   </span>
 </nav>
@@ -102,7 +108,7 @@
   <div class="collapse" id="questSubMenu">
     <ul class="list-group list-group-flush ms-3" style="background-color: #add8e6;">
       <li class="list-group-item">
-        <a href="#" class="submenu-link text-decoration-none text-dark" data-page="NewFile.jsp">퀘스트 목록</a>
+        <a href="#" class="submenu-link text-decoration-none text-dark" data-page="">퀘스트 목록</a>
       </li>
       <li class="list-group-item">
         <a href="#" class="submenu-link text-decoration-none text-dark" data-page="">퀘스트 히스토리</a>

@@ -38,6 +38,14 @@
 </script>
 </head>
 <body>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h3>퀘스트 목록</h3>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <span style="font-weight: 500;">admin님 (의뢰인 모드)</span>
+    <button class="btn btn-dark btn-sm">로그아웃</button>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="프로필" width="50">
+  </div>
+</div>
 
 <div class="container my-4">
   <h4 class="mb-4 fw-bold">퀘스트 목록</h4>
@@ -60,8 +68,7 @@
         <div class="mb-3"><span class="fw-bold">등록일:</span> 2025-06-12</div>
         <div class="d-flex justify-content-end gap-2">
           <button class="btn btn-outline-primary btn-sm">상세보기</button>
-          <button class="btn btn-outline-secondary btn-sm">수정</button>
-          <button class="btn btn-outline-danger btn-sm">삭제</button>
+        
         </div>
       </div>
     </div>
@@ -79,9 +86,7 @@
         <div class="mb-2"><span class="fw-bold">신청자:</span> 1명</div>
         <div class="mb-3"><span class="fw-bold">등록일:</span> 2025-06-10</div>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-primary btn-sm">상세보기</button>
-          <button class="btn btn-outline-secondary btn-sm">수정</button>
-          <button class="btn btn-outline-danger btn-sm">삭제</button>
+          <button class="btn btn-outline-primary btn-sm">상세보기</button>        
         </div>
       </div>
     </div>
@@ -100,8 +105,6 @@
         <div class="mb-3"><span class="fw-bold">등록일:</span> 2025-06-05</div>
         <div class="d-flex justify-content-end gap-2">
           <button class="btn btn-outline-primary btn-sm">상세보기</button>
-          <button class="btn btn-outline-secondary btn-sm">수정</button>
-          <button class="btn btn-outline-danger btn-sm">삭제</button>
         </div>
       </div>
     </div>

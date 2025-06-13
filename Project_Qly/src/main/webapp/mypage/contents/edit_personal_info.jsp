@@ -59,7 +59,18 @@
         }
     </style>
 </head>
+
 <body>
+<!-- 상단 헤더 -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h3>정보 수정</h3>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <span style="font-weight: 500;">admin님 (의뢰인 모드)</span>
+    <button class="btn btn-dark btn-sm">로그아웃</button>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="프로필" width="50">
+  </div>
+</div>
+
 
 <div class="container-inner">
     <h2>개인정보 수정</h2>
