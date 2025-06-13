@@ -3,19 +3,19 @@
 <!--
   admin_qusetion.jsp - 사용자 문의 관리 페이지
 
-  ✅ 기능 요약:
+   기능 요약:
   - 관리자 모드에서 사용자 문의 내역을 확인 및 답변 처리
   - 총 문의 수 / 미답변 수 / 최근 등록일 통계 카드 표시
   - DataTables를 활용한 문의 테이블 정렬, 검색, 페이징 기능
   - 운영 메모 기록 기능 포함
 -->
 
-<!-- ✅ CDN 링크 (최상단으로 이동) -->
+<!--  CDN 링크 (최상단으로 이동) -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-<!-- ✅ 상단 정보 바 -->
+<!--  상단 정보 바 -->
 <div style="display: flex; justify-content: space-between; align-items: center;">
 	<h3>사용자 문의 관리</h3>
 	<div style="display: flex; align-items: center; gap: 10px;">
@@ -25,7 +25,7 @@
 	</div>
 </div>
 
-<!-- ✅ 문의 통계 카드 -->
+<!--  문의 통계 카드 -->
 <div style="display: flex; gap: 20px; margin: 30px 0;">
 	<div style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
 		<h5>총 문의 수</h5><p>25건</p>
@@ -38,7 +38,7 @@
 	</div>
 </div>
 
-<!-- ✅ 문의 목록 테이블 -->
+<!--  문의 목록 테이블 -->
 <h5>문의 내역</h5>
 <table id="questionTable" class="display" style="width: 100%;">
 	<thead>
@@ -71,7 +71,7 @@
 	</tbody>
 </table>
 
-<!-- ✅ 운영 메모 -->
+<!--  운영 메모 -->
 <div style="margin-top: 40px;">
 	<h5>운영 메모</h5>
 	<textarea placeholder="문의 응대 정책, 처리 방법 등을 기록하세요"
@@ -81,7 +81,7 @@
 	</button>
 </div>
 
-<!-- ✅ 테이블 설정 -->
+<!--  테이블 설정 -->
 <script>
 	$(document).ready(function () {
 		$('#questionTable').DataTable({

@@ -1,9 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+
+<!--
+  관리자 퀘스트 관리 페이지 (admin_questList.jsp)
+  ------------------------------------------------------
+   페이지 목적:
+    - 전체 퀘스트 현황(총 건수, 상태별 분포, 최근 등록)을 관리자에게 시각적으로 제공
+    - 등록된 퀘스트 리스트를 표로 출력하고, 검색 및 페이징 처리
+    - 완료율, 응답/처리 지표, 최근 등록 추이 등을 차트와 카드로 시각화
+    - 운영 메모를 통해 관리자 간 커뮤니케이션 지원
+
+   포함 요소:
+    - 관리자 정보 표시 (admin 모드)
+    - 통계 카드: 총 퀘스트 / 진행중 / 완료 / 최근 등록
+    - 진행 상태 비율 바 (Progress Bar)
+    - 퀘스트 처리 지표 카드
+    - 최근 등록 추이 선형 차트 (Chart.js)
+    - 퀘스트 목록 테이블 (DataTables)
+    - 운영 메모 입력 영역
+    - Bootstrap, jQuery, DataTables, Chart.js 사용
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>퀴스트 관리</title>
+<title>퀘스트 관리</title>
+
 
 <!-- 필수 CDN 로드 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -29,7 +51,7 @@
 	<!-- 관리자 상단 정보 -->
 	<div
 		style="display: flex; justify-content: space-between; align-items: center;">
-		<h2>퀴스트 관리 페이지</h2>
+		<h2>퀘스트 관리 페이지</h2>
 		<div style="display: flex; align-items: center; gap: 10px;">
 			<span style="font-weight: 500;">admin님 (관리자 모드)</span>
 			<button class="btn btn-dark btn-sm">로그아웃</button>
@@ -42,14 +64,14 @@
 	<div style="display: flex; gap: 20px; margin: 30px 0;">
 		<div
 			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
-			<h5>총 퀴스트 수</h5>
+			<h5>총 퀘스트 수</h5>
 			<p>92건</p>
 			<img src="https://i.postimg.cc/VkZ36Ybx/quest.png" alt="퀴스트 아이콘"
 				style="position: absolute; bottom: 10px; right: 10px; width: 48px;">
 		</div>
 		<div
 			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
-			<h5>진행 중인 퀴스트</h5>
+			<h5>진행 중인 퀘스트</h5>
 			<p>24건</p>
 			<img src="https://cdn-icons-png.flaticon.com/512/189/189792.png"
 				alt="진행중 아이콘"
@@ -57,7 +79,7 @@
 		</div>
 		<div
 			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
-			<h5>완료된 퀴스트</h5>
+			<h5>완료된 퀘스트</h5>
 			<p>65건</p>
 			<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
 				alt="완료 아이콘"
@@ -65,16 +87,16 @@
 		</div>
 		<div
 			style="flex: 1; padding: 20px; background: #6aaea7; border-radius: 10px; color: white; box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);">
-			<h5>최근 등록 퀴스트</h5>
+			<h5>최근 등록 퀘스트</h5>
 			<p style="font-size: 1.5rem;">6건</p>
-			<p style="opacity: 0.9;">최근 7일 이내 등록된 퀴스트 수</p>
+			<p style="opacity: 0.9;">최근 7일 이내 등록된 퀘스트 수</p>
 		</div>
 	</div>
 
 <div class="row mb-4">
   <!-- 왼쪽: col-md-8 (완료율 + 아래 카드 포함) -->
   <div class="col-md-8 d-flex flex-column gap-3">
-<!-- ✅ 완료율 카드 -->
+<!--  완료율 카드 -->
 <div class="card shadow-sm p-4">
   <h5>전체 퀘스트 상태 분포</h5>
   <div class="progress" style="height: 30px;">
@@ -91,7 +113,7 @@
 </div>
 
 
-    <!-- ✅ 완료율 아래 새 카드 -->
+    <!--  완료율 아래 새 카드 -->
     <div class="card shadow-sm p-4">
       <h5>퀘스트 처리 지표 요약</h5>
       <ul class="mb-0">
@@ -114,13 +136,13 @@
 </div>
 
 
-	<!-- 퀴스트 목록 테이블 -->
-	<h5>퀴스트 목록</h5>
+	<!-- 퀘스트 목록 테이블 -->
+	<h5>퀘스트 목록</h5>
 	<table id="questTable" class="display" style="width: 100%;">
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>퀴스트제목</th>
+				<th>퀘스트제목</th>
 				<th>등록일자</th>
 				<th>지역</th>
 				<th>토큰</th>

@@ -1,0 +1,96 @@
+{관리자 페이지 필요 db 예상구조} 
+
+
+1. USERS – 회원 테이블
+컬럼명	타입	제약조건	설명
+USER_ID	VARCHAR2	PK	회원 고유 ID
+NICKNAME	VARCHAR2	NOT NULL	회원 닉네임
+JOIN_DATE	DATE	DEFAULT SYSDATE	가입 일자
+USER_TYPE	VARCHAR2	CHECK ('의뢰인','해결사')	회원 유형 구분
+TOTAL_TOKENS	NUMBER	DEFAULT 0	보유 토큰
+LAST_ACTIVE	DATE	NULL 가능	최근 활동 일자
+
+=========================================================================
+
+ 2. QUESTS – 퀘스트 정보 테이블
+컬럼명	타입	제약조건	설명
+QUEST_ID	NUMBER	PK	퀘스트 고유 번호
+TITLE	VARCHAR2	NOT NULL	퀘스트 제목
+REG_DATE	DATE	DEFAULT SYSDATE	등록 일자
+LOCATION	VARCHAR2		지역 정보
+REWARD_TOKENS	NUMBER	DEFAULT 0	보상 토큰 (Qubit)
+STATUS	VARCHAR2	CHECK ('예정','진행중','완료')	퀘스트 상태
+
+=========================================================================
+
+ 3. PAYMENTS – 토큰 관리/기록 테이블
+컬럼명	타입	제약조건	설명
+USER_ID	VARCHAR2	FK → USERS	회원 ID (외래키)
+NICKNAME	VARCHAR2		닉네임
+CURRENT_BALANCE	NUMBER	DEFAULT 0	현재 보유 토큰
+TOTAL_CHARGED	NUMBER	DEFAULT 0	누적 충전 토큰
+TOTAL_WITHDRAWN	NUMBER	DEFAULT 0	누적 환급 토큰
+LAST_CHARGE_DATE	DATE	NULL 가능	최근 충전 일시
+LAST_WITHDRAW_DATE	DATE	NULL 가능	최근 환급 일시
+STATUS	VARCHAR2	DEFAULT '정상'	상태 (예: 정상, 환급요청)
+
+=========================================================================
+
+ 4. QUESTIONS – 사용자 문의 테이블
+컬럼명	타입	제약조건	설명
+QUESTION_ID	VARCHAR2	PK	문의 고유 ID (예: Q2025001)
+TITLE	VARCHAR2	NOT NULL	문의 제목
+USER_ID	VARCHAR2	FK → USERS	문의 작성자
+CREATED_DATE	DATE	DEFAULT SYSDATE	문의 등록일
+ANSWER_STATUS	VARCHAR2	CHECK ('미답변','답변완료')	답변 상태
+ANSWER_CONTENT	CLOB	NULL 가능	답변 내용
+
+--------------------------------------------------------------------------------------------------------------------
+SQL 생성문 (Oracle 기준)//참고
+
+--  USERS 테이블: 회원
+CREATE TABLE USERS (
+    USER_ID        VARCHAR2(50) PRIMARY KEY,
+    NICKNAME       VARCHAR2(100) NOT NULL,
+    JOIN_DATE      DATE DEFAULT SYSDATE,
+    USER_TYPE      VARCHAR2(20) CHECK (USER_TYPE IN ('의뢰인', '해결사')),
+    TOTAL_TOKENS   NUMBER DEFAULT 0,
+    LAST_ACTIVE    DATE
+);
+
+--  QUESTS 테이블: 퀘스트 정보
+CREATE TABLE QUESTS (
+    QUEST_ID        NUMBER PRIMARY KEY,
+    TITLE           VARCHAR2(200) NOT NULL,
+    REG_DATE        DATE DEFAULT SYSDATE,
+    LOCATION        VARCHAR2(100),
+    REWARD_TOKENS   NUMBER DEFAULT 0,
+    STATUS          VARCHAR2(20) CHECK (STATUS IN ('예정', '진행중', '완료'))
+);
+
+--  PAYMENTS 테이블: 코인/토큰 기록
+CREATE TABLE PAYMENTS (
+    PAYMENT_ID          NUMBER PRIMARY KEY,
+    USER_ID             VARCHAR2(50),
+    NICKNAME            VARCHAR2(100),
+    CURRENT_BALANCE     NUMBER DEFAULT 0,
+    TOTAL_CHARGED       NUMBER DEFAULT 0,
+    TOTAL_WITHDRAWN     NUMBER DEFAULT 0,
+    LAST_CHARGE_DATE    DATE,
+    LAST_WITHDRAW_DATE  DATE,
+    STATUS              VARCHAR2(50) DEFAULT '정상',
+    CONSTRAINT FK_PAYMENTS_USER FOREIGN KEY (USER_ID)
+        REFERENCES USERS(USER_ID)
+);
+
+--  QUESTIONS 테이블: 사용자 문의
+CREATE TABLE QUESTIONS (
+    QUESTION_ID      VARCHAR2(20) PRIMARY KEY,
+    TITLE            VARCHAR2(200) NOT NULL,
+    USER_ID          VARCHAR2(50),
+    CREATED_DATE     DATE DEFAULT SYSDATE,
+    ANSWER_STATUS    VARCHAR2(20) CHECK (ANSWER_STATUS IN ('미답변', '답변완료')),
+    ANSWER_CONTENT   CLOB,
+    CONSTRAINT FK_QUESTIONS_USER FOREIGN KEY (USER_ID)
+        REFERENCES USERS(USER_ID)
+);
