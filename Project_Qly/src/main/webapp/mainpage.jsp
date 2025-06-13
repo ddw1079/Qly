@@ -133,8 +133,8 @@
 
 <div class="nav-menu">
   <a href="#">QLY 소개</a>
-  <a href="#">퀘스트 등록</a>
-  <a href="#">코인 충전소</a>
+  <a href="#">퀘스트 </a>
+  <a href="#">Qubit 충전소</a>
   <a href="#">고객센터</a>
 </div>
 
@@ -274,7 +274,7 @@
     });
   });
 
-  // ✅ 지역 선택 → 구 자동 채우기
+  // 지역 선택 
   const regionData = {
     seoul: ["강남구", "마포구", "종로구", "성수동"],
     busan: ["해운대구", "수영구", "중구"],
