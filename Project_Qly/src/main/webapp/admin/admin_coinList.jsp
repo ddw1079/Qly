@@ -16,10 +16,10 @@
 		<h5>총 회원 수</h5><p>112명</p>
 	</div>
 	<div style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-		<h5>총 토큰 보유량</h5><p>128,000 Qubit</p>
+		<h5>전체 보유 토큰</h5><p>128,000 Qubit</p>
 	</div>
 	<div style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-		<h5>최근 충전</h5><p>6,000 Qubit</p>
+		<h5>최근 7일 충전합</h5><p>6,000 Qubit</p>
 	</div>
 </div>
 
@@ -29,15 +29,18 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <!-- ✅ 토큰 내역 테이블 -->
-<h5>회원별 토큰 내역</h5>
+<h5>회원별 토큰 관리 내역</h5>
 <table id="coinTable" class="display" style="width: 100%;">
 	<thead>
 		<tr>
 			<th>회원 ID</th>
 			<th>닉네임</th>
-			<th>보유 토큰</th>
-			<th>최근 충전</th>
-			<th>최근 환급</th>
+			<th>현재 보유</th>
+			<th>누적 충전</th>
+			<th>누적 환급</th>
+			<th>최근 충전 일시</th>
+			<th>최근 환급 일시</th>
+			<th>상태</th>
 			<th>관리</th>
 		</tr>
 	</thead>
@@ -46,16 +49,22 @@
 			<td>user001</td>
 			<td>희상</td>
 			<td>3,000</td>
-			<td>2025-06-10</td>
+			<td>15,000</td>
+			<td>0</td>
+			<td>2025-06-10 14:20</td>
 			<td>-</td>
+			<td><span class="badge bg-success">정상</span></td>
 			<td><button class="btn btn-sm btn-outline-warning">조정</button></td>
 		</tr>
 		<tr>
 			<td>user002</td>
 			<td>성진</td>
 			<td>5,800</td>
-			<td>2025-06-08</td>
-			<td>2025-06-09</td>
+			<td>20,000</td>
+			<td>2,000</td>
+			<td>2025-06-08 16:50</td>
+			<td>2025-06-09 09:15</td>
+			<td><span class="badge bg-warning text-dark">환급 요청</span></td>
 			<td><button class="btn btn-sm btn-outline-warning">조정</button></td>
 		</tr>
 	</tbody>
@@ -64,7 +73,7 @@
 <!-- ✅ 메모 작성 -->
 <div style="margin-top: 40px;">
 	<h5>운영 메모</h5>
-	<textarea placeholder="코인 관련 메모를 기록하세요"
+	<textarea placeholder="코인 정책, 환급 요청 등 관련 메모를 기록하세요"
 		style="width: 100%; height: 100px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
 	<button style="margin-top: 10px; float: right; background-color: #fcb80f; color: white; border: none; padding: 8px 16px; border-radius: 5px;">
 		메모 저장
