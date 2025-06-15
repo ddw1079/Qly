@@ -1,0 +1,70 @@
+유저 테이블
+| `user_id`  | INT (PK) | 유저 고유 ID |
+| `username` | VARCHAR  | 유저 이름    |
+| `phone`    | VARCHAR  | 전화번호     |
+| `email`    | VARCHAR  | 이메일      |
+| `address`  | VARCHAR  | 주소       |
+
+
+
+퀘스트 테이블
+| `quest_id`   | INT (PK) | 퀘스트 ID             |
+| `title`         | VARCHAR  | 퀘스트 제목             |
+| `category`   | VARCHAR  | 퀘스트 카테고리           |
+| `content`    | TEXT     | 퀘스트 내용             |
+| `photo_path` | VARCHAR  | 사진 경로              |
+| `coin`       | INT      | 현상금                |
+| `status`     | VARCHAR  | 상태 (대기, 진행중, 완료 등) |
+| `progress`   | INT      | 진행률 (0~100)       |
+| `latitude`   | DOUBLE   | 위도                 |
+| `longitude`  | DOUBLE   | 경도                 |
+| `address`    | VARCHAR  | 주소                 |
+| `start_date` | DATE     | 퀘스트 시작일 (등록 페이지용)  |
+| `end_date`   | DATE     | 퀘스트 종료일            |
+| `created_at` | DATETIME | 등록일                |
+| `user_id`    | INT (FK) | 등록자 (user 참조)      |
+
+
+
+퀘스트 상세 테이블
+| ------------- | -------- | --------------- |
+| `task_id`     | INT (PK) | 항목 ID           |
+| `quest_id`    | INT (FK) | 어떤 퀘스트에 속한 항목인지 |
+| `description` | TEXT     | 할 일 내용          |
+| `is_checked`  | BOOLEAN  | 체크 여부 (0/1)     |
+
+
+
+
+퀘스트 신청 / 진행 정보 테이블
+| ---------------- | -------- | ----------------- |
+| `application_id` | INT (PK) | 신청 ID             |
+| `quest_id`       | INT (FK) | 신청한 퀘스트           |
+| `user_id`        | INT (FK) | 신청자 (해결사)         |
+| `applied_at`     | DATETIME | 신청일               |
+| `status`         | VARCHAR  | 신청 상태 (대기/진행중/완료) |
+
+
+
+퀘스트 완료 기록 테이블 (해결내역)
+| ------------- | -------- | -------- |
+| `resolve_id`  | INT (PK) | 해결내역 ID  |
+| `quest_id`    | INT (FK) | 퀘스트 ID   |
+| `user_id`     | INT (FK) | 해결한 유저   |
+| `resolved_at` | DATETIME | 해결일      |
+| `status`      | VARCHAR  | 해결 당시 상태 |
+
+
+
+
+탭/페이지별 매핑
+| ---------- | -------------------------------- |
+| 정보조회 탭     | `user`                           |
+| 퀘스트목록 탭    | `quest`, `user`                  |
+| 퀘스트 진행상황 탭 | `quest`, `quest_task`, `user`    |
+| 해결내역 탭     | `quest_resolve`, `quest`, `user` |
+| 퀘스트 전체 페이지 | `quest`, `user`                  |
+| 퀘스트 신청 페이지 | `quest_application`, `quest`     |
+| 퀘스트 등록 페이지 | `quest`                          |
+
+
