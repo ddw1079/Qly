@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qly.mapper.QuestMapper">
+
+	<select id="selectAllQuests" resultType="questDto">
+		SELECT QUEST_ID,
+		USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH, STATUS,
+		PROGRESS,
+		LATITUDE, LONGITUDE, ADDRESS, LOCATION, START_DATE,
+		END_DATE,
+		CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE
+		FROM QUESTS
+		ORDER BY
+		CREATED_AT DESC
+	</select>
+
+	<select id="searchQuestsByKeyword" parameterType="string"
+		resultType="questDto">
+		SELECT QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT,
+		PHOTO_PATH, STATUS,
+		PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION,
+		START_DATE,
+		END_DATE, CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE
+		FROM QUESTS
+		WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+		OR LOWER(CATEGORY) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+		ORDER BY
+		CREATED_AT DESC
+	</select>
+
+
+	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto"
+		useGeneratedKeys="true" keyProperty="questId">
+		INSERT INTO QUESTS (
+		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH,
+		STATUS, START_DATE, END_DATE, ADDRESS, REWARD_TOKENS, REG_DATE
+		) VALUES (
+		#{questId}, #{userId}, #{title}, #{category}, #{content}, #{photoPath},
+		#{status}, #{startDate}, #{endDate}, #{address}, #{rewardTokens},
+		SYSDATE
+		)
+	</insert>
+
+	<!-- 시퀀스 관련 selectKey 제거 -->
+
+	<insert id="insertTask" parameterType="com.qly.dto.QuestTaskDto">
+		INSERT INTO QUEST_TASK (
+		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
+		) VALUES (
+		#{taskId}, #{questId}, #{description}, #{isChecked}
+		)
+	</insert>
+
+
+
+</mapper>
