@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+
 <title>로그인 페이지</title>
 <style>
 body {
@@ -98,7 +99,7 @@ body {
 		</form>
 
 		<div class="signup-link">
-			<a href="/signup">회원가입</a>
+			<a href="../qly_Uesr.jsp" >회원가입</a>
 		</div>
 	</div>
 
