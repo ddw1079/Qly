@@ -4,8 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-    <!-- 전역 설정 예시 (선택사항) -->
-    <settings>
-        <setting name="mapUnderscoreToCamelCase" value="true"/>
-    </settings>
+	<typeAliases>
+		<typeAlias alias="questDto" type="com.qly.dto.QuestDto" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/QuestMapper.xml" />
+	</mappers>
+
+
 </configuration>
