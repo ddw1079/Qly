@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -72,6 +73,24 @@
                             <!-- <td>아주 유능한 춘식이</td> -->
                             <td><a href="#">quest Page 링크...</a></td>
                         </tr>
+                        <c:forEach var="ch1" items="${coinHistories }">
+                        <tr>
+                            <td>${ch1.date}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ch1.type == 'plus'}">
+                                        <span class="text-danger">+</span> ${ch1.amount} 코인
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="text-primary">-</span> ${ch1.amount} 코인
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${ch1.type}</td>
+                            <td><a href="quest/${ch1.quest_id}">quest Page 링크...</a></td>
+                        </tr>
+                        </c:forEach>
+                        
                     </tbody>
                 </table>
             </div>
@@ -105,6 +124,17 @@
                             <td>5,000 코인</td>
                             <td>115,000 코인</td>
                         </tr>
+                        
+                        <c:forEach var="ch2" items="${paymentHistories }">
+                        <tr>
+                            <td>${ch2.date}</td>
+                            <td>${ch2.paymentMethod}</td>
+                            <td>${ch2.status}</td>
+                            <td>${ch2.amount}원</td>
+                            <td>${ch2.coinAmount} 코인</td>
+                            <td>${ch2.remainingCoins} 코인</td>
+                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
