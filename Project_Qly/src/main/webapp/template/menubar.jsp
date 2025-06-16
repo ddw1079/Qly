@@ -3,203 +3,189 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<title>메인페이지</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>메뉴바</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<!-- Bootstrap JS CDN (optional) -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- DataTables CSS & JS -->
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script
-	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <style>
+    /* ✅ 사용자 영역 */
+    .user-panel {
+        background-color: #f9fefc;
+      padding: 12px 20px;
+      border-bottom: 1px solid #dee2e6;
+    }
 
-<style>
-.menu-box {
-	background-color: #198754;
-	color: white;
-	text-align: center;
-	padding: 15px 0;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
-	cursor: pointer;
-	transition: background-color 0.2s;
-}
+    .coin-box-lg {
+      padding: 10px 16px;
+      border: 2px solid #41867e;
+      background-color: white;
+      color: #41867e;
+      font-weight: bold;
+      border-radius: 8px;
+      font-size: 16px;
+      white-space: nowrap;
+    }
 
-.menu-box:hover {
-	background-color: #146c43;
-	color: white;
-}
+    .profile-pic {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #41867e;
+    }
 
-.submenu-row {
-	display: none;
-	background-color: white;
-}
+    /* ✅ 메뉴 영역 */
+    .menu-bar {
+      display: flex;
+      background-color: #6db1a9;
+      margin: 0;
+      padding: 0;
+    }
 
-.submenu-cell {
-	padding: 10px;
-	border: 1px solid #dee2e6;
-}
+    .menu-item {
+      flex: 1;
+      text-align: center;
+      padding: 15px 0;
+      font-weight: bold;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
 
-.submenu-cell a {
-	display: block;
-	text-align: center;
-	color: #000000;
-	text-decoration: none;
-	font-weight: 500;
-	padding: 5px 0;
-}
+    .menu-item:hover {
+      background-color: #559e96;
+    }
 
-.submenu-cell a:hover {
-	color: #007bff;
-	text-decoration: underline;
-}
+    /* ✅ submenu */
+    .submenu-container {
+      display: none;
+      background-color: #fff;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-.user-panel {
-	background-color: #e8f9f7;
-	padding: 8px 10px; /* 기존 15px → 8px, 좌우 10px로 */
-	border-bottom: 1px solid #dee2e6;
-}
+    .submenu-row {
+      display: flex;
+      margin: 0;
+    }
 
-.user-name {
-	font-weight: bold;
-	font-size: 15px; /* 기존 18px → 15px */
-}
+    .submenu-cell {
+      flex: 1;
+      border-left: 1px solid #dee2e6;
+      border-right: 1px solid #dee2e6;
+      text-align: center;
+      padding: 10px 0;
+    }
 
-.coin-info {
-	display: flex;
-	align-items: center;
-	gap: 10px; /* 보유 코인 박스와 충전 버튼 박스 사이 간격 */
-}
+    .submenu-cell a {
+      display: block;
+      color: #000;
+      text-decoration: none;
+      padding: 6px 0;
+      font-weight: 500;
+    }
 
-.coin-box {
-	padding: 5px 10px;
-	border: 2px solid black;
-	background-color: white;
-	color: black;
-	font-weight: bold;
-	border-radius: 4px;
-	user-select: none;
-}
+    .submenu-cell a:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
 
-.profile-pic {
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 2px solid #198754;
-}
+    /* ✅ hover 시 submenu 표시 */
+    .menu-wrapper:hover .submenu-container,
+    .submenu-container:hover {
+      display: block;
+    }
 
-.btn-sm {
-	padding: 3px 6px; /* 5px 10px → 3px 6px */
-	font-size: 12px; /* 14px → 12px */
-}
-</style>
+    /* ✅ 좌우 여백 제거 */
+    .container-fluid, .menu-wrapper, .menu-bar, .submenu-container {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  </style>
 </head>
+
 <body>
+  <%
+    String userName = "홍길동";
+    String userRole = "의뢰인";
+    int userCoins = 1250;
+  %>
 
-	<%
-	// 예시용 변수, 실제로는 세션이나 DB에서 받아오세요.
-	String userName = "홍길동";
-	String userRole = "의뢰인";
-	int userCoins = 1250;
-	%>
+  <div class="container-fluid">
 
-	<div class="container-fluid">
-		<!-- 🔼 사용자 정보 패널 -->
-		<div class="row user-panel align-items-center">
-			<!-- 로고: 왼쪽 -->
-			<div class="col-auto">
-				<img src="https://via.placeholder.com/100x30?text=LOGO" alt="로고"
-					class="img-fluid">
-			</div>
+    <!-- ✅ 사용자 정보 패널 -->
+    <div class="row user-panel align-items-center justify-content-between">
+      <div class="col-auto d-flex align-items-center">
+        <a href="/">
+          <img src="https://i.postimg.cc/yYVx9NTf/logo5.png" alt="QLY 로고" style="height: 120px;">
+        </a>
+      </div>
 
-			<!-- 사용자 정보: 오른쪽 -->
-			<div
-				class="col d-flex justify-content-end align-items-center flex-wrap text-end">
-				<div class="me-3">
-					<div class="user-name">
-						<%=userName%>
-						<small>(<%=userRole%>)
-						</small>
-					</div>
-					<div class="coin-info">
-						<div class="coin-box">
-							보유 코인: <strong><%=userCoins%></strong>
-						</div>
-						<!-- <button type="button" class="charge-btn-box btn-sm"
-							onclick="location.href='coin_charge.jsp'">충전</button> -->
-						<div class="col-lg d-flex align-items-center">
-							<button class="btn btn-success w-100"
-								onclick="$('#chargeCoinModal').modal('show');">충전</button>
-						</div>
-					</div>
-					<div class="mt-2">
-						<button class="btn btn-outline-secondary btn-sm"
-							style="background-color: black; color: white; font-size: 16px; padding: 8px 16px; border-radius: 5px;">로그아웃</button>
-						<button class="btn btn-outline-primary btn-sm"
-							style="background-color: black; color: white; font-size: 16px; padding: 8px 16px; border-radius: 5px;">회원가입</button>
-					</div>
+      <div class="col d-flex justify-content-end align-items-center gap-3 flex-wrap text-end">
+        <div class="text-end me-3 d-flex flex-column align-items-end">
+          <div class="fw-bold mb-2" style="font-size: 18px;">
+            <%= userName %> <small>(<%= userRole %>)</small>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="coin-box-lg">
+              보유 코인: <strong><%= userCoins %></strong>
+            </div>
+            <button class="btn btn-sm text-white px-3 py-2" style="background-color: #40746e;" onclick="$('#chargeCoinModal').modal('show');">충전</button>
+          </div>
+          <div class="d-flex gap-2 mt-2 w-100">
+            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
+            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">회원가입</button>
+          </div>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
+      </div>
+    </div>
 
-				</div>
-				<a href="#"> <img
-					src="https://via.placeholder.com/60x60.png?text=🙂" alt="프로필"
-					class="profile-pic">
-				</a>
+    <!-- ✅ 메뉴 + 서브메뉴 영역 -->
+    <div class="menu-wrapper">
 
-			</div>
-		</div>
+      <!-- 메뉴 -->
+      <div class="menu-bar">
+        <div class="menu-item">QLY소개</div>
+        <div class="menu-item">퀘스트</div>
+        <div class="menu-item">코인충전소</div>
+        <div class="menu-item">고객센터</div>
+      </div>
 
+      <!-- 하위메뉴 -->
+      <div class="submenu-container">
+        <div class="submenu-row">
+          <div class="submenu-cell">
+            <a href="#">QLY란?</a>
+            <a href="#">회사 소개</a>
+          </div>
+          <div class="submenu-cell">
+            <a href="#">퀘스트 등록</a>
+            <a href="#">퀘스트 신청</a>
+            <a href="#">퀘스트 목록</a>
+          </div>
+          <div class="submenu-cell">
+            <a href="#">QUBIT 충전</a>
+            <a href="#">QUBIT 환급</a>
+            <a href="#">거래내역 확인</a>
+          </div>
+          <div class="submenu-cell">
+            <a href="#">문의사항</a>
+          </div>
+        </div>
+      </div>
 
-		<!-- 🔽 상단 메뉴 -->
-		<div class="row">
-			<div class="col-3 p-0">
-				<div class="menu-box" onclick="toggleSubmenus()">QLY소개</div>
-			</div>
-			<div class="col-3 p-0">
-				<div class="menu-box" onclick="toggleSubmenus()">퀘스트</div>
-			</div>
-			<div class="col-3 p-0">
-				<div class="menu-box" onclick="toggleSubmenus()">코인충전소</div>
-			</div>
-			<div class="col-3 p-0">
-				<div class="menu-box" onclick="toggleSubmenus()">고객센터</div>
-			</div>
-		</div>
+    </div>
 
-		<!-- 🔽 서브메뉴 -->
-		<div class="row submenu-row" id="submenuRow">
-			<div class="col-3 submenu-cell">
-				<a href="#">QLY란?</a> <a href="#">회사 소개</a>
-			</div>
-			<div class="col-3 submenu-cell">
-				<a href="#">퀘스트 등록</a> <a href="#">퀘스트 신청</a> <a href="#">퀘스트 목록</a>
-			</div>
-			<div class="col-3 submenu-cell">
-				<a href="#">QUBIT 충전</a> <a href="#">QUBIT 환급</a> <a href="#">거래내역
-					확인</a>
-			</div>
-			<div class="col-3 submenu-cell">
-				<a href="#">문의사항</a>
-			</div>
-		</div>
-	</div>
-
-	<script>
-		function toggleSubmenus() {
-			const submenuRow = document.getElementById("submenuRow");
-			submenuRow.style.display = submenuRow.style.display === "flex" ? "none"
-					: "flex";
-		}
-	</script>
-
+  </div>
 </body>
 </html>
