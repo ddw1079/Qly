@@ -3,17 +3,7 @@
 	import="com.qly.quest.Quest, java.util.*"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<%
-// 임의의 모의 데이터 설정
-List<Quest> questList = new ArrayList<Quest>();
-questList.add(new Quest("에어컨 고장났어요", "생활 수리", "대기중", "2025-06-13", 2, "https://placehold.co/300x180?text=Aircon"));
-questList.add(new Quest("노트북 포맷", "컴퓨터", "진행중", "2025-06-12", 1, "https://placehold.co/300x180?text=Laptop"));
-questList.add(new Quest("방 청소 부탁", "청소", "완료", "2025-06-11", 4, "https://placehold.co/300x180?text=Cleaning"));
-questList.add(new Quest("정수기 고장", "가전", "대기중", "2025-06-10", 3, "https://placehold.co/300x180?text=Purifier"));
-request.setAttribute("questList", questList);
-%>
-
+<jsp:include page="/template/menubar.jsp" />
 
 <!DOCTYPE html>
 <html>
