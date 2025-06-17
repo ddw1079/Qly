@@ -7,16 +7,7 @@ public class PaymentHistoryVo {
     private double amount; // 결제 금액
     private String paymentMethod; // 결제 방법 (예: 카드, 계좌이체 등)
     private String status; // 결제 상태 (예: 완료, 취소 등)
-
-    // 생성자
-    public PaymentHistoryVo(int paymentId, int userId, String paymentDate, double amount, String paymentMethod, String status) {
-        this.paymentId = paymentId;
-        this.userId = userId;
-        this.paymentDate = paymentDate;
-        this.amount = amount;
-        this.paymentMethod = paymentMethod;
-        this.status = status;
-    }
+    private String remainCoin; // 잔여 코인 (선택적 필드)
 
     // Getter 및 Setter 메소드
     public int getPaymentId() {
@@ -66,4 +57,13 @@ public class PaymentHistoryVo {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getRemainCoin() {
+        return remainCoin;
+    }
+
+    public void setRemainCoin(String remainCoin) {
+        this.remainCoin = remainCoin;
+    }
+
 }

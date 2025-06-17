@@ -70,6 +70,19 @@
 		</foreach>
 	</insert>
 
+ <insert id="insertUser" parameterType="com.qly.dto.UserDto">
+   INSERT INTO USERS (
+      USER_ID, USERNAME, PASSWORD, PHONE, ADDRESS, EMAIL, USER_TYPE
+  ) VALUES (
+      #{userId},
+      #{userName},
+      #{password},
+      #{phone},
+      #{address},
+      #{email},
+      #{userType}
+  )
+  </insert>
 
 
 

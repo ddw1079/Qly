@@ -8,9 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.qly.vo.CoinHistoryVo;
+import com.qly.vo.PaymentHistoryVo;
 
 @Controller
-@RequestMapping("/coin")
+@RequestMapping("/payments")
 public class CoinController {
     @Autowired
     private com.qly.service.CoinService coinService;
@@ -20,12 +21,13 @@ public class CoinController {
     public String getCoinHistory(Model model) {
         List<CoinHistoryVo> coinHistories = coinService.getAllCoinHistories();
         model.addAttribute("coinHistories", coinHistories);
-
+        List<PaymentHistoryVo> paymentHistories = coinService.getAllPaymentHistories();
+        model.addAttribute("paymentHistories", paymentHistories);
         
         // 코인 히스토리 조회 로직
         // 예: List<CoinHistoryVo> history = coinService.getCoinHistory();
         // model.addAttribute("coinHistory", history);
-        return "CoinHistory"; // 뷰 이름 반환
+        return "payments/coin_history"; // 뷰 이름 반환
     }
 
 }

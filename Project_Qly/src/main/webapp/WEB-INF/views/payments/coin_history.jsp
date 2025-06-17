@@ -53,7 +53,7 @@
                             <th>일자</th>
                             <th>수량</th>
                             <th>거래 유형</th>
-                            <!-- <th>거래 대상</th> <- 이커 어케 들고오지 -->
+                            <th>잔여 코인</th>
                             <th>관련 퀘스트</th>
                         </tr>
                     </thead>
@@ -63,31 +63,32 @@
                             <td>2025-06-13</td>
                             <td><span class="text-danger">+</span> 100 코인</td>
                             <td>퀘스트 성공 보상</td>
-                            <!-- <td>도움이 필요한 라이언</td> -->
+                            <td>300</td>
                             <td><a href="#">quest Page 링크...</a></td>
                         </tr>
                         <tr>
                             <td>2025-06-15</td>
                             <td><span class="text-primary">-</span> 70 코인</td>
                             <td>퀘스트 보상 지급</td>
-                            <!-- <td>아주 유능한 춘식이</td> -->
+                            <td>200</td>
                             <td><a href="#">quest Page 링크...</a></td>
                         </tr>
                         <c:forEach var="ch1" items="${coinHistories }">
                         <tr>
-                            <td>${ch1.date}</td>
+                            <td>${ch1.transactionDate}</td>
                             <td>
                                 <c:choose>
-                                    <c:when test="${ch1.type == 'plus'}">
+                                    <c:when test="${ch1.amount > 0 }">
                                         <span class="text-danger">+</span> ${ch1.amount} 코인
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="text-primary">-</span> ${ch1.amount} 코인
+                                        <span class="text-primary">-</span> ${Math.abs(ch1.amount)} 코인
                                     </c:otherwise>
                                 </c:choose>
                             </td>
                             <td>${ch1.type}</td>
-                            <td><a href="quest/${ch1.quest_id}">quest Page 링크...</a></td>
+                            <td>${ch1.remainCoin }</td>
+                            <td><a href="quest/${ch1.questId}">quest Page 링크...</a></td>
                         </tr>
                         </c:forEach>
                         
@@ -127,12 +128,12 @@
                         
                         <c:forEach var="ch2" items="${paymentHistories }">
                         <tr>
-                            <td>${ch2.date}</td>
+                            <td>${ch2.paymentDate}</td>
                             <td>${ch2.paymentMethod}</td>
                             <td>${ch2.status}</td>
-                            <td>${ch2.amount}원</td>
-                            <td>${ch2.coinAmount} 코인</td>
-                            <td>${ch2.remainingCoins} 코인</td>
+                            <td>${ch2.amount.intValue()}원</td>
+                            <td>${(ch2.amount * 10).intValue()} 코인</td>
+                            <td>${ch2.remainCoin} 코인</td>
                         </tr>
                         </c:forEach>
                     </tbody>

@@ -42,67 +42,85 @@ body {
   
 
     </style>
-    <script>
-        function checkPasswordMatch() {
-            const pw = document.getElementById("password").value;
-            const pwCheck = document.getElementById("passwordCheck").value;
-            const status1 = document.getElementById("pwStatus1");
-            const status2 = document.getElementById("pwStatus2");
+  <script>
+$(document).ready(function () {
+  // 1. 비밀번호 토글 👁️
+  window.togglePassword = function (fieldId, btn) {
+    const field = $("#" + fieldId);
+    const isHidden = field.attr("type") === "password";
+    field.attr("type", isHidden ? "text" : "password");
+    $(btn).text(isHidden ? "🙈" : "👁️");
+  };
 
-            if (pw && pwCheck) {
-                if (pw === pwCheck) {
-                    status1.innerHTML = "[일치]";
-                    status2.innerHTML = "[일치]";
-                    status1.className = "text-success";
-                    status2.className = "text-success";
-                } else {
-                    status1.innerHTML = "[불일치]";
-                    status2.innerHTML = "[불일치]";
-                    status1.className = "text-danger";
-                    status2.className = "text-danger";
-                }
-            } else {
-                status1.innerHTML = "";
-                status2.innerHTML = "";
-            }
-        }
+  // 2. 하이픈 자동 입력
+  $("#phone").on("input", function () {
+    const num = $(this).val().replace(/[^0-9]/g, "");
+    let formatted = num;
+    if (num.length < 4) {
+      formatted = num;
+    } else if (num.length < 8) {
+      formatted = num.slice(0, 3) + "-" + num.slice(3);
+    } else if (num.length <= 11) {
+      formatted = num.slice(0, 3) + "-" + num.slice(3, 7) + "-" + num.slice(7);
+    } else {
+      formatted = num.slice(0, 3) + "-" + num.slice(3, 7) + "-" + num.slice(7, 11);
+    }
+    $(this).val(formatted);
+  });
 
-        function checkIdDuplicate() {
-            const userId = $("#userId").val();
-            if (!userId) {
-                alert("ID를 입력하세요.");
-                return;
-            }
+  // 3. 비밀번호 일치 여부
+  $("input#password, input#passwordCheck").on("input", function () {
+    const pw = $("#password").val();
+    const pwCheck = $("#passwordCheck").val();
+    const isMatch = pw && pwCheck && pw === pwCheck;
+    $("#pwStatus1, #pwStatus2")
+      .text(isMatch ? "[일치]" : "[불일치]")
+      .removeClass("text-success text-danger")
+      .addClass(isMatch ? "text-success" : "text-danger");
+    if (!pw || !pwCheck) $("#pwStatus1, #pwStatus2").text("");
+  });
 
-            $.ajax({
-                url: "checkDuplicate.jsp",  // 이 JSP에서 DB 조회 처리
-                method: "POST",
-                data: { userId: userId },
-                success: function(response) {
-                    if (response.trim() === "duplicate") {
-                        alert("이미 사용 중인 ID입니다.");
-                    } else if (response.trim() === "ok") {
-                        $("#idAvailableModal").modal("show");
-                    } else {
-                        alert("오류 발생");
-                    }
-                },
-                error: function() {
-                    alert("서버 오류");
-                }
-            });
-        }
+  // 4. 모든 필드 입력 시 버튼 활성화
+  $("input[required]").on("input change", function () {
+    const allFilled = $("input[required]").toArray().every(el => $(el).val().trim() !== "");
+    $("#submitBtn").prop("disabled", !allFilled);
+  });
 
-        function validateForm() {
-            const pw = document.getElementById("password").value;
-            const pwCheck = document.getElementById("passwordCheck").value;
-            if (pw !== pwCheck) {
-                alert("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
-            return true;
-        }
-    </script>
+  // 5. ID 중복 확인
+  window.checkIdDuplicate = function () {
+    const userId = $("#userId").val().trim();
+    if (!userId) {
+      alert("ID를 입력하세요.");
+      return;
+    }
+
+    $.post("checkDuplicate.jsp", { userId: userId }, function (response) {
+      const res = $.trim(response);
+      if (res === "duplicate") {
+        alert("이미 사용 중인 ID입니다.");
+      } else if (res === "ok") {
+        $("#idAvailableModal").modal("show");
+      } else {
+        alert("오류 발생");
+      }
+    }).fail(function () {
+      alert("서버 오류");
+    });
+  };
+
+  // 6. 폼 제출 시 최종 비밀번호 체크
+  $("form").on("submit", function () {
+    const pw = $("#password").val();
+    const pwCheck = $("#passwordCheck").val();
+    if (pw !== pwCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false;
+    }
+    return true;
+  });
+});
+</script>
+  
 </head>
 <body>
 
@@ -113,56 +131,71 @@ body {
         
     </div>
 
-    <form action="Qly_registerAction.jsp" method="post" onsubmit="return validateForm();">
-        <div class="mb-3">
-            <label for="userId" class="form-label"></label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" required>
-                <button type="button" class="btn btn-outline-secondary" onclick="checkIdDuplicate()">중복확인</button>
-            </div>
-        </div>
-        
-        
+    <form action="${pageContext.request.contextPath}/quest/Qly_insert.do" method="post" >
+    <div class="mb-3 input-group">
+        <span class="input-group-text" style="width: 100px;">ID</span>
+        <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" required>
+        <button type="button" class="btn btn-outline-secondary" onclick="checkIdDuplicate()">중복확인</button>
+    </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label"></label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="PW"required oninput="checkPasswordMatch();">
-            <div class="text-end" id="pwStatus1"></div>
-        </div>
-        
-   
+    <div class="mb-3 input-group">
+        <span class="input-group-text" style="width: 100px;">닉네임</span>
+        <input type="text" class="form-control" id="userName" name="userName" placeholder="닉네임" required>
+    </div>
 
-        <div class="mb-3">
-            <label for="passwordCheck" class="form-label"></label>
-            <input type="password" class="form-control" id="passwordCheck" placeholder="PW(확인)"required oninput="checkPasswordMatch();">
-            <div class="text-end" id="pwStatus2"></div>
-        </div>
+  <!-- 비밀번호 -->
+<div class="mb-3 input-group">
+  <span class="input-group-text" style="width: 100px;">PW</span>
+  <input type="password" class="form-control" id="password" name="password" placeholder="PW" required>
+  <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', this)">👁️</button>
+</div>
+<div class="text-end mb-2" id="pwStatus1"></div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label"></label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="aa@ondal.com"required>
-        </div>
+<!-- 비밀번호 확인 -->
+<div class="mb-3 input-group">
+  <span class="input-group-text" style="width: 100px;">PW 확인</span>
+  <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="PW 확인" required>
+  <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passwordCheck', this)">👁️</button>
+</div>
+<div class="text-end mb-2" id="pwStatus2"></div>
+  
 
-        <div class="mb-3">
-            <label class="form-label">유저 유형</label><br>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="userType" id="qlee" value="Qlee" required>
-                <label class="form-check-label" for="qlee">Qly (의뢰인)</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="userType" id="qulator" value="Qulator">
-                <label class="form-check-label" for="qulator">Qly (해결사)</label>
-            </div>
-        </div>
+    <div class="mb-3 input-group">
+        <span class="input-group-text" style="width: 100px;">휴대전화</span>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="010-1234-5678" required>
+    </div>
 
-<button type="submit" class="btn w-100"
+    <div class="mb-3 input-group">
+        <span class="input-group-text" style="width: 100px;">주소</span>
+        <input type="text" class="form-control" id="address" name="address" placeholder="주소" required>
+    </div>
+
+    <div class="mb-3 input-group">
+        <span class="input-group-text" style="width: 100px;">이메일</span>
+        <input type="email" class="form-control" id="email" name="email" placeholder="aa@ondal.com" required>
+    </div>
+
+    <div class="mb-4">
+        <span class="me-2">유저 유형:</span>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="userType" id="qlee" value="의뢰인" required> 
+            <label class="form-check-label" for="qlee">Qly (의뢰인)</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="userType" id="qulator" value="해결사"> 
+            <label class="form-check-label" for="qulator">Qly (해결사)</label>
+        </div>
+    </div>
+
+   <button id="submitBtn" type="submit" class="btn w-100" disabled
     style="background-color: #00FA9A; color: black; font-weight: bold; border: none;
            font-size: 1.3rem; padding: 18px; border-radius: 10px;">
     회원가입
 </button>
 
+</form>
+      
 
-    </form>
 </div>
 
 <!-- ✅ 모달: ID 사용 가능 -->
@@ -185,4 +218,4 @@ body {
 
 
 </body>
-</html>
+</html> 
