@@ -6,16 +6,10 @@ public class CoinHistoryVo {
 	private int userId;
 	private Date transactionDate;
 	private int amount;
+	private int remainCoin;
 	private String type;
 	private int questId;
 
-	public CoinHistoryVo(int userId, Date transactionDate, int amount, String type, int questId) {
-		this.userId = userId;
-		this.transactionDate = transactionDate;
-		this.amount = amount;
-		this.type = type;
-		this.questId = questId;
-	}
 	public int getUserId() {
 		return userId;
 	}
@@ -45,6 +39,12 @@ public class CoinHistoryVo {
 	}
 	public void setQuestId(int questId) {
 		this.questId = questId;
+	}
+	public int getRemainCoin() {
+		return remainCoin;
+	}
+	public void setRemainCoin(int remainCoin) {
+		this.remainCoin = remainCoin;
 	}
 	
 }
