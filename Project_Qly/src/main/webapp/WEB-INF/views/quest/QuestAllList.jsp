@@ -73,7 +73,7 @@
 				<div class="col quest-card">
 					<div class="card shadow-sm p-3 h-100">
 						<!-- 이미지 추가 -->
-						<img src="${quest.imageUrl}" alt="${quest.title}"
+						<img src="${quest.photoPath}" alt="${quest.title}"
 							class="img-fluid mb-3">
 
 						<%-- <img src="${quest.imageUrl}" class="card-img-top mb-3"

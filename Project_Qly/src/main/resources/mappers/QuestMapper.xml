@@ -4,41 +4,85 @@
 
 <mapper namespace="com.qly.mapper.QuestMapper">
 
-	<select id="selectAllQuests" resultType="questDto">
-		SELECT QUEST_ID,
-		USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH, STATUS,
+	<!-- <select id="getAllQuests" resultType="questdto"> SELECT QUEST_ID, USER_ID, 
+		TITLE, CATEGORY, CONTENT, PHOTO_PATH, STATUS, PROGRESS, LATITUDE, LONGITUDE, 
+		ADDRESS, LOCATION, START_DATE, END_DATE, CREATED_AT, VIEW_COUNT, REWARD_TOKENS, 
+		REG_DATE FROM QUESTS ORDER BY CREATED_AT DESC </select> <select id="searchQuests" 
+		parameterType="string" resultType="questdto"> SELECT QUEST_ID, USER_ID, TITLE, 
+		CATEGORY, CONTENT, PHOTO_PATH, STATUS, PROGRESS, LATITUDE, LONGITUDE, ADDRESS, 
+		LOCATION, START_DATE, END_DATE, CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE 
+		FROM QUESTS WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%') OR 
+		LOWER(CATEGORY) LIKE CONCAT('%', LOWER(#{keyword}), '%') ORDER BY CREATED_AT 
+		DESC </select> -->
+
+	<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
+		SELECT
+		QUEST_ID,
+		USER_ID,
+		TITLE,
+		CATEGORY,
+		CONTENT,
+		PHOTO_PATH,
+		STATUS,
 		PROGRESS,
-		LATITUDE, LONGITUDE, ADDRESS, LOCATION, START_DATE,
+		LATITUDE,
+		LONGITUDE,
+		ADDRESS,
+		LOCATION,
+		START_DATE,
 		END_DATE,
-		CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE
+		CREATED_AT,
+		VIEW_COUNT,
+		REWARD_TOKENS,
+		REG_DATE,
+		-- 신청자 수 추가
+		(SELECT COUNT(*) FROM QUEST_APPLICATION qa WHERE qa.QUEST_ID =
+		QUESTS.QUEST_ID) AS applicantCount
 		FROM QUESTS
-		ORDER BY
-		CREATED_AT DESC
+		ORDER BY CREATED_AT DESC
 	</select>
 
-	<select id="searchQuestsByKeyword" parameterType="string"
-		resultType="questDto">
-		SELECT QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT,
-		PHOTO_PATH, STATUS,
-		PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION,
+	<select id="searchQuests" parameterType="string"
+		resultType="com.qly.dto.QuestDto">
+		SELECT
+		QUEST_ID,
+		USER_ID,
+		TITLE,
+		CATEGORY,
+		CONTENT,
+		PHOTO_PATH,
+		STATUS,
+		PROGRESS,
+		LATITUDE,
+		LONGITUDE,
+		ADDRESS,
+		LOCATION,
 		START_DATE,
-		END_DATE, CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE
+		END_DATE,
+		CREATED_AT,
+		VIEW_COUNT,
+		REWARD_TOKENS,
+		REG_DATE,
+		(SELECT COUNT(*) FROM QUEST_APPLICATION qa WHERE qa.QUEST_ID =
+		QUESTS.QUEST_ID) AS applicantCount
 		FROM QUESTS
 		WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
 		OR LOWER(CATEGORY) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		ORDER BY
-		CREATED_AT DESC
+		ORDER BY CREATED_AT DESC
 	</select>
-
 
 	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto"
 		useGeneratedKeys="true" keyProperty="questId">
 		INSERT INTO QUESTS (
-		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH,
-		STATUS, START_DATE, END_DATE, ADDRESS, REWARD_TOKENS, REG_DATE
+		QUEST_ID,
+		USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH,
+		STATUS, START_DATE,
+		END_DATE, ADDRESS, REWARD_TOKENS, REG_DATE
 		) VALUES (
-		#{questId}, #{userId}, #{title}, #{category}, #{content}, #{photoPath},
-		#{status}, #{startDate}, #{endDate}, #{address}, #{rewardTokens},
+		#{questId},
+		#{userId}, #{title}, #{category}, #{content}, #{photoPath},
+		#{status},
+		#{startDate}, #{endDate}, #{address}, #{rewardTokens},
 		SYSDATE
 		)
 	</insert>
@@ -49,7 +93,8 @@
 		INSERT INTO QUEST_TASK (
 		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
 		) VALUES (
-		#{taskId}, #{questId}, #{description}, #{isChecked}
+		#{taskId},
+		#{questId}, #{description}, #{isChecked}
 		)
 	</insert>
 
