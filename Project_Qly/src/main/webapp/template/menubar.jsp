@@ -143,7 +143,8 @@
           </div>
           <div class="d-flex gap-2 mt-2 w-100">
             <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
-            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">회원가입</button>
+            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+                          onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
           </div>
         </div>
         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
