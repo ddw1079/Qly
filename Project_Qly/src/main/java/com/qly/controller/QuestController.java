@@ -1,17 +1,22 @@
 package com.qly.controller;
 
-
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qly.dto.QuestDto;
+import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
 import com.qly.service.QuestService;
@@ -22,67 +27,66 @@ public class QuestController {
 
 	@Autowired
 	private QuestService questService;
-	
+
 	@Autowired
 	private QlyService qlyService;
 
 	@RequestMapping(value = "/list.do")
-	public String questList(@RequestParam(required = false) String keyword, Model model) {
-		List<QuestDto> questList;
+	public String questList(Model model) {
+		List<QuestDto> questList = questService.getAllQuests();
 
-		if (keyword != null && !keyword.trim().isEmpty()) {
-			questList = questService.searchQuests(keyword);
-		} else {
-			questList = questService.getAllQuests();
-		}
-
-		System.out.println("questList size: " + questList.size()); // 크기 출력
+		System.out.println("questList size: " + questList.size());
 
 		model.addAttribute("questList", questList);
 		return "quest/QuestAllList";
 	}
 
-	@RequestMapping(value = "/insert.do")
-	public String insertQuest(@ModelAttribute QuestDto quest, @RequestParam("photo") MultipartFile photo) {
+	@RequestMapping(value = "/insert.do", method = RequestMethod.POST)
+	public String insertQuest(@ModelAttribute QuestDto questDto, @RequestParam("photo") MultipartFile photoFile,
+			HttpSession session) throws Exception {
 
-		quest.setStatus("대기");
-		quest.setUserId(1); // 임시 유저
+		if (!photoFile.isEmpty()) {
+			String originalFilename = photoFile.getOriginalFilename();
+			String newFilename = UUID.randomUUID() + "_" + originalFilename;
 
-		if (photo != null && !photo.isEmpty()) {
-			String fileName = photo.getOriginalFilename();
-			quest.setPhotoPath("/uploads/" + fileName);
+			// 절대 경로로 변경 (윈도우 환경 기준)
+			String uploadDir = "E:\\photo";
+
+			File uploadFolder = new File(uploadDir);
+			if (!uploadFolder.exists()) {
+				uploadFolder.mkdirs(); // 폴더가 없으면 생성
+			}
+
+			File saveFile = new File(uploadFolder, newFilename);
+			photoFile.transferTo(saveFile);
+
+			questDto.setPhotoPath(newFilename);
 		}
 
-		questService.insertQuest(quest);
+		Integer userId = (Integer) session.getAttribute("userId");
+		questDto.setUserId(userId);
 
-		return "redirect:/quest/list.do";
+		List<QuestTaskDto> tasks = questDto.getTasks();
+
+		questService.insertQuest(questDto, tasks);
+
+		return "quest/QuestAllList";
 	}
-	
-	
-		@RequestMapping("/listForm.do")
-		public String showQuestListPage() {
-	    return "quest/QuestAllList"; 
-		}
 
-	
-	   @RequestMapping("/registerForm.do")
-	    public String showQuestRegisterForm() {
-	        return "quest/QuestRegistration"; 
-	    }
-
-	    
-	    @RequestMapping("/particularForm.do")
-	    public String showQuestParticularForm() {
-	        return "quest/QuestParticular"; 
-	    }
-
-
-	
+	/*
+	 * @RequestMapping("/listForm.do") public String showQuestListPage() { return
+	 * "quest/QuestAllList"; }
+	 * 
+	 * @RequestMapping("/registerForm.do") public String showQuestRegisterForm() {
+	 * return "quest/QuestRegistration"; }
+	 * 
+	 * @RequestMapping("/particularForm.do") public String showQuestParticularForm()
+	 * { return "quest/QuestParticular"; }
+	 */
 	@RequestMapping("/Qly_insert.do")
 	public String insertUser(UserDto dto) throws Exception {
-		qlyService.insertUser(dto);  // 서비스 → DAO → MyBatis 호출
-	    return "mainpage";
+		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
+		return "mainpage";
 	}
-
 
 }
