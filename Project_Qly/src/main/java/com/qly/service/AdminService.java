@@ -14,30 +14,34 @@ public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
 
-	// 전체 회원 조회
+	// �쟾泥� �쉶�썝 議고쉶
 	public List<UserDto> getAllUsers() {
 		return adminMapper.findAllUsers();
 	}
 
-	// 회원 검색
+	// �쉶�썝 寃��깋
 	public List<UserDto> searchUsers(String keyword) {
 		return adminMapper.searchUsers(keyword);
 	}
 
-	// 회원 삭제
+	// �쉶�썝 �궘�젣
 	public void deleteUser(String userId) {
 		adminMapper.deleteUser(userId);
 	}
 
-	// 퀘스트 전체 조회
-	public List<QuestDto> getAllQuests() {
-		return adminMapper.getAllQuests();
-	}
-
-	//  퀘스트 검색 추가
-
+	// �섏뒪�듃 寃��깋
 	public List<QuestDto> searchQuests(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	    return adminMapper.searchQuests(keyword);
 	}
+	
+	// �쟾泥� �섏뒪�듃 議고쉶
+	public List<QuestDto> getAllQuests() {
+	    return adminMapper.getAllQuests();
+	}
+
+	// 🔹 총 회원 수 조회
+	public int getTotalUserCount() {
+	    return adminMapper.countAllUsers();
+	}
+	
 }

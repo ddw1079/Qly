@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!--
   관리자 퀘스트 관리 페이지 (admin_questList.jsp)
@@ -93,47 +96,47 @@
 		</div>
 	</div>
 
-<div class="row mb-4">
-  <!-- 왼쪽: col-md-8 (완료율 + 아래 카드 포함) -->
-  <div class="col-md-8 d-flex flex-column gap-3">
-<!--  완료율 카드 -->
-<div class="card shadow-sm p-4">
-  <h5>전체 퀘스트 상태 분포</h5>
-  <div class="progress" style="height: 30px;">
-    <div class="progress-bar" style="width: 20%; background-color: #cee4e3; color: black; font-weight: bold;">
-      예정 20%
-    </div>
-    <div class="progress-bar" style="width: 30%; background-color: #9dc9c5; color: white; font-weight: bold;">
-      진행중 30%
-    </div>
-    <div class="progress-bar" style="width: 50%; background-color: #6caea8; color: white; font-weight: bold;">
-      완료 50%
-    </div>
-  </div>
-</div>
+	<div class="row mb-4">
+		<!-- 왼쪽: col-md-8 (완료율 + 아래 카드 포함) -->
+		<div class="col-md-8 d-flex flex-column gap-3">
+			<!--  완료율 카드 -->
+			<div class="card shadow-sm p-4">
+				<h5>전체 퀘스트 상태 분포</h5>
+				<div class="progress" style="height: 30px;">
+					<div class="progress-bar"
+						style="width: 20%; background-color: #cee4e3; color: black; font-weight: bold;">
+						예정 20%</div>
+					<div class="progress-bar"
+						style="width: 30%; background-color: #9dc9c5; color: white; font-weight: bold;">
+						진행중 30%</div>
+					<div class="progress-bar"
+						style="width: 50%; background-color: #6caea8; color: white; font-weight: bold;">
+						완료 50%</div>
+				</div>
+			</div>
 
 
-    <!--  완료율 아래 새 카드 -->
-    <div class="card shadow-sm p-4">
-      <h5>퀘스트 처리 지표 요약</h5>
-      <ul class="mb-0">
-        <li>평균 응답 시간: <strong>1시간 20분</strong></li>
-        <li>평균 처리 시간: <strong>5시간</strong></li>
-        <li>신속 처리율: <strong>73%</strong></li>
-      </ul>
-    </div>
-  </div>
+			<!--  완료율 아래 새 카드 -->
+			<div class="card shadow-sm p-4">
+				<h5>퀘스트 처리 지표 요약</h5>
+				<ul class="mb-0">
+					<li>평균 응답 시간: <strong>1시간 20분</strong></li>
+					<li>평균 처리 시간: <strong>5시간</strong></li>
+					<li>신속 처리율: <strong>73%</strong></li>
+				</ul>
+			</div>
+		</div>
 
-  <!-- 오른쪽: col-md-4 (차트 영역) -->
-  <div class="col-md-4">
-    <div class="card shadow-sm p-4 h-100">
-      <h5>최근 등록 추이</h5>
-      <div style="height: 200px;">
-        <canvas id="questChart"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
+		<!-- 오른쪽: col-md-4 (차트 영역) -->
+		<div class="col-md-4">
+			<div class="card shadow-sm p-4 h-100">
+				<h5>최근 등록 추이</h5>
+				<div style="height: 200px;">
+					<canvas id="questChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- 퀘스트 목록 테이블 -->
@@ -150,6 +153,21 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach var="quest" items="${questList}" varStatus="status">
+				<tr>
+					<td>${status.count}</td>
+					<td>${quest.title}</td>
+					<td><fmt:formatDate value="${quest.createdAt}"
+							pattern="yyyy-MM-dd" /></td>
+					<td>${quest.location}</td>
+					<td>${quest.rewardTokens}</td>
+					<td>${quest.status}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+
+
+		<!-- 		<tbody>
 			<tr>
 				<td>1</td>
 				<td>냉장고 옴기기</td>
@@ -166,7 +184,7 @@
 				<td>3500</td>
 				<td>진행완료</td>
 			</tr>
-		</tbody>
+		</tbody> -->
 	</table>
 
 	<!-- 운영 메모 -->

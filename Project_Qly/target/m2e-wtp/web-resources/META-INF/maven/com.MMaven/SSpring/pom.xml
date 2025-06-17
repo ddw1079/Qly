@@ -39,6 +39,11 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
 
 		<!-- ( 참고 ) 일단 오라클 11g라면 ( #### 오라클 18c는 Dependency로 pom.xml에 기술 ) 1) 플젝 
 			- 마오 - build path - config ... - library 탭에서 add external jar - ojdbc6.jar를 
