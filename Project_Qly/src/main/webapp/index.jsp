@@ -12,8 +12,8 @@
 
 <body>
 	<script>
-		// location.href = "list.do"
-		location.href = "${pageContext.request.contextPath}/quest/insert.do";
+		// location.href = "quest/list.do"
+		location.href = "${pageContext.request.contextPath}/quest/list.do";
 	</script>
 </body>
 </html>

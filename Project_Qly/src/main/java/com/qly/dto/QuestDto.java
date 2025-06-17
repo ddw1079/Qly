@@ -16,9 +16,27 @@ public class QuestDto {
 	private int rewardTokens;
 	private String status;
 	private List<QuestTaskDto> tasks; // 여러 의뢰내용 담는 리스트
+	private int applicantCount; 
+	private Date regDate;
 
 	public int getQuestId() {
 		return questId;
+	}
+
+	public int getApplicantCount() {
+		return applicantCount;
+	}
+
+	public void setApplicantCount(int applicantCount) {
+		this.applicantCount = applicantCount;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 
 	public void setQuestId(int questId) {
