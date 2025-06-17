@@ -1,0 +1,72 @@
+프로젝트 controller mapper
+
+==src/main/java(java)
+
+-controller 
+클라이언트로부터 요청을 받아 Service에 전달하고,
+결과를 View로 넘깁니다.
+
+-service
+컨트롤러가 호출할 비즈니스 로직의 형태(인터페이스) 를 정의합니다.
+인터페이스. 컨트롤러 ↔ 서비스 구현체 간의 추상화 제공
+
+-serviceimpl
+db와 연결하는 로직 포함
+실제 비즈니스 로직 구현
+@Service로 선언되어 DI 사용 가능
+내부에서 mapper를 호출해 DB 작업
+
+-mapper
+실제 SQL과 연결되는 MyBatis 인터페이스입니다.
+여기서 메서드를 정의하고, SQL은 XML에 작성합니다.
+SQL XML 파일(.xml)과 매핑되는 인터페이스
+@Mapper 또는 xml에서 mapperLocations 지정
+
+-dto
+데이터베이스에서 가져오거나 사용자에게 전달할 데이터를 담는 객체
+단순히 데이터를 담는 용도로만 사용 (로직 없음)
+
+[사용자] ➝ [Controller] ➝ [Service] ➝ [ServiceImpl] ➝ 
+[Mapper] ➝ [Mapper.xml] ➝ [DB]
+
+== src/main/resources(xml)
+
+- mapper
+Mapper에서 정의한 메서드들의 SQL을 작성하는 XML입니다.
+
+
+- mybatis-config
+<typeAliases>
+	<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
+</typeAliases>
+이것을 사용하면 root-context에서 typeAliasesPackage를 사용안 해도 된다.
+그리고 사용할 mapper.xml을 등록을 해주어야한다.
+<mappers>
+	<mapper resource="mappers/QuestMapper.xml" />
+</mappers>
+
+root-context
+mapper에서 alias 단축키를 등록할 때 오류가 많이 났는데
+root-context에  밑에 것을 등록
+<property name="typeAliasesPackage" value="com.qly.dto" />
+
+typaAliasesPackage 는 지정한 패키지 아래 클래스들에 자동으로 타입 별칭 부여
+
+이 설정은 MyBatis가 com.qly.dto 패키지 아래의 클래스를 찾아서:
+com.qly.dto.QuestDto → questdto
+com.qly.dto.CoinHistoryDto → coinhistorydto
+처럼 자동으로 소문자 클래스명으로 별칭 등록해줍니다.
+
+만약에 이것이 없으면
+mapper.xml에 이렇게 사용하면 가능
+<resultType="com.qly.dto.QuestDto" />
+
+
+root-context랑 mybatis에선 alias를 두 개 다 등록을 하면
+충돌할 수 있으므로 하나만 등록 
+
+
+- pom.xml
+에서는 필요한 .jar
+<dependency>
+</dependency>
