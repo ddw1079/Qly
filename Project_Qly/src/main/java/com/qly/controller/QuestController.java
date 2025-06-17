@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qly.dto.QuestDto;
+import com.qly.dto.UserDto;
+import com.qly.service.QlyService;
 import com.qly.service.QuestService;
 
 @Controller
@@ -20,6 +22,9 @@ public class QuestController {
 
 	@Autowired
 	private QuestService questService;
+	
+	@Autowired
+	private QlyService qlyService;
 
 	@RequestMapping(value = "/list.do")
 	public String questList(@RequestParam(required = false) String keyword, Model model) {
@@ -73,5 +78,11 @@ public class QuestController {
 
 
 	
+	@RequestMapping("/Qly_insert.do")
+	public String insertUser(UserDto dto) throws Exception {
+		qlyService.insertUser(dto);  // 서비스 → DAO → MyBatis 호출
+	    return "mainpage";
+	}
+
 
 }
