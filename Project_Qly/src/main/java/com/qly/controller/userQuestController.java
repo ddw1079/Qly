@@ -20,7 +20,7 @@ import com.qly.dto.QuestTaskDto;
 import com.qly.service.QuestService;
 
 @Controller
-@RequestMapping("/quest")
+@RequestMapping("/questaa")
 public class userQuestController {
 
 	@Autowired
@@ -40,7 +40,7 @@ public class userQuestController {
 	 * 
 	 * model.addAttribute("questList", questList); return "quest/QuestAllList"; }
 	 */
-	@RequestMapping(value = "/list.do")
+	@RequestMapping(value = "/lista.do")
 	public String questList(Model model) {
 		List<QuestDto> questList = questService.getAllQuests();
 
@@ -50,7 +50,7 @@ public class userQuestController {
 		return "quest/QuestAllList";
 	}
 
-	@RequestMapping(value = "/insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/inserta.do", method = RequestMethod.POST)
 	public String insertQuest(@ModelAttribute QuestDto questDto, @RequestParam("photo") MultipartFile photoFile,
 			HttpSession session) throws Exception {
 
@@ -58,12 +58,12 @@ public class userQuestController {
 			String originalFilename = photoFile.getOriginalFilename();
 			String newFilename = UUID.randomUUID() + "_" + originalFilename;
 
-			// ì ˆëŒ€ ê²½ë¡œë¡œ ë³€ê²½ (ìœˆë„ìš° í™˜ê²½ ê¸°ì¤€)
+			// Àı´ë °æ·Î·Î º¯°æ (À©µµ¿ì È¯°æ ±âÁØ)
 			String uploadDir = "E:\\photo";
 
 			File uploadFolder = new File(uploadDir);
 			if (!uploadFolder.exists()) {
-				uploadFolder.mkdirs(); // í´ë”ê°€ ì—†ìœ¼ë©´ ìƒì„±
+				uploadFolder.mkdirs(); // Æú´õ°¡ ¾øÀ¸¸é »ı¼º
 			}
 
 			File saveFile = new File(uploadFolder, newFilename);

@@ -13,7 +13,7 @@
 <body>
 	<script>
 		// location.href = "quest/list.do"
-		location.href = "${pageContext.request.contextPath}/quest/list.do";
+		location.href = "${pageContext.request.contextPath}/quest/list.do"; /*  */
 	</script>
 </body>
 </html>
