@@ -52,5 +52,26 @@ public class QuestController {
 
 		return "redirect:/quest/list.do";
 	}
+	
+	
+		@RequestMapping("/listForm.do")
+		public String showQuestListPage() {
+	    return "quest/QuestAllList"; 
+		}
+
+	
+	   @RequestMapping("/registerForm.do")
+	    public String showQuestRegisterForm() {
+	        return "quest/QuestRegistration"; 
+	    }
+
+	    
+	    @RequestMapping("/particularForm.do")
+	    public String showQuestParticularForm() {
+	        return "quest/QuestParticular"; 
+	    }
+
+
+	
 
 }
