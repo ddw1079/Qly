@@ -166,21 +166,25 @@
       <div class="submenu-container">
         <div class="submenu-row">
           <div class="submenu-cell">
-            <a href="#">QLY란?</a>
-            <a href="#">회사 소개</a>
+          
+            <a href="/mypage/propile_Quest/qly_Introduction.jsp">QLY란?</a>
+            <a href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
           </div>
           <div class="submenu-cell">
-            <a href="#">퀘스트 등록</a>
-            <a href="#">퀘스트 신청</a>
-            <a href="#">퀘스트 목록</a>
+      	    <a href="/quest/registerForm.do">퀘스트 등록</a>
+			<a href="/quest/particularForm.do">퀘스트 신청</a>
+			<a href="/quest/list.do">퀘스트 목록</a>
+
+
+
           </div>
           <div class="submenu-cell">
-            <a href="#">QUBIT 충전</a>
-            <a href="#">QUBIT 환급</a>
-            <a href="#">거래내역 확인</a>
+            <a href="/template/coin_charge.jsp">QUBIT 충전</a>
+            <a href="#">QUBIT 환급</a> //아직없음
+            <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">
-            <a href="#">문의사항</a>
+            <a href="#">문의사항</a> 
           </div>
         </div>
       </div>
@@ -190,3 +194,4 @@
   </div>
 </body>
 </html>
+

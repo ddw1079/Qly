@@ -58,6 +58,26 @@ public class QuestController {
 		return "redirect:/quest/list.do";
 	}
 	
+	
+		@RequestMapping("/listForm.do")
+		public String showQuestListPage() {
+	    return "quest/QuestAllList"; 
+		}
+
+	
+	   @RequestMapping("/registerForm.do")
+	    public String showQuestRegisterForm() {
+	        return "quest/QuestRegistration"; 
+	    }
+
+	    
+	    @RequestMapping("/particularForm.do")
+	    public String showQuestParticularForm() {
+	        return "quest/QuestParticular"; 
+	    }
+
+
+	
 	@RequestMapping("/Qly_insert.do")
 	public String insertUser(UserDto dto) throws Exception {
 		qlyService.insertUser(dto);  // 서비스 → DAO → MyBatis 호출
