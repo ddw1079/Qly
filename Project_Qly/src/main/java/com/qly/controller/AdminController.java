@@ -19,35 +19,49 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-	@Autowired
-	private AdminService adminService;
+   @Autowired
+   private AdminService adminService;
+   
+   @RequestMapping("/layout.do")
+   public String layoutPage(@RequestParam(required = false) String page, Model model) {
+       if (page == null || page.trim().isEmpty()) {
+           page = "admin_memberList.jsp"; // 기본 페이지
+       }
+       model.addAttribute("page", page); // JSP로 전달
+       return "admin/admin_layout";
+   }
 
-	// 회원 목록 (검색 포함)
-	@RequestMapping(value = "/memberList.do")
-	public String showMemberList(@RequestParam(required = false) String keyword, Model model) {
-		List<UserDto> userList = (keyword != null && !keyword.trim().isEmpty()) ? adminService.searchUsers(keyword)
-				: adminService.getAllUsers();
 
-		model.addAttribute("userList", userList);
-		return "AdminMember";
-	}
+   // 회원 목록 (검색 포함)
+   @RequestMapping(value = "/memberList.do")
+   public String showMemberList(@RequestParam(required = false) String keyword, Model model) {
+      List<UserDto> userList = (keyword != null && !keyword.trim().isEmpty()) 
+    		? adminService.searchUsers(keyword)
+            : adminService.getAllUsers();
+      
+      int totalUsers = adminService.getTotalUserCount(); // 🔹 추가: 총 회원 수 조회
 
-	// 회원 삭제
-	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public String deleteUser(@RequestParam String userId, @RequestParam(required = false) String keyword) {
-		adminService.deleteUser(userId);
-		return "redirect:/admin/memberList" + (keyword != null ? "?keyword=" + keyword : "");
-	}
+      model.addAttribute("userList", userList);
+      model.addAttribute("totalUsers", totalUsers);      // 🔹 JSP로 전달
+      return "admin/admin_layout"; // JSP 직접 연결
+   }
 
-	// 퀘스트 목록
-	@RequestMapping(value = "/questList.do")
-	public String showQuestList(@RequestParam(required = false) String keyword, Model model) {
-	    List<QuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
-	        ? adminService.searchQuests(keyword)
-	        : adminService.getAllQuests();
+   // 회원 삭제
+   @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+   public String deleteUser(@RequestParam String userId, @RequestParam(required = false) String keyword) {
+      adminService.deleteUser(userId);
+      return "redirect:/admin/memberList" + (keyword != null ? "?keyword=" + keyword : "");
+   }
 
-	    model.addAttribute("questList", questList);
-	    return "AdminQuest";
-	}
+   // 퀘스트 목록
+   @RequestMapping(value = "/questList.do")
+   public String showQuestList(@RequestParam(required = false) String keyword, Model model) {
+       List<QuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
+           ? adminService.searchQuests(keyword)
+           : adminService.getAllQuests();
+
+       model.addAttribute("questList", questList);
+       return "admin_questList"; 
+   }
 
 }

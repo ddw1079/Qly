@@ -20,4 +20,7 @@ public interface AdminMapper {
 
     // 퀘스트 검색
     List<QuestDto> searchQuests(String keyword);
+    
+ // 총 회원 수 조회
+    int countAllUsers();
 }
