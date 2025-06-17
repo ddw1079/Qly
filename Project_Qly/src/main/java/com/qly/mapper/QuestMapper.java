@@ -8,14 +8,18 @@ import com.qly.dto.UserDto;
 
 public interface QuestMapper {
 
-    // 퀘스트 단일 저장
-    void insertQuest(QuestDto quest);
+	// 전체 퀘스트 리스트 조회
+	List<QuestDto> getAllQuests();
 
-    // 퀘스트에 속한 작업(Task) 저장
-    void insertTask(QuestTaskDto task);
+	// 키워드로 퀘스트 검색
+	/* List<QuestDto> searchQuests(String keyword); */
 
-    // 전체 퀘스트 리스트 조회
-    List<QuestDto> getAllQuests();
+	// 퀘스트 등록 (insert 후 PK 세팅)
+	void insertQuest(QuestDto questDto) throws Exception;
+
+
+	// 퀘스트 작업 등록
+	void insertQuestTask(List<QuestTaskDto> tasks) throws Exception;
 
     // 키워드로 퀘스트 검색
     List<QuestDto> searchQuests(String keyword);
@@ -23,4 +27,5 @@ public interface QuestMapper {
     void insertUser(UserDto dto);
 
     // (필요하면) 퀘스트 단일 조회, 수정, 삭제 메서드 추가 가능
+
 }

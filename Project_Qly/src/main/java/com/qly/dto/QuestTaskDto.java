@@ -1,10 +1,10 @@
 package com.qly.dto;
 
 public class QuestTaskDto {
-	private int taskId;
-	private int questId;
-	private String description; // 의뢰내용 하나
-	private char isChecked; // '0' or '1'
+	private int taskId; // PK
+	private int questId; // FK
+	private String description;
+	private char isChecked; // 기본값 '0'
 
 	public int getTaskId() {
 		return taskId;

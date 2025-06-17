@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
@@ -12,35 +13,32 @@ import com.qly.mapper.QuestMapper;
 @Service
 public class QuestServiceImpl implements QuestService {
 
-    @Autowired
-    private QuestMapper questMapper;
+	@Autowired
+	private QuestMapper questMapper;
 
-    @Override
-    public List<QuestDto> getAllQuests() {
-        return questMapper.getAllQuests();
-    }
+	@Override
+	public List<QuestDto> getAllQuests() {
+		return questMapper.getAllQuests();
+	}
 
-    @Override
-    public List<QuestDto> searchQuests(String keyword) {
-        return questMapper.searchQuests(keyword);
-    }
+	/*
+	 * @Override public List<QuestDto> searchQuests(String keyword) { return
+	 * questMapper.searchQuests(keyword); }
+	 */
+	@Override
+	@Transactional // 트랜잭션 처리 (한 번에 모두 성공하거나 실패)
+	public void insertQuest(QuestDto questDto, List<QuestTaskDto> tasks) throws Exception {
+		// 1) 퀘스트 저장 (시퀀스로 questId 생성)
+		questMapper.insertQuest(questDto);
 
-    @Override
-    public void insertQuestWithTasks(QuestDto quest) {
-        // 1) QUESTS 테이블에 퀘스트 저장
-        questMapper.insertQuest(quest);
+		// questDto에 insert 후 시퀀스에 의해 questId 값이 들어와 있어야 함
 
-        // 2) QUEST_TASK 테이블에 태스크 여러 개 저장
-        if (quest.getTasks() != null) {
-            for (QuestTaskDto task : quest.getTasks()) {
-                task.setQuestId(quest.getQuestId());
-                questMapper.insertTask(task);
-            }
-        }
-    }
+		// 2) 각 task에 questId 세팅
+		for (QuestTaskDto task : tasks) {
+			task.setQuestId(questDto.getQuestId());
+		}
 
-    @Override
-    public void insertQuest(QuestDto quest) {
-        questMapper.insertQuest(quest);
-    }
+		// 3) 퀘스트 태스크 일괄 저장
+		questMapper.insertQuestTask(tasks);
+	}
 }

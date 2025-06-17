@@ -4,9 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	
 	<typeAliases>
 		<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
+
+		<typeAlias alias="questtaskdto"
+			type="com.qly.dto.QuestTaskDto" />
+
 		<typeAlias alias="Userdto" type="com.qly.dto.QuestDto" />
+
 	</typeAliases>
 
 	<mappers>

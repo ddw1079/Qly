@@ -30,6 +30,10 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern> <!-- ❗ 중요 -->
+	</servlet-mapping>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>

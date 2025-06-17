@@ -10,6 +10,7 @@ public class QuestDto {
 	private String category;
 	private String content; // 필요하면 유지
 	private String photoPath;
+	private int progress;
 	private Date startDate;
 	private Date endDate;
 	private String address;
@@ -18,6 +19,59 @@ public class QuestDto {
 	private List<QuestTaskDto> tasks; // 여러 의뢰내용 담는 리스트
 	private int applicantCount; 
 	private Date regDate;
+	private double latitude;
+    private double longitude;
+    private String location;
+    private Date createdAt;
+    private int viewCount;
+
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
 
 	public int getQuestId() {
 		return questId;
