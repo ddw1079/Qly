@@ -100,4 +100,6 @@ Servers/
 Servers/*
 
 # Eclipse에서 생성하는 .project 파일은 프로젝트 설정을 포함하고 있어 일반적으로 버전 관리에 포함됩니다.
+/target/
+/build/
 *.properties
