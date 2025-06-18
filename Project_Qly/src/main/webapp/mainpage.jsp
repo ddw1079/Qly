@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<jsp:include page="../../template/menubar.jsp" />
+<jsp:include page="/template/menubar.jsp" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>

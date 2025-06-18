@@ -58,12 +58,12 @@ public class userQuestController {
 			String originalFilename = photoFile.getOriginalFilename();
 			String newFilename = UUID.randomUUID() + "_" + originalFilename;
 
-			// Àı´ë °æ·Î·Î º¯°æ (À©µµ¿ì È¯°æ ±âÁØ)
+			// ì ˆëŒ€ ê²½ë¡œë¡œ ë³€ê²½ (ìœˆë„ìš° í™˜ê²½ ê¸°ì¤€)
 			String uploadDir = "E:\\photo";
 
 			File uploadFolder = new File(uploadDir);
 			if (!uploadFolder.exists()) {
-				uploadFolder.mkdirs(); // Æú´õ°¡ ¾øÀ¸¸é »ı¼º
+				uploadFolder.mkdirs(); // í´ë”ê°€ ì—†ìœ¼ë©´ ìƒì„±
 			}
 
 			File saveFile = new File(uploadFolder, newFilename);
