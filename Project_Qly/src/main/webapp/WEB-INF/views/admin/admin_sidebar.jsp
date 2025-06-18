@@ -92,44 +92,24 @@ if (currentPage == null)
 <!--  메뉴 리스트 -->
 <div
 	style="background: white; color: #2f3542; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); font-size: 16px;">
-	<ul class="sidebar-menu"
-		style="list-style: none; padding: 0; margin: 0;">
+<ul class="sidebar-menu" style="list-style: none; padding: 0; margin: 0;">
 
-		<li
-			class="<%=currentPage.equals("admin_memberList.jsp") ? "active" : ""%>"
-			onclick="location.href='/Project_Qly/admin/memberList.do?page=admin_memberList.jsp'">회원
-			관리</li>
+	<li class="${page eq 'member' ? 'active' : ''}"
+		onclick="location.href='/Project_Qly/admin/memberList.do'">회원 관리</li>
 
+	<li class="${page eq 'quest' ? 'active' : ''}"
+		onclick="location.href='/Project_Qly/admin/questList.do'">퀘스트 관리</li>
 
+	<li class="${page eq 'coin' ? 'active' : ''}"
+		onclick="location.href='/Project_Qly/admin/coinList.do'">코인 관리</li>
 
-		<li
-			class="<%=currentPage.equals("admin_questList.jsp") ? "active" : ""%>"
-			onclick="location.href='/Project_Qly/admin/questList.do?page=admin_questList.jsp'">퀘스트
-			관리</li>
+	<li class="${page eq 'question' ? 'active' : ''}"
+		onclick="location.href='/Project_Qly/admin/questionList.do'">사용자 문의</li>
 
-		<li
-			class="<%=currentPage.equals("admin_coinList.jsp") ? "active" : ""%>"
-			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_coinList.jsp'">코인
-			관리</li>
+	<li class="disabled" style="pointer-events: none; opacity: 0.5;">🔒 매출 통계</li>
+	<li class="disabled" style="pointer-events: none; opacity: 0.5;">🔒 사내 게시판</li>
+	<li class="disabled" style="pointer-events: none; opacity: 0.5;">🔒 보안 정책</li>
+	<li class="disabled" style="pointer-events: none; opacity: 0.5;">🔒 환경 설정</li>
+</ul>
 
-		<li
-			class="<%=currentPage.equals("admin_qusetion.jsp") ? "active" : ""%>"
-			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_qusetion.jsp'">사용자
-			문의</li>
-
-		<li class="disabled"
-			style="pointer-events: none; opacity: 0.5; cursor: default;">🔒
-			매출 통계</li>
-		<li class="disabled"
-			style="pointer-events: none; opacity: 0.5; cursor: default;">🔒
-			사내 게시판</li>
-		<li class="disabled"
-			style="pointer-events: none; opacity: 0.5; cursor: default;">🔒
-			보안 정책</li>
-		<li class="disabled"
-			style="pointer-events: none; opacity: 0.5; cursor: default;">🔒
-			환경 설정</li>
-
-
-	</ul>
 </div>
