@@ -1,10 +1,10 @@
 package com.qly.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qly.dto.QuestDto;
-import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
 import com.qly.service.QuestService;
@@ -41,52 +40,62 @@ public class QuestController {
 		return "quest/QuestAllList";
 	}
 
-	@RequestMapping(value = "/insert.do", method = RequestMethod.POST)
-	public String insertQuest(@ModelAttribute QuestDto questDto, @RequestParam("photo") MultipartFile photoFile,
-			HttpSession session) throws Exception {
+	/*
+	 * @RequestMapping(value = "/insert.do") public String
+	 * insertQuest(@ModelAttribute QuestDto quest,
+	 * 
+	 * @RequestParam("photo") MultipartFile photo, HttpServletRequest request) {
+	 * 
+	 * // 파일 업로드 처리 (간단 예시) if (!photo.isEmpty()) { String uploadDir =
+	 * request.getSession().getServletContext().getRealPath("/upload/"); File dir =
+	 * new File(uploadDir); if (!dir.exists()) dir.mkdirs();
+	 * 
+	 * String fileName = photo.getOriginalFilename(); try { photo.transferTo(new
+	 * File(uploadDir + fileName)); quest.setPhotoPath("/upload/" + fileName); }
+	 * catch (IOException e) { e.printStackTrace(); } }
+	 * 
+	 * questService.registerQuest(quest); return "quest/QuestAllList"; }
+	 */
 
-		if (!photoFile.isEmpty()) {
-			String originalFilename = photoFile.getOriginalFilename();
-			String newFilename = UUID.randomUUID() + "_" + originalFilename;
-
-			// 절대 경로로 변경 (윈도우 환경 기준)
-			String uploadDir = "E:\\photo";
-
-			File uploadFolder = new File(uploadDir);
-			if (!uploadFolder.exists()) {
-				uploadFolder.mkdirs(); // 폴더가 없으면 생성
-			}
-
-			File saveFile = new File(uploadFolder, newFilename);
-			photoFile.transferTo(saveFile);
-
-			questDto.setPhotoPath(newFilename);
-		}
-
-		Integer userId = (Integer) session.getAttribute("userId");
-		questDto.setUserId(userId);
-
-		List<QuestTaskDto> tasks = questDto.getTasks();
-
-		questService.insertQuest(questDto, tasks);
-
-		return "quest/QuestAllList";
+	// GET: 퀘스트 등록 폼 보여주기
+	@RequestMapping(value = "/insert.do", method = RequestMethod.GET)
+	public String showInsertForm() {
+		// views/quest/insertForm.jsp 가 있다고 가정
+		return "quest/QuestRegistration";
 	}
 
-	/*
-	 * @RequestMapping("/listForm.do") public String showQuestListPage() { return
-	 * "quest/QuestAllList"; }
-	 * 
-	 * @RequestMapping("/registerForm.do") public String showQuestRegisterForm() {
-	 * return "quest/QuestRegistration"; }
-	 * 
-	 * @RequestMapping("/particularForm.do") public String showQuestParticularForm()
-	 * { return "quest/QuestParticular"; }
-	 */
+	// POST: 퀘스트 등록 처리
+	@RequestMapping(value = "/insert.do", method = RequestMethod.POST)
+	public String insertQuest(@ModelAttribute QuestDto quest, 
+							  @RequestParam("photo") MultipartFile photo,
+							  HttpServletRequest request) {
+
+		if (!photo.isEmpty()) {
+			String uploadDir = request.getSession().getServletContext().getRealPath("/upload/");
+			File dir = new File(uploadDir);
+			if (!dir.exists())
+				dir.mkdirs();
+
+			String fileName = photo.getOriginalFilename();
+			try {
+				photo.transferTo(new File(uploadDir + fileName));
+				quest.setPhotoPath("/upload/" + fileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		quest.setUserId(2);
+		questService.registerQuest(quest);
+
+		// 등록 후 퀘스트 리스트 페이지로 리다이렉트
+		return "redirect:/list.do";
+	}
+
 	@RequestMapping("/Qly_insert.do")
 	public String insertUser(UserDto dto) throws Exception {
 		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
-		return "mainpage";
+		return "quest/QuestAllList";
 	}
 
 }

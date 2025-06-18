@@ -40,46 +40,40 @@ public class userQuestController {
 	 * 
 	 * model.addAttribute("questList", questList); return "quest/QuestAllList"; }
 	 */
-	@RequestMapping(value = "/lista.do")
-	public String questList(Model model) {
-		List<QuestDto> questList = questService.getAllQuests();
-
-		System.out.println("questList size: " + questList.size());
-
-		model.addAttribute("questList", questList);
-		return "quest/QuestAllList";
-	}
-
-	@RequestMapping(value = "/inserta.do", method = RequestMethod.POST)
-	public String insertQuest(@ModelAttribute QuestDto questDto, @RequestParam("photo") MultipartFile photoFile,
-			HttpSession session) throws Exception {
-
-		if (!photoFile.isEmpty()) {
-			String originalFilename = photoFile.getOriginalFilename();
-			String newFilename = UUID.randomUUID() + "_" + originalFilename;
-
-			// Àý´ë °æ·Î·Î º¯°æ (À©µµ¿ì È¯°æ ±âÁØ)
-			String uploadDir = "E:\\photo";
-
-			File uploadFolder = new File(uploadDir);
-			if (!uploadFolder.exists()) {
-				uploadFolder.mkdirs(); // Æú´õ°¡ ¾øÀ¸¸é »ý¼º
-			}
-
-			File saveFile = new File(uploadFolder, newFilename);
-			photoFile.transferTo(saveFile);
-
-			questDto.setPhotoPath(newFilename);
-		}
-
-		Integer userId = (Integer) session.getAttribute("userId");
-		questDto.setUserId(userId);
-
-		List<QuestTaskDto> tasks = questDto.getTasks();
-
-		questService.insertQuest(questDto, tasks);
-
-		return "quest/QuestAllList";
-	}
+	/*
+	 * @RequestMapping(value = "/lista.do") public String questList(Model model) {
+	 * List<QuestDto> questList = questService.getAllQuests();
+	 * 
+	 * System.out.println("questList size: " + questList.size());
+	 * 
+	 * model.addAttribute("questList", questList); return "quest/QuestAllList"; }
+	 * 
+	 * @RequestMapping(value = "/inserta.do", method = RequestMethod.POST) public
+	 * String insertQuest(@ModelAttribute QuestDto questDto, @RequestParam("photo")
+	 * MultipartFile photoFile, HttpSession session) throws Exception {
+	 * 
+	 * if (!photoFile.isEmpty()) { String originalFilename =
+	 * photoFile.getOriginalFilename(); String newFilename = UUID.randomUUID() + "_"
+	 * + originalFilename;
+	 * 
+	 * // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) String uploadDir = "E:\\photo";
+	 * 
+	 * File uploadFolder = new File(uploadDir); if (!uploadFolder.exists()) {
+	 * uploadFolder.mkdirs(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ }
+	 * 
+	 * File saveFile = new File(uploadFolder, newFilename);
+	 * photoFile.transferTo(saveFile);
+	 * 
+	 * questDto.setPhotoPath(newFilename); }
+	 * 
+	 * Integer userId = (Integer) session.getAttribute("userId");
+	 * questDto.setUserId(userId);
+	 * 
+	 * List<QuestTaskDto> tasks = questDto.getTasks();
+	 * 
+	 * questService.insertQuest(questDto, tasks);
+	 * 
+	 * return "quest/QuestAllList"; }
+	 */
 
 }

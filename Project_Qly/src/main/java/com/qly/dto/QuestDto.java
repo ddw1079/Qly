@@ -25,6 +25,7 @@ public class QuestDto {
     private Date createdAt;
     private int viewCount;
 
+    
 	public int getProgress() {
 		return progress;
 	}
