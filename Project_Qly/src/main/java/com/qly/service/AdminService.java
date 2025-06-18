@@ -11,37 +11,37 @@ import java.util.List;
 @Service
 public class AdminService {
 
-	@Autowired
-	private AdminMapper adminMapper;
+    @Autowired
+    private AdminMapper adminMapper;
 
-	// ï¿½ìŸ¾ï§£ï¿½ ï¿½ì‰¶ï¿½ì è­°ê³ ì‰¶
-	public List<UserDto> getAllUsers() {
-		return adminMapper.findAllUsers();
-	}
+    // ÀüÃ¼ È¸¿ø Á¶È¸
+    public List<UserDto> getAllUsers() {
+        return adminMapper.findAllUsers();
+    }
 
-	// ï¿½ì‰¶ï¿½ì å¯ƒï¿½ï¿½ê¹‹
-	public List<UserDto> searchUsers(String keyword) {
-		return adminMapper.searchUsers(keyword);
-	}
+    // È¸¿ø °Ë»ö
+    public List<UserDto> searchUsers(String keyword) {
+        return adminMapper.searchUsers(keyword);
+    }
 
-	// ï¿½ì‰¶ï¿½ì ï¿½ê¶˜ï¿½ì £
-	public void deleteUser(String userId) {
-		adminMapper.deleteUser(userId);
-	}
+    // È¸¿ø »èÁ¦
+    public void deleteUser(String userId) {
+        adminMapper.deleteUser(userId);
+    }
 
-	// ï¿½ì„ë’ªï¿½ë“ƒ å¯ƒï¿½ï¿½ê¹‹
-	public List<QuestDto> searchQuests(String keyword) {
-	    return adminMapper.searchQuests(keyword);
-	}
-	
-	// ï¿½ìŸ¾ï§£ï¿½ ï¿½ì„ë’ªï¿½ë“ƒ è­°ê³ ì‰¶
-	public List<QuestDto> getAllQuests() {
-	    return adminMapper.getAllQuests();
-	}
+    // Äù½ºÆ® °Ë»ö
+    public List<QuestDto> searchQuests(String keyword) {
+        return adminMapper.searchQuests(keyword);
+    }
 
-	// ğŸ”¹ ì´ íšŒì› ìˆ˜ ì¡°íšŒ
-	public int getTotalUserCount() {
-	    return adminMapper.countAllUsers();
-	}
-	
+    // ÀüÃ¼ Äù½ºÆ® Á¶È¸
+    public List<QuestDto> getAllQuests() {
+        return adminMapper.getAllQuests();
+    }
+
+    // ÀüÃ¼ È¸¿ø ¼ö Á¶È¸
+    public int getTotalUserCount() {
+        return adminMapper.countAllUsers();
+    }
+
 }

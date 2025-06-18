@@ -12,18 +12,33 @@
 
 	<!-- 1. 전체 회원 조회 -->
 	<select id="findAllUsers" resultType="com.qly.dto.UserDto">
-		SELECT USER_ID, EMAIL, CREATED_AT
+		SELECT
+		USER_ID,
+		USERNAME,
+		EMAIL,
+		PHONE,
+		ADDRESS,
+		JOIN_DATE,
+		USER_TYPE,
+		TOTAL_TOKENS,
+		LAST_LOGIN,
+		LAST_ACTIVE,
+		CREATED_AT
 		FROM USERS
 		ORDER BY CREATED_AT DESC
 	</select>
 
+
 	<!-- 2. 아이디 또는 닉네임 검색 -->
 	<select id="searchUsers" resultType="com.qly.dto.UserDto">
-		SELECT USER_ID, EMAIL, USER_TYPE, CREATED_AT
+		SELECT USER_ID, EMAIL,
+		USER_TYPE, CREATED_AT
 		FROM USERS
-		WHERE USER_ID LIKE CONCAT('%', #{keyword}, '%')
+		WHERE USER_ID LIKE CONCAT('%',
+		#{keyword}, '%')
 		OR NICKNAME LIKE CONCAT('%', #{keyword}, '%')
-		ORDER BY CREATED_AT DESC
+		ORDER BY
+		CREATED_AT DESC
 	</select>
 
 	<!-- 3. 회원 삭제 -->
@@ -35,7 +50,8 @@
 	<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
 		SELECT
 		TITLE,
-		REWARD_TOKENS AS rewardTokens,
+		REWARD_TOKENS
+		AS rewardTokens,
 		LOCATION,
 		CREATOR_ID AS creatorNickname
 		FROM QUESTS
@@ -46,14 +62,18 @@
 	<select id="searchQuests" resultType="com.qly.dto.QuestDto">
 		SELECT
 		TITLE,
-		REWARD_TOKENS AS rewardTokens,
+		REWARD_TOKENS
+		AS rewardTokens,
 		LOCATION,
 		CREATOR_ID AS creatorNickname
 		FROM QUESTS
 		WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		OR LOWER(LOCATION) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		OR LOWER(CREATOR_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		ORDER BY CREATED_AT DESC
+		OR
+		LOWER(LOCATION) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+		OR
+		LOWER(CREATOR_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+		ORDER BY
+		CREATED_AT DESC
 	</select>
 
 
