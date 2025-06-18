@@ -1,12 +1,13 @@
 package com.qly.service;
 
-import com.qly.dto.QuestDto;
-import com.qly.dto.UserDto;
-import com.qly.mapper.AdminMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.qly.dto.QuestDto;
+import com.qly.dto.UserDto;
+import com.qly.mapper.AdminMapper;
 
 @Service
 public class AdminService {
@@ -14,32 +15,32 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
-    // ÀüÃ¼ È¸¿ø Á¶È¸
+    // ì „ì²´ íšŒì› ì¡°íšŒ
     public List<UserDto> getAllUsers() {
         return adminMapper.findAllUsers();
     }
 
-    // È¸¿ø °Ë»ö
+    // íšŒì› ê²€ìƒ‰
     public List<UserDto> searchUsers(String keyword) {
         return adminMapper.searchUsers(keyword);
     }
 
-    // È¸¿ø »èÁ¦
+    // íšŒì› ì‚­ì œ
     public void deleteUser(String userId) {
         adminMapper.deleteUser(userId);
     }
 
-    // Äù½ºÆ® °Ë»ö
+    // í€˜ìŠ¤íŠ¸ ê²€ìƒ‰
     public List<QuestDto> searchQuests(String keyword) {
         return adminMapper.searchQuests(keyword);
     }
 
-    // ÀüÃ¼ Äù½ºÆ® Á¶È¸
+    // ì „ì²´ í€˜ìŠ¤íŠ¸ ì¡°íšŒ
     public List<QuestDto> getAllQuests() {
         return adminMapper.getAllQuests();
     }
 
-    // ÀüÃ¼ È¸¿ø ¼ö Á¶È¸
+    // ì „ì²´ íšŒì› ìˆ˜ ì¡°íšŒ
     public int getTotalUserCount() {
         return adminMapper.countAllUsers();
     }

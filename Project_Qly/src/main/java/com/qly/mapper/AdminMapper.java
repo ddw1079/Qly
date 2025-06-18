@@ -1,26 +1,27 @@
 package com.qly.mapper;
 
+import java.util.List;
+
 import com.qly.dto.QuestDto;
 import com.qly.dto.UserDto;
-import java.util.List;
 
 public interface AdminMapper {
 
-    // ÀüÃ¼ È¸¿ø Á¶È¸
+    // ì „ì²´ íšŒì› ì¡°íšŒ
     List<UserDto> findAllUsers();
 
-    // ¾ÆÀÌµğ ¶Ç´Â ´Ğ³×ÀÓ °Ë»ö
+    // ì•„ì´ë”” ë˜ëŠ” ë‹‰ë„¤ì„ ê²€ìƒ‰
     List<UserDto> searchUsers(String keyword);
 
-    // È¸¿ø »èÁ¦
+    // íšŒì› ì‚­ì œ
     void deleteUser(String userId);
 
-    // Äù½ºÆ® ÀüÃ¼ ¸ñ·Ï
+    // í€˜ìŠ¤íŠ¸ ì „ì²´ ëª©ë¡
     List<QuestDto> getAllQuests();
 
-    // Äù½ºÆ® °Ë»ö
+    // í€˜ìŠ¤íŠ¸ ê²€ìƒ‰
     List<QuestDto> searchQuests(String keyword);
 
-    // ÀüÃ¼ È¸¿ø ¼ö Á¶È¸
+    // ì „ì²´ íšŒì› ìˆ˜ ì¡°íšŒ
     int countAllUsers();
 }
