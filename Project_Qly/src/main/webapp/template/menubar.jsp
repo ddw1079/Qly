@@ -115,7 +115,7 @@
 
 <body>
 <%
-  com.qly.dto.UserDto loginUser =  session.getAttribute("loginUser");
+  com.qly.dto.UserDto loginUser =  (com.qly.dto.UserDto)session.getAttribute("loginUser");
 
   String userName = loginUser != null ? loginUser.getUsername() : "게스트";
   String userType = loginUser != null ? loginUser.getUserType() : "비회원";
