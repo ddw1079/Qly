@@ -40,6 +40,9 @@ public class userQuestController {
 	 * 
 	 * model.addAttribute("questList", questList); return "quest/QuestAllList"; }
 	 */
+
+
+
 	@RequestMapping(value = "/lista.do")
 	public String questList(Model model) {
 		List<QuestDto> questList = questService.getAllQuests();
@@ -81,5 +84,6 @@ public class userQuestController {
 
 		return "quest/QuestAllList";
 	}
+
 
 }

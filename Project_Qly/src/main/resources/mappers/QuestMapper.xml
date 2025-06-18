@@ -38,51 +38,43 @@
 		CREATED_AT DESC
 	</select>
 
-
-
-	<!-- 2. 특정 QUEST_ID의 tasks 목록 조회 -->
-	<!-- <select id="searchQuests" parameterType="int" resultType="com.qly.dto.QuestTaskDto"> 
-		SELECT TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED FROM QUEST_TASK WHERE QUEST_ID 
-		= #{questId} </select> -->
-
-	<!-- 퀘스트 저장 -->
-	<insert id="insertQuest" parameterType="questdto"
+	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto"
 		useGeneratedKeys="true" keyProperty="questId">
 		INSERT INTO QUESTS (
-		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH, STATUS,
-		PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION, START_DATE,
-		END_DATE, CREATED_AT, VIEW_COUNT, REWARD_TOKENS, REG_DATE
-		) VALUES (
-		SEQ_QUEST_ID.NEXTVAL, #{userId}, #{title}, #{category}, #{content}, #{photoPath},
-		#{status},
-		#{progress}, #{latitude}, #{longitude}, #{address}, #{location},
-		#{startDate}, #{endDate}, SYSDATE, #{viewCount}, #{rewardTokens}, SYSDATE
+		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH,
+		STATUS, PROGRESS, LATITUDE, LONGITUDE,
+		ADDRESS, LOCATION, START_DATE, END_DATE, REWARD_TOKENS
+		)
+		VALUES (
+		QUEST_SEQ.NEXTVAL, #{userId}, #{title}, #{category}, #{content}, #{photoPath},
+		'대기', 0, #{latitude}, #{longitude},
+		#{address}, #{location}, #{startDate}, #{endDate}, #{rewardTokens}
 		)
 	</insert>
 
-	<!-- 퀘스트 태스크 여러 건 저장 -->
-	<insert id="insertQuestTasks" parameterType="list">
-		INSERT INTO QUEST_TASK (TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED)
-		VALUES
-		<foreach collection="list" item="task" separator=",">
-			(SEQ_TASK_ID.NEXTVAL, #{task.questId}, #{task.description},
-			#{task.isChecked})
-		</foreach>
+	<insert id="insertQuestTask" parameterType="com.qly.dto.QuestTaskDto">
+		INSERT INTO QUEST_TASK (
+		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
+		)
+		VALUES (
+		QUEST_TASK_SEQ.NEXTVAL, #{questId}, #{description}, #{isChecked}
+		)
 	</insert>
 
- <insert id="insertUser" parameterType="com.qly.dto.UserDto">
-   INSERT INTO USERS (
-      USER_ID, USERNAME, PASSWORD, PHONE, ADDRESS, EMAIL, USER_TYPE
-  ) VALUES (
-      #{userId},
-      #{userName},
-      #{password},
-      #{phone},
-      #{address},
-      #{email},
-      #{userType}
-  )
-  </insert>
+	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
+		INSERT INTO USERS (
+		USER_ID, USERNAME, PASSWORD, PHONE, ADDRESS, EMAIL, USER_TYPE
+		) VALUES
+		(
+		#{userId},
+		#{userName},
+		#{password},
+		#{phone},
+		#{address},
+		#{email},
+		#{userType}
+		)
+	</insert>
 
 
 

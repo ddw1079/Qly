@@ -11,21 +11,14 @@ public interface QuestMapper {
 	// 전체 퀘스트 리스트 조회
 	List<QuestDto> getAllQuests();
 
+	void insertQuest(QuestDto quest);
+
+	void insertQuestTask(QuestTaskDto task);
+
 	// 키워드로 퀘스트 검색
-	/* List<QuestDto> searchQuests(String keyword); */
+	List<QuestDto> searchQuests(String keyword);
 
-	// 퀘스트 등록 (insert 후 PK 세팅)
-	void insertQuest(QuestDto questDto) throws Exception;
+	void insertUser(UserDto dto);
 
-
-	// 퀘스트 작업 등록
-	void insertQuestTask(List<QuestTaskDto> tasks) throws Exception;
-
-    // 키워드로 퀘스트 검색
-    List<QuestDto> searchQuests(String keyword);
-    
-    void insertUser(UserDto dto);
-
-    // (필요하면) 퀘스트 단일 조회, 수정, 삭제 메서드 추가 가능
 
 }

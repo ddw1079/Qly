@@ -24,6 +24,14 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+
+		<multipart-config>
+			<max-file-size>10485760</max-file-size>          <!-- 10MB -->
+			<max-request-size>20971520</max-request-size>    <!-- 20MB -->
+			<file-size-threshold>0</file-size-threshold>
+		</multipart-config>
+
+
 	</servlet>
 
 	<servlet-mapping>
@@ -52,6 +60,16 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>*.do</url-pattern> <!-- .do 요청에 멀티파트 필터 적용 -->
 	</filter-mapping>
 
 </web-app>
