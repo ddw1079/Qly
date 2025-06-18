@@ -6,10 +6,17 @@
 <mapper namespace="com.qly.mapper.UserMapper">
 
   <!-- 로그인 -->
-  <select id="login" parameterType="com.qly.dto.UserDto" resultType="com.qly.dto.UserDto">
-    SELECT * 
-    FROM USERS 
-    WHERE userid = #{userId} AND password = #{password}
+ <select id="login" resultType="com.qly.dto.UserDto">
+    SELECT
+      username,
+       user_type AS userType,
+  total_tokens AS totalTokens    
+    FROM
+      users
+    WHERE
+      username = #{username}
+      AND password = #{password}
+      
   </select>
 
 </mapper>

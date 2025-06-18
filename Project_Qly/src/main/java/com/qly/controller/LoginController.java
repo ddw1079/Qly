@@ -1,5 +1,7 @@
 package com.qly.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
@@ -28,11 +31,12 @@ public class LoginController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-        UserDto user = qlyService.login(username, password);
+        UserDto user =  qlyService.login(username, password);
+        System.out.println(user);
 
         if (user != null) {
             session.setAttribute("loginUser", user);
-            return "redirect:/mainpage";
+            return "mainpage";
         } else {
             model.addAttribute("loginError", "아이디 또는 비밀번호가 틀렸습니다.");
             return "userlogin/UserLogin";
