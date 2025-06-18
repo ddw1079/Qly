@@ -1,8 +1,11 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>문의 작성</title>
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
@@ -70,7 +73,7 @@
 </head>
 <body>
 
- <form class="form-box" onsubmit="handleSubmit(event)">
+<form class="form-box" onsubmit="handleSubmit(event)">
   <div class="form-group">
     <label for="type">문의 유형</label>
     <select id="type" name="type" required>
@@ -83,13 +86,11 @@
     </select>
   </div>
 
-  <!-- 제목 먼저 -->
   <div class="form-group">
     <label for="title">문의 제목</label>
     <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
   </div>
 
-  <!-- 내용 크게 -->
   <div class="form-group">
     <label for="content">문의 내용</label>
     <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
@@ -98,22 +99,21 @@
   <button class="btn-submit" type="submit">완료</button>
 </form>
 
+<script>
+  function handleSubmit(event) {
+    event.preventDefault();
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
 
-  <script>
-    function handleSubmit(event) {
-      event.preventDefault();
-      const title = document.getElementById("title").value.trim();
-      const content = document.getElementById("content").value.trim();
-
-      if (!title || !content) {
-        alert("제목과 내용을 모두 입력해주세요.");
-        return;
-      }
-
-      alert("문의가 등록되었습니다.");
-      window.location.href = "/mainpage"; // 필요시 URL 수정
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
     }
-  </script>
+
+    alert("문의가 등록되었습니다.");
+    window.location.href = "/mainpage"; // 필요시 URL 수정
+  }
+</script>
 
 </body>
 </html>
