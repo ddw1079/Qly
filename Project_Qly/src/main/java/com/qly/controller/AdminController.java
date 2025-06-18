@@ -34,11 +34,14 @@ public class AdminController {
 		List<UserDto> userList = (keyword != null && !keyword.trim().isEmpty()) ? adminService.searchUsers(keyword)
 				: adminService.getAllUsers();
 
-		int totalUsers = adminService.getTotalUserCount(); // 전체 회원 수 조회
+		int totalUsers = adminService.getTotalUserCount(); // 전체 회원 수
+		int totalQuestCount = adminService.getTotalQuestCount(); // ✅ 퀘스트 수도 조회
 
 		model.addAttribute("userList", userList);
 		model.addAttribute("totalUsers", totalUsers);
-		model.addAttribute("page", "admin_memberList.jsp"); // ✅ 본문 지정
+		model.addAttribute("totalQuestCount", totalQuestCount); // ✅ 모델에 추가
+		model.addAttribute("page", "admin_memberList.jsp");
+
 		return "admin/admin_layout";
 	}
 
@@ -55,10 +58,20 @@ public class AdminController {
 		List<admin_QuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
 				? adminService.searchQuests(keyword)
 				: adminService.getAllQuests();
-		
 
+		// ✅ 퀘스트 통계 정보 가져오기
+		int totalQuestCount = adminService.getTotalQuestCount();
+		int progressCount = adminService.countQuestByStatus("진행중");
+		int doneCount = adminService.countQuestByStatus("완료");
+		int recentCount = adminService.countRecentQuests();
+
+		// ✅ 모델에 값 전달
 		model.addAttribute("questList", questList);
-		System.out.println();
+		model.addAttribute("totalQuestCount", totalQuestCount);
+		model.addAttribute("progressCount", progressCount);
+		model.addAttribute("doneCount", doneCount);
+		model.addAttribute("recentCount", recentCount);
+
 		model.addAttribute("page", "admin_questList.jsp");
 		return "admin/admin_layout";
 	}
