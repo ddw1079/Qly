@@ -1,26 +1,37 @@
 package com.qly.mapper;
 
-import com.qly.dto.QuestDto;
 import com.qly.dto.UserDto;
+import com.qly.dto.admin_QuestDto;
+
 import java.util.List;
 
 public interface AdminMapper {
 
-    // ÀüÃ¼ È¸¿ø Á¶È¸
-    List<UserDto> findAllUsers();
+	// ì „ì²´ íšŒì› ì¡°íšŒ
+	List<UserDto> findAllUsers();
 
-    // ¾ÆÀÌµğ ¶Ç´Â ´Ğ³×ÀÓ °Ë»ö
-    List<UserDto> searchUsers(String keyword);
+	// ì•„ì´ë”” ë˜ëŠ” ë‹‰ë„¤ì„ ê²€ìƒ‰
+	List<UserDto> searchUsers(String keyword);
 
-    // È¸¿ø »èÁ¦
-    void deleteUser(String userId);
+	// íšŒì› ì‚­ì œ
+	void deleteUser(String userId);
 
-    // Äù½ºÆ® ÀüÃ¼ ¸ñ·Ï
-    List<QuestDto> getAllQuests();
+	// âœ… í€˜ìŠ¤íŠ¸ ì „ì²´ ëª©ë¡ (admin_QuestDto ê¸°ì¤€)
+	List<admin_QuestDto> getAllQuests();
 
-    // Äù½ºÆ® °Ë»ö
-    List<QuestDto> searchQuests(String keyword);
+	// âœ… í€˜ìŠ¤íŠ¸ ê²€ìƒ‰ë„ admin_QuestDto ê¸°ì¤€ìœ¼ë¡œ í†µì¼
+	List<admin_QuestDto> searchQuests(String keyword);
 
-    // ÀüÃ¼ È¸¿ø ¼ö Á¶È¸
-    int countAllUsers();
+	// ì „ì²´ íšŒì› ìˆ˜ ì¡°íšŒ
+	int countAllUsers();
+
+	// ì „ì²´ í€˜ìŠ¤íŠ¸ ìˆ˜ ì¡°íšŒ
+	int countAllQuests();
+
+	// ìƒíƒœë³„ í€˜ìŠ¤íŠ¸ ìˆ˜ ì¡°íšŒ
+	int countQuestByStatus(String status);
+
+	// ìµœê·¼ 7ì¼ ë‚´ ë“±ë¡ëœ í€˜ìŠ¤íŠ¸ ìˆ˜
+	int countRecentQuests();
+
 }

@@ -1,47 +1,63 @@
 package com.qly.service;
 
-import com.qly.dto.QuestDto;
-import com.qly.dto.UserDto;
-import com.qly.mapper.AdminMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.qly.dto.UserDto;
+import com.qly.dto.admin_QuestDto;
+import com.qly.mapper.AdminMapper;
 
 @Service
 public class AdminService {
 
-    @Autowired
-    private AdminMapper adminMapper;
+	@Autowired
+	private AdminMapper adminMapper;
 
-    // ��ü ȸ�� ��ȸ
-    public List<UserDto> getAllUsers() {
-        return adminMapper.findAllUsers();
-    }
+	// 전체 회원 조회
+	public List<UserDto> getAllUsers() {
+		return adminMapper.findAllUsers();
+	}
 
-    // ȸ�� �˻�
-    public List<UserDto> searchUsers(String keyword) {
-        return adminMapper.searchUsers(keyword);
-    }
+	// 회원 검색
+	public List<UserDto> searchUsers(String keyword) {
+		return adminMapper.searchUsers(keyword);
+	}
 
-    // ȸ�� ����
-    public void deleteUser(String userId) {
-        adminMapper.deleteUser(userId);
-    }
+	// 회원 삭제
+	public void deleteUser(String userId) {
+		adminMapper.deleteUser(userId);
+	}
 
-    // ����Ʈ �˻�
-    public List<QuestDto> searchQuests(String keyword) {
-        return adminMapper.searchQuests(keyword);
-    }
+	// 퀘스트 검색
+	public List<admin_QuestDto> searchQuests(String keyword) {
+		return adminMapper.searchQuests(keyword);
+	}
 
-    // ��ü ����Ʈ ��ȸ
-    public List<QuestDto> getAllQuests() {
-        return adminMapper.getAllQuests();
-    }
+	// 전체 퀘스트 조회
+	public List<admin_QuestDto> getAllQuests() {
+		return adminMapper.getAllQuests();
+	}
 
-    // ��ü ȸ�� �� ��ȸ
-    public int getTotalUserCount() {
-        return adminMapper.countAllUsers();
-    }
+	// 전체 회원 수 조회
+	public int getTotalUserCount() {
+		return adminMapper.countAllUsers();
+	}
+
+	// 전체 퀘스트 수 조회
+	public int getTotalQuestCount() {
+		return adminMapper.countAllQuests();
+	}
+
+	// 진행상태별 퀘스트 수 조회
+	public int countQuestByStatus(String status) {
+		return adminMapper.countQuestByStatus(status);
+	}
+	
+	// 최근 7일 내 등록된 퀘스트 수 조회
+	public int countRecentQuests() {
+		return adminMapper.countRecentQuests();
+	}
 
 }

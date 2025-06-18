@@ -13,11 +13,16 @@
 		<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
 		<typeAlias alias="questtaskdto" type="com.qly.dto.QuestTaskDto" />
 		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
+		<typeAlias alias="auserdto" type="com.qly.dto.admin_QuestDto" />
+		
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/QuestMapper.xml" />
-		<mapper resource="com/qly/mapper/AdminMapper.xml"/>
+		<mapper resource="mappers/AdminMapper.xml"/>
+
+		<mapper resource="mappers/UserMapper.xml" />
+
 	</mappers>
 
 </configuration>

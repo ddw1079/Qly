@@ -1,16 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Äù½ºÆ® ¸ñ·Ï</title>
+<meta charset="UTF-8">
+<title>í€˜ìŠ¤íŠ¸ ëª©ë¡</title>
 
 <!-- Bootstrap & jQuery -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- »óÅÂ Á¡ ½ºÅ¸ÀÏ -->
+<!-- ìƒíƒœ ì  ìŠ¤íƒ€ì¼ -->
 <style>
 .status-dot {
   display: inline-block;
@@ -20,9 +20,9 @@
   margin-right: 6px;
   vertical-align: middle;
 }
-.dot-waiting { background-color: #000; }       /* ´ë±âÁß */
-.dot-progress { background-color: #ffc107; }   /* ÁøÇàÁß */
-.dot-complete { background-color: #28a745; }   /* ¿Ï·á */
+.dot-waiting { background-color: #000; }       /* ëŒ€ê¸°ì¤‘ */
+.dot-progress { background-color: #ffc107; }   /* ì§„í–‰ì¤‘ */
+.dot-complete { background-color: #28a745; }   /* ì™„ë£Œ */
 </style>
 
 <script>
@@ -39,72 +39,72 @@
 </head>
 <body>
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-  <h3>Äù½ºÆ® ¸ñ·Ï</h3>
+  <h3>í€˜ìŠ¤íŠ¸ ëª©ë¡</h3>
   <div style="display: flex; align-items: center; gap: 10px;">
-    <span style="font-weight: 500;">admin´Ô (ÀÇ·ÚÀÎ ¸ðµå)</span>
-    <button class="btn btn-dark btn-sm">·Î±×¾Æ¿ô</button>
-    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="ÇÁ·ÎÇÊ" width="50">
+    <span style="font-weight: 500;">adminë‹˜ (ì˜ë¢°ì¸ ëª¨ë“œ)</span>
+    <button class="btn btn-dark btn-sm">ë¡œê·¸ì•„ì›ƒ</button>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="í”„ë¡œí•„" width="50">
   </div>
 </div>
 
 <div class="container my-4">
-  <h4 class="mb-4 fw-bold">Äù½ºÆ® ¸ñ·Ï</h4>
+  <h4 class="mb-4 fw-bold">í€˜ìŠ¤íŠ¸ ëª©ë¡</h4>
 
-  <input type="text" id="searchInput" class="form-control mb-4" placeholder="Á¦¸ñ, »óÅÂ, Ä«Å×°í¸® µî °Ë»ö">
+  <input type="text" id="searchInput" class="form-control mb-4" placeholder="ì œëª©, ìƒíƒœ, ì¹´í…Œê³ ë¦¬ ë“± ê²€ìƒ‰">
 
   <div class="row row-cols-1 row-cols-md-2 g-4">
 
-    <!-- Ä«µå 1: ´ë±âÁß -->
+    <!-- ì¹´ë“œ 1: ëŒ€ê¸°ì¤‘ -->
     <div class="col quest-card">
       <div class="card shadow-sm p-3">
         <div class="mb-2">
-          <span class="fw-bold">[Ä«Å×°í¸®]</span> »ýÈ° ¼ö¸®
+          <span class="fw-bold">[ì¹´í…Œê³ ë¦¬]</span> ìƒí™œ ìˆ˜ë¦¬
         </div>
         <div class="mb-2 d-flex align-items-center">
-          <div class="status-dot dot-waiting" title="´ë±âÁß"></div>
-          <span class="fw-bold">Á¦¸ñ:</span> ¿¡¾îÄÁÀÌ ¾È ³ª¿Í¿ä
+          <div class="status-dot dot-waiting" title="ëŒ€ê¸°ì¤‘"></div>
+          <span class="fw-bold">ì œëª©:</span> ì—ì–´ì»¨ì´ ì•ˆ ë‚˜ì™€ìš”
         </div>
-        <div class="mb-2"><span class="fw-bold">½ÅÃ»ÀÚ:</span> 2¸í</div>
-        <div class="mb-3"><span class="fw-bold">µî·ÏÀÏ:</span> 2025-06-12</div>
+        <div class="mb-2"><span class="fw-bold">ì‹ ì²­ìž:</span> 2ëª…</div>
+        <div class="mb-3"><span class="fw-bold">ë“±ë¡ì¼:</span> 2025-06-12</div>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-primary btn-sm">»ó¼¼º¸±â</button>
+          <button class="btn btn-outline-primary btn-sm">ìƒì„¸ë³´ê¸°</button>
         
         </div>
       </div>
     </div>
 
-    <!-- Ä«µå 2: ÁøÇàÁß -->
+    <!-- ì¹´ë“œ 2: ì§„í–‰ì¤‘ -->
     <div class="col quest-card">
       <div class="card shadow-sm p-3">
         <div class="mb-2">
-          <span class="fw-bold">[Ä«Å×°í¸®]</span> ÄÄÇ»ÅÍ
+          <span class="fw-bold">[ì¹´í…Œê³ ë¦¬]</span> ì»´í“¨í„°
         </div>
         <div class="mb-2 d-flex align-items-center">
-          <div class="status-dot dot-progress" title="ÁøÇàÁß"></div>
-          <span class="fw-bold">Á¦¸ñ:</span> Æ÷¸Ë µµ¿ÍÁÖ¼¼¿ä
+          <div class="status-dot dot-progress" title="ì§„í–‰ì¤‘"></div>
+          <span class="fw-bold">ì œëª©:</span> í¬ë§· ë„ì™€ì£¼ì„¸ìš”
         </div>
-        <div class="mb-2"><span class="fw-bold">½ÅÃ»ÀÚ:</span> 1¸í</div>
-        <div class="mb-3"><span class="fw-bold">µî·ÏÀÏ:</span> 2025-06-10</div>
+        <div class="mb-2"><span class="fw-bold">ì‹ ì²­ìž:</span> 1ëª…</div>
+        <div class="mb-3"><span class="fw-bold">ë“±ë¡ì¼:</span> 2025-06-10</div>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-primary btn-sm">»ó¼¼º¸±â</button>        
+          <button class="btn btn-outline-primary btn-sm">ìƒì„¸ë³´ê¸°</button>        
         </div>
       </div>
     </div>
 
-    <!-- Ä«µå 3: ¿Ï·á -->
+    <!-- ì¹´ë“œ 3: ì™„ë£Œ -->
     <div class="col quest-card">
       <div class="card shadow-sm p-3">
         <div class="mb-2">
-          <span class="fw-bold">[Ä«Å×°í¸®]</span> Ã»¼Ò
+          <span class="fw-bold">[ì¹´í…Œê³ ë¦¬]</span> ì²­ì†Œ
         </div>
         <div class="mb-2 d-flex align-items-center">
-          <div class="status-dot dot-complete" title="¿Ï·á"></div>
-          <span class="fw-bold">Á¦¸ñ:</span> ¿ø·ë Ã»¼Ò ºÎÅ¹ÇØ¿ä
+          <div class="status-dot dot-complete" title="ì™„ë£Œ"></div>
+          <span class="fw-bold">ì œëª©:</span> ì›ë£¸ ì²­ì†Œ ë¶€íƒí•´ìš”
         </div>
-        <div class="mb-2"><span class="fw-bold">½ÅÃ»ÀÚ:</span> 4¸í</div>
-        <div class="mb-3"><span class="fw-bold">µî·ÏÀÏ:</span> 2025-06-05</div>
+        <div class="mb-2"><span class="fw-bold">ì‹ ì²­ìž:</span> 4ëª…</div>
+        <div class="mb-3"><span class="fw-bold">ë“±ë¡ì¼:</span> 2025-06-05</div>
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-primary btn-sm">»ó¼¼º¸±â</button>
+          <button class="btn btn-outline-primary btn-sm">ìƒì„¸ë³´ê¸°</button>
         </div>
       </div>
     </div>

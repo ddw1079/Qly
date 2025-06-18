@@ -1,27 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-
-<!--
-  관리자 퀘스트 관리 페이지 (admin_questList.jsp)
-  ------------------------------------------------------
-   페이지 목적:
-    - 전체 퀘스트 현황(총 건수, 상태별 분포, 최근 등록)을 관리자에게 시각적으로 제공
-    - 등록된 퀘스트 리스트를 표로 출력하고, 검색 및 페이징 처리
-    - 완료율, 응답/처리 지표, 최근 등록 추이 등을 차트와 카드로 시각화
-    - 운영 메모를 통해 관리자 간 커뮤니케이션 지원
-
-   포함 요소:
-    - 관리자 정보 표시 (admin 모드)
-    - 통계 카드: 총 퀘스트 / 진행중 / 완료 / 최근 등록
-    - 진행 상태 비율 바 (Progress Bar)
-    - 퀘스트 처리 지표 카드
-    - 최근 등록 추이 선형 차트 (Chart.js)
-    - 퀘스트 목록 테이블 (DataTables)
-    - 운영 메모 입력 영역
-    - Bootstrap, jQuery, DataTables, Chart.js 사용
--->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,11 +8,10 @@
 <meta charset="UTF-8">
 <title>퀘스트 관리</title>
 
-
-<!-- 필수 CDN 로드 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 공통 스타일 및 CDN -->
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet"
@@ -41,11 +19,57 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 15px;
+	background-color: #f9f9f9;
+	margin: 0;
+	padding: 0px;
+}
+
+.card-common {
+	flex: 1;
+	padding: 20px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	position: relative;
+	min-width: 220px;
+}
+
+.card-common h5 {
+	font-weight: bold;
+}
+
 #chart-container {
 	width: 100%;
 	height: 100%;
+}
+
+.summary-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin: 30px 0;
+}
+
+/* 🔍 아이콘 포함한 검색창용 스타일 추가 */
+.dataTables_filter label {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.dataTables_filter input {
+	margin-left: 4px;
+	padding-left: 24px;
+	background-image:
+		url('https://cdn-icons-png.flaticon.com/512/622/622669.png');
+	/* 돋보기 아이콘 */
+	background-size: 18px;
+	background-position: 4px center;
+	background-repeat: no-repeat;
 }
 </style>
 </head>
@@ -54,69 +78,60 @@
 	<!-- 관리자 상단 정보 -->
 	<div
 		style="display: flex; justify-content: space-between; align-items: center;">
-		<h2>퀘스트 관리 페이지</h2>
+		<h3>퀘스트 관리 페이지</h3>
 		<div style="display: flex; align-items: center; gap: 10px;">
 			<span style="font-weight: 500;">admin님 (관리자 모드)</span>
 			<button class="btn btn-dark btn-sm">로그아웃</button>
 			<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-				alt="관리자 프로필" width="50">
+				alt="관리자 프리플" width="50">
 		</div>
 	</div>
 
-	<!-- 통계 요약 커드 -->
-	<div style="display: flex; gap: 20px; margin: 30px 0;">
-		<div
-			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
+	<!-- 통계 카드 -->
+	<div class="summary-cards">
+		<div class="card-common">
 			<h5>총 퀘스트 수</h5>
-			<p>92건</p>
-			<img src="https://i.postimg.cc/VkZ36Ybx/quest.png" alt="퀴스트 아이콘"
+			<p>${totalQuestCount}건</p>
+			<img src="https://i.postimg.cc/VkZ36Ybx/quest.png"
 				style="position: absolute; bottom: 10px; right: 10px; width: 48px;">
 		</div>
-		<div
-			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
+		<div class="card-common">
 			<h5>진행 중인 퀘스트</h5>
-			<p>24건</p>
+			<p>${progressCount}건</p>
 			<img src="https://cdn-icons-png.flaticon.com/512/189/189792.png"
-				alt="진행중 아이콘"
 				style="position: absolute; bottom: 10px; right: 10px; width: 48px;">
 		</div>
-		<div
-			style="flex: 1; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); position: relative;">
+		<div class="card-common">
 			<h5>완료된 퀘스트</h5>
-			<p>65건</p>
+			<p>${doneCount}건</p>
 			<img src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
-				alt="완료 아이콘"
 				style="position: absolute; bottom: 10px; right: 10px; width: 48px;">
 		</div>
-		<div
-			style="flex: 1; padding: 20px; background: #6aaea7; border-radius: 10px; color: white; box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);">
+		<div class="card-common" style="background: #6aaea7; color: white;">
 			<h5>최근 등록 퀘스트</h5>
-			<p style="font-size: 1.5rem;">6건</p>
+			<p style="font-size: 1.5rem;">${recentCount}건</p>
 			<p style="opacity: 0.9;">최근 7일 이내 등록된 퀘스트 수</p>
 		</div>
 	</div>
 
+	<!-- 상태 바 및 통계 -->
 	<div class="row mb-4">
-		<!-- 왼쪽: col-md-8 (완료율 + 아래 카드 포함) -->
 		<div class="col-md-8 d-flex flex-column gap-3">
-			<!--  완료율 카드 -->
 			<div class="card shadow-sm p-4">
 				<h5>전체 퀘스트 상태 분포</h5>
 				<div class="progress" style="height: 30px;">
 					<div class="progress-bar"
-						style="width: 20%; background-color: #cee4e3; color: black; font-weight: bold;">
-						예정 20%</div>
+						style="width: 20%; background-color: #cee4e3; color: black; font-weight: bold;">예정
+						20%</div>
 					<div class="progress-bar"
-						style="width: 30%; background-color: #9dc9c5; color: white; font-weight: bold;">
-						진행중 30%</div>
+						style="width: 30%; background-color: #9dc9c5; color: white; font-weight: bold;">진행중
+						30%</div>
 					<div class="progress-bar"
-						style="width: 50%; background-color: #6caea8; color: white; font-weight: bold;">
-						완료 50%</div>
+						style="width: 50%; background-color: #6caea8; color: white; font-weight: bold;">완료
+						50%</div>
 				</div>
 			</div>
 
-
-			<!--  완료율 아래 새 카드 -->
 			<div class="card shadow-sm p-4">
 				<h5>퀘스트 처리 지표 요약</h5>
 				<ul class="mb-0">
@@ -127,7 +142,6 @@
 			</div>
 		</div>
 
-		<!-- 오른쪽: col-md-4 (차트 영역) -->
 		<div class="col-md-4">
 			<div class="card shadow-sm p-4 h-100">
 				<h5>최근 등록 추이</h5>
@@ -138,8 +152,7 @@
 		</div>
 	</div>
 
-
-	<!-- 퀘스트 목록 테이블 -->
+	<!-- 퀘스트 목록 -->
 	<h5>퀘스트 목록</h5>
 	<table id="questTable" class="display" style="width: 100%;">
 		<thead>
@@ -153,38 +166,32 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="quest" items="${questList}" varStatus="status">
+			<c:forEach var="quest" items="${questList}">
 				<tr>
-					<td>${status.count}</td>
+					<td>${quest.questId}</td>
 					<td>${quest.title}</td>
 					<td><fmt:formatDate value="${quest.createdAt}"
 							pattern="yyyy-MM-dd" /></td>
 					<td>${quest.location}</td>
 					<td>${quest.rewardTokens}</td>
-					<td>${quest.status}</td>
+					<td><c:choose>
+							<c:when test="${quest.status eq '대기'}">
+								<span style="color: gray; font-weight: bold;"><span
+									style="display: inline-block; width: 10px; height: 10px; background-color: gray; border-radius: 50%; margin-right: 5px;"></span>대기</span>
+							</c:when>
+							<c:when test="${quest.status eq '진행중'}">
+								<span style="color: orange; font-weight: bold;"><span
+									style="display: inline-block; width: 10px; height: 10px; background-color: orange; border-radius: 50%; margin-right: 5px;"></span>진행중</span>
+							</c:when>
+							<c:when test="${quest.status eq '완료'}">
+								<span style="color: green; font-weight: bold;"><span
+									style="display: inline-block; width: 10px; height: 10px; background-color: green; border-radius: 50%; margin-right: 5px;"></span>완료</span>
+							</c:when>
+							<c:otherwise>${quest.status}</c:otherwise>
+						</c:choose></td>
 				</tr>
 			</c:forEach>
 		</tbody>
-
-
-		<!-- 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>냉장고 옴기기</td>
-				<td>2024-06-20</td>
-				<td>서울</td>
-				<td>5000</td>
-				<td>진행예정</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>반려견 산책</td>
-				<td>2024-06-20</td>
-				<td>인천</td>
-				<td>3500</td>
-				<td>진행완료</td>
-			</tr>
-		</tbody> -->
 	</table>
 
 	<!-- 운영 메모 -->
@@ -211,21 +218,20 @@
 								next : "다음",
 								previous : "이전"
 							},
-							emptyTable : "회원이 없습니다.",
+							emptyTable : "등록된 퀘스트가 없습니다.",
 							zeroRecords : "검색 결과가 없습니다."
 						}
 					});
 
-					// 선형 차트 구성
 					const ctx = document.getElementById('questChart')
 							.getContext('2d');
 					const questChart = new Chart(ctx, {
 						type : 'line',
 						data : {
 							labels : [ '6일 전', '5일 전', '4일 전', '3일 전', '2일 전',
-									'어저', '오늘' ],
+									'어제', '오늘' ],
 							datasets : [ {
-								label : '등록 퀴스트 수',
+								label : '등록 퀘스트 수',
 								data : [ 2, 1, 4, 3, 2, 1, 5 ],
 								backgroundColor : 'rgba(106, 174, 167, 0.2)',
 								borderColor : '#6aaea7',
