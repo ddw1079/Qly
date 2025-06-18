@@ -1,9 +1,9 @@
 package com.qly.mapper;
 
-import java.util.List;
-
-import com.qly.dto.QuestDto;
 import com.qly.dto.UserDto;
+import com.qly.dto.admin_QuestDto;
+
+import java.util.List;
 
 public interface AdminMapper {
 
@@ -16,11 +16,11 @@ public interface AdminMapper {
     // 회원 삭제
     void deleteUser(String userId);
 
-    // 퀘스트 전체 목록
-    List<QuestDto> getAllQuests();
+    // ✅ 퀘스트 전체 목록 (admin_QuestDto 기준)
+    List<admin_QuestDto> getAllQuests();
 
-    // 퀘스트 검색
-    List<QuestDto> searchQuests(String keyword);
+    // ✅ 퀘스트 검색도 admin_QuestDto 기준으로 통일
+    List<admin_QuestDto> searchQuests(String keyword);
 
     // 전체 회원 수 조회
     int countAllUsers();
