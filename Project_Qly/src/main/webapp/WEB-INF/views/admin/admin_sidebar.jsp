@@ -2,40 +2,41 @@
 <%
 String currentPage = request.getParameter("page");
 if (currentPage == null)
-    currentPage = "admin_memberList.jsp";
+	currentPage = "admin_memberList.jsp";
 %>
 
 <!--  공통 스타일 (강제 적용용) -->
 <style>
-    .sidebar-menu li {
-        padding: 12px 24px !important;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: background-color 0.2s ease;
-        font-size: 18px !important;
-        line-height: 1.6;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.sidebar-menu li {
+	padding: 12px 24px !important;
+	cursor: pointer;
+	border-radius: 8px;
+	transition: background-color 0.2s ease;
+	font-size: 18px !important;
+	line-height: 1.6;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
-    .sidebar-menu li:hover {
-        background-color: #e8f9f7;
-    }
+.sidebar-menu li:hover {
+	background-color: #e8f9f7;
+}
 
-    .sidebar-menu .active {
-        font-weight: bold;
-        background-color: #d4f3ef;
-    }
+.sidebar-menu .active {
+	font-weight: bold;
+	background-color: #d4f3ef;
+}
 
-    .sidebar-menu {
-        font-family: 'Noto Sans KR', sans-serif;
-    }
+.sidebar-menu {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 </style>
 
 <!--  Qly 로고 -->
 <div style="text-align: center; margin-bottom: 10px;">
-    <img src="https://i.postimg.cc/0j1MDRhn/logo.png" alt="Qly 로고" width="200" style="max-width: 80%;">
+	<img src="https://i.postimg.cc/0j1MDRhn/logo.png" alt="Qly 로고"
+		width="200" style="max-width: 80%;">
 </div>
 
 <style>
@@ -81,8 +82,7 @@ if (currentPage == null)
 <!--  로그인 상태 박스 -->
 <div style="text-align: center; margin-bottom: 20px;">
 	<div class="sidebar-user-info">
-		<span>관리자(admin)님 접속 중</span>
-		<span class="status-dot" title="활동 중"></span>
+		<span>관리자(admin)님 접속 중</span> <span class="status-dot" title="활동 중"></span>
 	</div>
 </div>
 
@@ -90,31 +90,51 @@ if (currentPage == null)
 
 
 <!--  메뉴 리스트 -->
-<div style="background: white; color: #2f3542; border-radius: 12px; padding: 10px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); font-size: 16px;">
-    <ul class="sidebar-menu" style="list-style: none; padding: 0; margin: 0;">
-        <li class="<%=currentPage.equals("admin_memberList.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_memberList.jsp'">회원 관리</li>
+<div
+	style="background: white; color: #2f3542; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); font-size: 16px;">
+	<ul class="sidebar-menu"
+		style="list-style: none; padding: 0; margin: 0;">
+		
+		<li
+			class="<%=currentPage.equals("admin_memberList.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/memberList.do?page=admin_memberList.jsp'">회원
+			관리</li>
+			
+			
 
-        <li class="<%=currentPage.equals("admin_questList.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_questList.jsp'">퀘스트 관리</li>
+		<li
+			class="<%=currentPage.equals("admin_questList.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/questList.do?page=admin_questList.jsp'">퀘스트
+			관리</li>
+		
+		<li
+			class="<%=currentPage.equals("admin_coinList.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_coinList.jsp'">코인
+			관리</li>
 
-        <li class="<%=currentPage.equals("admin_coinList.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_coinList.jsp'">코인 관리</li>
+		<li
+			class="<%=currentPage.equals("admin_qusetion.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_qusetion.jsp'">사용자
+			문의</li>
 
-        <li class="<%=currentPage.equals("admin_qusetion.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_qusetion.jsp'">사용자 문의</li>
+		<li class="<%=currentPage.equals("admin_sales.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_sales.jsp'">매출
+			통계</li>
 
-        <li class="<%=currentPage.equals("admin_sales.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_sales.jsp'">매출 통계</li>
+		<li
+			class="<%=currentPage.equals("admin_policy.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_policy.jsp'">사내
+			게시판</li>
 
-        <li class="<%=currentPage.equals("admin_policy.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_policy.jsp'">사내 게시판</li>
+		<li
+			class="<%=currentPage.equals("admin_security.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_security.jsp'">보안
+			정책</li>
 
-        <li class="<%=currentPage.equals("admin_security.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_security.jsp'">보안 정책</li>
+		<li
+			class="<%=currentPage.equals("admin_setting.jsp") ? "active" : ""%>"
+			onclick="location.href='/Project_Qly/admin/layout.do?page=admin_setting.jsp'">환경
+			설정</li>
 
-        <li class="<%=currentPage.equals("admin_setting.jsp") ? "active" : ""%>"
-            onclick="location.href='admin_layout.jsp?page=admin_setting.jsp'">환경 설정</li>
-    </ul>
+	</ul>
 </div>

@@ -5,76 +5,112 @@
 
 <mapper namespace="com.qly.mapper.AdminMapper">
 
-	<!-- ✅ 0. 전체 회원 수 조회 -->
-	<select id="countAllUsers" resultType="int">
-		SELECT COUNT(*) FROM USERS
-	</select>
+    <!-- ✅ 회원 결과 매핑 -->
+    <resultMap id="userResultMap" type="com.qly.dto.UserDto">
+        <result property="userId" column="USER_ID" />
+        <result property="username" column="USERNAME" />
+        <result property="email" column="EMAIL" />
+        <result property="phone" column="PHONE" />
+        <result property="address" column="ADDRESS" />
+        <result property="joinDate" column="JOIN_DATE" />
+        <result property="userType" column="USER_TYPE" />
+        <result property="totalTokens" column="TOTAL_TOKENS" />
+        <result property="lastLogin" column="LAST_LOGIN" />
+        <result property="lastActive" column="LAST_ACTIVE" />
+    </resultMap>
 
-	<!-- 1. 전체 회원 조회 -->
-	<select id="findAllUsers" resultType="com.qly.dto.UserDto">
-		SELECT
-		USER_ID,
-		USERNAME,
-		EMAIL,
-		PHONE,
-		ADDRESS,
-		JOIN_DATE,
-		USER_TYPE,
-		TOTAL_TOKENS,
-		LAST_LOGIN,
-		LAST_ACTIVE,
-		CREATED_AT
-		FROM USERS
-		ORDER BY CREATED_AT DESC
-	</select>
+    <!-- ✅ 퀘스트 결과 매핑 -->
+    <resultMap id="adminQuestResultMap" type="com.qly.dto.admin_QuestDto">
+        <result property="questId" column="QUEST_ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="title" column="TITLE"/>
+        <result property="category" column="CATEGORY"/>
+        <result property="content" column="CONTENT"/>
+        <result property="photoPath" column="PHOTO_PATH"/>
+        <result property="progress" column="PROGRESS"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="rewardTokens" column="REWARD_TOKENS"/>
+        <result property="status" column="STATUS"/>
+        <result property="regDate" column="REG_DATE"/>
+        <result property="latitude" column="LATITUDE"/>
+        <result property="longitude" column="LONGITUDE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="viewCount" column="VIEW_COUNT"/>
+    </resultMap>
 
+    <!-- ✅ 0. 전체 회원 수 조회 -->
+    <select id="countAllUsers" resultType="int">
+        SELECT COUNT(*) FROM USERS
+    </select>
 
-	<!-- 2. 아이디 또는 닉네임 검색 -->
-	<select id="searchUsers" resultType="com.qly.dto.UserDto">
-		SELECT USER_ID, EMAIL,
-		USER_TYPE, CREATED_AT
-		FROM USERS
-		WHERE USER_ID LIKE CONCAT('%',
-		#{keyword}, '%')
-		OR NICKNAME LIKE CONCAT('%', #{keyword}, '%')
-		ORDER BY
-		CREATED_AT DESC
-	</select>
+    <!-- ✅ 1. 전체 회원 조회 -->
+    <select id="findAllUsers" resultMap="userResultMap">
+        SELECT
+            USER_ID,
+            USERNAME,
+            EMAIL,
+            PHONE,
+            ADDRESS,
+            JOIN_DATE,
+            USER_TYPE,
+            TOTAL_TOKENS,
+            LAST_LOGIN,
+            LAST_ACTIVE
+        FROM USERS
+        ORDER BY JOIN_DATE DESC
+    </select>
 
-	<!-- 3. 회원 삭제 -->
-	<delete id="deleteUser">
-		DELETE FROM USERS WHERE USER_ID = #{userId}
-	</delete>
+    <!-- ✅ 2. 회원 검색 -->
+    <select id="searchUsers" resultMap="userResultMap">
+        SELECT
+            USER_ID,
+            USERNAME,
+            EMAIL,
+            PHONE,
+            ADDRESS,
+            JOIN_DATE,
+            USER_TYPE,
+            TOTAL_TOKENS,
+            LAST_LOGIN,
+            LAST_ACTIVE
+        FROM USERS
+        WHERE USER_ID LIKE CONCAT('%', #{keyword}, '%')
+           OR USERNAME LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY JOIN_DATE DESC
+    </select>
 
-	<!-- 4. 퀘스트 전체 목록 -->
-	<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
-		SELECT
-		TITLE,
-		REWARD_TOKENS
-		AS rewardTokens,
-		LOCATION,
-		CREATOR_ID AS creatorNickname
-		FROM QUESTS
-		ORDER BY CREATED_AT DESC
-	</select>
+    <!-- ✅ 3. 회원 삭제 -->
+    <delete id="deleteUser">
+        DELETE FROM USERS WHERE USER_ID = #{userId}
+    </delete>
 
-	<!-- 5. 퀘스트 검색 -->
-	<select id="searchQuests" resultType="com.qly.dto.QuestDto">
-		SELECT
-		TITLE,
-		REWARD_TOKENS
-		AS rewardTokens,
-		LOCATION,
-		CREATOR_ID AS creatorNickname
-		FROM QUESTS
-		WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		OR
-		LOWER(LOCATION) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		OR
-		LOWER(CREATOR_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
-		ORDER BY
-		CREATED_AT DESC
-	</select>
+    <!-- ✅ 4. 전체 퀘스트 조회 (CREATED_AT 제거됨) -->
+    <select id="getAllQuests" resultType="com.qly.dto.admin_QuestDto">
+        SELECT
+        QUEST_ID,
+        TITLE,
+        CREATED_AT,
+        LOCATION,
+        REWARD_TOKENS,
+        STATUS
+        FROM QUESTS
+        
+    </select>
 
+    <!-- ✅ 5. 퀘스트 검색 -->
+    <select id="searchQuests" resultType="com.qly.dto.QuestDto">
+        SELECT
+            TITLE,
+            REWARD_TOKENS AS rewardTokens,
+            LOCATION,
+            CREATOR_ID AS creatorNickname
+        FROM QUESTS
+        WHERE LOWER(TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+           OR LOWER(LOCATION) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+           OR LOWER(CREATOR_ID) LIKE CONCAT('%', LOWER(#{keyword}), '%')
+        ORDER BY REG_DATE DESC
+    </select>
 
 </mapper>
