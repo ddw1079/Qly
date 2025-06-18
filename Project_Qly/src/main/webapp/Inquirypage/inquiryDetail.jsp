@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>문의 상세</title>
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
@@ -34,20 +36,14 @@
       font-weight: bold;
     }
 
-    .form-group select,
-    .form-group input,
-    .form-group textarea {
+    .form-group span {
       flex: 1;
       padding: 10px;
       font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 6px;
+      background-color: #f5f5f5;
       box-sizing: border-box;
-    }
-
-    textarea {
-      height: 200px;
-      resize: vertical;
     }
 
     .btn-submit {
@@ -70,43 +66,46 @@
 </head>
 <body>
 
- 
-<div class="form-group">
-  <label for="type">문의 유형</label>
-  <input type="text" id="type" name="type" placeholder="문의 유형을 입력하세요" required>
+<div class="form-box">
+  <div class="form-group">
+    <label>문의 유형</label>
+    <span id="type">-</span>
+  </div>
+
+  <div class="form-group">
+    <label>문의 제목</label>
+    <span id="title">-</span>
+  </div>
+
+  <div class="form-group">
+    <label>문의 내용</label>
+    <span id="content" style="white-space: pre-line;">-</span>
+  </div>
+
+  <div class="form-group">
+    <label>작성일</label>
+    <span id="date">-</span>
+  </div>
+
+  <button class="btn-submit" onclick="history.back()">← 목록으로</button>
 </div>
 
-  <!-- ì ëª© ë¨¼ì  -->
-  <div class="form-group">
-    <label for="title">ë¬¸ì ì ëª©</label>
-    <input type="text" id="title" name="title" placeholder="ì ëª©ì ìë ¥íì¸ì" required>
-  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const index = parseInt(urlParams.get("index"));
+    const data = JSON.parse(localStorage.getItem("inquiries")) || [];
 
-  <!-- ë´ì© í¬ê² -->
-  <div class="form-group">
-    <label for="content">ë¬¸ì ë´ì©</label>
-    <textarea id="content" name="content" placeholder="ë´ì©ì ìë ¥íì¸ì" required></textarea>
-  </div>
-
-  <button class="btn-submit" type="submit">ìë£</button>
-</form>
-
-
-  <script>
-    function handleSubmit(event) {
-      event.preventDefault();
-      const title = document.getElementById("title").value.trim();
-      const content = document.getElementById("content").value.trim();
-
-      if (!title || !content) {
-        alert("ì ëª©ê³¼ ë´ì©ì ëª¨ë ìë ¥í´ì£¼ì¸ì.");
-        return;
-      }
-
-      alert("ë¬¸ìê° ë±ë¡ëììµëë¤.");
-      window.location.href = "/mainpage"; // íìì URL ìì 
+    if (!isNaN(index) && data[index]) {
+      document.getElementById("type").textContent = data[index].type;
+      document.getElementById("title").textContent = data[index].title;
+      document.getElementById("content").textContent = data[index].content;
+      document.getElementById("date").textContent = data[index].date;
+    } else {
+      document.querySelector(".form-box").innerHTML = "<p style='color:red;'>문의 데이터를 찾을 수 없습니다.</p>";
     }
-  </script>
+  });
+</script>
 
 </body>
 </html>

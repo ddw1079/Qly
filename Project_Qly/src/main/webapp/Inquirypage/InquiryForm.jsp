@@ -1,11 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>문의 작성</title>
+  <title>문의 등록</title>
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
@@ -76,24 +75,22 @@
 <form class="form-box" onsubmit="handleSubmit(event)">
   <div class="form-group">
     <label for="type">문의 유형</label>
-    <select id="type" name="type" required>
-      <option value="">문의 유형 선택</option>
-      <option>퀘스트 진행 방법 문의</option>
-      <option>의뢰 내용 변경/수정 요청</option>
-      <option>코인 결제 / 충전 관련 문제</option>
-      <option>퀘스트 수행자 불만 / 신고</option>
-      <option>기타 문의 또는 시스템 오류 제보</option>
+    <select id="type" required>
+      <option value="">선택</option>
+      <option>회원 정보 수정</option>
+      <option>퀘스트 오류</option>
+      <option>기타 문의</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label for="title">문의 제목</label>
-    <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
+    <label for="title">제목</label>
+    <input type="text" id="title" placeholder="제목 입력" required />
   </div>
 
   <div class="form-group">
-    <label for="content">문의 내용</label>
-    <textarea id="content" name="content" placeholder="내용을 입력하세요" required></textarea>
+    <label for="content">내용</label>
+    <textarea id="content" placeholder="문의 내용을 입력하세요" required></textarea>
   </div>
 
   <button class="btn-submit" type="submit">완료</button>
@@ -102,16 +99,30 @@
 <script>
   function handleSubmit(event) {
     event.preventDefault();
+
+    const type = document.getElementById("type").value.trim();
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
 
-    if (!title || !content) {
-      alert("제목과 내용을 모두 입력해주세요.");
+    if (!type || !title || !content) {
+      alert("모든 항목을 입력해주세요.");
       return;
     }
 
+    const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const newInquiry = { type, title, content, date };
+
+    // 기존 데이터 불러오기
+    const inquiries = JSON.parse(localStorage.getItem("inquiries")) || [];
+
+    // 새 데이터 추가
+    inquiries.push(newInquiry);
+
+    // 저장
+    localStorage.setItem("inquiries", JSON.stringify(inquiries));
+
     alert("문의가 등록되었습니다.");
-    window.location.href = "/mainpage"; // 필요시 URL 수정
+    window.location.href = "InquiryList.jsp";
   }
 </script>
 
