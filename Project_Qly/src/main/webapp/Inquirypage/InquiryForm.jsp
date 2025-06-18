@@ -74,13 +74,13 @@
 
 <form class="form-box" onsubmit="handleSubmit(event)">
   <div class="form-group">
-    <label for="type">문의 유형</label>
-    <select id="type" required>
-      <option value="">선택</option>
-      <option>회원 정보 수정</option>
-      <option>퀘스트 오류</option>
-      <option>기타 문의</option>
-    </select>
+   <select id="type" required>
+  <option value="">선택</option>
+  <option value="회원 정보 수정">회원 정보 수정</option>
+  <option value="퀘스트 오류">퀘스트 오류</option>
+  <option value="기타 문의">기타 문의</option>
+</select>
+
   </div>
 
   <div class="form-group">
