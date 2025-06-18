@@ -1,12 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%
-// 현재 페이지 파라미터 받아오기, 없으면 기본값으로 회원 관리 페이지로 설정
-String pageParam = request.getParameter("page");
-if (pageParam == null || pageParam.trim().equals("")) {
-	pageParam = "admin_memberList.jsp"; // 기본 페이지
-}
-%>
-
 <!-- 
   ============================================================
    <  Qly 관리자 레이아웃 페이지 (admin_layout.jsp) >
@@ -83,6 +75,12 @@ html, body {
 
 		<!--  본문 영역: 동적으로 각 관리 JSP 삽입 -->
 		<div class="main-content">
+			<%
+			String pageParam = (String) request.getAttribute("page");
+			if (pageParam == null || pageParam.trim().equals("")) {
+				pageParam = "admin_memberList.jsp";
+			}
+			%>
 			<jsp:include page="<%=pageParam%>" />
 		</div>
 	</div>

@@ -155,12 +155,12 @@
 		<tbody>
 			<c:forEach var="quest" items="${questList}" varStatus="status">
 				<tr>
-					<td>${status.count}</td>
+					<td>${quest.questId}</td>
 					<td>${quest.title}</td>
-					<td><fmt:formatDate value="${quest.createdAt}"
+					<td><fmt:formatDate value="${quest.createdat}"
 							pattern="yyyy-MM-dd" /></td>
 					<td>${quest.location}</td>
-					<td>${quest.rewardTokens}</td>
+					<td>${quest.tokens}</td>
 					<td>${quest.status}</td>
 				</tr>
 			</c:forEach>

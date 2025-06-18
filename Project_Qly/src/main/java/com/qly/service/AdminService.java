@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qly.dto.QuestDto;
 import com.qly.dto.UserDto;
+import com.qly.dto.admin_QuestDto; // 추가 필요
 import com.qly.mapper.AdminMapper;
 
 @Service
@@ -31,12 +31,12 @@ public class AdminService {
     }
 
     // 퀘스트 검색
-    public List<QuestDto> searchQuests(String keyword) {
-        return adminMapper.searchQuests(keyword);
+    public List<admin_QuestDto> searchQuests(String keyword) {
+        return (List<admin_QuestDto>) adminMapper.searchQuests(keyword);
     }
 
-    // 전체 퀘스트 조회
-    public List<QuestDto> getAllQuests() {
+    // ✅ 전체 퀘스트 조회
+    public List<admin_QuestDto> getAllQuests() {
         return adminMapper.getAllQuests();
     }
 
