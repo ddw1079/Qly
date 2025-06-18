@@ -20,6 +20,9 @@
 	<mappers>
 		<mapper resource="mappers/QuestMapper.xml" />
 		<mapper resource="mappers/AdminMapper.xml"/>
+
+		<mapper resource="mappers/UserMapper.xml" />
+
 	</mappers>
 
 </configuration>

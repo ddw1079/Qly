@@ -12,9 +12,10 @@
 
 <body>
 	<script>
-		// location.href = "quest/list.do"
-		location.href = "${pageContext.request.contextPath}/mypage/"; /*  */
+	 location.href = "${pageContext.request.contextPath}/login.do";
+
 	</script>
+
 </body>
 </html>
 

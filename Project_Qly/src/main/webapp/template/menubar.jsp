@@ -114,15 +114,19 @@
 </head>
 
 <body>
-  <%
-    String userName = "홍길동";
-    String userRole = "의뢰인";
-    int userCoins = 1250;
-  %>
+<%
+  com.qly.dto.UserDto loginUser =  session.getAttribute("loginUser");
+
+  String userName = loginUser != null ? loginUser.getUsername() : "게스트";
+  String userType = loginUser != null ? loginUser.getUserType() : "비회원";
+  int userCoins =loginUser.getTotalTokens();
+%>
+
 
   <div class="container-fluid">
 
-    <!-- ✅ 사용자 정보 패널 -->
+ 
+     <!-- ✅ 사용자 정보 패널 -->
     <div class="row user-panel align-items-center justify-content-between">
       <div class="col-auto d-flex align-items-center">
         <a href="/">
@@ -133,7 +137,7 @@
       <div class="col d-flex justify-content-end align-items-center gap-3 flex-wrap text-end">
         <div class="text-end me-3 d-flex flex-column align-items-end">
           <div class="fw-bold mb-2" style="font-size: 18px;">
-            <%= userName %> <small>(<%= userRole %>)</small>
+            <%= userName %> <small>(<%= userType %>)</small>
           </div>
           <div class="d-flex align-items-center gap-2 mb-2">
             <div class="coin-box-lg">
@@ -151,6 +155,10 @@
       </div>
     </div>
 
+
+
+
+        
     <!-- ✅ 메뉴 + 서브메뉴 영역 -->
     <div class="menu-wrapper">
 
@@ -180,7 +188,7 @@
           </div>
           <div class="submenu-cell">
             <a href="/template/coin_charge.jsp">QUBIT 충전</a>
-            <a href="#">QUBIT 환급</a> //아직없음
+            <a href="#">QUBIT 환급</a> 
             <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">
