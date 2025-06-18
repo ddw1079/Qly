@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -69,11 +71,9 @@ body {
 }
 
 .signup-link a {
-	/* color: #007BFF; */
 	color: gray;
 	text-decoration: none;
 	font-weight: bold;
-	text-decoration: none;
 }
 
 .signup-link a:hover {
@@ -88,18 +88,18 @@ body {
 		<div class="logo">
 			<img class="w-100" src="https://i.postimg.cc/Dy7BstrB/logo2.png"
 				alt="Qly 로고" width="250"><br> <br>
-			<!-- 로고 경로는 실제 파일에 맞게 수정 -->
 		</div>
 
-		<form action="/main" method="POST">
-			<input type="text" name="username" placeholder="ID" required>
-			<input type="password" name="password" placeholder="password"
-				required>
-			<button type="submit">로그인</button>
+		
+		<form action="${pageContext.request.contextPath}/login.do" method="POST">
+	 		<input type="text" name="username" placeholder="ID" required>
+	 		<input type="password" name="password" placeholder="password" required>
+	 		<button type="submit">로그인</button>
 		</form>
 
 		<div class="signup-link">
-			<a href="../qly_Uesr.jsp" >회원가입</a>
+			
+			<a href="${pageContext.request.contextPath}/qly_Uesr.jsp">회원가입</a>
 		</div>
 	</div>
 

@@ -122,7 +122,8 @@
 
   <div class="container-fluid">
 
-    <!-- ✅ 사용자 정보 패널 -->
+ 
+     <!-- ✅ 사용자 정보 패널 -->
     <div class="row user-panel align-items-center justify-content-between">
       <div class="col-auto d-flex align-items-center">
         <a href="/">
@@ -151,6 +152,10 @@
       </div>
     </div>
 
+
+
+
+        
     <!-- ✅ 메뉴 + 서브메뉴 영역 -->
     <div class="menu-wrapper">
 
@@ -180,7 +185,7 @@
           </div>
           <div class="submenu-cell">
             <a href="/template/coin_charge.jsp">QUBIT 충전</a>
-            <a href="#">QUBIT 환급</a> //아직없음
+            <a href="#">QUBIT 환급</a> 
             <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">

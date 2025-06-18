@@ -18,6 +18,7 @@
 	<mappers>
 		<mapper resource="mappers/QuestMapper.xml" />
 		<mapper resource="com/qly/mapper/AdminMapper.xml"/>
+		<mapper resource="mappers/UserMapper.xml" />
 	</mappers>
 
 </configuration>
