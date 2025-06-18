@@ -149,15 +149,27 @@
 				<tr>
 					<td>${status.index + 1}</td>
 					<td>${user.userId}</td>
-					<td><fmt:formatDate value="${user.joinDate}"
-							pattern="yyyy-MM-dd" /></td>
 
-					<td>${user.userType}</td>
+					<td><c:choose>
+							<c:when test="${not empty user.joinDate}">
+								<fmt:formatDate value="${user.joinDate}" pattern="yyyy-MM-dd" />
+							</c:when>
+							<c:otherwise>-</c:otherwise>
+						</c:choose></td>
+
+					<td>${user.userType != null ? user.userType : '-'}</td>
+
 					<td>${user.totalTokens}</td>
-					<td><fmt:formatDate value="${user.lastActive}"
-							pattern="yyyy-MM-dd" /></td>
+
+					<td><c:choose>
+							<c:when test="${not empty user.lastActive}">
+								<fmt:formatDate value="${user.lastActive}" pattern="yyyy-MM-dd" />
+							</c:when>
+							<c:otherwise>-</c:otherwise>
+						</c:choose></td>
 				</tr>
 			</c:forEach>
+
 		</tbody>
 
 		<!-- <tbody>

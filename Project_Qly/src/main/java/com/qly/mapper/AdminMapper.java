@@ -6,21 +6,21 @@ import java.util.List;
 
 public interface AdminMapper {
 
-    // ì „ì²´ íšŒì› ì¡°íšŒ
+    // ÀüÃ¼ È¸¿ø Á¶È¸
     List<UserDto> findAllUsers();
 
-    // ì•„ì´ë”” ë˜ëŠ” ë‹‰ë„¤ì„ ê²€ìƒ‰
+    // ¾ÆÀÌµğ ¶Ç´Â ´Ğ³×ÀÓ °Ë»ö
     List<UserDto> searchUsers(String keyword);
 
-    // íšŒì› ì‚­ì œ
+    // È¸¿ø »èÁ¦
     void deleteUser(String userId);
 
-    // í€˜ìŠ¤íŠ¸ ì „ì²´ ì¡°íšŒ
+    // Äù½ºÆ® ÀüÃ¼ ¸ñ·Ï
     List<QuestDto> getAllQuests();
 
-    // í€˜ìŠ¤íŠ¸ ê²€ìƒ‰
+    // Äù½ºÆ® °Ë»ö
     List<QuestDto> searchQuests(String keyword);
-    
- // ì´ íšŒì› ìˆ˜ ì¡°íšŒ
+
+    // ÀüÃ¼ È¸¿ø ¼ö Á¶È¸
     int countAllUsers();
 }
