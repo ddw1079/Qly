@@ -1,13 +1,13 @@
 package com.qly.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
@@ -42,5 +42,13 @@ public class LoginController {
             return "userlogin/UserLogin";
         }
     }
+
+    @RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+        
+        session.invalidate(); // 세션 무효화
+        return "redirect:/login/loginForm"; // 로그인 폼으로 리다이렉트
+    }
+    
 }
 

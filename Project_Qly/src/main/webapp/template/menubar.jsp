@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/template/coin_charge.jsp" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -145,13 +146,32 @@
             </div>
             <button class="btn btn-sm text-white px-3 py-2" style="background-color: #40746e;" onclick="$('#chargeCoinModal').modal('show');">충전</button>
           </div>
-          <div class="d-flex gap-2 mt-2 w-100">
-            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
-            <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+          <c:choose>
+            <c:when test="${empty loginUser}">
+                <!-- 조건이 참일 때 실행 -->
+              <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
+              <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
                           onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
+            </c:when>
+            <c:otherwise>
+              <!-- 조건이 거짓일 때 실행 -->
+              <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+                          onclick="location.href='/mypage/'">마이페이지</button>
+              <button class="btn w-100" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+                          onclick="location.href='/logout.do'">로그아웃</button>
+            </c:otherwise>
+        </c:choose>
+          <c:if test="">
+            <div class="text-muted" style="font-size: 14px;">로그인 후 이용해주세요.</div>
+          </c:if>
+          <c:if test="${not empty loginUser}">
+            <div class="text-muted" style="font-size: 14px;">환영합니다, <%= userName %>님!</div>
+          </c:if>
+          <div class="d-flex gap-2 mt-2 w-100">
+
           </div>
         </div>
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
+        <a href="/mypage/"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" /></a>
       </div>
     </div>
 
