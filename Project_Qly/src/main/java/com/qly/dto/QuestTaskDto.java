@@ -1,24 +1,25 @@
 package com.qly.dto;
 
 public class QuestTaskDto {
-	private int taskId; // PK
-	private int questId; // FK
+	private Integer taskId;
+	private Integer questId;
 	private String description;
-	private char isChecked; // 기본값 '0'
+	private String isChecked; // '0' or '1'
 
-	public int getTaskId() {
+
+	public Integer getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(int taskId) {
+	public void setTaskId(Integer taskId) {
 		this.taskId = taskId;
 	}
 
-	public int getQuestId() {
+	public Integer getQuestId() {
 		return questId;
 	}
 
-	public void setQuestId(int questId) {
+	public void setQuestId(Integer questId) {
 		this.questId = questId;
 	}
 
@@ -30,12 +31,11 @@ public class QuestTaskDto {
 		this.description = description;
 	}
 
-	public char getIsChecked() {
+	public String getIsChecked() {
 		return isChecked;
 	}
 
-	public void setIsChecked(char isChecked) {
+	public void setIsChecked(String isChecked) {
 		this.isChecked = isChecked;
 	}
-
 }
