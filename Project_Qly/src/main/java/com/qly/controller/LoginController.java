@@ -47,7 +47,7 @@ public class LoginController {
     public String logout(HttpSession session) {
         
         session.invalidate(); // 세션 무효화
-        return "redirect:/login/loginForm"; // 로그인 폼으로 리다이렉트
+        return "redirect:/mainpage"; // 로그인 폼으로 리다이렉트
     }
     
 }

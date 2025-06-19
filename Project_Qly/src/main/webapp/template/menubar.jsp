@@ -130,7 +130,7 @@
      <!-- ✅ 사용자 정보 패널 -->
     <div class="row user-panel align-items-center justify-content-between">
       <div class="col-auto d-flex align-items-center mt-1">
-        <a href="/">
+        <a href="/mainpage">
           <img src="https://i.postimg.cc/yYVx9NTf/logo5.png" alt="QLY 로고" style="height: 120px;">
         </a>
       </div>
@@ -143,7 +143,7 @@
               <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width=100 alt="프로필" />
             </a>
         	</c:when>
-        <c:otherwise>
+        	<c:otherwise>
 				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
         	</c:otherwise>
         </c:choose>
@@ -171,16 +171,17 @@
              <c:choose>
 	            <c:when test="${empty loginUser}">
 	                <!-- 조건이 참일 때 실행 -->
-	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
+	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+	              onclick="location.href='/login/loginForm'">>로그인</button>
 	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
 	                          onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
 	            </c:when>
 	            <c:otherwise>
 	              <!-- 조건이 거짓일 때 실행 -->
 	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	                          onclick="location.href='/mypage/'">마이페이지</button>
+	                          onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">마이페이지</button>
 	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	                          onclick="location.href='/logout.do'">로그아웃</button>
+	                          onclick="location.href='/login/logout.do'">로그아웃</button>
 	            </c:otherwise>
 	        </c:choose>
           </div>
