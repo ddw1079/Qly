@@ -24,7 +24,7 @@ public interface QuestMapper {
 	
 
 
-	List<QuestTaskDto> getQuestUserId(int userId);
+	List<QuestDto> getQuestUserId(int userId);
 
 
 }

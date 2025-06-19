@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
 import com.qly.mapper.QuestMapper;
@@ -34,8 +35,14 @@ public class QlyServiceImpl implements QlyService{
 		  return questMapper.getTasksQuestId(questid);
 	  }
 	  @Override
-	  public List<QuestTaskDto> getQuestUserId(int userId){
+	  public List<QuestDto> getQuestUserId(int userId){
 		  return questMapper.getQuestUserId(userId);
 	  }
+	  
+	  @Override
+	  public UserDto getUser(UserDto dto) {
+		  return userMapper.getUser(dto);
+	  }
+	  
 
 }

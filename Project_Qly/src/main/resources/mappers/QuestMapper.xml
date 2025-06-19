@@ -76,7 +76,7 @@
 		)
 	</insert>
 	
-	<select id="QuestTaskDto" resultType="com.qly.dto.QuestTaskDto">
+	<select id="getTasksQuestId" resultType="com.qly.dto.QuestTaskDto">
     SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
     </select> 
     

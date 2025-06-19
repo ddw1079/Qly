@@ -116,17 +116,26 @@ public class QuestController {
 	
 	@RequestMapping("/quest_history.do")
 	public String questHistory(@RequestParam("userId") int userId, Model model) {
-	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
+//	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
+		 List<QuestDto> questlist = qlyService.getQuestUserId(userId);
 
 	    // 퀘스트별 할 일 목록 Map 생성
-	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
-	    for (QuestTaskDto q : questlist) {
+	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
+	    for (QuestDto q : questlist) {
 	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
 	    }
 
 	    model.addAttribute("questlist", questlist);
 	    model.addAttribute("taskMap", taskMap);
-	    return "mypage/questHistory";
+	    
+	    
+	    model.addAttribute("pageParam", "questHistory.jsp");
+	    return "mypage/user_layout";
+	}
+	@RequestMapping("/personl_info.do")
+	public String user(@RequestParam("userName") String username,UserDto dto) {
+		qlyService.getUser(dto);
+		return "mypage/user_layout";
 	}
 
 	

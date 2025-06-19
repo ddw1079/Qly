@@ -101,7 +101,7 @@ if (currentPage == null)
 		<li class="${page eq 'admin_questList.jsp' ? 'active' : ''}"
 			onclick="location.href='/Project_Qly/admin/questList.do'">퀘스트 관리</li>
 
-		<li class="${page eq 'admin_coinList.jsp' ? 'active' : ''}"
+		<li class="${page eq 'admin_coinList.jsp' ? 'active' : ''}"	
 			onclick="location.href='/Project_Qly/admin/coinList.do'">코인 관리</li>
 
 		<li class="${page eq 'admin_question.jsp' ? 'active' : ''}"

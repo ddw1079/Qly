@@ -22,6 +22,7 @@ body {
 .login-box {
 	background-color: #EDF4FB;
 	padding: 80px;
+	
 	border-radius: 12px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 	width: 500px;

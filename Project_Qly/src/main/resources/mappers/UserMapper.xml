@@ -18,5 +18,13 @@
       AND password = #{password}
       
   </select>
+  <select id="getUser" resultType="com.qly.dto.UserDto">
+  SELECT
+  username,
+  phone,
+  emalil
+  	
+  
+  </select>
 
 </mapper>
