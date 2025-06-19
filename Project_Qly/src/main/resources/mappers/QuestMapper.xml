@@ -38,28 +38,56 @@
 		CREATED_AT DESC
 	</select>
 
-	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto"
-		useGeneratedKeys="true" keyProperty="questId">
+	<!-- <insert id="insertQuest" parameterType="com.qly.dto.QuestDto" useGeneratedKeys="true" 
+		keyProperty="questId"> INSERT INTO QUESTS ( QUEST_ID, USER_ID, TITLE, CATEGORY, 
+		CONTENT, PHOTO_PATH, STATUS, PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION, 
+		START_DATE, END_DATE, REWARD_TOKENS ) VALUES ( QUEST_SEQ.NEXTVAL, #{userId}, 
+		#{title}, #{category}, #{content, jdbcType=CLOB}, #{photoPath}, '대기', 0, 
+		#{latitude}, #{longitude}, #{address}, #{location}, #{startDate}, #{endDate}, 
+		#{rewardTokens} ) </insert> -->
+	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto">
+		<selectKey keyProperty="questId" order="BEFORE"
+			resultType="int">
+			SELECT QUESTS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
 		INSERT INTO QUESTS (
-		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT, PHOTO_PATH,
-		STATUS, PROGRESS, LATITUDE, LONGITUDE,
-		ADDRESS, LOCATION, START_DATE, END_DATE, REWARD_TOKENS
-		)
-		VALUES (
-		QUEST_SEQ.NEXTVAL, #{userId}, #{title}, #{category}, #{content}, #{photoPath},
-		'대기', 0, #{latitude}, #{longitude},
-		#{address}, #{location}, #{startDate}, #{endDate}, #{rewardTokens}
+		QUEST_ID, USER_ID, TITLE, CATEGORY, CONTENT,
+		PHOTO_PATH, STATUS, PROGRESS,
+		LATITUDE, LONGITUDE, ADDRESS, LOCATION,
+		START_DATE, END_DATE,
+		REWARD_TOKENS
+		) VALUES (
+		#{questId,
+		jdbcType=NUMERIC},
+		#{userId, jdbcType=NUMERIC},
+		#{title,
+		jdbcType=VARCHAR},
+		#{category,
+		jdbcType=VARCHAR},
+		#{content,
+		jdbcType=CLOB},
+		#{photoPath,
+		jdbcType=VARCHAR},
+		'대기',
+		#{progress,
+		jdbcType=NUMERIC},
+		#{latitude,
+		jdbcType=NUMERIC},
+		#{longitude,
+		jdbcType=NUMERIC},
+		#{address,
+		jdbcType=VARCHAR},
+		#{location,
+		jdbcType=VARCHAR},
+		#{startDate,
+		jdbcType=DATE},
+		#{endDate,
+		jdbcType=DATE},
+		#{rewardTokens,
+		jdbcType=NUMERIC}
 		)
 	</insert>
 
-	<insert id="insertQuestTask" parameterType="com.qly.dto.QuestTaskDto">
-		INSERT INTO QUEST_TASK (
-		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
-		)
-		VALUES (
-		QUEST_TASK_SEQ.NEXTVAL, #{questId}, #{description}, #{isChecked}
-		)
-	</insert>
 
 	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
 		INSERT INTO USERS (
@@ -67,7 +95,7 @@
 		) VALUES
 		(
 		#{userId},
-		#{userName},
+		#{username},
 		#{password},
 		#{phone},
 		#{address},

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qly.mapper.QuestTaskMapper">
+
+	<insert id="insertQuestTask"
+		parameterType="com.qly.dto.QuestTaskDto">
+		INSERT INTO QUEST_TASK (
+		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
+		) VALUES (
+		QUEST_TASK_SEQ.NEXTVAL,
+		#{questId, jdbcType=NUMERIC},
+		#{description, jdbcType=CLOB},
+		#{isChecked, jdbcType=CHAR}
+		)
+	</insert>
+
+</mapper>

@@ -8,19 +8,21 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-	
+
 	<typeAliases>
 		<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
-		<typeAlias alias="questtaskdto" type="com.qly.dto.QuestTaskDto" />
+		<typeAlias alias="questtaskdto"
+			type="com.qly.dto.QuestTaskDto" />
 		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
-		<typeAlias alias="auserdto" type="com.qly.dto.admin_QuestDto" />
-		
+		<typeAlias alias="auserdto"
+			type="com.qly.dto.admin_QuestDto" />
+
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/QuestMapper.xml" />
-		<mapper resource="mappers/AdminMapper.xml"/>
-
+		<mapper resource="mappers/AdminMapper.xml" />
+		<mapper resource="mappers/QuestTaskMapper.xml" />
 		<mapper resource="mappers/UserMapper.xml" />
 		<mapper resource="mappers/InquiryMapper.xml" />
 

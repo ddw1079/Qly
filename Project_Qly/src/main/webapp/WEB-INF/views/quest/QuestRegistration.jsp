@@ -5,240 +5,279 @@
 <head>
 <meta charset="UTF-8">
 <title>퀘스트 등록</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-	crossorigin="anonymous"></script>
 <style>
 body {
-	font-family: 'Segoe UI', sans-serif;
-	margin: 40px;
+	background: #fafbfc;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.request::placeholder {
-	color: rgba(0, 0, 0, 0.3);
+.container {
+	width: 870px; /* 1.5배 */
+	margin: 40px auto;
 }
 
-label {
+h2 {
+	color: #d32f2f;
+	font-size: 20px;
 	font-weight: bold;
-	font-size: 16px;
+	margin-bottom: 26px;
+	margin-left: 2px;
 }
 
-.style {
-	width: 100%;
-	height: 40px;
-	text-align: center;
-	font-size: 16px;
-}
-
-/* .can 제거하고 대신 아래처럼 스타일 변경 */
-.can {
-	background-color: silver;
-	padding: 20px;
-	border-radius: 8px;
-}
-
-.request-item {
+.form-title-row {
 	display: flex;
-	gap: 10px;
-	margin-bottom: 8px;
+	align-items: center;
+	margin-bottom: 28px;
 }
 
-.request-item input {
+.form-title-label {
+	font-size: 24px;
+	font-weight: 600;
+	margin-right: 16px;
+	min-width: 58px;
+	letter-spacing: -1px;
+}
+
+.form-title-input {
+	flex: 1;
+	font-size: 22px;
+	padding: 12px 16px;
+	border: 1.5px solid #b0b0b0;
+	border-radius: 7px;
+	background: #f7f7f7;
+}
+
+.form-card {
+	background: #ededed;
+	border-radius: 16px;
+	box-shadow: 0 4px 16px rgba(80, 100, 140, 0.09);
+	padding: 48px 38px 50px 38px;
+	margin-top: 0;
+	margin-bottom: 22px;
+	min-height: 530px; /* 2배 */
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.flex-row {
+	display: flex;
+	gap: 38px;
+	margin-bottom: 36px;
+}
+
+.flex-col {
 	flex: 1;
 }
 
-.image-upload {
-	background-color: #f8f9fa;
-	border: 2px dashed #6c757d;
-	height: 500px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 8px;
-	flex-direction: column;
+.left-area {
+	flex: 1.15;
 }
 
-.image-upload input[type="file"] {
+.right-area {
+	flex: 1;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	min-width: 200px;
+}
+
+#taskList input[type="text"] {
+	font-size: 18px;
+	padding: 11px 14px;
+	border-radius: 5px;
+}
+
+#taskList {
+	margin-bottom: 10px;
+}
+
+.add-btn, .delete-btn {
+	background: #2c7ff6;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 7px;
+	font-size: 17px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-top: 7px;
+	margin-bottom: 10px;
+	margin-left: 3px;
+}
+
+.add-btn:hover, .delete-btn:hover {
+	background: #005bb3;
+}
+
+.upload-box {
+	width: 300px;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #eaf6fd;
+	border: 2px dashed #a4d1f3;
+	border-radius: 11px;
+	color: #818181;
+	font-size: 18px;
+	font-weight: 500;
+	flex-direction: column;
+	position: relative;
+	margin-top: 12px;
+}
+
+input[type="file"] {
+	margin-top: 14px;
+	font-size: 15px;
+}
+
+.form-group {
+	margin-bottom: 22px;
+	font-size: 18px;
+}
+
+.inline {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	font-size: 18px;
+}
+
+label {
+	display: block;
+	font-size: 18px;
+	margin-bottom: 6px;
+	color: #414141;
+	font-weight: 500;
+}
+
+input[type="text"], input[type="number"], input[type="date"] {
+	width: 97%;
+	padding: 11px 14px;
+	font-size: 18px;
+	border: 1.5px solid #b0b0b0;
+	border-radius: 7px;
+	background: #f7f7f7;
+	outline: none;
+	margin-bottom: 7px;
+	transition: border-color 0.2s;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus
+	{
+	border-color: #1976d2;
+}
+
+.submit-btn {
+	background: #08c762;
+	color: #fff;
+	border: none;
+	padding: 15px 50px;
+	font-size: 22px;
+	font-weight: bold;
+	border-radius: 11px;
+	position: absolute;
+	bottom: 42px;
+	right: 70px;
+	cursor: pointer;
+	transition: background 0.18s;
+}
+
+.submit-btn:hover {
+	background: #08975a;
+}
+
+.charge-btn {
+	background: #33d193;
+	color: #fff;
+	border: none;
+	padding: 9px 23px;
+	border-radius: 7px;
+	font-size: 16px;
+	margin-left: 10px;
+	font-weight: bold;
 	cursor: pointer;
 }
 
-.image-upload p {
-	color: #6c757d;
-	font-size: 16px;
-	margin-top: 10px;
+.charge-btn:hover {
+	background: #158865;
+}
+
+.box-footer {
+	position: relative;
+	min-height: 60px;
 }
 </style>
 </head>
 <body>
-
-	<form action="${pageContext.request.contextPath}/quest/insert.do"
-		method="post" enctype="multipart/form-data">
-
-		<div class="container" style="max-width: 900px;">
-
-			<!-- 제목 -->
-			<div class="mb-4 d-flex justify-content-center align-items-center"
-				style="gap: 8px;">
-				<label for="title" class="form-label mb-0"
-					style="white-space: nowrap;">제목</label> <input type="text"
-					name="title" id="title" class="form-control style"
-					style="width: 600px; height: 50px; text-align: center;"
-					placeholder="제목을 입력하세요" required>
+	<div class="container">
+		<h2>4. 퀘스트 등록</h2>
+		<form action="${pageContext.request.contextPath}/quest/insert.do"
+			method="post" enctype="multipart/form-data">
+			<div class="form-title-row">
+				<div class="form-title-label">제목</div>
+				<input type="text" name="title" class="form-title-input"
+					placeholder="제목을 입력하세요" required />
 			</div>
-
-			<!-- 좌우 그리드 -->
-			<div class="row can">
-
-				<!-- 왼쪽: 의뢰내용 여러 개 입력 UI로 변경 -->
-				<div class="col-md-6">
-					<label class="form-label">의뢰내용</label>
-					<div id="requestItemsContainer">
-						<div class="request-item">
-							<input type="text" id="request-item" name="tasks[0].description"
-								class="form-control" placeholder="의뢰 내용을 입력하세요" required />
-							<button type="button" class="btn btn-danger btn-remove-item">삭제</button>
+			<div class="form-group inline">
+				<label>카테고리</label> <input type="text" name="category"
+					placeholder="카테고리를 입력하세요"
+					style="width: 250px; font-size: 17px; padding: 9px 12px; border-radius: 6px; margin-bottom: 7px;"
+					required />
+			</div>
+			<div class="form-card">
+				<div class="flex-row">
+					<div class="left-area flex-col">
+						<label>의뢰내용</label>
+						<div id="taskList">
+							<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" />
+						</div>
+						<button type="button" class="add-btn" onclick="addTask()">의뢰내용
+							추가</button>
+					</div>
+					<div class="right-area flex-col">
+						<div class="upload-box">
+							사진 파일을 넣어주세요 <input type="file" name="photo">
 						</div>
 					</div>
-					<button type="button" id="addRequestItem"
-						class="btn btn-primary mt-2">+ 의뢰내용 추가</button>
 				</div>
-
-				<!-- 오른쪽: 사진 업로드 -->
-				<div class="col-md-6">
-					<div class="image-upload">
-						<label for="fileInput" class="form-label">사진 업로드</label> <input
-							type="file" name="photo" id="photo" accept="image/*" />
-						<p>여기에 사진을 올려주세요</p>
-					</div>
+				<div class="form-group">
+					<label for="content">추가 요청사항</label>
+					<textarea name="content" id="content"
+						placeholder="추가 요청사항을 적으세요!!!" rows="5"
+						style="width: 50%; font-size: 17px; padding: 10px 14px; border-radius: 7px; resize: vertical; background: #f7f7f7; border: 1.5px solid #b0b0b0; margin-bottom: 13px;"
+						required></textarea>
 				</div>
-
-				<div class="mb-4">
-					<label class="form-label d-block">의뢰 기간</label>
-					<div class="d-inline-flex gap-3">
-						<input type="datetime-local" name="startDate" id="startDate" class="form-control"
-							style="width: 250px;" placeholder="시작 시간 선택" required> <input
-							type="datetime-local" name="endDate" class="form-control"
-							style="width: 250px;" placeholder="종료 시간 선택" required>
-					</div>
+				<div class="form-group inline">
+					<label>의뢰 기간</label> <input type="date" name="startDate" required
+						style="width: 180px;" /> <span style="font-size: 18px;">~</span>
+					<input type="date" name="endDate" required style="width: 180px;" />
 				</div>
-
-				<div class="mb-4">
-					<label for="address" class="form-label">주소</label><br> <input
-						type="text" id="address" name="address" class="form-control"
-						style="width: 515px;" placeholder="의뢰 장소를 입력하세요" required>
+				<div class="form-group inline">
+					<label>의뢰 장소</label> <input type="text" name="address"
+						placeholder="구, 군, 시 입력" style="width: 250px;" /> <label>상세
+						장소</label> <input type="text" name="location" placeholder="상세주소"
+						style="width: 250px;" />
 				</div>
-
-				<div class="mb-4">
-					<label for="price" class="form-label">의뢰 가격 (코인)</label>
-					<div class="d-flex align-items-center" style="gap: 10px;">
-						<input type="number" id="rewardTokens" name="rewardTokens" class="form-control"
-							style="width: 200px;" placeholder="예: 100" min="0" required>
-						<button type="button" class="btn"
-							style="background-color: #00FA9A; color: black;">충전</button>
-					</div>
+				<div class="form-group inline">
+					<label>의뢰 가격 (코인)</label> <input type="number" name="rewardTokens"
+						min="0" placeholder="예: 100" style="width: 120px;" />
+					<button type="button" class="charge-btn">충전</button>
 				</div>
-
-				<div class="text-end mt-auto">
-					<button type="submit" class="btn btn-lg submit-btn"
-						style="background-color: #00FA9A; color: black;">등록</button>
+				<div class="box-footer">
+					<button type="submit" class="submit-btn">등록</button>
 				</div>
-
 			</div>
-		</div>
-	</form>
-
+		</form>
+	</div>
 	<script>
-const container = document.getElementById('requestItemsContainer');
-const addBtn = document.getElementById('addRequestItem');
-const form = document.querySelector('form');  // 🔹 form 요소 가져오기
-
-let taskIndex = 0;
-
-addBtn.addEventListener('click', () => {
-	
-	console.log('추가 버튼 클릭 전 taskIndex:', taskIndex);
-	
-    const div = document.createElement('div');
-    div.className = 'request-item';
-    div.innerHTML = `
-        <input type="text" name="tasks[${taskIndex}].description" class="form-control" placeholder="의뢰 내용을 입력하세요" required />
-        <button type="button" class="btn btn-danger btn-remove-item">삭제</button>
-    `;
-    container.appendChild(div);
-        
-    taskIndex++;  // 추가 후 인덱스 증가
-    
-    console.log('추가 버튼 클릭 후 taskIndex:', taskIndex);
-    
-});
-
-container.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-remove-item')) {
-    	
-    	//console.log('삭제 버튼 클릭됨');
-    	
-        const parent = e.target.closest('.request-item');
-        if (parent) {
-        	parent.remove();
-        	
-        	//console.log('삭제된 항목:', parent);
-        	 setTimeout(() => {
-                 updateTaskInputNames();  // 🔹 DOM 정리 후 인덱스 재정렬
-             }, 0);
-        	
-        }
-        //updateTaskInputNames();  // 삭제 후 인덱스 재정렬
-    }
-});
-
-function updateTaskInputNames() {
-	console.log('✅ updateTaskInputNames 실행됨');
-    const inputs = container.querySelectorAll('input[name^="tasks"]');
-    console.log('✅ 현재 input 개수:', inputs.length);
-    
-    inputs.forEach((input, idx) => {
-    	
-    	console.log(`인풋 ${idx} → ${input.value}`); // 확인용
-
-    	input.setAttribute('name', `tasks[${idx}].description`);
-    });
-    taskIndex = inputs.length;  // 인덱스 재설정
-    
-    console.log('taskIndex 재설정됨:', taskIndex);
-}
-
-form.addEventListener('submit', (e) => {
-	e.preventDefault(); // 🚫 기본 제출 막기
-	 
-	console.log('폼 제출 직전');
-	
-    const inputs = container.querySelectorAll('input[name^="tasks"]');
-    console.log('✅ 현재 input 개수:', inputs.length);
-    
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-        	
-        	 console.log('빈 입력값 발견 및 삭제:', input);
-        	
-            input.closest('.request-item').remove();
-        }
-    });
-    updateTaskInputNames();  // 제출 전 인덱스 정리
-    
-    console.log('폼 제출 후 인덱스 정리 완료');
-    
-    // ✅ 수동 제출
-    form.submit();
-    
-});
-</script>
-
-
+		function addTask() {
+			let div = document.createElement("div");
+			div.innerHTML = '<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" style="width:88%;font-size:18px;padding:10px 14px;border-radius:5px;" /> <button type="button" class="delete-btn add-btn" style="padding:8px 14px;font-size:15px;" onclick="this.parentNode.remove();">삭제</button>';
+			document.getElementById("taskList").appendChild(div);
+		}
+	</script>
 </body>
 </html>
