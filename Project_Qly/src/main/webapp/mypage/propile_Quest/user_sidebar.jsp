@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    String userId = (String) session.getAttribute("loginId");
-    String userType = (String) session.getAttribute("userType");
-    if (userId == null) userId = "비회원";
-    if (userType == null) userType = "Qlel"; // 기본값
-%> <!-- 지금은 DB없어서 NULL값일때 기본값으로 줫음 -->
+    com.qly.dto.UserDto loginUser =  (com.qly.dto.UserDto)session.getAttribute("loginUser");
+
+    String userName = loginUser.getUsername();
+    String userType = loginUser.getUserType();
+
+    
+%> 
 
 <style>
     .sidebar-menu { list-style: none; padding: 0; margin: 0; }
@@ -28,7 +30,7 @@
     <div style="display: inline-block; background-color: rgba(255,255,255,0.9); color: #2f3542;
                 padding: 8px 16px; border-radius: 30px; font-size: 14px; font-weight: bold;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        <%= userType.equals("Qlee") ? "의뢰인" : "해결사" %>(<%= userId %>)님 접속 중
+               <%= userName %>님(<%=userType %> 모드)
         <span style="display: inline-block; width: 10px; height: 10px;
                     background-color: #2ecc71; border-radius: 50%; margin-left: 8px;" title="활동 중"></span>
     </div>
