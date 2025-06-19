@@ -19,6 +19,12 @@ public interface QuestMapper {
 	List<QuestDto> searchQuests(String keyword);
 
 	void insertUser(UserDto dto);
+	
+	List<QuestTaskDto> getTasksQuestId(int questid);
+	
+
+
+	List<QuestTaskDto> getQuestUserId(int userId);
 
 
 }

@@ -4,15 +4,18 @@ import java.util.List;
 
 
 import com.qly.dto.QuestDto;
+import com.qly.dto.QuestTaskDto;
 
 public interface QuestService {
 
 	List<QuestDto> getAllQuests();
 
 	void registerQuest(QuestDto quest);
+	
+	
 
 	/*
-	 * // 키워드로 검색한 퀘스트 목록 가져오기 List<QuestDto> searchQuests(String keyword);
+	 * // �궎�썙�뱶濡� 寃��깋�븳 �섏뒪�듃 紐⑸줉 媛��졇�삤湲� List<QuestDto> searchQuests(String keyword);
 	 */
 
 }
