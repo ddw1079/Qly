@@ -75,6 +75,18 @@
 		#{userType}
 		)
 	</insert>
+	
+	<select id="QuestTaskDto" resultType="com.qly.dto.QuestTaskDto">
+    SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
+    </select> 
+    
+   <select id="getQuestUserId" resultType="com.qly.dto.QuestDto">
+    SELECT * 
+    FROM QUESTS 
+    WHERE USER_ID = #{userId}
+    ORDER BY CREATED_AT DESC
+  </select>
+
 
 
 
