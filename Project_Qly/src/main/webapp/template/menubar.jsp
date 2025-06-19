@@ -134,7 +134,7 @@
      <!-- ✅ 사용자 정보 패널 -->
     <div class="row user-panel align-items-center justify-content-between">
       <div class="col-auto d-flex align-items-center mt-1">
-        <a href="/mainpage">
+        <a href="${pageContext.request.contextPath}/mainpage">
           <img src="https://i.postimg.cc/yYVx9NTf/logo5.png" alt="QLY 로고" style="height: 120px;">
         </a>
       </div>
@@ -142,7 +142,7 @@
       <div class="col d-flex justify-content-end align-items-center gap-3 flex-wrap text-end mt-1">
         <c:choose>
         	<c:when test="${not empty loginUser}">
-            <a href="<c:url value='${loginUser.userType eq "관리자" ? "/admin/memberList.do" : "/mypage/propile_Quest/user_layout.jsp"}' />">
+            <a href="<c:url value='${loginUser.userType eq "관리자" ? "${pageContext.request.contextPath}/admin/memberList.do" : "${pageContext.request.contextPath}/mypage/propile_Quest/user_layout.jsp"}' />">
             <!-- c:url == context path  인라인 방식으로 선언한것-->
               <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width=100 alt="프로필" />
             </a>
@@ -176,7 +176,7 @@
             <c:when test="${empty loginUser}">
               <!-- 조건이 참일 때 실행 -->
               <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-              onclick="location.href='/login/loginForm'">>로그인</button>
+              onclick="location.href='${pageContext.request.contextPath}/login/loginForm'">>로그인</button>
               <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
                           onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
             </c:when>
@@ -185,20 +185,20 @@
 				  <c:when test="${loginUser.userType eq '관리자'}">
 				    <button class="btn w-100 mt-1"
 				            style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-				            onclick="location.href='/admin/memberList.do'">
+				            onclick="location.href='${pageContext.request.contextPath}/admin/memberList.do'">
 				      관리자 페이지
 				    </button>
 				  </c:when>
 				  <c:otherwise>
 				    <button class="btn w-100 mt-1"
 				            style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-				            onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">
+				            onclick="location.href='${pageContext.request.contextPath}/mypage/propile_Quest/user_layout.jsp'">
 				      마이페이지
 				    </button>
 				  </c:otherwise>
 				</c:choose>
               <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-                          onclick="location.href='/login/logout.do'">로그아웃</button>
+                          onclick="location.href='${pageContext.request.contextPath}/login/logout.do'">로그아웃</button>
             </c:otherwise>
 	        </c:choose>
           </div>
@@ -222,21 +222,21 @@
         <div class="submenu-row">
           <div class="submenu-cell">
           
-            <a href="/mypage/propile_Quest/qly_Introduction.jsp">QLY란?</a>
-            <a href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
+            <a href="${pageContext.request.contextPath}/mypage/propile_Quest/qly_Introduction.jsp">QLY란?</a>
+            <a href="${pageContext.request.contextPath}/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
           </div>
           <div class="submenu-cell">
-      	    <a href="/quest/registerForm.do">퀘스트 등록</a>
-			<a href="/quest/particularForm.do">퀘스트 신청</a>
-			<a href="/quest/list.do">퀘스트 목록</a>
+      	    <a href="${pageContext.request.contextPath}/quest/registerForm.do">퀘스트 등록</a>
+			<a href="${pageContext.request.contextPath}/quest/particularForm.do">퀘스트 신청</a>
+			<a href="${pageContext.request.contextPath}/quest/list.do">퀘스트 목록</a>
 
 
 
           </div>
           <div class="submenu-cell">
-            <a href="/template/coin_charge.jsp">QUBIT 충전</a>
+            <a href="${pageContext.request.contextPath}/template/coin_charge.jsp">QUBIT 충전</a>
             <a href="#">QUBIT 환급</a> 
-            <a href="/template/coin_history.jsp">거래내역 확인</a>
+            <a href="${pageContext.request.contextPath}/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">
             <!-- 고객센터 메뉴 링크 -->

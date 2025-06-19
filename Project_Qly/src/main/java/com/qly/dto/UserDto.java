@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserDto {
 
-    private String userId;
+    private int userId;
     private String username;
     private String email;
     private String password;
@@ -19,11 +19,11 @@ public class UserDto {
 
     // Getter & Setter
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
