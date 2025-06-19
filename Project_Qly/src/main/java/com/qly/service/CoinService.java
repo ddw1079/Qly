@@ -39,7 +39,7 @@ public class CoinService {
     }
 
     // 특정 유저의 결제 히스토리 조회
-    public List<PaymentHistoryVo> getPaymentHistoriesByUserId(String userId) {
+    public List<PaymentHistoryVo> getPaymentHistoriesByUserId(int userId) {
         return coinMapper.findPaymentHistoriesByUserId(userId);
     }
 
@@ -49,7 +49,7 @@ public class CoinService {
     }
 
     // 특정 유저의 코인 히스토리 조회
-    public List<CoinHistoryVo> getCoinHistoriesByUserId(String userId) {
+    public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId) {
         return coinMapper.findCoinHistoriesByUserId(userId);
     }
 }

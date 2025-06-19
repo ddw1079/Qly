@@ -25,12 +25,12 @@ public interface CoinMapper {
 	                          @Param("type") String type);
 	// 코인 히스토리 관련
 	List<CoinHistoryVo> findAllCoinHistories();
-	List<CoinHistoryVo> findCoinHistoriesByUserId(@Param("userId") String userId);
+	List<CoinHistoryVo> findCoinHistoriesByUserId(@Param("userId") int userId);
 	void insertCoinHistory(CoinHistoryVo vo);
 
 	// 결제 히스토리 관련
 	List<PaymentHistoryVo> findAllPaymentHistories();
-	List<PaymentHistoryVo> findPaymentHistoriesByUserId(@Param("userId") String userId);
+	List<PaymentHistoryVo> findPaymentHistoriesByUserId(@Param("userId") int userId);
 	void insertPaymentHistory(PaymentHistoryVo vo);
 
 	// 기타 예시 (코인 업데이트 등)

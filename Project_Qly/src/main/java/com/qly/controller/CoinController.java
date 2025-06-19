@@ -26,20 +26,30 @@ public class CoinController {
     @Autowired
     private CoinService coinService;
 
+    @RequestMapping(value = "/")
+    public String index() {
+        return "payments/coin_history"; // 결제 페이지로 이동
+    }
+
     // 코인 히스토리 조회
-    @RequestMapping("/history.do")
+    @RequestMapping(value = "/history.do")
     public String getCoinHistory(Model model, HttpSession session) {
         // 세션에서 로그인된 사용자 정보 가져오기
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/login"; // 로그인 페이지로 리다이렉트
+            return "redirect:/login/loginForm"; // 로그인 페이지로 리다이렉트
         }
+        System.out.println("로그인된 사용자: " + loginUser);
+        System.out.println("로그인된 사용자: " + loginUser.getUserId());
         // 로그인된 사용자의 코인 히스토리 조회
-        List<CoinHistoryVo> coinHistories = coinService.getCoinHistoriesByUserId(String.valueOf(loginUser.getUserId()));
+        List<CoinHistoryVo> coinHistories = coinService.getCoinHistoriesByUserId(loginUser.getUserId());
+        System.out.println("코인 히스토리: " + coinHistories);
         // 모델에 코인 히스토리 추가
         model.addAttribute("coinHistories", coinHistories);
+        System.out.println("모델에 코인 히스토리 추가 완료");
         // 결제 히스토리 조회
-        List<PaymentHistoryVo> paymentHistories = coinService.getPaymentHistoriesByUserId(String.valueOf(loginUser.getUserId()));
+        List<PaymentHistoryVo> paymentHistories = coinService.getPaymentHistoriesByUserId(loginUser.getUserId());
+        System.out.println("결제 히스토리: " + paymentHistories);
         // 모델에 결제 히스토리 추가
         model.addAttribute("paymentHistories", paymentHistories);
 

@@ -44,7 +44,7 @@
 		FROM COIN_HISTORY
 	</select>
 
-	<select id="findCoinHistoriesByUserId" resultType="com.qly.vo.CoinHistoryVo">
+	<select id="findCoinHistoriesByUserId" parameterType="string" resultType="com.qly.vo.CoinHistoryVo">
 		SELECT USER_ID, AMOUNT, REMAIN_COIN, TYPE, TRANSACTION_DATE, QUEST_ID
 		FROM COIN_HISTORY
 		WHERE USER_ID = #{userId}

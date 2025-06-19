@@ -114,9 +114,24 @@
                     buyer_postcode: '12345',
                 };
                 IMP.request_pay(requestData, function(response) {
+                        // 서버에 결제 정보 전송 (예: AJAX 요청)
+                        $.post('/chargeCoin', {
+                            coinAmount: coinAmount,
+                            paymentMethod: paymentMethod,
+                            totalAmount: totalAmount,
+                            imp_uid: response.imp_uid, // 아임포트 결제 고유 ID
+                            merchant_uid: response.merchant_uid // 주문 고유 ID
+                        }, function(response) {
+                            if (response.success) {
+                                alert('코인 충전이 완료되었습니다. 충전된 코인 수: ' + response.coinAmount);
+                                // 페이지 새로고침 또는 코인 잔액 업데이트 로직 추가
+                                location.reload(); // 페이지 새로고침
+                            } else {
+                                alert('코인 충전에 실패하였습니다. 에러 메시지: ' + response.error_msg);
+                            }
+                        });
                     if (response.success) {
-                        // 결제 성공
-                        alert('결제가 완료되었습니다. 결제 금액: ' + response.paid_amount + '원');
+
                         // 모달 닫기
                         $('#chargeCoinModal').modal('hide');
                     } else {

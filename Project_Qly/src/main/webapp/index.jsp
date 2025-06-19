@@ -12,7 +12,7 @@
 
 <body>
 	<script>
-	 location.href = "${pageContext.request.contextPath}/mainpage";
+	 location.href = "${pageContext.request.contextPath}/payments/history.do";
 	</script>
 
 </body>
