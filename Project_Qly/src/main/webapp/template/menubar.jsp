@@ -117,126 +117,124 @@
 </head>
 
 <body>
-	<%
-	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 
-	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
-	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
-	int userCoins = loginUser.getTotalTokens();
-	%>
+<%
+  com.qly.dto.UserDto loginUser =  (com.qly.dto.UserDto)session.getAttribute("loginUser");
 
-
-	<div class="container-fluid">
+  String userName = loginUser != null ? loginUser.getUsername() : "게스트";
+  String userType = loginUser != null ? loginUser.getUserType() : "비회원";
+  int userCoins = loginUser != null ? loginUser.getTotalTokens() : 0;
+%>
 
 
-		<!-- ✅ 사용자 정보 패널 -->
-		<div class="row user-panel align-items-center justify-content-between">
-			<div class="col-auto d-flex align-items-center">
-				<a href="/"> <img src="https://i.postimg.cc/yYVx9NTf/logo5.png"
-					alt="QLY 로고" style="height: 120px;">
-				</a>
-			</div>
+  <div class="container-fluid">
 
-			<div
-				class="col d-flex justify-content-end align-items-center gap-3 flex-wrap text-end">
-				<div class="text-end me-3 d-flex flex-column align-items-end">
-					<div class="fw-bold mb-2" style="font-size: 18px;">
-						<%=userName%>
-						<small>(<%=userType%>)
-						</small>
-					</div>
-					<div class="d-flex align-items-center gap-2 mb-2">
-						<div class="coin-box-lg">
-							보유 코인: <strong><%=userCoins%></strong>
-						</div>
-						<button class="btn btn-sm text-white px-3 py-2"
-							style="background-color: #40746e;"
-							onclick="$('#chargeCoinModal').modal('show');">충전</button>
-					</div>
-					<c:choose>
-						<c:when test="${empty loginUser}">
-							<!-- 조건이 참일 때 실행 -->
-							<button class="btn w-100"
-								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;">로그인</button>
-							<button class="btn w-100"
-								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-								onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
-						</c:when>
-						<c:otherwise>
-							<!-- 조건이 거짓일 때 실행 -->
-							<button class="btn w-100"
-								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-								onclick="location.href='/mypage/'">마이페이지</button>
-							<button class="btn w-100"
-								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-								onclick="location.href='/logout.do'">로그아웃</button>
-						</c:otherwise>
-					</c:choose>
-					<c:if test="">
-						<div class="text-muted" style="font-size: 14px;">로그인 후
-							이용해주세요.</div>
-					</c:if>
-					<c:if test="${not empty loginUser}">
-						<div class="text-muted" style="font-size: 14px;">
-							환영합니다,
-							<%=userName%>님!
-						</div>
-					</c:if>
-					<div class="d-flex gap-2 mt-2 w-100"></div>
-				</div>
-				<a href="/mypage/"><img
-					src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-					alt="프로필" class="profile-pic ms-2" /></a>
-			</div>
-		</div>
+ 
+     <!-- ✅ 사용자 정보 패널 -->
+    <div class="row user-panel align-items-center justify-content-between">
+      <div class="col-auto d-flex align-items-center mt-1">
+        <a href="/mainpage">
+          <img src="https://i.postimg.cc/yYVx9NTf/logo5.png" alt="QLY 로고" style="height: 120px;">
+        </a>
+      </div>
+	
+      <div class="col d-flex justify-content-end align-items-center gap-3 flex-wrap text-end mt-1">
+        <c:choose>
+        	<c:when test="${not empty loginUser}">
+            <a href="<c:url value='${loginUser.userType eq "관리자" ? "/admin/memberList.do" : "/mypage/propile_Quest/user_layout.jsp"}' />">
+            <!-- c:url == context path  인라인 방식으로 선언한것-->
+              <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width=100 alt="프로필" />
+            </a>
+        	</c:when>
+        	<c:otherwise>
+				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
+        	</c:otherwise>
+        </c:choose>
+        <div class="text-end me-3 d-flex flex-column align-items-end">
+          <div class="fw-bold mb-2" style="font-size: 18px;">
+            <%= userName %> <small>(<%= userType %>)</small>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="coin-box-lg">
+              보유 코인: <strong><%= userCoins %></strong>
+            </div>
+            <button class="btn btn-sm text-white px-3 py-2" style="background-color: #40746e;" onclick="$('#chargeCoinModal').modal('show');">충전</button>
+          </div>
+          <c:if test="">
+            <div class="text-muted" style="font-size: 14px;">로그인 후 이용해주세요.</div>
+          </c:if>
+          <c:if test="${not empty loginUser}">
+            <div class="text-muted" style="font-size: 14px;">환영합니다, <%= userName %>님!</div>
+          </c:if>
+          <div class="d-flex gap-2 mt-2 w-100">
 
+          </div>
+        </div>
+        <div>
+             <c:choose>
+	            <c:when test="${empty loginUser}">
+	                <!-- 조건이 참일 때 실행 -->
+	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+	              onclick="location.href='/login/loginForm'">>로그인</button>
+	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+	                          onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
+	            </c:when>
+	            <c:otherwise>
+	              <!-- 조건이 거짓일 때 실행 -->
+	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+	                          onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">마이페이지</button>
+	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+	                          onclick="location.href='/login/logout.do'">로그아웃</button>
+	            </c:otherwise>
+	        </c:choose>
+          </div>
+      </div>
+    </div>
+    
+    
+    <!-- ✅ 메뉴 + 서브메뉴 영역 -->
+    <div class="menu-wrapper">
 
+      <!-- 메뉴 -->
+      <div class="menu-bar">
+        <div class="menu-item">QLY소개</div>
+        <div class="menu-item">퀘스트</div>
+        <div class="menu-item">코인충전소</div>
+        <div class="menu-item">고객센터</div>
+      </div>
 
-
-
-		<!-- ✅ 메뉴 + 서브메뉴 영역 -->
-		<div class="menu-wrapper">
-
-			<!-- 메뉴 -->
-			<div class="menu-bar">
-				<div class="menu-item">QLY소개</div>
-				<div class="menu-item">퀘스트</div>
-				<div class="menu-item">코인충전소</div>
-				<div class="menu-item">고객센터</div>
-			</div>
-
-			<!-- 하위메뉴 -->
-			<div class="submenu-container">
-				<div class="submenu-row">
-					<div class="submenu-cell">
-
-						<a href="/mypage/propile_Quest/qly_Introduction.jsp">QLY란?</a> <a
-							href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
-					</div>
-					<div class="submenu-cell">
-						<a href="/quest/registerForm.do">퀘스트 등록</a> <a
-							href="/quest/particularForm.do">퀘스트 신청</a> <a
-							href="/quest/list.do">퀘스트 목록</a>
+      <!-- 하위메뉴 -->
+      <div class="submenu-container">
+        <div class="submenu-row">
+          <div class="submenu-cell">
+          
+            <a href="/mypage/propile_Quest/qly_Introduction.jsp">QLY란?</a>
+            <a href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
+          </div>
+          <div class="submenu-cell">
+      	    <a href="/quest/registerForm.do">퀘스트 등록</a>
+			<a href="/quest/particularForm.do">퀘스트 신청</a>
+			<a href="/quest/list.do">퀘스트 목록</a>
 
 
 
-					</div>
-					<div class="submenu-cell">
-						<a href="/template/coin_charge.jsp">QUBIT 충전</a> <a href="#">QUBIT
-							환급</a> <a href="/template/coin_history.jsp">거래내역 확인</a>
-					</div>
-					<div class="submenu-cell">
-						<!-- 고객센터 메뉴 링크 -->
+          </div>
+          <div class="submenu-cell">
+            <a href="/template/coin_charge.jsp">QUBIT 충전</a>
+            <a href="#">QUBIT 환급</a> 
+            <a href="/template/coin_history.jsp">거래내역 확인</a>
+          </div>
+          <div class="submenu-cell">
+            <!-- 고객센터 메뉴 링크 -->
 						<a
 							href="${pageContext.request.contextPath}/Inquirypage/InquiryMain.jsp">문의사항</a>
+          </div>
+        </div>
+      </div>
 
-					</div>
-				</div>
-			</div>
+    </div>
 
-		</div>
-
-	</div>
+  </div>
 </body>
 </html>
 
