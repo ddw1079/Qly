@@ -171,7 +171,13 @@
 
           </div>
         </div>
-        <a href="/mypage/"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" /></a>
+<a href="<c:url value='${loginUser.userType eq "관리자" ? "/admin/memberList.do" : "/mypage/propile_Quest/user_layout.jsp"}' />">
+<!-- c:url == context path  인라인 방식으로 선언한것-->
+  <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width=100 alt="프로필" />
+</a>
+
+        
+        
       </div>
     </div>
 
