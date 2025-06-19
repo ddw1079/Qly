@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/template/coin_charge.jsp" />
 
 <!DOCTYPE html>
@@ -147,7 +148,7 @@
             </a>
         	</c:when>
         	<c:otherwise>
-				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
+				    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필" class="profile-pic ms-2" />
         	</c:otherwise>
         </c:choose>
         <div class="text-end me-3 d-flex flex-column align-items-end">
@@ -171,21 +172,34 @@
           </div>
         </div>
         <div>
-             <c:choose>
-	            <c:when test="${empty loginUser}">
-	                <!-- 조건이 참일 때 실행 -->
-	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	              onclick="location.href='/login/loginForm'">>로그인</button>
-	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	                          onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
-	            </c:when>
-	            <c:otherwise>
-	              <!-- 조건이 거짓일 때 실행 -->
-	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	                          onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">마이페이지</button>
-	              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-	                          onclick="location.href='/login/logout.do'">로그아웃</button>
-	            </c:otherwise>
+          <c:choose>
+            <c:when test="${empty loginUser}">
+              <!-- 조건이 참일 때 실행 -->
+              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+              onclick="location.href='/login/loginForm'">>로그인</button>
+              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+                          onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
+            </c:when>
+            <c:otherwise>
+				<c:choose>
+				  <c:when test="${loginUser.userType eq '관리자'}">
+				    <button class="btn w-100 mt-1"
+				            style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+				            onclick="location.href='/admin/memberList.do'">
+				      관리자 페이지
+				    </button>
+				  </c:when>
+				  <c:otherwise>
+				    <button class="btn w-100 mt-1"
+				            style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+				            onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">
+				      마이페이지
+				    </button>
+				  </c:otherwise>
+				</c:choose>
+              <button class="btn w-100 mt-1" style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+                          onclick="location.href='/login/logout.do'">로그아웃</button>
+            </c:otherwise>
 	        </c:choose>
           </div>
       </div>
