@@ -1,120 +1,123 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="/template/coin_charge.jsp" />
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>메뉴바</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<meta charset="UTF-8" />
+<title>메뉴바</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-  <style>
-    /* ✅ 사용자 영역 */
-    .user-panel {
-        background-color: #f9fefc;
-      padding: 12px 20px;
-      border-bottom: 1px solid #dee2e6;
-    }
+<style>
+/* ✅ 사용자 영역 */
+.user-panel {
+	background-color: #f9fefc;
+	padding: 12px 20px;
+	border-bottom: 1px solid #dee2e6;
+}
 
-    .coin-box-lg {
-      padding: 10px 16px;
-      border: 2px solid #41867e;
-      background-color: white;
-      color: #41867e;
-      font-weight: bold;
-      border-radius: 8px;
-      font-size: 16px;
-      white-space: nowrap;
-    }
+.coin-box-lg {
+	padding: 10px 16px;
+	border: 2px solid #41867e;
+	background-color: white;
+	color: #41867e;
+	font-weight: bold;
+	border-radius: 8px;
+	font-size: 16px;
+	white-space: nowrap;
+}
 
-    .profile-pic {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #41867e;
-    }
+.profile-pic {
+	width: 65px;
+	height: 65px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #41867e;
+}
 
-    /* ✅ 메뉴 영역 */
-    .menu-bar {
-      display: flex;
-      background-color: #6db1a9;
-      margin: 0;
-      padding: 0;
-    }
+/* ✅ 메뉴 영역 */
+.menu-bar {
+	display: flex;
+	background-color: #6db1a9;
+	margin: 0;
+	padding: 0;
+}
 
-    .menu-item {
-      flex: 1;
-      text-align: center;
-      padding: 15px 0;
-      font-weight: bold;
-      font-size: 24px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
+.menu-item {
+	flex: 1;
+	text-align: center;
+	padding: 15px 0;
+	font-weight: bold;
+	font-size: 24px;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
 
-    .menu-item:hover {
-      background-color: #559e96;
-    }
+.menu-item:hover {
+	background-color: #559e96;
+}
 
-    /* ✅ submenu */
-    .submenu-container {
-      display: none;
-      background-color: #fff;
-      border-top: 1px solid #dee2e6;
-      border-bottom: 1px solid #dee2e6;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
+/* ✅ submenu */
+.submenu-container {
+	display: none;
+	background-color: #fff;
+	border-top: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
 
-    .submenu-row {
-      display: flex;
-      margin: 0;
-    }
+.submenu-row {
+	display: flex;
+	margin: 0;
+}
 
-    .submenu-cell {
-      flex: 1;
-      border-left: 1px solid #dee2e6;
-      border-right: 1px solid #dee2e6;
-      text-align: center;
-      padding: 10px 0;
-    }
+.submenu-cell {
+	flex: 1;
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	text-align: center;
+	padding: 10px 0;
+}
 
-    .submenu-cell a {
-      display: block;
-      color: #000;
-      text-decoration: none;
-      padding: 6px 0;
-      font-weight: 500;
-    }
+.submenu-cell a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding: 6px 0;
+	font-weight: 500;
+}
 
-    .submenu-cell a:hover {
-      color: #007bff;
-      text-decoration: underline;
-    }
+.submenu-cell a:hover {
+	color: #007bff;
+	text-decoration: underline;
+}
 
-    /* ✅ hover 시 submenu 표시 */
-    .menu-wrapper:hover .submenu-container,
-    .submenu-container:hover {
-      display: block;
-    }
+/* ✅ hover 시 submenu 표시 */
+.menu-wrapper:hover .submenu-container, .submenu-container:hover {
+	display: block;
+}
 
-    /* ✅ 좌우 여백 제거 */
-    .container-fluid, .menu-wrapper, .menu-bar, .submenu-container {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-  </style>
+/* ✅ 좌우 여백 제거 */
+.container-fluid, .menu-wrapper, .menu-bar, .submenu-container {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+</style>
 </head>
 
 <body>
+
 <%
   com.qly.dto.UserDto loginUser =  (com.qly.dto.UserDto)session.getAttribute("loginUser");
 
@@ -222,7 +225,9 @@
             <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">
-            <a href="/Inquirypage/InquiryList.jsp">문의사항</a> 
+            <!-- 고객센터 메뉴 링크 -->
+						<a
+							href="${pageContext.request.contextPath}/Inquirypage/InquiryMain.jsp">문의사항</a>
           </div>
         </div>
       </div>
