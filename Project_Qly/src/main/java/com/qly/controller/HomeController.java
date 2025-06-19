@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping("/mainpage")
     public String showMainPage() {
-        return "mainpage"; // °Ê /WEB-INF/views/mainpage.jsp
+        return "mainpage"; // /WEB-INF/views/mainpage.jsp
     }
 
-    @RequestMapping("/") // ±‚∫ª »® URL
+    @RequestMapping("/") // Î©îÏù∏ URL
     public String home() {
         return "redirect:/mainpage";
     }

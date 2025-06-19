@@ -1,11 +1,18 @@
 package com.qly.controller;
 
 import java.io.File;
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qly.dto.QuestDto;
+import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
 import com.qly.service.QuestService;
@@ -159,6 +167,22 @@ public class QuestController {
 		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
 		return "quest/QuestAllList";
 	}
+	
+	@RequestMapping("/quest_history.do")
+	public String questHistory(@RequestParam("userId") int userId, Model model) {
+	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
+
+	    // 퀘스트별 할 일 목록 Map 생성
+	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
+	    for (QuestTaskDto q : questlist) {
+	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
+	    }
+
+	    model.addAttribute("questlist", questlist);
+	    model.addAttribute("taskMap", taskMap);
+	    return "mypage/questHistory";
+	}
+
 	
 
 }
