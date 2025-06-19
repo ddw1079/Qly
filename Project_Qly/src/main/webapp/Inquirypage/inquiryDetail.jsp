@@ -15,7 +15,6 @@
       height: 100vh;
       margin: 0;
     }
-
     .form-box {
       background: white;
       padding: 40px;
@@ -24,18 +23,15 @@
       width: 100%;
       max-width: 500px;
     }
-
     .form-group {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
     }
-
     .form-group label {
       width: 100px;
       font-weight: bold;
     }
-
     .form-group span {
       flex: 1;
       padding: 10px;
@@ -45,7 +41,6 @@
       background-color: #f5f5f5;
       box-sizing: border-box;
     }
-
     .btn-submit {
       display: block;
       margin-left: auto;
@@ -58,7 +53,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-
     .btn-submit:hover {
       background-color: #00e88e;
     }
@@ -95,7 +89,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const index = parseInt(urlParams.get("index"));
     const data = JSON.parse(localStorage.getItem("inquiries")) || [];
-
     if (!isNaN(index) && data[index]) {
       document.getElementById("type").textContent = data[index].type;
       document.getElementById("title").textContent = data[index].title;

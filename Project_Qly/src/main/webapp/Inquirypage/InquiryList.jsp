@@ -86,15 +86,11 @@
 
 <div class="container">
 
-  <!-- 검색창 + 등록 버튼 -->
+  <!-- 검색창 및 등록 버튼 영역 -->
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
     <button onclick="filterTable()">🔍</button>
-
-<button class="btn-register" onclick="location.href='InquiryForm.jsp'">등록</button>
-
-
-
+    <button class="btn-register" onclick="location.href='InquiryForm.jsp'">등록</button>
   </div>
 
   <!-- 문의 목록 테이블 -->
@@ -110,24 +106,18 @@
     </thead>
     <tbody id="inquiryTableBody"></tbody>
   </table>
-  
-  <!-- 결과 없음 메시지 -->
+
   <p id="noResult" style="display:none; text-align:center; margin-top:20px; color:gray;">
     검색 결과가 없습니다.
   </p>
 
-  <!-- 더보기 버튼 -->
   <div class="more-btn">•••</div>
-
 </div>
 
-<!-- 스크립트 -->
 <script>
-  // 목록 데이터 렌더링
   document.addEventListener("DOMContentLoaded", function () {
     const tbody = document.getElementById("inquiryTableBody");
     const storedData = JSON.parse(localStorage.getItem("inquiries")) || [];
-
     storedData.forEach((item, index) => {
       const row = document.createElement("tr");
       row.innerHTML = `
@@ -141,28 +131,22 @@
     });
   });
 
-  // 검색 필터
   function filterTable() {
     const keyword = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll("#inquiryTableBody tr");
     const noResult = document.getElementById("noResult");
-
     let visibleCount = 0;
-
     rows.forEach(row => {
       const cells = row.querySelectorAll("td");
       let match = false;
-
       cells.forEach(cell => {
         if (cell.textContent.toLowerCase().includes(keyword)) {
           match = true;
         }
       });
-
       row.style.display = match ? "" : "none";
       if (match) visibleCount++;
     });
-
     noResult.style.display = visibleCount === 0 ? "block" : "none";
   }
 </script>

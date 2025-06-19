@@ -212,7 +212,7 @@
             <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">
-            <a href="#">문의사항</a> 
+            <a href="/Inquirypage/InquiryList.jsp">문의사항</a> 
           </div>
         </div>
       </div>
