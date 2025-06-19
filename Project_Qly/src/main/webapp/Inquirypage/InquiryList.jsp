@@ -11,7 +11,6 @@
       background-color: #f7f7f7;
       padding: 50px;
     }
-
     .container {
       max-width: 1000px;
       margin: 0 auto;
@@ -20,12 +19,10 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     .search-box {
       display: flex;
       margin-bottom: 20px;
     }
-
     .search-box input {
       flex: 1;
       padding: 10px 14px;
@@ -34,7 +31,6 @@
       border-radius: 6px 0 0 6px;
       outline: none;
     }
-
     .search-box button {
       padding: 10px 16px;
       background-color: #333;
@@ -43,32 +39,39 @@
       border-radius: 0 6px 6px 0;
       cursor: pointer;
     }
-
+    .btn-register {
+      margin-left: 10px;
+      padding: 10px 16px;
+      background-color: #00FA9A;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-register:hover {
+      background-color: #00e88e;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-
     th, td {
       border: 1px solid #ccc;
       padding: 12px;
       text-align: center;
     }
-
     th {
       background-color: #f0f0f0;
     }
-
     td a {
       color: #007bff;
       text-decoration: none;
     }
-
     td a:hover {
       text-decoration: underline;
     }
-
     .more-btn {
       display: block;
       margin: 20px auto;
@@ -81,54 +84,72 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <!--  검색창 -->
-    <div class="search-box">
-      <input type="text" placeholder="검색어를 입력하세요" />
-      <button>🔍</button>
-    </div>
-
-    <!--  문의 목록 테이블 -->
-    <table>
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>문의 유형</th>
-          <th>문의 제목</th>
-          <th>문의 상황</th>
-          <th>작성일</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>유형</td>
-          <td><a href="#">제목1</a></td>
-          <td>답변 대기</td>
-          <td>2024-08-12</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>유형</td>
-          <td><a href="#">제목2</a></td>
-          <td>답변 완료</td>
-          <td>2024-08-13</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>유형</td>
-          <td><a href="#">제목3</a></td>
-          <td>답변 대기</td>
-          <td>2024-08-14</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- 더보기 버튼 -->
-    <div class="more-btn">•••</div>
-
+  <!-- 검색창 및 등록 버튼 영역 -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="검색어를 입력하세요" />
+    <button onclick="filterTable()">🔍</button>
+    <button class="btn-register" onclick="location.href='InquiryForm.jsp'">등록</button>
   </div>
+
+  <!-- 문의 목록 테이블 -->
+  <table>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>문의 유형</th>
+        <th>문의 제목</th>
+        <th>문의 상황</th>
+        <th>작성일</th>
+      </tr>
+    </thead>
+    <tbody id="inquiryTableBody"></tbody>
+  </table>
+
+  <p id="noResult" style="display:none; text-align:center; margin-top:20px; color:gray;">
+    검색 결과가 없습니다.
+  </p>
+
+  <div class="more-btn">•••</div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tbody = document.getElementById("inquiryTableBody");
+    const storedData = JSON.parse(localStorage.getItem("inquiries")) || [];
+    storedData.forEach((item, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.type}</td>
+        <td><a href="inquiryDetail.jsp?index=${index}">${item.title}</a></td>
+        <td>답변 대기</td>
+        <td>${item.date}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  });
+
+  function filterTable() {
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.querySelectorAll("#inquiryTableBody tr");
+    const noResult = document.getElementById("noResult");
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const cells = row.querySelectorAll("td");
+      let match = false;
+      cells.forEach(cell => {
+        if (cell.textContent.toLowerCase().includes(keyword)) {
+          match = true;
+        }
+      });
+      row.style.display = match ? "" : "none";
+      if (match) visibleCount++;
+    });
+    noResult.style.display = visibleCount === 0 ? "block" : "none";
+  }
+</script>
 
 </body>
 </html>
