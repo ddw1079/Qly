@@ -14,5 +14,6 @@ public interface InquiryMapper {
     List<InquiryDto> selectAll();                           // 占쏙옙체 占쏙옙占쏙옙 占쏙옙회 (占쏙옙占쏙옙占쌘울옙)
     InquiryDto selectById(int questionId);               // 占쏙옙占쏙옙 占쏙옙 占쏙옙회
     List<InquiryDto> selectByUserId(int userId);            // 占쏙옙占쏙옙占� ID占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙회
+    void insertQustion(InquiryDto dto);
     
 }

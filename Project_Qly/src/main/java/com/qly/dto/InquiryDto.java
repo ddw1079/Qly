@@ -11,8 +11,17 @@ public class InquiryDto {
     private String answerStatus;     // ANSWER_STATUS
     private String answerContent;    // ANSWER_CONTENT (초기에는 content와 동일하게 저장)
     private String type;
+    private String questionContent;
     
   
+
+	public String getQuestionContent() {
+		return questionContent;
+	}
+
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
+	}
 
 	public String getType() {
 		return type;

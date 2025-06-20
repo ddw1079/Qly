@@ -37,4 +37,11 @@ public class InquiryServiceImpl implements InquiryService {
 	public List<InquiryDto> getAllInquiries() {
 		return inquiryMapper.selectAll();
 	}
+	
+	@Override
+	public void insertQustion(InquiryDto dto) {
+		inquiryMapper.insertQustion(dto);
+	}
+	
+	
 }

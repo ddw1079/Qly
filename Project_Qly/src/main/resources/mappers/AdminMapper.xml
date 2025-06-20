@@ -141,6 +141,8 @@
 		QUESTS
 		WHERE REG_DATE >= SYSDATE - 7
 	</select>
+	
+	
 
 
 
