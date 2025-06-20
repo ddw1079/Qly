@@ -4,43 +4,52 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.qly.mapper.CoinHistoryMapper;
-import com.qly.mapper.PaymentHistoryMapper;
+import com.qly.dto.CoinChargeDto;
+import com.qly.mapper.CoinMapper;
 import com.qly.vo.CoinHistoryVo;
 import com.qly.vo.PaymentHistoryVo;
 
 @Service
 public class CoinService {
-    @Autowired
-    private CoinHistoryMapper coinHistoryMapper;
 
-    // 코인 히스토리 전체 조회
-    public List<CoinHistoryVo> getAllCoinHistories() {
-        return coinHistoryMapper.findAllHistories();
-    }
-    // 특정 유저의 코인 히스토리 조회
-    public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId) {
-        return coinHistoryMapper.findHistoriesByUserId(userId);
-    }
-    // 코인 히스토리 추가
-    public void addCoinHistory(CoinHistoryVo coinHistory) {
-        coinHistoryMapper.insertHistory(coinHistory);
-    }  
-    
     @Autowired
-    private PaymentHistoryMapper paymentHistoryMapper;
+    private CoinMapper coinMapper;
     
-    // 결제 히스토리 전체 조회
+	@Transactional
+	public void processCharge(int i, CoinChargeDto req) {
+		int coinAmount = req.getCoinAmount();
+		int amountWon = req.getPaid_amount();
+
+		// 1. PAYMENTS 테이블 업데이트 또는 생성
+		coinMapper.updateInsertPayment(i, coinAmount);
+
+		// 2. COIN_HISTORY 삽입
+		Integer currentCoin = coinMapper.getCurrentCoin(i);
+		coinMapper.insertCoinHistory(i, coinAmount, currentCoin, "충전", 0);
+
+		// 3. PAYMENT_HISTORY 삽입
+		coinMapper.insertPaymentHistory(i, amountWon, currentCoin, "충전");
+	}
+
+    // 전체 결제 히스토리 조회
     public List<PaymentHistoryVo> getAllPaymentHistories() {
-        return paymentHistoryMapper.findAllHistories();
+        return coinMapper.findAllPaymentHistories();
     }
+
     // 특정 유저의 결제 히스토리 조회
     public List<PaymentHistoryVo> getPaymentHistoriesByUserId(int userId) {
-        return paymentHistoryMapper.findHistoriesByUserId(userId);
+        return coinMapper.findPaymentHistoriesByUserId(userId);
     }
-    // 결제 히스토리 추가
-    public void addPaymentHistory(PaymentHistoryVo paymentHistory) {
-        paymentHistoryMapper.insertHistory(paymentHistory);
+
+    // 전체 코인 히스토리 조회
+    public List<CoinHistoryVo> getAllCoinHistories() {
+        return coinMapper.findAllCoinHistories();
+    }
+
+    // 특정 유저의 코인 히스토리 조회
+    public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId) {
+        return coinMapper.findCoinHistoriesByUserId(userId);
     }
 }

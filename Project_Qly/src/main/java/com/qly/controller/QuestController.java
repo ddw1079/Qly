@@ -191,7 +191,7 @@ public class QuestController {
 	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
 
 	    // 퀘스트별 할 일 목록 Map 생성
-	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
+	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
 	    for (QuestTaskDto q : questlist) {
 	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
 	    }
