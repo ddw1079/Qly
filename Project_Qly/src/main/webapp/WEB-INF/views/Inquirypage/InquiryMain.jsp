@@ -273,7 +273,7 @@ textarea {
 	<form action="${pageContext.request.contextPath}/inquiry/inquiry2.do" method="post">
 
 		<!-- ✅ hidden input 추가 -->
-		<input type="hidden" name="userId" value="<%= userid %>" /> 
+		<input type="hidden" name="userId" value="<%= userId %>" /> 
 		<input type="hidden" name="userType" value="<%= userType %>" />
 
 		<div class="form-group">

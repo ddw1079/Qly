@@ -122,7 +122,8 @@
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 	
-    int userid = loginUser.getUserId();
+    // int userid = loginUser.getUserId();
+	int userId = loginUser != null ? loginUser.getUserId() : 0;
 	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
 	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
 	int userCoins = loginUser != null ? loginUser.getTotalTokens() : 0;
@@ -130,8 +131,6 @@
 
 
 	<div class="container-fluid">
-
-
 		<!-- ✅ 사용자 정보 패널 -->
 		<div class="row user-panel align-items-center justify-content-between">
 			<div class="col-auto d-flex align-items-center mt-1">

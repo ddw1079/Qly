@@ -45,9 +45,4 @@ public class QuestServiceImpl implements QuestService {
 		}
 	}
 
-	@Override
-	public void registerQuest(QuestDto quest) {
-		// TODO Auto-generated method stub
-		
-	}
 }
