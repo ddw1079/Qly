@@ -11,40 +11,23 @@
 
 	<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
 		SELECT
-		QUEST_ID,
-		USER_ID,
+		QUEST_ID AS questId,
 		TITLE,
 		CATEGORY,
-		CONTENT,
-		PHOTO_PATH,
+		PHOTO_PATH AS photoPath,
 		STATUS,
-		PROGRESS,
-		LATITUDE,
-		LONGITUDE,
-		ADDRESS,
-		LOCATION,
-		START_DATE,
-		END_DATE,
-		CREATED_AT,
-		VIEW_COUNT,
-		REWARD_TOKENS,
 		REG_DATE,
-		(SELECT COUNT(*) FROM
-		QUEST_APPLICATION qa WHERE
-		qa.QUEST_ID = QUESTS.QUEST_ID) AS
+		(SELECT
+		COUNT(*)
+		FROM
+		QUEST_APPLICATION qa
+		WHERE qa.QUEST_ID = q.QUEST_ID) AS
 		applicantCount
-		FROM QUESTS
-		ORDER BY
-		CREATED_AT DESC
+		FROM QUESTS q
+		ORDER BY REG_DATE DESC
 	</select>
 
-	<!-- <insert id="insertQuest" parameterType="com.qly.dto.QuestDto" useGeneratedKeys="true" 
-		keyProperty="questId"> INSERT INTO QUESTS ( QUEST_ID, USER_ID, TITLE, CATEGORY, 
-		CONTENT, PHOTO_PATH, STATUS, PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION, 
-		START_DATE, END_DATE, REWARD_TOKENS ) VALUES ( QUEST_SEQ.NEXTVAL, #{userId}, 
-		#{title}, #{category}, #{content, jdbcType=CLOB}, #{photoPath}, '대기', 0, 
-		#{latitude}, #{longitude}, #{address}, #{location}, #{startDate}, #{endDate}, 
-		#{rewardTokens} ) </insert> -->
+
 	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto">
 		<selectKey keyProperty="questId" order="BEFORE"
 			resultType="int">
@@ -88,6 +71,39 @@
 		)
 	</insert>
 
+	<insert id="insertQuestApplication"
+		parameterType="com.qly.dto.QuestDto">
+		INSERT INTO QUEST_APPLICATION (
+		APPLICATION_ID,
+		QUEST_ID,
+		USER_ID,
+		STATUS,
+		APPLIED_AT
+		) VALUES (
+		QUEST_APPLICATION_SEQ.NEXTVAL,
+		#{questId},
+		#{userId},
+		#{status},
+		#{appliedAt}
+		)
+	</insert>
+
+	<select id="selectQuestById" parameterType="int"
+		resultType="com.qly.dto.QuestDto">
+		SELECT
+		QUEST_ID AS questId,
+		TITLE AS title,
+		ADDRESS AS
+		address,
+		REWARD_TOKENS AS rewardTokens,
+		PHOTO_PATH AS photoPath
+		FROM
+		QUESTS
+		WHERE QUEST_ID = #{questId}
+	</select>
+
+
+
 
 <insert id="insertUser" parameterType="com.qly.dto.UserDto">
   INSERT INTO USERS (
@@ -107,16 +123,17 @@
 
 
 
+
 	<select id="QuestTaskDto" resultType="com.qly.dto.QuestTaskDto">
-    SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
-    </select> 
-    
-   <select id="getQuestUserId" resultType="com.qly.dto.QuestDto">
-    SELECT * 
-    FROM QUESTS 
-    WHERE USER_ID = #{userId}
-    ORDER BY CREATED_AT DESC
-  </select>
+		SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
+	</select>
+
+	<select id="getQuestUserId" resultType="com.qly.dto.QuestDto">
+		SELECT *
+		FROM QUESTS
+		WHERE USER_ID = #{userId}
+		ORDER BY CREATED_AT DESC
+	</select>
 
 
 

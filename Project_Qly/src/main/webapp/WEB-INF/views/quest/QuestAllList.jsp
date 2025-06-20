@@ -72,12 +72,12 @@
 			<c:forEach var="quest" items="${questList}">
 				<div class="col quest-card">
 					<div class="card shadow-sm p-3 h-100">
-						<!-- 이미지 추가 -->
-						<img src="${quest.photoPath}" alt="${quest.title}"
-							class="img-fluid mb-3">
+						<c:if test="${not empty quest.photoPath}">
+							<img src="${quest.photoPath}" class="img-fluid mb-3"
+								alt="퀘스트 이미지" />
+						</c:if>
 
-						<%-- <img src="${quest.imageUrl}" class="card-img-top mb-3"
-							alt="퀘스트 이미지" style="height: 180px; object-fit: cover;"> --%>
+
 						<div class="mb-2">
 							<span class="fw-bold">[카테고리]</span> ${quest.category}
 						</div>
@@ -99,8 +99,10 @@
 						<div class="text-end">
 							<button class="btn btn-sm"
 								style="background-color: #00FA9A; color: black;"
-								onclick="location.href=' .... ' ">상세보기</button>
+								onclick="location.href='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}'">
+								상세보기</button>
 						</div>
+
 					</div>
 				</div>
 			</c:forEach>

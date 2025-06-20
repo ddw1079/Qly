@@ -26,12 +26,12 @@ public class QuestServiceImpl implements QuestService {
 
 	@Transactional
 	@Override
-	public void insertQuest(QuestDto quest, String[] taskList) {
-		// 1. �섏뒪�듃 �벑濡�
-		questMapper.insertQuest(quest); // questId媛� �깮�꽦�맖 (keyProperty)
+	public int insertQuest(QuestDto quest, String[] taskList) {
+		// 1. 퀘스트 등록
+		questMapper.insertQuest(quest); // questId가 생성됨 (keyProperty)
 		System.out.println("questId AFTER insert = " + quest.getQuestId());
 
-		// 2. �쓽猶곕궡�슜(�븷 �씪) �뿬�윭媛� �벑濡�
+		// 2. 의뢰내용(할 일) 여러개 등록
 		if (taskList != null) {
 			for (String desc : taskList) {
 				if (desc != null && !desc.trim().isEmpty()) {
@@ -43,6 +43,22 @@ public class QuestServiceImpl implements QuestService {
 				}
 			}
 		}
+		return quest.getQuestId();
 	}
+
+
+	@Override
+	public void applyQuest(QuestDto quest) {
+		questMapper.insertQuestApplication(quest);
+	}
+
+	@Override
+	public QuestDto getQuestById(int questId) {
+		QuestDto quest = questMapper.selectQuestById(questId); // QUESTS만 조회함
+		List<QuestTaskDto> tasks = questTaskMapper.getTasksByQuestId(questId); // QUEST_TASK 조회 추가
+		quest.setTasks(tasks); // QuestDto 안에 세팅
+		return quest;
+	}
+
 
 }

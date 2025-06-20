@@ -10,9 +10,12 @@
 <title>Insert title here</title>
 </head>
 
+
 <body>
 	<script>
+    
 	 location.href = "${pageContext.request.contextPath}/payments/history.do";
+
 	</script>
 
 </body>

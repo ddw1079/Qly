@@ -1,18 +1,11 @@
 package com.qly.controller;
 
-import java.io.File;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,6 +23,7 @@ import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
 import com.qly.service.QlyService;
 import com.qly.service.QuestService;
+import com.qly.util.CloudinaryUploader;
 import com.qly.util.GeoUtil;
 
 @Controller
@@ -50,14 +44,11 @@ public class QuestController {
 	@RequestMapping(value = "/list.do")
 	public String questList(Model model) {
 		List<QuestDto> questList = questService.getAllQuests();
-
-		System.out.println("questList size: " + questList.size());
-
 		model.addAttribute("questList", questList);
 		return "quest/QuestAllList";
 	}
 
-
+	// 등록
 	@RequestMapping("/registerForm.do")
 	public String showQuestRegisterForm() {
 		return "quest/QuestRegistration";
@@ -87,30 +78,43 @@ public class QuestController {
 		// 1. 로그인 유저 정보 세션에서 꺼내기
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null) {
-			throw new IllegalStateException("로그인 정보가 없습니다.");
+			System.out.println("로그인 정보 없음");
+			return "redirect:/user/login.do";
 		}
+		int userId = loginUser.getUserId();
+		System.out.println(userId);
+		System.out.println("로그인 유저 확인: " + loginUser);
+		System.out.println("userId: " + loginUser.getUserId());
 
-		// int userId = loginUser.getUserId();
-		int userId = 12; // 임시
+		// int userId = 12; // 임시
 
-		// 2. 파일 업로드 처리
+		/*
+		 * // 2. 파일 업로드 처리 String photoPath = null; String uploadDir = null;
+		 * 
+		 * if (photo != null && !photo.isEmpty()) { // 외부 경로로 지정 (E:\images) uploadDir =
+		 * "C:\\images\\";
+		 * 
+		 * File dir = new File(uploadDir); if (!dir.exists()) dir.mkdirs();
+		 * 
+		 * String fileName = UUID.randomUUID().toString() + "_" +
+		 * photo.getOriginalFilename(); File dest = new File(dir, fileName);
+		 * photo.transferTo(dest);
+		 * 
+		 * // 웹에서 접근할 상대 경로 (DB에 저장되는 값) photoPath = "/images/" + fileName; }
+		 */
+
+		// 2. 이미지 업로드 처리 (Cloudinary 사용)
 		String photoPath = null;
-		String uploadDir = null;
 
 		if (photo != null && !photo.isEmpty()) {
-			// 외부 경로로 지정 (E:\images)
-			uploadDir = "E:\\images\\";
-
-			File dir = new File(uploadDir);
-			if (!dir.exists())
-				dir.mkdirs();
-
-			String fileName = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
-			File dest = new File(dir, fileName);
-			photo.transferTo(dest);
-
-			// 웹에서 접근할 상대 경로 (DB에 저장되는 값)
-			photoPath = "/images/" + fileName;
+			try {
+				CloudinaryUploader uploader = new CloudinaryUploader();
+				photoPath = uploader.upload(photo); // Cloudinary에 업로드
+				System.out.println("업로드된 이미지 URL: " + photoPath);
+			} catch (Exception e) {
+				System.out.println("Cloudinary 업로드 실패: " + e.getMessage());
+				e.printStackTrace();
+			}
 		}
 
 		// 3. 날짜 변환
@@ -120,7 +124,9 @@ public class QuestController {
 
 		// 4. DTO 생성 및 값 세팅
 		QuestDto quest = new QuestDto();
-		quest.setUserId(userId); // 세션에서 꺼낸 userId
+		UserDto user = new UserDto();
+		user.setUserId(userId); // 세션에서 꺼낸 userId
+		quest.setUserId(userId);
 		quest.setTitle(title);
 		quest.setPhotoPath(photoPath);
 		quest.setAddress(address);
@@ -148,25 +154,107 @@ public class QuestController {
 		quest.setContent(content);
 
 		// 필요한 필드 추가로 세팅
+		int questId = questService.insertQuest(quest, taskList);
 
-		// 6. 서비스 호출
-		questService.insertQuest(quest, taskList);
+		session.setAttribute("QuestId", questId);
 
 		// 7. 결과 페이지로 이동
-		return "redirect:/quest/list.do";
+		// return "redirect:/quest/list.do?questId=" + questId;
+		// return "redirect:/quest/particularForm.do?questId=" + questId;
+		return "mainpage";
+	}
+
+	@RequestMapping("/particularForm.do")
+	public String showQuestparticularForm(@RequestParam("questId") int questId, HttpSession session, Model model) {
+		System.out.println("전달받은 questId = " + questId);
+
+		QuestDto quest = questService.getQuestById(questId);
+		System.out.println("photoPath: " + quest.getPhotoPath());
+
+		/*
+		 * if (quest == null) { System.out.println("❗ 해당 퀘스트 없음"); return
+		 * "redirect:/quest/list.do"; }
+		 */
+
+		model.addAttribute("quest", quest);
+
+		return "quest/QuestParticular";
+	}
+
+	/*
+	 * @RequestMapping("/application.do") public String
+	 * applyQuest(@RequestParam("questId") int questId, @RequestParam("day") String
+	 * day,
+	 * 
+	 * @RequestParam("time") String time, HttpSession session) throws Exception {
+	 * 
+	 * 
+	 * UserDto loginUser = (UserDto) session.getAttribute("loginUser"); if
+	 * (loginUser == null) return "redirect:/user/login.do";
+	 * 
+	 * System.out.println("👉 로그인한 유저 userId: " + loginUser.getUserId());
+	 * 
+	 * String datetimeStr = day + " " + time; SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date appliedAt =
+	 * sdf.parse(datetimeStr);
+	 * 
+	 * QuestDto dto = new QuestDto(); dto.setQuestId(questId);
+	 * dto.setUserId(loginUser.getUserId()); dto.setStatus("대기");
+	 * dto.setAppliedAt(appliedAt);
+	 * 
+	 * System.out.println("✅ QuestApplication 신청 정보: questId=" + dto.getQuestId() +
+	 * ", userId=" + dto.getUserId() + ", status=" + dto.getStatus() +
+	 * ", appliedAt=" + appliedAt);
+	 * 
+	 * questService.applyQuest(dto); return "mainpage"; }
+	 */
+
+	@RequestMapping("/application.do")
+	public String applyQuest(@RequestParam("questId") int questId, @RequestParam("day") String day,
+			@RequestParam("time") String time, HttpSession session, Model model) throws Exception {
+
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			System.out.println("로그인 정보 없음");
+			return "redirect:/user/login.do";
+		}
+
+		System.out.println("userId: " + loginUser.getUserId());
+		System.out.println("questId: " + questId);
+		System.out.println("day: " + day);
+		System.out.println("time: " + time);
+
+		String datetimeStr = day + " " + time;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date appliedAt = sdf.parse(datetimeStr);
+
+		QuestDto dto = new QuestDto();
+		dto.setQuestId(questId);
+		dto.setUserId(loginUser.getUserId());
+		dto.setStatus("대기");
+		dto.setAppliedAt(appliedAt);
+
+		questService.applyQuest(dto);
+		model.addAttribute("loginUser", loginUser);
+
+		QuestDto quest = questService.getQuestById(questId);
+		System.out.println("photoPath: " + quest.getPhotoPath());
+
+		return "mainpage";
+	}
+
+	@RequestMapping("/listForm.do")
+	public String showQuestListPage() {
+		return "quest/QuestAllList";
 	}
 
 
+	@RequestMapping("/Qly_insert.do")
+	public String insertUser(UserDto dto) throws Exception {
+		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
+		return "quest/QuestAllList";
+	}
 
-	
-	 @RequestMapping("/listForm.do") public String showQuestListPage() { return
-	 "quest/QuestAllList"; }
-	 
-	
-	 
-	 @RequestMapping("/particularForm.do") public String showQuestParticularForm()
-	 { return "quest/QuestParticular"; }
-	 
 
 	 @RequestMapping("/Qly_insert.do")
 	 public String insertUser(UserDto dto) throws Exception {
@@ -186,21 +274,20 @@ public class QuestController {
 	 }
 
 	
+
 	@RequestMapping("/quest_history.do")
 	public String questHistory(@RequestParam("userId") int userId, Model model) {
-	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
+		List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
 
-	    // 퀘스트별 할 일 목록 Map 생성
-	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
-	    for (QuestTaskDto q : questlist) {
-	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
-	    }
+		// 퀘스트별 할 일 목록 Map 생성
+		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
+		for (QuestTaskDto q : questlist) {
+			taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
+		}
 
-	    model.addAttribute("questlist", questlist);
-	    model.addAttribute("taskMap", taskMap);
-	    return "mypage/questHistory";
+		model.addAttribute("questlist", questlist);
+		model.addAttribute("taskMap", taskMap);
+		return "mypage/questHistory";
 	}
-
-	
 
 }

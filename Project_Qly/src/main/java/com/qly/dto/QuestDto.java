@@ -24,8 +24,25 @@ public class QuestDto {
     private String location;
     private Date createdAt;
     private int viewCount;
-
+    private int applicationId;
+	private Date appliedAt;;
     
+	public int getApplicationId() {
+		return applicationId;
+	}
+
+	public void setApplicationId(int applicationId) {
+		this.applicationId = applicationId;
+	}
+
+	public Date getAppliedAt() {
+		return appliedAt;
+	}
+
+	public void setAppliedAt(Date appliedAt) {
+		this.appliedAt = appliedAt;
+	}
+
 	public int getProgress() {
 		return progress;
 	}
