@@ -89,21 +89,24 @@
 	</insert>
 
 
-	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
-		INSERT INTO USERS (
-		USER_ID, USERNAME, PASSWORD, PHONE, ADDRESS, EMAIL, USER_TYPE
-		) VALUES
-		(
-		#{userId},
-		#{username},
-		#{password},
-		#{phone},
-		#{address},
-		#{email},
-		#{userType}
-		)
-	</insert>
-	
+<insert id="insertUser" parameterType="com.qly.dto.UserDto">
+  INSERT INTO USERS (
+    USER_ID, USERNAME, PASSWORD, PHONE, EMAIL, ADDRESS, USER_TYPE, TOTAL_TOKENS, JOIN_DATE
+  ) VALUES (
+    #{userId, jdbcType=INTEGER},
+    #{username, jdbcType=VARCHAR},
+    #{password, jdbcType=VARCHAR},
+    #{phone, jdbcType=VARCHAR},
+    #{email, jdbcType=VARCHAR},
+    #{address, jdbcType=VARCHAR},
+    #{userType, jdbcType=VARCHAR},
+    #{totalTokens, jdbcType=INTEGER},
+    SYSDATE
+  )
+</insert>
+
+
+
 	<select id="QuestTaskDto" resultType="com.qly.dto.QuestTaskDto">
     SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
     </select> 

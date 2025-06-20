@@ -235,7 +235,7 @@
           </div>
           <div class="submenu-cell">
             <a href="/template/coin_charge.jsp">QUBIT 충전</a>
-            <a href="#">QUBIT 환급</a> 
+           <a href="${pageContext.request.contextPath}/exchange/withdrawForm">QUBIT 환급</a>
             <a href="/template/coin_history.jsp">거래내역 확인</a>
           </div>
           <div class="submenu-cell">

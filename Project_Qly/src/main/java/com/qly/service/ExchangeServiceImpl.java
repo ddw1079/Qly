@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.qly.dto.ExchangeDto;
 import com.qly.mapper.ExchangeMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Service
@@ -13,6 +14,9 @@ public class ExchangeServiceImpl implements ExchangeService {
     @Autowired
     private ExchangeMapper exchangeMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; 
+
     @Override
     public ExchangeDto getExchangeInfo(int userId) {
         return exchangeMapper.getExchangeInfo(userId); 
@@ -20,25 +24,25 @@ public class ExchangeServiceImpl implements ExchangeService {
 
     @Override
     public boolean processWithdraw(int userId, int amount, String password) {
-        // 1. 사용자 정보 조회
-        ExchangeDto payment = exchangeMapper.getExchangeInfo(userId);  // 
-        if (payment == null) return false;
+		// 현재 잔액 조회 
+        ExchangeDto payment = exchangeMapper.getExchangeInfo(userId); 
+        
+        //잔액 부족 또는 정보 없음
+        if (payment == null || payment.getCurrentBalance() < amount) return false;
+        
+        //암호화된 비밀번호 가져오기
+        String hashedPassword = exchangeMapper.selectPasswordByUserId(userId);
 
-        // 2. 잔액 부족 확인
-        if (payment.getCurrentBalance() < amount) return false;
+        //비밀번호 비교 실패
+        if (!passwordEncoder.matches(password, hashedPassword)) return false;
 
-        // 3. 비밀번호 확인
-        String userPassword = exchangeMapper.selectPasswordByUserId(userId);
-        if (!userPassword.equals(password)) return false;
-
-        // 4. 잔액 차감 및 출금 기록
+        //출금처리
         int result1 = exchangeMapper.withdrawAmount(userId, amount);
         int newBalance = payment.getCurrentBalance() - amount;
-        int result2 = exchangeMapper.insertWithdrawHistory(userId, amount, newBalance, "출금");  // type 명시
-
-        return result1 > 0 && result2 > 0;
+        int result2 = exchangeMapper.insertWithdrawHistory(userId, amount, newBalance, "출금");
         
+        //성공 여부 반환
+        return result1 > 0 && result2 > 0;
     }
-
 }
 

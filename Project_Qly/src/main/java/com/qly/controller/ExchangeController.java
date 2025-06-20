@@ -29,12 +29,14 @@ public class ExchangeController {
             return "redirect:/login/loginForm";
         }
 
-        int userId = Integer.parseInt(loginUser.getUserId());
+        int userId = loginUser.getUserId();
         ExchangeDto exchangeDto = exchangeService.getExchangeInfo(userId);
         model.addAttribute("exchange", exchangeDto);
 
         return "exchange/exchangemain";
     }
+
+
 
     @RequestMapping(value = "/withdraw.do", method = RequestMethod.POST)
     public String handleWithdrawForm(@RequestParam("amount") int amount,
@@ -48,22 +50,22 @@ public class ExchangeController {
             return "redirect:/login/loginForm";
         }
 
-        int userId = Integer.parseInt(loginUser.getUserId());
+        int userId = loginUser.getUserId();
 
         boolean result = exchangeService.processWithdraw(userId, amount, password);
 
         if (result) {
-            //  출금 성공 시 → 출금 내역 페이지로 이동
+            //  異쒓툑 �꽦怨� �떆 �넂 異쒓툑 �궡�뿭 �럹�씠吏�濡� �씠�룞
             return "redirect:/exchange/history.jsp?latest=true";
         } else {
-            //  출금 실패 시 → 출금 폼 다시 보여주며 오류 메시지 표시
-            model.addAttribute("errorMsg", "출금에 실패했습니다. 비밀번호 또는 잔액을 확인해주세요.");
+            //  異쒓툑 �떎�뙣 �떆 �넂 異쒓툑 �뤌 �떎�떆 蹂댁뿬二쇰ŉ �삤瑜� 硫붿떆吏� �몴�떆
+            model.addAttribute("errorMsg", "異쒓툑�뿉 �떎�뙣�뻽�뒿�땲�떎. 鍮꾨�踰덊샇 �삉�뒗 �옍�븸�쓣 �솗�씤�빐二쇱꽭�슂.");
 
-            // 잔액 정보 다시 조회하여 JSP에 전달
+            // �옍�븸 �젙蹂� �떎�떆 議고쉶�븯�뿬 JSP�뿉 �쟾�떖
             ExchangeDto exchangeDto = exchangeService.getExchangeInfo(userId);
             model.addAttribute("exchange", exchangeDto);
 
-            return "exchange/exchangemain";  // exchangemain.jsp가 위치한 경로 확인 필요
+            return "exchange/exchangemain";  // exchangemain.jsp媛� �쐞移섑븳 寃쎈줈 �솗�씤 �븘�슂
         }
     }
 

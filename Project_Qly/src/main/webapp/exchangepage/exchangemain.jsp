@@ -122,20 +122,38 @@
       </div>
     </div>
 
-    <div class="section">
-      <label>예상 정산액</label>
-      <p id="net-amount">0 원</p>
-    </div>
+  
+	
+<div class="section">
+  <label for="refund-method">환급 방법</label>
+  <select id="refund-method" style="width: 100%; padding: 8px; font-size: 16px;">
+    <option value="">선택하세요</option>
+    <option value="bank">계좌이체</option>
+    <option value="mobile">휴대폰 결제</option>
+  </select>
+</div>
 
-    <div class="section">
-      <label>출금 계좌</label>
-      <label><input type="radio" name="account" checked /> 카카오뱅크 3333-12-1234567</label>
-    </div>
+<!-- 계좌번호 + 은행명 입력 영역 -->
+<div class="section" id="bank-info-section" style="display: none;">
+  <div style="margin-bottom: 12px;">
+   
+  <div>
+    <label for="bank-name">은행명</label>
+    <input type="text" id="bank-name" placeholder="은행명을 입력해주세요"
+           style="width: 100%; padding: 8px; font-size: 16px;" />
+  </div>
+  
+   <label for="account-number">계좌번호 입력</label>
+    <input type="text" id="account-number" placeholder="계좌번호를 입력해주세요"
+           style="width: 100%; padding: 8px; font-size: 16px;" />
+  </div>
+</div>
 
+  
     <div class="section">
       <label for="withdraw-password">출금 비밀번호</label>
-      <input type="password" id="withdraw-password" maxlength="6" placeholder="숫자 6자리 입력" style="width: 100%; padding: 8px; font-size: 16px;" />
-    </div>
+     <input type="password" id="withdraw-password" placeholder="비밀번호를 입력해주세요" style="width: 100%; padding: 8px; font-size: 16px;" />
+	</div>
 
     <div class="section checkbox">
       <label><input type="checkbox" id="confirm" /> 이체 정보를 확인 후 신청합니다</label>
@@ -150,12 +168,17 @@
 
     <div class="actions">
       <button class="primary" onclick="submitWithdraw()">출금 신청</button>
-      <button class="cancel" onclick="location.href='/'">취소</button>
+     <button class="cancel" onclick="location.href='../mainpage.jsp'">취소</button>
+
+
+
     </div>
 
-    <div class="status-link">
-      <a href="/exchange/history.jsp?latest=true">최근 출금 상태 보기 ></a>
-    </div>
+   <div class="status-link">
+  <a href="../coinpage/coin_history.jsp">최근 출금 상태 보기 ></a>
+</div>
+
+
   </div>
 
   <script>
@@ -188,28 +211,53 @@
     }
 
     function submitWithdraw() {
-      const amount = parseInt(input.value || 0);
-      const password = document.getElementById("withdraw-password").value;
+    	  const amount = parseInt(input.value || 0);
+    	  const password = document.getElementById("withdraw-password").value;
+    	  const refundMethod = document.getElementById("refund-method").value;
 
-      if (!document.getElementById("confirm").checked) {
-        alert("보안 확인에 체크해주세요.");
-        return;
-      }
-      if (amount <= 0) {
-        alert("출금 금액을 입력해주세요.");
-        return;
-      }
-      if (password.length !== 6 || !/^[0-9]+$/.test(password)) {
-        alert("비밀번호를 입력해주세요.");
-        return;
-      }
+    	  if (!document.getElementById("confirm").checked) {
+    	    alert("보안 확인에 체크해주세요.");
+    	    return;
+    	  }
+    	  if (amount <= 0) {
+    	    alert("출금 금액을 입력해주세요.");
+    	    return;
+    	  }
+    	  if (password.trim().length === 0) {
+    	    alert("비밀번호를 입력해주세요.");
+    	    return;
+    	  }
 
-      document.getElementById("form-amount").value = amount;
-      document.getElementById("form-password").value = password;
-      document.getElementById("withdraw-form").submit();
-    }
+    	  //  계좌이체일 경우 은행 정보 필수 입력
+    	  if (refundMethod === "bank") {
+    	    const accountNumber = document.getElementById("account-number").value.trim();
+    	    const bankName = document.getElementById("bank-name").value.trim();
+
+    	    if (!accountNumber || !bankName) {
+    	      alert("계좌번호와 은행명을 입력해주세요.");
+    	      return;
+    	    }
+    	  }
+
+    	  // 실제 전송할 값 설정 (필요시 hidden input 추가 가능)
+    	  document.getElementById("form-amount").value = amount;
+    	  document.getElementById("form-password").value = password;
+    	  document.getElementById("withdraw-form").submit();
+    	}
+
 
     input.addEventListener("input", calculate);
+    document.getElementById("refund-method").addEventListener("change", function () {
+        const selected = this.value;
+        const bankInfoSection = document.getElementById("bank-info-section");
+
+        if (selected === "bank") {
+          bankInfoSection.style.display = "block";
+        } else {
+          bankInfoSection.style.display = "none";
+        }
+      });
+    
   </script>
 </body>
 </html>

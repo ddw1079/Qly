@@ -13,8 +13,6 @@ public interface QuestService {
 
 	void insertQuest(QuestDto quest, String[] taskList);
 
-	void registerQuest(QuestDto quest);
-	
 
 
 
