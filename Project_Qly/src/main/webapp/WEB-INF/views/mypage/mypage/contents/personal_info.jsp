@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -46,16 +46,22 @@ body {
 }
 </style>
 </head>
-<body>
-	<div class="container-fluid mt-4 mb-3 px-5">
-		<div class="d-flex justify-content-between align-items-center">
-			<h3>정보 조회</h3>
-			<div class="d-flex align-items-center gap-3">
-				<span style="font-weight: 500;">admin님 (의뢰인 모드)</span>
-				<button class="btn btn-dark btn-sm">로그아웃</button>
-				<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-					alt="프로필" width="50">
-			</div>
+<%
+com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+%>
+
+<div class="container-fluid mt-4">
+	<!-- 상단 -->
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h4 class="fw-bold">퀘스트 목록</h4>
+		<div class="d-flex align-items-center gap-3">
+			<span class="fw-semibold"> <%=loginUser != null ? loginUser.getUsername() : "게스트"%>님
+				(<%=loginUser != null ? loginUser.getUserType() : "비회원"%> 모드)
+			</span>
+			<button class="btn btn-dark btn-sm"
+				onclick="location.href='/login/logout.do'">로그아웃</button>
+			<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+				alt="프로필" width="40" style="border-radius: 50%;">
 		</div>
 	</div>
 
@@ -86,36 +92,31 @@ body {
 						<div class="mb-3 row">
 							<label class="col-sm-2 col-form-label">이름</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" readonly value="홍길동">
+								<input type="text" class="form-control" readonly
+									value="${sessionScope.loginUser.username}">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label class="col-sm-2 col-form-label">전화번호</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" readonly
-									value="010-1234-5678">
+									value="${sessionScope.loginUser.phone}">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label class="col-sm-2 col-form-label">주소</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" readonly
-									value="서울특별시 강남구 테헤란로 123">
+									value="${sessionScope.loginUser.address}">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label class="col-sm-2 col-form-label">이메일</label>
 							<div class="col-sm-10">
 								<input type="email" class="form-control" readonly
-									value="honggildong@example.com">
+									value="${sessionScope.loginUser.email}">
 							</div>
 						</div>
-					</form>
-					<div class="text-end">
-						<button class="btn text-white" style="background-color: #6db1a9;"
-							onclick="location.href='user_layout.jsp?page=../contents/edit_personal_info.jsp'">
-							정보 수정하기</button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -221,5 +222,5 @@ body {
 			</div>
 		</div>
 	</div>
-</body>
+	</body>
 </html>

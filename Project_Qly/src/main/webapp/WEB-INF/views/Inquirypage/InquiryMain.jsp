@@ -137,7 +137,7 @@ textarea {
 	<!-- ✅ 1:1 문의 작성 -->
 	<div id="inquiry" class="tab-content">
 		<form action="${pageContext.request.contextPath}/inquiry/inquiry2.do" method="post">
-			<input type="hidden" name="userId" value="<%=userId%>" />
+			<input type="hidden" name="userId" value="<%=userid%>" />
 			<input type="hidden" name="userType" value="<%=userType%>" />
 			<div class="form-group">
 				<label for="type">문의 유형</label>
