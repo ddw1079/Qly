@@ -226,12 +226,9 @@
             <a href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
           </div>
           <div class="submenu-cell">
-      	    <a href="/quest/registerForm.do">퀘스트 등록</a>
+      	    <a href="${pageContext.request.contextPath}/quest/registerForm.do">퀘스트 등록</a>
 			<a href="/quest/particularForm.do">퀘스트 신청</a>
-			<a href="/quest/list.do">퀘스트 목록</a>
-
-
-
+			<a href="${pageContext.request.contextPath}/quest/list.do">퀘스트 목록</a>
           </div>
           <div class="submenu-cell">
             <a href="/template/coin_charge.jsp">QUBIT 충전</a>

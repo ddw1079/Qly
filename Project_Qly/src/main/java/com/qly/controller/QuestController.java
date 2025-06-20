@@ -1,18 +1,13 @@
 package com.qly.controller;
 
 import java.io.File;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,7 +46,6 @@ public class QuestController {
 		return "quest/QuestAllList";
 	}
 
-
 	@RequestMapping("/registerForm.do")
 	public String showQuestRegisterForm() {
 		return "quest/QuestRegistration";
@@ -89,22 +83,30 @@ public class QuestController {
 
 		// 2. 파일 업로드 처리
 		String photoPath = null;
-		String uploadDir = null;
+		String uploadDir = "E:\\images\\"; // 외부 디렉토리
 
 		if (photo != null && !photo.isEmpty()) {
-			// 외부 경로로 지정 (E:\images)
-			uploadDir = "E:\\images\\";
+			try {
+				File dir = new File(uploadDir);
+				if (!dir.exists()) {
+					boolean created = dir.mkdirs();
+					System.out.println("디렉토리 생성됨: " + created);
+				}
 
-			File dir = new File(uploadDir);
-			if (!dir.exists())
-				dir.mkdirs();
+				String fileName = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
+				File dest = new File(dir, fileName);
+				photo.transferTo(dest);
 
-			String fileName = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
-			File dest = new File(dir, fileName);
-			photo.transferTo(dest);
+				// DB에 저장할 절대경로
+				photoPath = uploadDir + fileName;
+				System.out.println("✅ 이미지 업로드 완료 (절대경로): " + photoPath);
 
-			// 웹에서 접근할 상대 경로 (DB에 저장되는 값)
-			photoPath = "/images/" + fileName;
+			} catch (Exception e) {
+				System.err.println("❗ 이미지 업로드 중 오류 발생: " + e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("⚠️ 업로드된 파일이 없습니다.");
 		}
 
 		// 3. 날짜 변환
@@ -150,39 +152,35 @@ public class QuestController {
 		return "redirect:/quest/list.do";
 	}
 
+	@RequestMapping("/listForm.do")
+	public String showQuestListPage() {
+		return "quest/QuestAllList";
+	}
 
-
-	
-	 @RequestMapping("/listForm.do") public String showQuestListPage() { return
-	 "quest/QuestAllList"; }
-	 
-	
-	 
-	 @RequestMapping("/particularForm.do") public String showQuestParticularForm()
-	 { return "quest/QuestParticular"; }
-	 
+	@RequestMapping("/particularForm.do")
+	public String showQuestParticularForm() {
+		return "quest/QuestParticular";
+	}
 
 	@RequestMapping("/Qly_insert.do")
 	public String insertUser(UserDto dto) throws Exception {
 		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
 		return "quest/QuestAllList";
 	}
-	
+
 	@RequestMapping("/quest_history.do")
 	public String questHistory(@RequestParam("userId") int userId, Model model) {
-	    List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
+		List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
 
-	    // 퀘스트별 할 일 목록 Map 생성
-	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
-	    for (QuestTaskDto q : questlist) {
-	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
-	    }
+		// 퀘스트별 할 일 목록 Map 생성
+		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
+		for (QuestTaskDto q : questlist) {
+			taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
+		}
 
-	    model.addAttribute("questlist", questlist);
-	    model.addAttribute("taskMap", taskMap);
-	    return "mypage/questHistory";
+		model.addAttribute("questlist", questlist);
+		model.addAttribute("taskMap", taskMap);
+		return "mypage/questHistory";
 	}
-
-	
 
 }

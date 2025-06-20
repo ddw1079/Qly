@@ -10,9 +10,10 @@
 <title>Insert title here</title>
 </head>
 
+
 <body>
 	<script>
-	 location.href = "${pageContext.request.contextPath}/mainpage";
+	 location.href = "${pageContext.request.contextPath}/quest/list.do";
 	</script>
 
 </body>
