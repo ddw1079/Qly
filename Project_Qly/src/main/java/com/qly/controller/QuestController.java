@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,11 @@ public class QuestController {
 
 	@Autowired
 	private QlyService qlyService;
+	
+	//암호화용 Bean
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
 
 	@RequestMapping(value = "/list.do")
 	public String questList(Model model) {
@@ -162,11 +168,23 @@ public class QuestController {
 	 { return "quest/QuestParticular"; }
 	 
 
-	@RequestMapping("/Qly_insert.do")
-	public String insertUser(UserDto dto) throws Exception {
-		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
-		return "quest/QuestAllList";
-	}
+	 @RequestMapping("/Qly_insert.do")
+	 public String insertUser(UserDto dto) throws Exception {
+	     // 1. 입력된 평문 비밀번호 가져오기
+	     String rawPw = dto.getPassword();
+
+	     // 2. 암호화 (해싱) 처리
+	     String encodedPw = passwordEncoder.encode(rawPw);
+
+	     // 3. 암호화된 비밀번호로 교체
+	     dto.setPassword(encodedPw);
+
+	     // 4. 저장
+	     qlyService.insertUser(dto);// 서비스 → DAO → MyBatis 호출
+
+	     return "quest/QuestAllList";
+	 }
+
 	
 	@RequestMapping("/quest_history.do")
 	public String questHistory(@RequestParam("userId") int userId, Model model) {
