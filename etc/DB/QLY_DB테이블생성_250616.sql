@@ -131,6 +131,11 @@ CREATE TABLE PAYMENT_HISTORY (
     REMAIN_COIN        NUMBER, -- 현재 잔액
     TYPE               VARCHAR2(100), -- ex: '충전', '출금'
     STATUS             VARCHAR2(50) DEFAULT '성공',
+    
+    BANK_NAME          VARCHAR2(100),  -- 은행명 
+    ACCOUNT_NUMBER     VARCHAR2(100),  -- 계좌번호 
+    
+
     CONSTRAINT FK_PAYMENT_HISTORY_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
 );
 
