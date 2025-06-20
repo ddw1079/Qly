@@ -37,7 +37,7 @@ public class CoinController {
         // 세션에서 로그인된 사용자 정보 가져오기
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/login/loginForm"; // 로그인 페이지로 리다이렉트
+            return "redirect:/mainpage"; // 로그인 페이지로 리다이렉트
         }
         System.out.println("로그인된 사용자: " + loginUser);
         System.out.println("로그인된 사용자: " + loginUser.getUserId());
@@ -52,6 +52,7 @@ public class CoinController {
         System.out.println("결제 히스토리: " + paymentHistories);
         // 모델에 결제 히스토리 추가
         model.addAttribute("paymentHistories", paymentHistories);
+        System.out.println("모델에 결제 히스토리 추가 완료");
 
         return "payments/coin_history"; // 뷰 이름 반환
     }

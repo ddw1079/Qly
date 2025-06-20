@@ -25,6 +25,7 @@
 		<mapper resource="mappers/QuestTaskMapper.xml" />
 		<mapper resource="mappers/UserMapper.xml" />
 		<mapper resource="mappers/InquiryMapper.xml" />
+		<mapper resource="mappers/CoinMapper.xml" />
 
 	</mappers>
 

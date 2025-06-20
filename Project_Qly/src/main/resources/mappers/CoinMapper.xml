@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.mapper.CoinMapper">
+<mapper namespace="com.qly.mapper.CoinMapper">
 
 	<!-- PAYMENTS 테이블: Merge(조건 확인 Update/Insert) -->
 	<update id="updateInsertPayment">
@@ -44,7 +44,7 @@
 		FROM COIN_HISTORY
 	</select>
 
-	<select id="findCoinHistoriesByUserId" parameterType="string" resultType="com.qly.vo.CoinHistoryVo">
+	<select id="findCoinHistoriesByUserId" parameterType="int" resultType="com.qly.vo.CoinHistoryVo">
 		SELECT USER_ID, AMOUNT, REMAIN_COIN, TYPE, TRANSACTION_DATE, QUEST_ID
 		FROM COIN_HISTORY
 		WHERE USER_ID = #{userId}
@@ -57,7 +57,7 @@
 		FROM PAYMENT_HISTORY
 	</select>
 
-	<select id="findPaymentHistoriesByUserId" parameterType="string" resultType="com.qly.vo.PaymentHistoryVo">
+	<select id="findPaymentHistoriesByUserId" parameterType="int" resultType="com.qly.vo.PaymentHistoryVo">
 		SELECT PAYMENT_HISTORY_ID, USER_ID, PAYMENT_DATE, AMOUNT, REMAIN_COIN, TYPE, STATUS
 		FROM PAYMENT_HISTORY
 		WHERE USER_ID = #{userId}
