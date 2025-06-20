@@ -172,11 +172,19 @@ public class QuestController {
 	public String questHistory(@RequestParam("userId") int userId, Model model) {
 		List<QuestTaskDto> questlist = qlyService.getQuestUserId(userId);
 
+<<<<<<< HEAD
 		// 퀘스트별 할 일 목록 Map 생성
 		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
 		for (QuestTaskDto q : questlist) {
 			taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
 		}
+=======
+	    // 퀘스트별 할 일 목록 Map 생성
+	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<Integer, List<QuestTaskDto>>();
+	    for (QuestTaskDto q : questlist) {
+	        taskMap.put(q.getQuestId(), qlyService.getTasksQuestId(q.getQuestId()));
+	    }
+>>>>>>> origin/0620-usermapper-수정
 
 		model.addAttribute("questlist", questlist);
 		model.addAttribute("taskMap", taskMap);
