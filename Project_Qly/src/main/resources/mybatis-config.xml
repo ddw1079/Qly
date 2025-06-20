@@ -16,6 +16,10 @@
 		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
 		<typeAlias alias="auserdto"
 			type="com.qly.dto.admin_QuestDto" />
+			
+			
+			<typeAlias alias="inquirydto"
+			type="com.qly.dto.InquiryDto" />
 
 	</typeAliases>
 
@@ -25,6 +29,8 @@
 		<mapper resource="mappers/QuestTaskMapper.xml" />
 		<mapper resource="mappers/UserMapper.xml" />
 		<mapper resource="mappers/InquiryMapper.xml" />
+		<mapper resource="mappers/ExchangeMapper.xml" />
+		<mapper resource="mappers/CoinMapper.xml" />
 
 	</mappers>
 

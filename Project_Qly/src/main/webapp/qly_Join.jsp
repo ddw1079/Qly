@@ -140,7 +140,7 @@ $(document).ready(function () {
 
     <div class="mb-3 input-group">
         <span class="input-group-text" style="width: 100px;">닉네임</span>
-        <input type="text" class="form-control" id="userName" name="userName" placeholder="닉네임" required>
+        <input type="text" class="form-control" id="username" name="username" placeholder="닉네임" required>
     </div>
 
   <!-- 비밀번호 -->

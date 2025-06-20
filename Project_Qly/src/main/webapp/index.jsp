@@ -13,7 +13,9 @@
 
 <body>
 	<script>
-	 location.href = "${pageContext.request.contextPath}/quest/list.do";
+    
+	 location.href = "${pageContext.request.contextPath}/payments/history.do";
+
 	</script>
 
 </body>

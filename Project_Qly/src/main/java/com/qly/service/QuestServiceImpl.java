@@ -46,6 +46,7 @@ public class QuestServiceImpl implements QuestService {
 		return quest.getQuestId();
 	}
 
+
 	@Override
 	public void applyQuest(QuestDto quest) {
 		questMapper.insertQuestApplication(quest);
@@ -58,5 +59,6 @@ public class QuestServiceImpl implements QuestService {
 		quest.setTasks(tasks); // QuestDto 안에 세팅
 		return quest;
 	}
+
 
 }
