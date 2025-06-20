@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
-<%@ include file="/template/menubar.jsp"%>
+<%@ include file="/template/menubar.jsp"%> 
 
 <%-- 
   ✅ QLY 고객센터 메인 페이지 (InquiryMain.jsp)
@@ -15,7 +15,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>고객센터</title>
+<title>고객센터</title> 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -269,30 +269,55 @@ textarea {
 
 
 		<!-- 1:1 문의작성 -->
-		<div id="inquiry" class="tab-content">
-			<form onsubmit="submitInquiry(event)">
-				<div class="form-group">
-					<label for="type">문의 유형</label> <select id="type" name="type"
-						required>
-						<option value="">문의 유형 선택</option>
-						<option>퀘스트 진행 방법 문의</option>
-						<option>의뢰 내용 변경/수정 요청</option>
-						<option>코인 결제 / 충전 관련 문제</option>
-						<option>퀘스트 수행자 불만 / 신고</option>
-						<option>기타 문의 또는 시스템 오류 제보</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="title">문의 제목</label> <input type="text" id="title"
-						name="title" required>
-				</div>
-				<div class="form-group">
-					<label for="content">문의 내용</label>
-					<textarea id="content" name="content" required></textarea>
-				</div>
-				<button type="submit" class="btn-submit">등록</button>
-			</form>
+<div id="inquiry" class="tab-content">
+	<form action="${pageContext.request.contextPath}/inquiry/inquiry2.do" method="post">
+
+		<!-- ✅ hidden input 추가 -->
+		<input type="hidden" name="userId" value="<%= userid %>" /> 
+		<input type="hidden" name="userType" value="<%= userType %>" />
+
+		<div class="form-group">
+			<label for="type">문의 유형</label>
+			<select id="type" name="type" required>
+				<option value="">문의 유형 선택</option>
+				<option value="guide">퀘스트 진행 방법 문의</option>
+				<option value="edit">의뢰 내용 변경/수정 요청</option>
+				<option value="payment">코인 결제 / 충전 관련 문제</option>
+				<option value="report">퀘스트 수행자 불만 / 신고</option>
+				<option value="etc">기타 문의 또는 시스템 오류 제보</option>
+			</select>
 		</div>
+
+		<div class="form-group">
+			<label for="title">문의 제목</label>
+			<input type="text" id="title" name="title" required />
+		</div>
+
+		<div class="form-group">
+			<label for="content">문의 내용</label>
+			<textarea id="content" name="content" required></textarea>
+		</div>
+
+		<button type="submit" class="btn-submit">등록</button>
+	</form>
+</div> 
+
+		<!-- ✅ 등록 성공 메시지 출력 -->
+		<c:if test="${not empty message}">
+			<div class="alert alert-success text-center" role="alert"
+				style="margin-top: 20px;">${message}</div>
+		</c:if>
+		<c:if test="${not empty message}">
+			<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    showTab('my'); // 등록 성공 시 "내 문의 보기" 탭 활성화
+  });
+</script>
+		</c:if>
+
+
+		<div class="cs-title">CS CENTER</div>
+		<div class="cs-subtitle">궁금한 모든 것을 확인해보세요.</div>
 
 		<!-- 내 문의 보기 -->
 		<div id="my" class="tab-content">
@@ -310,20 +335,23 @@ textarea {
 				<tbody id="inquiryCardContainer">
 					<c:forEach var="inq" items="${inquiryList}">
 						<tr>
-							<td>${inq.id}</td>
+							<td>${inq.questionId}</td>
 							<td>${inq.type}</td>
 							<td>${inq.title}</td>
-							<td>${inq.createdAt}</td>
+							<td>${inq.createdDate}</td>
 							<td><c:choose>
-									<c:when test="${inq.status == '완료'}">
+									<c:when test="${inq.answerStatus eq '답변완료'}">
 										<span class="badge bg-success">답변 완료</span>
 									</c:when>
+									<c:when test="${inq.answerStatus eq '미답변'}">
+										<span class="badge bg-warning text-dark">미답변</span>
+									</c:when>
 									<c:otherwise>
-										<span class="badge bg-warning text-dark">대기</span>
+										<span class="badge bg-danger">에러 상태</span>
+										<%-- 예외 처리용 --%>
 									</c:otherwise>
 								</c:choose></td>
-							<td><a href="inquiryDetail.jsp?id=${inq.id}"
-								class="btn btn-sm btn-outline-secondary">상세보기</a></td>
+
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -358,6 +386,8 @@ textarea {
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
   }
+  
+  
 </script>
 </body>
 </html>

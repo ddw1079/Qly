@@ -16,6 +16,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	
 	margin: 0;
 }
 
@@ -54,7 +55,7 @@ body {
 	color: gray;
 }
 
-.login-box button {
+.login-box button {	
 	background-color: #00FA9A;
 	color: black;
 	font-weight: bold;
@@ -64,6 +65,7 @@ body {
 .login-box button:hover {
 	background-color: #00e88e;
 }
+
 
 .signup-link {
 	text-align: right;
