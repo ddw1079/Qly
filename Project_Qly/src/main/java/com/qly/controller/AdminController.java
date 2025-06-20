@@ -89,4 +89,5 @@ public class AdminController {
         model.addAttribute("page", "admin_question.jsp");
         return "admin/admin_layout";
     }
+    
 }
