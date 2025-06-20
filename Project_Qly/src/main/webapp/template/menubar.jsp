@@ -121,7 +121,8 @@
 
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
-
+	
+    int userid = loginUser.getUserId();
 	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
 	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
 	int userCoins = loginUser != null ? loginUser.getTotalTokens() : 0;
@@ -198,14 +199,13 @@
 								<c:when test="${loginUser.userType eq '관리자'}">
 									<button class="btn w-100 mt-1"
 										style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-										onclick="location.href='/admin/memberList.do'">관리자
+										onclick="location.href='${pageContext.request.contextPath}/admin/memberList.do'">관리자
 										페이지</button>
 								</c:when>
 								<c:otherwise>
 									<button class="btn w-100 mt-1"
 										style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-										onclick="location.href='/SSpring/mypage/propile_Quest/user_layout.jsp'">
-
+										onclick="location.href='/mypage/propile_Quest/user_layout.jsp'">
 										마이페이지</button>
 								</c:otherwise>
 							</c:choose>
@@ -252,8 +252,8 @@
 					</div>
 					<div class="submenu-cell">
 						<!-- 고객센터 메뉴 링크 -->
-						<a
-							href="${pageContext.request.contextPath}/Inquirypage/InquiryMain.jsp">문의사항</a>
+						<a href="${pageContext.request.contextPath}/inquiry/form">문의사항</a>
+
 					</div>
 				</div>
 			</div>
