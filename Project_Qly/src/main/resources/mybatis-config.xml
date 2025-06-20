@@ -16,6 +16,10 @@
 		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
 		<typeAlias alias="auserdto"
 			type="com.qly.dto.admin_QuestDto" />
+			
+			
+			<typeAlias alias="inquirydto"
+			type="com.qly.dto.InquiryDto" />
 
 	</typeAliases>
 

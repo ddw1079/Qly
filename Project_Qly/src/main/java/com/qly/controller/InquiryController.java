@@ -24,13 +24,13 @@ public class InquiryController {
 	@Autowired
 	private InquiryService inquiryService;
 
-	// 1:1 문의 작성 폼
+	// ✅ 1:1 문의 작성 폼 (GET)
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String showInquiryForm() {
 		return "Inquirypage/InquiryMain";
 	}
 
-	// 문의 등록 처리
+	// ✅ 문의 등록 처리 (POST)
 	@RequestMapping(value = "/inquiry2.do", method = RequestMethod.POST)
 	public String submitInquiry(@ModelAttribute InquiryDto dto, HttpSession session,
 			RedirectAttributes redirectAttributes) {
@@ -38,45 +38,41 @@ public class InquiryController {
 		if (user == null) {
 			return "redirect:/login";
 		}
-		
+
 		dto.setUserId(user.getUserId());
-		
-		
 		dto.setAnswerStatus("미답변");
 
-		// ✅ 로그 추가
 		System.out.println("📌 로그인 유저 ID (세션): " + user.getUserId());
 		System.out.println("📌 문의에 설정된 USER_ID: " + dto.getUserId());
-		
 
 		if (dto.getAnswerContent() == null || dto.getAnswerContent().trim().isEmpty()) {
 			dto.setAnswerContent(dto.getContent());
 		}
 
 		inquiryService.saveInquiry(dto);
-
 		redirectAttributes.addFlashAttribute("message", "문의가 성공적으로 등록되었습니다.");
-		return "redirect:/inquiry/list";
+		return "redirect:/inquiry/list.do";
 	}
 
-	// 문의 목록
+	// ✅ 문의 목록 조회 (GET)
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
 	public String listInquiries(Model model, HttpSession session) {
 		UserDto user = (UserDto) session.getAttribute("loginUser");
-		List<InquiryDto> inquiries = (user != null) ? inquiryService.getInquiriesByUserId(user.getUserId())
-				: inquiryService.getAllInquiries(); // 관리자가 보면 전체 출력 가능
+		List<InquiryDto> inquiries = (user != null)
+				? inquiryService.getInquiriesByUserId(user.getUserId())
+				: inquiryService.getAllInquiries();
+
 		model.addAttribute("inquiryList", inquiries);
 		return "Inquirypage/InquiryMain";
 	}
 
-	// 문의 상세
-	// ✔ 올바르게 수정
-	// ✔ 올바르게 수정
+	// ✅ 문의 상세 보기 (GET)
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String viewInquiry(@PathVariable("id") int questionId, Model model) {
 		InquiryDto inquiry = inquiryService.getInquiryById(questionId);
 		model.addAttribute("inquiry", inquiry);
 		return "Inquirypage/inquiryDetail";
 	}
-
+	
+	
 }

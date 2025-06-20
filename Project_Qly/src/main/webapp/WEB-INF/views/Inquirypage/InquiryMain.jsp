@@ -279,12 +279,12 @@ textarea {
 		<div class="form-group">
 			<label for="type">문의 유형</label>
 			<select id="type" name="type" required>
-				<option value="">문의 유형 선택</option>
-				<option value="guide">퀘스트 진행 방법 문의</option>
-				<option value="edit">의뢰 내용 변경/수정 요청</option>
-				<option value="payment">코인 결제 / 충전 관련 문제</option>
-				<option value="report">퀘스트 수행자 불만 / 신고</option>
-				<option value="etc">기타 문의 또는 시스템 오류 제보</option>
+				<option value="문의 유형 선택">문의 유형 선택</option>
+				<option value="퀘스트 진행 방법 문의">퀘스트 진행 방법 문의</option>
+				<option value="의뢰 내용 변경/수정 요청">의뢰 내용 변경/수정 요청</option>
+				<option value="코인 결제 / 충전 관련 문제">코인 결제 / 충전 관련 문제</option>
+				<option value="퀘스트 수행자 불만 / 신고">퀘스트 수행자 불만 / 신고</option>
+				<option value="기타 문의 또는 시스템 오류 제보">기타 문의 또는 시스템 오류 제보</option>
 			</select>
 		</div>
 

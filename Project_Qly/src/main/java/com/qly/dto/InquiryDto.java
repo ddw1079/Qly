@@ -10,8 +10,19 @@ public class InquiryDto {
     private Date createdDate;        // CREATED_DATE
     private String answerStatus;     // ANSWER_STATUS
     private String answerContent;    // ANSWER_CONTENT (초기에는 content와 동일하게 저장)
+    private String type;
+    
+  
 
-    public InquiryDto() {}
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public InquiryDto() {}
 
 	public int getQuestionId() {
 		return questionId;
