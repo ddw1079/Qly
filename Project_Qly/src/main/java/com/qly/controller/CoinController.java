@@ -28,7 +28,7 @@ public class CoinController {
 
     @RequestMapping(value = "/")
     public String index() {
-        return "payments/coin_history"; // 결제 페이지로 이동
+        return "/payments/history.do"; // 결제 페이지로 이동
     }
 
     // 코인 히스토리 조회
@@ -37,6 +37,7 @@ public class CoinController {
         // 세션에서 로그인된 사용자 정보 가져오기
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         if (loginUser == null) {
+            
             return "redirect:/mainpage"; // 로그인 페이지로 리다이렉트
         }
         System.out.println("로그인된 사용자: " + loginUser);

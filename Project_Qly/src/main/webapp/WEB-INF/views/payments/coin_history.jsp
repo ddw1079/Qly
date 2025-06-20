@@ -17,6 +17,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
+<%-- 세션의 유저 데이터를 사용하기 위한 구문 --%>
+<% 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser"); %>
 <div id="modalContainer">
     <!-- Coin Charge Modal -->
     <jsp:include page="../template/coin_charge.jsp" />
@@ -26,7 +28,7 @@
     <div class="card p-3">
         <div class="mb-4 row">
             <div class="col-lg d-flex justify-content-start align-items-center">
-                <span class="fs-4 fw-bold">보유 코인: 1코인</span>
+                <span class="fs-4 fw-bold">보유 코인: <% loginUser.getTotalTokens()%>코인</span>
             </div>
             <div class="col-lg d-flex align-items-center">
                 <button class="btn btn-success w-100" onclick="$('#chargeCoinModal').modal('show');">코인 충전하기</button>
@@ -58,21 +60,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 예시 데이터, 실제 데이터로 대체 필요 -->
-                        <tr>
-                            <td>2025-06-13</td>
-                            <td><span class="text-danger">+</span> 100 코인</td>
-                            <td>퀘스트 성공 보상</td>
-                            <td>300</td>
-                            <td><a href="#">quest Page 링크...</a></td>
-                        </tr>
-                        <tr>
-                            <td>2025-06-15</td>
-                            <td><span class="text-primary">-</span> 70 코인</td>
-                            <td>퀘스트 보상 지급</td>
-                            <td>200</td>
-                            <td><a href="#">quest Page 링크...</a></td>
-                        </tr>
                         <c:forEach var="ch1" items="${coinHistories }">
                         <tr>
                             <td>${ch1.transactionDate}</td>
@@ -108,24 +95,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 예시 데이터, 실제 데이터로 대체 필요 -->
-                        <tr>
-                            <td>2024-05-20 14:30</td>
-                            <td>카카오페이</td>
-                            <td>성공</td>
-                            <td>100,000원</td>
-                            <td>10,000 코인</td>
-                            <td>110,000 코인</td>
-                        </tr>
-                        <tr>
-                            <td>2024-06-01 09:15</td>
-                            <td>계좌이체</td>
-                            <td>성공</td>
-                            <td>50,000원</td>
-                            <td>5,000 코인</td>
-                            <td>115,000 코인</td>
-                        </tr>
-                        
                         <c:forEach var="ch2" items="${paymentHistories }">
                         <tr>
                             <td>${ch2.paymentDate}</td>

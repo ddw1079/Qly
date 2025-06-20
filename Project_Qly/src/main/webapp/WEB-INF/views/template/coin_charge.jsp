@@ -8,6 +8,14 @@
 <div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            <%-- controller 유저 데이터 확인용--%>
+            <div>
+                <c:if test="${not empty user}">
+                    <p class="text-center">안녕하세요, ${user.name}님!</p>
+                <c:else>
+                    <p class="text-center">로그인 후 코인을 충전할 수 있습니다.</p>
+                </c:if>
+            </div>
             <form id="chargeCoinForm">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="chargeCoinModalLabel">코인 충전</h5>
@@ -40,9 +48,9 @@
                         <label for="paymentMethod" class="form-label">결제 방법</label>
                         <select class="form-select" id="paymentMethod" name="paymentMethod" required>
                             <option value="">선택하세요</option>
-                            <option value="credit_card">신용카드</option>
-                            <option value="bank_transfer">계좌이체</option>
-                            <option value="mobile">휴대폰 결제</option>
+                            <option value="kakaopay">카카오페이</option>
+                            <option value="tosspay">토스페이</option>
+                            <option value="naverpay">네이버페이</option>
                         </select>
                     </div>
                     <hr>
@@ -68,7 +76,7 @@
                             let totalAmount = document.getElementById("totalAmount");
 
                             let value = parseInt(coinInput.value) || 0;
-                            let total = value * 10; // 1 코인 = 10원 가정
+                            let total = value * 10; // 1 코인 = 10원
                             totalAmount.textContent = total.toLocaleString() + "원"; // 쉼표 추가하여 금액 표시
                         }
 
@@ -89,9 +97,26 @@
                 // 입력 값 가져오기
                 let coinAmount = document.getElementById("coinAmount").value;
                 let paymentMethod = document.getElementById("paymentMethod").value;
+                let paymentMethodText = document.querySelector("#paymentMethod option:checked").textContent;
                 let totalAmount = document.getElementById("totalAmount").textContent;
                 // 금액 문자열에서 '원' 제거 및 쉼표 제거 
                 totalAmount = parseInt(totalAmount.replace(/[^0-9]/g, ''));
+                
+
+                switch (paymentMethod) {
+                    case "kakaopay":
+                        break;
+                    case "tosspay":
+                        alert("토스페이는 현재 지원하지 않습니다.");
+                        return;
+                    case "naverpay":
+                        alert("네이버페이는 현재 지원하지 않습니다.");
+                        return;
+                    default:
+                        alert("올바른 접근 방식이 아닙니다.");
+                        return;
+                }
+
                 // 유효성 검사
                 if (totalAmount <= 0 || !paymentMethod) {
                     alert("충전할 코인 수와 결제 방법을 올바르게 선택해주세요.");
@@ -102,35 +127,34 @@
                 const IMP = window.IMP;
                 IMP.init('imp15327364'); // 가맹점 식별코드 입력
                 const requestData = {
-                    pg: 'kakaopay', // 결제 수단
+                    pg: paymentMethod, // 결제 수단
                     pay_method: 'card',
                     merchant_uid: "order_" + new Date().getTime(), // 주문 고유 ID
                     amount: totalAmount, // 1 코인 = 10원 가정
                     name: '퀘스트 코인 충전 - ' + totalAmount + '코인',
-                    buyer_name: '사용자 이름',
-                    buyer_tel: '010-1234-5678',
-                    buyer_email: 'email@email.co.kr',
-                    buyer_addr: '서울특별시 강남구',
-                    buyer_postcode: '12345',
+                    buyer_name: ${user.username}, // 사용자 이름
+                    buyer_tel: ${user.phone},
+                    buyer_email: ${user.email},
+                    buyer_addr: ${user.address},
                 };
                 IMP.request_pay(requestData, function(response) {
-                        // 서버에 결제 정보 전송 (예: AJAX 요청)
-                        $.post('/chargeCoin', {
-                            coinAmount: coinAmount,
-                            paymentMethod: paymentMethod,
-                            totalAmount: totalAmount,
-                            imp_uid: response.imp_uid, // 아임포트 결제 고유 ID
-                            merchant_uid: response.merchant_uid // 주문 고유 ID
-                        }, function(response) {
-                            if (response.success) {
-                                alert('코인 충전이 완료되었습니다. 충전된 코인 수: ' + response.coinAmount);
-                                // 페이지 새로고침 또는 코인 잔액 업데이트 로직 추가
-                                location.reload(); // 페이지 새로고침
-                            } else {
-                                alert('코인 충전에 실패하였습니다. 에러 메시지: ' + response.error_msg);
-                            }
-                        });
                     if (response.success) {
+                        // 결제 성공
+                        alert('결제가 완료되었습니다. 결제 금액: ' + response.paid_amount + '원');
+                        
+                        // 서버에 결제 정보 저장
+                        $.post('/charge/success', {
+                            userId: ${user.userId}, // 사용자 ID
+                            paymentDate: , // 결제 날짜 (YYYY-MM-DD 형식)
+                            amount: , // 결제 금액
+                            paymentMethod: paymentMethod, // 결제 방법
+                            status: '결제 성공', // 결제 상태
+                            remainCoin:  // 잔여 코인 (선택적 필드)
+                        }, function(data) {
+                            console.log('결제 정보 저장 완료:', data);
+                        }).fail(function(xhr, status, error) {
+                            console.error('결제 정보 저장 실패:', error);
+                        });
 
                         // 모달 닫기
                         $('#chargeCoinModal').modal('hide');
