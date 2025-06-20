@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap CSS CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap JS CDN (optional) -->
@@ -10,6 +11,7 @@
         <div class="modal-content">
             <%-- controller 유저 데이터 확인용--%>
             <div>
+
                 <c:if test="${not empty user}">
                     <p class="text-center">안녕하세요, ${user.name}님!</p>
                 <c:else>
@@ -100,6 +102,7 @@
                 let paymentMethod = document.getElementById("paymentMethod").value;
                 let paymentMethodText = document.querySelector("#paymentMethod option:checked").textContent;
                 let totalAmount = document.getElementById("totalAmount").textContent;
+                let reason = '퀘스트 코인 충전 - ' + coinAmount + '코인';
                 // 금액 문자열에서 '원' 제거 및 쉼표 제거 
                 totalAmount = parseInt(totalAmount.replace(/[^0-9]/g, ''));
                 
@@ -132,37 +135,40 @@
                     pay_method: 'card',
                     merchant_uid: "order_" + new Date().getTime(), // 주문 고유 ID
                     amount: totalAmount, // 1 코인 = 10원 가정
-                    name: '퀘스트 코인 충전 - ' + totalAmount + '코인',
-                    buyer_name: ${user.username}, // 사용자 이름
-                    buyer_tel: ${user.phone},
-                    buyer_email: ${user.email},
-                    buyer_addr: ${user.address},
+                    name: '퀘스트 코인 충전 - ' + coinAmount + '코인',
+                    buyer_name: "${user.username}", // 사용자 이름
+                    buyer_tel: "${user.phone}", // 사용자 전화번호
+                    buyer_email: "${user.email}", // 사용자 이메일
+                    buyer_addr: "${user.address}", // 사용자 주소
                 };
+                let strIsSuceess = "fail";
                 IMP.request_pay(requestData, function(response) {
                     if (response.success) {
                         // 결제 성공
                         alert('결제가 완료되었습니다. 결제 금액: ' + response.paid_amount + '원');
+                        // 서버에 결제 정보 전송하기 위한 url 정보
+                        strIsSuceess = "success";
                         
-                        // 서버에 결제 정보 저장
-                        $.post('/charge/success', {
-                            userId: ${user.userId}, // 사용자 ID
-                            paymentDate: , // 결제 날짜 (YYYY-MM-DD 형식)
-                            amount: , // 결제 금액
-                            paymentMethod: paymentMethod, // 결제 방법
-                            status: '결제 성공', // 결제 상태
-                            remainCoin:  // 잔여 코인 (선택적 필드)
-                        }, function(data) {
-                            console.log('결제 정보 저장 완료:', data);
-                        }).fail(function(xhr, status, error) {
-                            console.error('결제 정보 저장 실패:', error);
-                        });
-
                         // 모달 닫기
                         $('#chargeCoinModal').modal('hide');
                     } else {
                         // 결제 실패
                         alert('결제에 실패하였습니다. 에러 메시지: ' + response.error_msg);
+                        // 서버에 결제 정보 전송하기 위한 url 정보
+                        strIsSuceess = "fail";
                     }
+                    $.post('/payments/'+strIsSuceess, {
+                        coinAmount: coinAmount,
+                        reason: reason,
+                    }, function(data) {
+                        if (data.success) {
+                            alert('코인이 충전되었습니다. 현재 보유 코인: ' + data.currentCoin);
+                            // 페이지 새로고침 또는 코인 잔액 업데이트 로직 추가
+                            location.reload();
+                        } else {
+                            alert('코인 충전에 실패하였습니다. 에러 메시지: ' + data.error_msg);
+                        }
+                    });
                 });                
             });
             </script>

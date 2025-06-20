@@ -58,14 +58,25 @@ public class CoinController {
         return "payments/coin_history"; // 뷰 이름 반환
     }
 
-	@RequestMapping(value = "/charge/success", method = RequestMethod.POST)
+	@RequestMapping(value = "/success", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> chargeSuccess(@RequestBody CoinChargeDto request,
 	                                       HttpSession session) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-		
-		
+		if (loginUser == null) {
+            return new ResponseEntity<String>("로그인 필요", HttpStatus.UNAUTHORIZED);
+        }
+        coinService.adjustCoinByPayment(loginUser.getUserId(), request.getCoinAmount(), request.getPaymentMethod() + "_" + request.());
 
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+    @RequestMapping(value = "/fail", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> chargeFail(@RequestBody CoinChargeDto request,
+	                                       HttpSession session) {
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		
 		if (loginUser == null) {
 			return new ResponseEntity<String>("로그인 필요", HttpStatus.UNAUTHORIZED);
 		}
@@ -74,5 +85,4 @@ public class CoinController {
 		coinService.processCharge((int) loginUser.getUserId(), request);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
-
 }

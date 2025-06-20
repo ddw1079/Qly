@@ -63,5 +63,18 @@
 		WHERE USER_ID = #{userId}
 	</select>
 
+	<!-- 유저의 코인 개수 변경. 이걸 실행하면 CoinHistoryAspect 가 실행되어야 함. -->
+	<update id="updateUserCoinCount">
+		UPDATE USERS
+		SET COIN_COUNT = COIN_COUNT + #{coinAmount}
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<!-- 결제로 인한 유저의 코인 개수 변경. 이걸 실행하면 PaymentHistoryAspect 가 실행되어야 함. -->
+	<update id="updateUserCoinCountWithPayment">
+		UPDATE USERS
+		SET COIN_COUNT = COIN_COUNT + #{coinAmount}
+		WHERE USER_ID = #{userId}
+	</update>
 </mapper>
 

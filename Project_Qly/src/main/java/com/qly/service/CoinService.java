@@ -21,16 +21,9 @@ public class CoinService {
 	public void processCharge(int i, CoinChargeDto req) {
 		int coinAmount = req.getCoinAmount();
 		int amountWon = req.getPaid_amount();
+        String reason = req.getReason();
 
-		// 1. PAYMENTS 테이블 업데이트 또는 생성
-		coinMapper.updateInsertPayment(i, coinAmount);
-
-		// 2. COIN_HISTORY 삽입
-		Integer currentCoin = coinMapper.getCurrentCoin(i);
-		coinMapper.insertCoinHistory(i, coinAmount, currentCoin, "충전", 0);
-
-		// 3. PAYMENT_HISTORY 삽입
-		coinMapper.insertPaymentHistory(i, amountWon, currentCoin, "충전");
+        coinMapper.updateUserCoinCountWithPayment(, i, reason);
 	}
 
     // 전체 결제 히스토리 조회
@@ -52,4 +45,18 @@ public class CoinService {
     public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId) {
         return coinMapper.findCoinHistoriesByUserId(userId);
     }
+
+    // 코인 조정 메소드. 이 메서드의 실행을 CoinHistoryAspect 가 감지함.
+    @Transactional
+    public void adjustUserCoin(int userId, int coinAmount, String reason, int questId) {
+        coinMapper.updateUserCoinCount(userId, coinAmount, reason, questId); // 코인 변경
+    }
+
+    // 결제용 코인 조정 메소드. 이 메서드의 실행을 PaymentHistoryAspect 가 감지함.
+    @Transactional
+    public void adjustCoinByPayment(int userId, int coinAmount, String reason) {
+        coinMapper.updateUserCoinCountWithPayment(userId, coinAmount, reason); // 결제용 변경
+    }
+
 }
+

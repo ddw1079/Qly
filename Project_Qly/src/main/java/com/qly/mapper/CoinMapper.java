@@ -34,6 +34,16 @@ public interface CoinMapper {
 	void insertPaymentHistory(PaymentHistoryVo vo);
 
 	// 기타 예시 (코인 업데이트 등)
-	void updateCoin(@Param("userId") Long userId, @Param("coinAmount") int coinAmount);
-	Integer getCurrentCoin(@Param("userId") Long userId);
+	// void updateCoin(@Param("userId") Long userId, @Param("coinAmount") int coinAmount);
+	// Integer getCurrentCoin(@Param("userId") Long userId);
+
+	// 사용자 코인 수 업데이트
+	void updateUserCoinCount(@Param("userId") int userId,
+							@Param("coinAmount") int coinAmount,
+							@Param("reason") String reason,
+							@Param("questId") int questId);
+	void updateUserCoinCountWithPayment(@Param("userId") int userId,
+                         @Param("coinAmount") int coinAmount,
+                         @Param("reason") String reason);
+
 }
