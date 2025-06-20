@@ -26,47 +26,68 @@
 
 
 	<!-- ✅ 사용자별 문의 목록 조회 -->
-<select id="selectByUserId" parameterType="int"
-		resultType="com.qly.dto.InquiryDto">
-	SELECT
-		QUESTION_ID AS questionId,
-		TITLE AS title,
-		USER_ID AS userId,
-		CREATED_DATE AS createdDate,
-		ANSWER_STATUS AS answerStatus,
-		ANSWER_CONTENT AS answerContent,
-		TYPE AS type
-	FROM QUESTIONS
-	WHERE USER_ID = #{userId}
-	ORDER BY CREATED_DATE DESC
+<select id="selectByUserId" parameterType="int" resultType="com.qly.dto.InquiryDto">
+  SELECT
+    QUESTION_ID AS questionId,
+    TITLE AS title,
+    USER_ID AS userId,
+    CREATED_DATE AS createdDate,
+    CASE
+      WHEN QUESTION_CONTENT IS NULL 
+           OR TRIM(SUBSTR(TO_CHAR(QUESTION_CONTENT), 1, 4000)) = '' THEN '미답변'
+      ELSE '답변완료'
+    END AS answerStatus,
+    ANSWER_CONTENT AS answerContent,
+    QUESTION_CONTENT AS questionContent,
+    TYPE AS type
+  FROM QUESTIONS
+  WHERE USER_ID = #{userId}
+  ORDER BY CREATED_DATE DESC
 </select>
 
 
-	<!-- ✅ 전체 문의 목록 조회 -->
-	<select id="selectAll" resultType="com.qly.dto.InquiryDto">
-		SELECT
-		QUESTION_ID,
-		TITLE,
-		USER_ID,
-		CREATED_DATE,
-		ANSWER_STATUS,
-		ANSWER_CONTENT
-		FROM QUESTIONS
-		ORDER BY CREATED_DATE DESC
-	</select>
 
+
+
+
+	<!-- ✅ 전체 문의 목록 조회 -->
+<select id="selectAll" parameterType="int" resultType="com.qly.dto.InquiryDto">
+  SELECT
+    QUESTION_ID AS questionId,
+    TITLE AS title,
+    USER_ID AS userId,
+    CREATED_DATE AS createdDate,
+    CASE
+      WHEN QUESTION_CONTENT IS NULL 
+           OR TRIM(SUBSTR(TO_CHAR(QUESTION_CONTENT), 1, 4000)) = '' THEN '미답변'
+      ELSE '답변완료'
+    END AS answerStatus,
+    ANSWER_CONTENT AS answerContent,
+    QUESTION_CONTENT AS questionContent,
+    TYPE AS type
+  FROM QUESTIONS
+  ORDER BY CREATED_DATE DESC
+</select>
 	<!-- ✅ 문의 상세 조회 -->
-	<select id="selectById" parameterType="int"
-		resultType="com.qly.dto.InquiryDto">
-		SELECT
+<select id="selectById" parameterType="int" resultType="com.qly.dto.InquiryDto">
+	SELECT
 		QUESTION_ID,
 		TITLE,
 		USER_ID,
 		CREATED_DATE,
 		ANSWER_STATUS,
-		ANSWER_CONTENT
-		FROM QUESTIONS
-		WHERE QUESTION_ID = #{questionId}
-	</select>
+		ANSWER_CONTENT,
+		QUESTION_CONTENT,
+		TYPE
+	FROM QUESTIONS
+	WHERE QUESTION_ID = #{questionId}
+</select>
+<!-- 관리자 문의답변 -->
+<update id="insertQustion" parameterType="com.qly.dto.InquiryDto">
+  UPDATE QUESTIONS
+  SET QUESTION_CONTENT = #{questionContent, jdbcType=CLOB}
+  WHERE QUESTION_ID = #{questionId, jdbcType=INTEGER}
+</update>
+
 
 </mapper>

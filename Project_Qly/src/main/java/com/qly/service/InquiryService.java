@@ -9,4 +9,5 @@ public interface InquiryService {
     InquiryDto getInquiryById(int questionId);      // ID로 조회
     void insertInquiry(InquiryDto dto);                // 등록
     List<InquiryDto> getInquiriesByUserId(int userId); // 사용자별 목록
+    void insertQustion(InquiryDto dto);   // 관리자 답변
 }
