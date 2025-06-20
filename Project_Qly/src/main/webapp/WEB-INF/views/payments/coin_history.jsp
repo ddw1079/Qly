@@ -28,7 +28,7 @@
     <div class="card p-3">
         <div class="mb-4 row">
             <div class="col-lg d-flex justify-content-start align-items-center">
-                <span class="fs-4 fw-bold">보유 코인: <% loginUser.getTotalTokens()%>코인</span>
+                <span class="fs-4 fw-bold">보유 코인: <% loginUser.getTotalTokens();%>코인</span>
             </div>
             <div class="col-lg d-flex align-items-center">
                 <button class="btn btn-success w-100" onclick="$('#chargeCoinModal').modal('show');">코인 충전하기</button>

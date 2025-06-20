@@ -14,6 +14,7 @@
                     <p class="text-center">안녕하세요, ${user.name}님!</p>
                 <c:else>
                     <p class="text-center">로그인 후 코인을 충전할 수 있습니다.</p>
+                </c:else>
                 </c:if>
             </div>
             <form id="chargeCoinForm">

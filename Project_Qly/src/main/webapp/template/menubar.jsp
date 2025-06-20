@@ -251,7 +251,7 @@
 					</div>
 					<div class="submenu-cell">
 						<!-- 고객센터 메뉴 링크 -->
-						<a href="${pageContext.request.contextPath}/inquiry/form">문의사항</a>
+						<a href="${pageContext.request.contextPath}/inquiry/list.do">문의사항</a>
 
 					</div>
 				</div>
