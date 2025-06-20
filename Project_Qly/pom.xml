@@ -51,6 +51,12 @@
 			<version>20240303</version> <!-- 최신 버전 -->
 		</dependency>
 
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.34.0</version>
+		</dependency>
+
 		<!-- ( 참고 ) 일단 오라클 11g라면 ( #### 오라클 18c는 Dependency로 pom.xml에 기술 ) 1) 플젝 
 			- 마오 - build path - config ... - library 탭에서 add external jar - ojdbc6.jar를 
 			함 2) 또는 ojdbc6.jar 를 복사하여 윈도우 탐색기를 사용하여 tomcat의 lib 방에 넣으시오 -->

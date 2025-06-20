@@ -7,13 +7,24 @@
 	<insert id="insertQuestTask"
 		parameterType="com.qly.dto.QuestTaskDto">
 		INSERT INTO QUEST_TASK (
-		TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
+		TASK_ID, QUEST_ID, DESCRIPTION,
+		IS_CHECKED
 		) VALUES (
 		QUEST_TASK_SEQ.NEXTVAL,
-		#{questId, jdbcType=NUMERIC},
+		#{questId,
+		jdbcType=NUMERIC},
 		#{description, jdbcType=CLOB},
-		#{isChecked, jdbcType=CHAR}
+		#{isChecked,
+		jdbcType=CHAR}
 		)
 	</insert>
+
+	<select id="getTasksByQuestId" parameterType="int"
+		resultType="com.qly.dto.QuestTaskDto">
+		SELECT TASK_ID, QUEST_ID, DESCRIPTION, IS_CHECKED
+		FROM
+		QUEST_TASK
+		WHERE QUEST_ID = #{questId}
+	</select>
 
 </mapper>

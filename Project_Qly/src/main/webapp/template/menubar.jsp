@@ -118,14 +118,34 @@
 </head>
 
 <body>
-
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
-	
-    int userid = loginUser.getUserId();
+
+	/* int userid = loginUser.getUserId();
 	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
 	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
-	int userCoins = loginUser != null ? loginUser.getTotalTokens() : 0;
+	int userCoins = loginUser != null ? loginUser.getTotalTokens() : 0; */
+	int userid = 0;
+	String userName = "게스트";
+	String userType = "비회원";
+	int userCoins = 0;
+
+	if (loginUser != null) {
+		userid = loginUser.getUserId();
+		userName = loginUser.getUsername();
+		userType = loginUser.getUserType();
+		userCoins = loginUser.getTotalTokens();
+
+		// 콘솔 출력
+		System.out.println("🟢 로그인 유저 확인 (JSP)");
+		System.out.println(" - userId: " + userid);
+		System.out.println(" - userName: " + userName);
+		System.out.println(" - userType: " + userType);
+		System.out.println(" - userCoins: " + userCoins);
+	} else {
+		System.out.println("❗ 세션에 로그인 정보 없음 (loginUser is null)");
+
+	}
 	%>
 
 
@@ -239,12 +259,11 @@
 							href="/mypage/propile_Quest/qly_Introduction2.jsp">회사 소개</a>
 					</div>
 					<div class="submenu-cell">
-						<a href="/quest/registerForm.do">퀘스트 등록</a> <a
-							href="/quest/particularForm.do">퀘스트 신청</a> <a
-							href="/quest/list.do">퀘스트 목록</a>
-
-
-
+						<a href="${pageContext.request.contextPath}/quest/registerForm.do">퀘스트
+							등록</a> <a
+							href="${pageContext.request.contextPath}/quest/particularForm.do">퀘스트
+							신청</a> <a href="${pageContext.request.contextPath}/quest/list.do">퀘스트
+							목록</a>
 					</div>
 					<div class="submenu-cell">
 						<a href="/template/coin_charge.jsp">QUBIT 충전</a> <a href="#">QUBIT

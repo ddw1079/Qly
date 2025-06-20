@@ -19,12 +19,16 @@ public interface QuestMapper {
 	List<QuestDto> searchQuests(String keyword);
 
 	void insertUser(UserDto dto);
-	
-	List<QuestTaskDto> getTasksQuestId(int questid);
-	
 
+	List<QuestTaskDto> getTasksQuestId(int questid);
 
 	List<QuestTaskDto> getQuestUserId(int userId);
 
+	// 신청
+	void insertQuestApplication(QuestDto quest);
+
+	QuestDto selectQuestById(int questId);
+
+	QuestDto QuestById(int questId);
 
 }
