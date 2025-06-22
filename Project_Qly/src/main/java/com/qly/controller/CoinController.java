@@ -66,23 +66,8 @@ public class CoinController {
 		if (loginUser == null) {
             return new ResponseEntity<String>("로그인 필요", HttpStatus.UNAUTHORIZED);
         }
-        coinService.adjustCoinByPayment(loginUser.getUserId(), request.getCoinAmount(), request.getPaymentMethod() + "_" + request.());
+        coinService.adjustCoinByPayment(loginUser.getUserId(), request.getCoinAmount(), request.getPaymentMethod() + "_" + request.getReason());
 
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
-
-    @RequestMapping(value = "/fail", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<?> chargeFail(@RequestBody CoinChargeDto request,
-	                                       HttpSession session) {
-		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-		
-		if (loginUser == null) {
-			return new ResponseEntity<String>("로그인 필요", HttpStatus.UNAUTHORIZED);
-		}
-
-		// 여기서 UserId 를 int 형태로 캐스팅했음. 
-		coinService.processCharge((int) loginUser.getUserId(), request);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

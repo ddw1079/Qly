@@ -126,7 +126,21 @@
                     alert("충전할 코인 수와 결제 방법을 올바르게 선택해주세요.");
                     return;
                 }
-
+                let strIsSuceess = "success";
+                $.post('/payments/'+strIsSuceess, {
+                        coinAmount: coinAmount,
+                        reason: reason,
+                        
+                    }, function(data) {
+                        if (data.success) {
+                            alert('코인이 충전되었습니다. 현재 보유 코인: ' + data.currentCoin);
+                            // 페이지 새로고침 또는 코인 잔액 업데이트 로직 추가
+                            location.reload();
+                        } else {
+                            alert('코인 충전에 실패하였습니다. 에러 메시지: ' + data.error_msg);
+                        }
+                    });
+                /*
                 // 충전 로직 (예: AJAX 요청 등)
                 const IMP = window.IMP;
                 IMP.init('imp15327364'); // 가맹점 식별코드 입력
@@ -169,7 +183,8 @@
                             alert('코인 충전에 실패하였습니다. 에러 메시지: ' + data.error_msg);
                         }
                     });
-                });                
+                });   
+                */             
             });
             </script>
         </div>
