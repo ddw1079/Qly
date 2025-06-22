@@ -6,19 +6,19 @@
 
 	<!-- ✅ 1:1 문의 등록 - 시퀀스로 QUESTION_ID 생성 -->
 	<insert id="insertInquiry" parameterType="com.qly.dto.InquiryDto">
-	<selectKey keyProperty="questionId" resultType="int" order="BEFORE">
+	<selectKey keyProperty="questionId" resultType="String" order="BEFORE">
 		SELECT SEQ_QUESTION_ID.NEXTVAL FROM DUAL
 	</selectKey>
 	INSERT INTO QUESTIONS (
 		QUESTION_ID, TITLE, USER_ID, CREATED_DATE,
 		ANSWER_STATUS, ANSWER_CONTENT, TYPE
 	) VALUES (
-		#{questionId, jdbcType=INTEGER},
+		#{questionId, jdbcType=VARCHAR},
 		#{title, jdbcType=VARCHAR},
 		#{userId, jdbcType=INTEGER},
 		SYSDATE,
 		#{answerStatus, jdbcType=VARCHAR},
-		#{answerContent, jdbcType=VARCHAR},
+		#{answerContent, jdbcType=CLOB},
 		#{type, jdbcType=VARCHAR}
 	)
 </insert>
@@ -69,18 +69,18 @@
   ORDER BY CREATED_DATE DESC
 </select>
 	<!-- ✅ 문의 상세 조회 -->
-<select id="selectById" parameterType="int" resultType="com.qly.dto.InquiryDto">
+<select id="selectById" parameterType="String" resultType="com.qly.dto.InquiryDto">
 	SELECT
 		QUESTION_ID,
 		TITLE,
 		USER_ID,
-		CREATED_DATE,
+		CREATED_DATE AS createdDate,
 		ANSWER_STATUS,
-		ANSWER_CONTENT,
-		QUESTION_CONTENT,
+		ANSWER_CONTENT AS answerContent,
+		QUESTION_CONTENT AS questionContent,
 		TYPE
 	FROM QUESTIONS
-	WHERE QUESTION_ID = #{questionId}
+	WHERE QUESTION_ID = #{questionId,jdbcType=VARCHAR}
 </select>
 <!-- 관리자 문의답변 -->
 <update id="insertQustion" parameterType="com.qly.dto.InquiryDto">

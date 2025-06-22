@@ -1,13 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  String pageParam = request.getParameter("page");
+  String pageParam = (String) request.getAttribute("pageParam");
   if (pageParam == null || pageParam.trim().equals("")) {
-    // 기본 페이지 지정 (mypage/contents 폴더 기준)
+    pageParam = request.getParameter("page");
+  }
+  if (pageParam == null || pageParam.trim().equals("")) {
     pageParam = "mypage/contents/personal_info.jsp";
   }
   request.setAttribute("pageParam", pageParam);
 %>
+
 
 <!DOCTYPE html>
 <html lang="ko">

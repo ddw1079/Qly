@@ -7,6 +7,16 @@ public class QuestTaskDto {
 	private String isChecked; // '0' or '1'
 
 
+
+
+	public String getIsChecked() {
+		return isChecked;
+	}
+
+	public void setIsChecked(String isChecked) {
+		this.isChecked = isChecked;
+	}
+
 	public Integer getTaskId() {
 		return taskId;
 	}
@@ -31,11 +41,5 @@ public class QuestTaskDto {
 		this.description = description;
 	}
 
-	public String getIsChecked() {
-		return isChecked;
-	}
 
-	public void setIsChecked(String isChecked) {
-		this.isChecked = isChecked;
-	}
 }
