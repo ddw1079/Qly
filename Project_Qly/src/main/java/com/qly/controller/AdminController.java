@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.qly.dto.InquiryDto;
 import com.qly.dto.UserDto;
-import com.qly.dto.admin_QuestDto;
+import com.qly.dto.AdminQuestDto;
 import com.qly.service.AdminService;
 import com.qly.service.InquiryService;
 
@@ -65,7 +65,7 @@ public class AdminController {
     // ✅ 퀘스트 목록 페이지 (검색 포함)
     @RequestMapping("/questList.do")
     public String showQuestList(@RequestParam(required = false) String keyword, Model model) {
-        List<admin_QuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
+        List<AdminQuestDto> questList = (keyword != null && !keyword.trim().isEmpty())
                 ? adminService.searchQuests(keyword)
                 : adminService.getAllQuests();
 

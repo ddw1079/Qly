@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qly.dto.UserDto;
-import com.qly.dto.admin_QuestDto;
+import com.qly.dto.AdminQuestDto;
 import com.qly.mapper.AdminMapper;
 
 @Service
@@ -31,12 +31,12 @@ public class AdminService {
 	}
 
 	// 퀘스트 검색
-	public List<admin_QuestDto> searchQuests(String keyword) {
+	public List<AdminQuestDto> searchQuests(String keyword) {
 		return adminMapper.searchQuests(keyword);
 	}
 
 	// 전체 퀘스트 조회
-	public List<admin_QuestDto> getAllQuests() {
+	public List<AdminQuestDto> getAllQuests() {
 		return adminMapper.getAllQuests();
 	}
 

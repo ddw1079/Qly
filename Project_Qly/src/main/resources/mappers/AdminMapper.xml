@@ -21,7 +21,7 @@
 
 	<!-- ✅ 퀘스트 결과 매핑 -->
 	<resultMap id="adminQuestResultMap"
-		type="com.qly.dto.admin_QuestDto">
+		type="com.qly.dto.AdminQuestDto">
 		<result property="questId" column="QUEST_ID" />
 		<result property="userId" column="USER_ID" />
 		<result property="title" column="TITLE" />

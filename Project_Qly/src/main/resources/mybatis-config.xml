@@ -1,37 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true" />
-	</settings>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
 
-	<typeAliases>
-		<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
-		<typeAlias alias="questtaskdto"
-			type="com.qly.dto.QuestTaskDto" />
-		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
-		<typeAlias alias="auserdto"
-			type="com.qly.dto.admin_QuestDto" />
-			
-			
-			<typeAlias alias="inquirydto"
-			type="com.qly.dto.InquiryDto" />
+    <typeAliases>
+        <typeAlias alias="QuestDto" type="com.qly.dto.QuestDto"/>
+        <typeAlias alias="QuestTaskDto" type="com.qly.dto.QuestTaskDto"/>
+        <typeAlias alias="UserDto" type="com.qly.dto.UserDto"/>
+        <typeAlias alias="AdminQuestDto" type="com.qly.dto.AdminQuestDto"/>
+        <typeAlias alias="InquiryDto" type="com.qly.dto.InquiryDto"/>
+    </typeAliases>
 
-	</typeAliases>
-
-	<mappers>
-		<mapper resource="mappers/QuestMapper.xml" />
-		<mapper resource="mappers/AdminMapper.xml" />
-		<mapper resource="mappers/QuestTaskMapper.xml" />
-		<mapper resource="mappers/UserMapper.xml" />
-		<mapper resource="mappers/InquiryMapper.xml" />
-		<mapper resource="mappers/ExchangeMapper.xml" />
-		<mapper resource="mappers/CoinMapper.xml" />
-
-	</mappers>
+    <mappers>
+        <mapper resource="mappers/QuestMapper.xml"/>
+        <mapper resource="mappers/AdminMapper.xml"/>
+        <mapper resource="mappers/QuestTaskMapper.xml"/>
+        <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/InquiryMapper.xml"/>
+        <mapper resource="mappers/ExchangeMapper.xml"/>
+        <mapper resource="mappers/CoinMapper.xml"/>
+    </mappers>
 
 </configuration>

@@ -1,61 +1,65 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xsi:schemaLocation="
            http://www.springframework.org/schema/beans 
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context 
            http://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/aop 
-           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+      
 
-	<!-- 데이터베이스 연결 -->
-	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName"
-			value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url"
-			value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
-		<property name="username" value="qly" />
-		<property name="password" value="qly" />
-	</bean>
+    <!-- 데이터베이스 연결 -->
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+        <property name="username" value="qly" />
+        <property name="password" value="qly" />
+    </bean>
 
-	<!-- MyBatis SqlSessionFactory -->
-	<bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations"
-			value="classpath:/mappers/*.xml" />
-		<property name="typeAliasesPackage" value="com.qly.dto" />
-	</bean>
+    <!-- MyBatis SqlSessionFactory -->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:/mappers/*.xml" />
+        <property name="typeAliasesPackage" value="com.qly.dto" />
+    </bean>
 
-	<!-- SqlSessionTemplate -->
-	<bean id="sqlSession"
-		class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg name="sqlSessionFactory"
-			ref="sqlSessionFactory" />
-	</bean>
+    <!-- SqlSessionTemplate -->
+    <bean id="sqlSession"
+          class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
 
-	<!-- Mapper 인터페이스 스캔 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.qly.mapper" />
-	</bean>
+    <!-- Mapper 인터페이스 스캔 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qly.mapper" />
+    </bean>
 
-	<!-- 트랜잭션 관리자 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+    <!-- 트랜잭션 관리자 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
-	<context:component-scan base-package="com.qly"></context:component-scan>
+    <!-- ✅ 트랜잭션 어노테이션(@Transactional) 활성화 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="passwordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <!-- 컴포넌트 스캔 -->
+    <context:component-scan base-package="com.qly" />
 
-	<!-- aop Annotation 을 사용하려면 필요함 -->
-	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
+    <!-- 비밀번호 암호화 -->
+    <bean id="passwordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <!-- AOP 활성화 필요시 -->
+    <!-- <aop:aspectj-autoproxy /> -->
 
 </beans>

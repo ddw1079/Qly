@@ -2,7 +2,7 @@ package com.qly.dto;
 
 import java.util.Date;
 
-public class admin_QuestDto {
+public class AdminQuestDto {
     private int questId;
     private String title;
     private Date createdAt;           // ✅ 날짜 타입으로 수정

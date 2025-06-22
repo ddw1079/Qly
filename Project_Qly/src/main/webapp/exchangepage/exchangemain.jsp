@@ -4,6 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <title>코인 출금</title>
+  <%
+  com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+  String phone = loginUser != null ? loginUser.getPhone() : "01000000000"; // 기본값 또는 예외 처리%>
+  
   <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
@@ -92,6 +96,15 @@
     }
   </style>
 </head>
+<% 
+  if (loginUser == null || loginUser.getPhone() == null) {
+%>
+  <script>alert("로그인이 필요하거나 전화번호가 등록되어 있지 않습니다."); history.back();</script>
+<%
+    return;
+  }
+%>
+
 <body>
   <div class="withdrawal-container">
     <h2>코인 출금</h2>
@@ -160,11 +173,16 @@
       <small style="color: gray;">※ 정산은 영업일 기준으로 최대 3일 정도 소요됩니다.</small>
     </div>
 
-    <!-- 출금 hidden form -->
-    <form id="withdraw-form" action="/exchange/withdraw.do" method="post">
-      <input type="hidden" name="amount" id="form-amount" />
-      <input type="hidden" name="password" id="form-password" />
-    </form>
+   <!-- 출금 hidden form -->
+<form id="withdraw-form" action="/exchange/withdraw.do" method="post">
+  <input type="hidden" name="amount" id="form-amount" />
+  <input type="hidden" name="password" id="form-password" />
+  <input type="hidden" name="bankName" id="form-bank-name" />
+  <input type="hidden" name="accountNumber" id="form-account-number" />
+</form>
+
+
+
 
     <div class="actions">
       <button class="primary" onclick="submitWithdraw()">출금 신청</button>
@@ -181,83 +199,120 @@
 
   </div>
 
-  <script>
-    const input = document.getElementById("withdraw-amount");
-    const netAmountEl = document.getElementById("net-amount");
-    const COIN_TO_WON = 10;
-    const myCoin = <%= currentBalance %>;
+ <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script>
+  const input = document.getElementById("withdraw-amount");
+  const COIN_TO_WON = 10;
+  const myCoin = <%= currentBalance %>;
 
-    function addAmount(value) {
-      const current = parseInt(input.value || 0);
-      input.value = current + value;
-      calculate();
-    }
+  function addAmount(value) {
+    const current = parseInt(input.value || 0);
+    input.value = current + value;
+    calculate();
+  }
 
-    function setMax() {
+  function setMax() {
+    input.value = myCoin;
+    calculate();
+  }
+
+  function calculate() {
+    const amount = parseInt(input.value || 0);
+    if (amount > myCoin) {
+      alert("잔액보다 많은 금액을 입력했습니다.");
       input.value = myCoin;
-      calculate();
+      return;
+    }
+  }
+
+  function submitWithdraw() {
+    const amount = parseInt(input.value || 0);
+    const password = document.getElementById("withdraw-password").value;
+    const refundMethod = document.getElementById("refund-method").value;
+
+    if (!document.getElementById("confirm").checked) {
+      alert("보안 확인에 체크해주세요.");
+      return;
+    }
+    if (amount <= 0) {
+      alert("출금 금액을 입력해주세요.");
+      return;
+    }
+    if (password.trim().length === 0) {
+      alert("비밀번호를 입력해주세요.");
+      return;
     }
 
-    function calculate() {
-      const amount = parseInt(input.value || 0);
-      if (amount > myCoin) {
-        alert("잔액보다 많은 금액을 입력했습니다.");
-        input.value = myCoin;
+    if (refundMethod === "bank") {
+      const accountNumber = document.getElementById("account-number").value.trim();
+      const bankName = document.getElementById("bank-name").value.trim();
+
+      if (!accountNumber || !bankName) {
+        alert("계좌번호와 은행명을 입력해주세요.");
         return;
       }
-      const fee = Math.floor(amount * 0.01);
-      const net = amount - fee;
-      netAmountEl.textContent = (net * COIN_TO_WON).toLocaleString() + " 원";
-    }
 
-    function submitWithdraw() {
-    	  const amount = parseInt(input.value || 0);
-    	  const password = document.getElementById("withdraw-password").value;
-    	  const refundMethod = document.getElementById("refund-method").value;
+      document.getElementById("form-bank-name").value = bankName;
+      document.getElementById("form-account-number").value = accountNumber;
 
-    	  if (!document.getElementById("confirm").checked) {
-    	    alert("보안 확인에 체크해주세요.");
-    	    return;
-    	  }
-    	  if (amount <= 0) {
-    	    alert("출금 금액을 입력해주세요.");
-    	    return;
-    	  }
-    	  if (password.trim().length === 0) {
-    	    alert("비밀번호를 입력해주세요.");
-    	    return;
-    	  }
+      document.getElementById("form-amount").value = amount;
+      document.getElementById("form-password").value = password;
+      document.getElementById("withdraw-form").submit();
 
-    	  //  계좌이체일 경우 은행 정보 필수 입력
-    	  if (refundMethod === "bank") {
-    	    const accountNumber = document.getElementById("account-number").value.trim();
-    	    const bankName = document.getElementById("bank-name").value.trim();
+    } else if (refundMethod === "mobile") {
+    	  IMP.init("channel-key-17d098c7-8f98-42b5-b35a-58f760f435c6");
+    	  IMP.request_pay({
+    	    pg: "kakaopay",
+    	    pay_method: "card",
+    	    merchant_uid: "refund_" + new Date().getTime(),
+    	    name: "코인 환급",
+    	    amount: amount * COIN_TO_WON,
+    	    buyer_tel: "<%= phone %>"
+    	  }, function (rsp) {
+    	    if (rsp.success) {
+    	      alert("출금 요청이 처리중입니다...");
 
-    	    if (!accountNumber || !bankName) {
-    	      alert("계좌번호와 은행명을 입력해주세요.");
-    	      return;
+    	      // ✅ 서버에 출금 금액 먼저 세션에 저장
+    	      fetch("/exchange/saveMobileAmount", {
+    	        method: "POST",
+    	        headers: {
+    	          "Content-Type": "application/x-www-form-urlencoded"
+    	        },
+    	        body: "amount=" + amount
+    	      })
+    	      .then(() => {
+    	        // 금액 저장 후 거래 완료 확인 요청
+    	        return fetch("/exchange/mobileSuccess.do?imp_uid=" + rsp.imp_uid + "&merchant_uid=" + rsp.merchant_uid);
+    	      })
+    	      .then(response => response.json())
+    	      .then(data => {
+    	        if (data.success) {
+    	          alert(data.message); // 🎉 거래 완료 메시지
+    	          location.href = "/exchange/history.jsp?latest=true";
+    	        } else {
+    	          alert("❗ " + data.message); // 실패 메시지
+    	        }
+    	      })
+    	      .catch(error => {
+    	        alert("⚠️ 오류가 발생했습니다: " + error);
+    	      });
+
+    	    } else {
+    	      alert("결제가 취소되었습니다.");
     	    }
-    	  }
-
-    	  // 실제 전송할 값 설정 (필요시 hidden input 추가 가능)
-    	  document.getElementById("form-amount").value = amount;
-    	  document.getElementById("form-password").value = password;
-    	  document.getElementById("withdraw-form").submit();
+    	  });
     	}
 
+  }
 
-    input.addEventListener("input", calculate);
-    document.getElementById("refund-method").addEventListener("change", function () {
-        const selected = this.value;
-        const bankInfoSection = document.getElementById("bank-info-section");
+  input.addEventListener("input", calculate);
+  document.getElementById("refund-method").addEventListener("change", function () {
+    const selected = this.value;
+    const bankInfoSection = document.getElementById("bank-info-section");
+    bankInfoSection.style.display = selected === "bank" ? "block" : "none";
+  });
+</script>
 
-        if (selected === "bank") {
-          bankInfoSection.style.display = "block";
-        } else {
-          bankInfoSection.style.display = "none";
-        }
-      });
-    
-  </script>
+
 </body>
 </html>

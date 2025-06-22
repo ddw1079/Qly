@@ -28,24 +28,29 @@
 
     <!-- 출금 기록 삽입 -->
     <insert id="insertWithdrawHistory" parameterType="map">
-        INSERT INTO PAYMENT_HISTORY (
-            PAYMENT_HISTORY_ID,
-            USER_ID,
-            PAYMENT_DATE,
-            AMOUNT,
-            REMAIN_COIN,
-            TYPE,
-            STATUS
-        ) VALUES (
-            PAYMENT_HISTORY_SEQ.NEXTVAL,
-            #{userId},
-            SYSDATE,
-            #{amount},
-            #{remain},
-            #{type},
-            '성공'
-        )
-    </insert>
+    INSERT INTO PAYMENT_HISTORY (
+        PAYMENT_HISTORY_ID,
+        USER_ID,
+        PAYMENT_DATE,
+        AMOUNT,
+        REMAIN_COIN,
+        TYPE,
+        STATUS,
+        BANK_NAME,
+        ACCOUNT_NUMBER
+    ) VALUES (
+        PAYMENT_HISTORY_SEQ.NEXTVAL,
+        #{userId},
+        SYSDATE,
+        #{amount},
+        #{remain},
+        #{type},
+        '성공',
+        #{bankName},
+        #{accountNumber}
+    )
+</insert>
+
 
     <!-- 사용자 비밀번호 조회 -->
     <select id="selectPasswordByUserId" resultType="String" parameterType="int">
