@@ -11,18 +11,18 @@ import com.qly.vo.PaymentHistoryVo;
 @Mapper
 public interface CoinMapper {
 	void updateInsertPayment(@Param("userId") int i, @Param("coinAmount") int coinAmount);
-	Integer getCurrentCoin(@Param("userId") int userId);
+	int getCurrentCoin(@Param("userId") int userId);
 
 	void insertCoinHistory(@Param("userId") int userId,
-	                       @Param("amount") int amount,
+	                       @Param("coinAmount") int amount,
 	                       @Param("remain") int remain,
-	                       @Param("type") String type,
+	                       @Param("reason") String reason,
 	                       @Param("questId") int questId);
 
 	void insertPaymentHistory(@Param("userId") int userId,
-	                          @Param("amount") int amount,
+	                          @Param("coinAmount") int amount,
 	                          @Param("remain") int remain,
-	                          @Param("type") String type);
+	                          @Param("reason") String type);
 	// 코인 히스토리 관련
 	List<CoinHistoryVo> findAllCoinHistories();
 	List<CoinHistoryVo> findCoinHistoriesByUserId(@Param("userId") int userId);

@@ -2,28 +2,39 @@ package com.qly.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.qly.mapper.CoinMapper;
 
 @Aspect
 @Component
 public class CoinHistoryAspect {
+
     @Autowired
-    private com.qly.mapper.CoinMapper coinMapper;
+    private CoinMapper coinMapper;
 
-    @After("execution(* com.qly.mapper.CoinMapper.updateUserCoinCount(..))")
+    @AfterReturning("execution(* com.qly.service.CoinService.adjustUserCoin(int, int, String, int))")
     public void recordCoinChange(JoinPoint joinPoint) {
-        int userId = (Integer) joinPoint.getArgs()[0];
-        int coinAmount = (Integer) joinPoint.getArgs()[1];
-        int currentCoin = coinMapper.getCurrentCoin(userId);
-        String reason =  (String) joinPoint.getArgs()[2];
-        int questId = (Integer) joinPoint.getArgs()[3]; // 예시로 questId를 추가
-
-        System.out.println("[AOP] 코인 변경 감지 → userId=" + userId + ", amount=" + coinAmount + ", currentCoin=" + currentCoin + ", reason=" + reason + ", questId=" + questId);
-        // TODO: coinMapper.insertCoinHistory(...) 같은 실제 기록 로직 연결 가능
-        
-        coinMapper.insertCoinHistory(userId, coinAmount, currentCoin, reason, questId);
-        System.out.println("[AOP] 코인기록 테이블에 기록됨 → userId=" + userId + ", amount=" + coinAmount + ", reason=" + reason + ", questId=" + questId);
+    	System.out.println("[AOP] CoinHistoryAspect 의 안으로 들어왔음!" + joinPoint);
+        Object[] args = joinPoint.getArgs();
+        int userId = (Integer) args[0];
+        int coinAmount = (Integer) args[1];
+        String type = (String) args[2];
+        int remain = coinMapper.getCurrentCoin(userId);
+        int questId = (Integer) args[3];
+//        int questId = 0;
+//        if (args.length >= 4) {
+//        	questId = (Integer) args[3];
+//        }
+        System.out.println("[AOP] CoinHistoryAspect 정상 완료됨!" + 
+        "userId: " + userId + " |coinAmount: " + coinAmount + " |type: " + type + " |remain: " + remain
+        + " |questId: " + questId);
+        // QUEST_ID는 일반 결제/충전인 경우 0
+        coinMapper.insertCoinHistory(userId, coinAmount, remain, type, questId);
+        System.out.println("[AOP] CoinHistoryAspect 정상 완료됨!");
     }
 }
