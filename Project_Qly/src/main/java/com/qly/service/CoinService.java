@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qly.dto.CoinChargeDto;
 import com.qly.mapper.CoinMapper;
 import com.qly.vo.CoinHistoryVo;
 import com.qly.vo.PaymentHistoryVo;
@@ -17,14 +16,14 @@ public class CoinService {
     @Autowired
     private CoinMapper coinMapper;
     
-	@Transactional
-	public void processCharge(int i, CoinChargeDto req) {
-		int coinAmount = req.getCoinAmount();
-		int amountWon = req.getPaid_amount();
-        String reason = req.getReason();
+	// @Transactional
+	// public void processCharge(int i, CoinChargeDto req) {
+	// 	int coinAmount = req.getCoinAmount();
+	// 	int amountWon = req.getPaid_amount();
+    //     String reason = req.getReason();
 
-        coinMapper.updateUserCoinCountWithPayment(, i, reason);
-	}
+    //     coinMapper.updateUserCoinCountWithPayment(, i, reason);
+	// }
 
     // 전체 결제 히스토리 조회
     public List<PaymentHistoryVo> getAllPaymentHistories() {

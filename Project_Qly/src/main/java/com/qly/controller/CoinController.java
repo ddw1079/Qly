@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qly.dto.CoinChargeDto;
@@ -60,13 +61,14 @@ public class CoinController {
 
 	@RequestMapping(value = "/success", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> chargeSuccess(@RequestBody CoinChargeDto request,
+	public ResponseEntity<?> chargeSuccess(@RequestParam int coinAmount,
+											@RequestParam String reason,
 	                                       HttpSession session) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null) {
             return new ResponseEntity<String>("로그인 필요", HttpStatus.UNAUTHORIZED);
         }
-        coinService.adjustCoinByPayment(loginUser.getUserId(), request.getCoinAmount(), request.getPaymentMethod() + "_" + request.getReason());
+        coinService.adjustCoinByPayment(loginUser.getUserId(), coinAmount, reason);
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

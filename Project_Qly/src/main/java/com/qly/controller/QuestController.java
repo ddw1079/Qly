@@ -249,11 +249,11 @@ public class QuestController {
 	}
 
 
-	@RequestMapping("/Qly_insert.do")
-	public String insertUser(UserDto dto) throws Exception {
-		qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
-		return "quest/QuestAllList";
-	}
+	// @RequestMapping("/Qly_insert.do")
+	// public String insertUser(UserDto dto) throws Exception {
+	// 	qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
+	// 	return "quest/QuestAllList";
+	// }
 
 
 	 @RequestMapping("/Qly_insert.do")

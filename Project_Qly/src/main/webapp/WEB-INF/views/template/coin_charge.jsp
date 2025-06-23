@@ -6,18 +6,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Coin Charge Modal -->
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<%-- 세션의 유저 데이터를 사용하기 위한 구문 --%>
+<% 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser"); %>
 <div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <%-- controller 유저 데이터 확인용--%>
             <div>
-
-                <c:if test="${not empty user}">
-                    <p class="text-center">안녕하세요, ${user.name}님!</p>
-                <c:else>
-                    <p class="text-center">로그인 후 코인을 충전할 수 있습니다.</p>
-                </c:else>
-                </c:if>
+            	<c:choose>
+            		<c:when test="${not empty loginUser}">
+            			<p class="text-center">안녕하세요, ${loginUser.username}님!</p>
+            		</c:when>
+            		<c:otherwise>
+            			<p class="text-center">로그인 후 코인을 충전할 수 있습니다.</p>
+            		</c:otherwise>
+            	</c:choose>
             </div>
             <form id="chargeCoinForm">
                 <div class="modal-header">
@@ -150,10 +153,10 @@
                     merchant_uid: "order_" + new Date().getTime(), // 주문 고유 ID
                     amount: totalAmount, // 1 코인 = 10원 가정
                     name: '퀘스트 코인 충전 - ' + coinAmount + '코인',
-                    buyer_name: "${user.username}", // 사용자 이름
-                    buyer_tel: "${user.phone}", // 사용자 전화번호
-                    buyer_email: "${user.email}", // 사용자 이메일
-                    buyer_addr: "${user.address}", // 사용자 주소
+                    buyer_name: "${loginUser.username}", // 사용자 이름
+                    buyer_tel: "${loginUser.phone}", // 사용자 전화번호
+                    buyer_email: "${loginUser.email}", // 사용자 이메일
+                    buyer_addr: "${loginUser.address}", // 사용자 주소
                 };
                 let strIsSuceess = "fail";
                 IMP.request_pay(requestData, function(response) {
