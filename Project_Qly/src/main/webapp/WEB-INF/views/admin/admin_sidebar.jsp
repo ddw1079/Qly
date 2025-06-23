@@ -105,7 +105,7 @@ if (currentPage == null)
 			onclick="location.href='/Project_Qly/admin/coinList.do'">코인 관리</li>
 
 		<li class="${page eq 'admin_question.jsp' ? 'active' : ''}"
-			onclick="location.href='/Project_Qly/admin/questionList.do'">사용자
+			onclick="location.href='<%= request.getContextPath() %>/admin/questionList.do'">사용자
 			문의</li>
 
 

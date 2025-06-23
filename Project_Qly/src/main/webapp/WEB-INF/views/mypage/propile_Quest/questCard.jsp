@@ -131,13 +131,13 @@
 </c:choose>
 
 
-        <div class="quest-card" data-date="<fmt:formatDate value='${quest.regDate}' pattern='yyyy-MM-dd' />">
+        <div class="quest-card" data-date="<fmt:formatDate value='${quest.createdAt}' pattern='yyyy-MM-dd' />">
           <div class="mb-2 text-muted small">[카테고리] ${quest.category}</div>
           <div class="mb-2 fw-semibold">
             <span class="status-dot ${statusClass}"></span> ${quest.title}
           </div>
           <div class="mb-1 text-muted">신청자: ${quest.applicantCount}명</div>
-          <div class="mb-3 text-muted">등록일: <fmt:formatDate value="${quest.regDate}" pattern="yyyy-MM-dd" /></div>
+          <div class="mb-3 text-muted">등록일: <fmt:formatDate value="${quest.createdAt}" pattern="yyyy-MM-dd" /></div>
           <div class="text-end">
             <button class="btn btn-outline-success btn-sm">상세보기</button>
           </div>

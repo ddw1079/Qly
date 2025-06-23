@@ -86,6 +86,11 @@ public class QuestServiceImpl implements QuestService {
     public void deductRewardTokens(int questId) {
         questMapper.reduceTokensBy100(questId);
     }
+	
+	@Override
+	public List<QuestDto> heagualList(int userId){
+		return  questMapper.heagualList(userId);
+	}
 
 
 }

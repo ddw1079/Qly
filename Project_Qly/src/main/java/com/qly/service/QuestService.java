@@ -28,6 +28,7 @@ public interface QuestService {
 	
 	void deductRewardTokens(int questId);
 	
+	List<QuestDto> heagualList(int userId);
 	
 	
 
