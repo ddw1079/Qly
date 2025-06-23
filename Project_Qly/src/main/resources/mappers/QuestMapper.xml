@@ -11,18 +11,20 @@
 
 	<select id="getAllQuests" resultType="com.qly.dto.QuestDto">
 		SELECT
-	   
+
 		QUEST_ID AS questId,
 		TITLE,
 		CATEGORY,
 		PHOTO_PATH AS photoPath,
 		STATUS,
-		REG_DATE AS regDate,
+		REG_DATE AS
+		regDate,
 		(SELECT
 		COUNT(*)
 		FROM
 		QUEST_APPLICATION qa
-		WHERE qa.QUEST_ID = q.QUEST_ID)
+		WHERE qa.QUEST_ID =
+		q.QUEST_ID)
 		AS
 		applicantCount
 		FROM QUESTS q
@@ -117,17 +119,21 @@
 
 	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
 		INSERT INTO USERS (
-		USER_ID, USERNAME, PASSWORD, PHONE, EMAIL, ADDRESS, USER_TYPE, TOTAL_TOKENS,
+		USER_ID, USERNAME, PASSWORD, PHONE, EMAIL, ADDRESS, USER_TYPE,
+		TOTAL_TOKENS,
 		JOIN_DATE
 		) VALUES (
 		#{userId, jdbcType=INTEGER},
 		#{username, jdbcType=VARCHAR},
 		#{password, jdbcType=VARCHAR},
-		#{phone, jdbcType=VARCHAR},
+		#{phone,
+		jdbcType=VARCHAR},
 		#{email, jdbcType=VARCHAR},
-		#{address, jdbcType=VARCHAR},
+		#{address,
+		jdbcType=VARCHAR},
 		#{userType, jdbcType=VARCHAR},
-		#{totalTokens, jdbcType=INTEGER},
+		#{totalTokens,
+		jdbcType=INTEGER},
 		SYSDATE
 		)
 	</insert>
@@ -151,61 +157,94 @@
 
 
 
-<select id="getMyQuestList" resultType="com.qly.dto.QuestDto">
-  SELECT
-    QUEST_ID AS questId,
-    USER_ID AS userId,
-    TITLE,
-    CATEGORY,
-    CONTENT,
-    PHOTO_PATH,
-    PROGRESS,
-    LATITUDE,
-    LONGITUDE,
-    ADDRESS,
-    LOCATION,
-    STATUS,
-    REWARD_TOKENS AS rewardTokens,
-    REG_DATE AS regDate
-  FROM QUESTS
-  WHERE USER_ID = #{userId}
-  ORDER BY REG_DATE DESC
-</select>
+	<select id="getMyQuestList" resultType="com.qly.dto.QuestDto">
+		SELECT
+		QUEST_ID AS
+		questId,
+		USER_ID AS userId,
+		TITLE,
+		CATEGORY,
+		CONTENT,
+		PHOTO_PATH as
+		photoPath,
+		PROGRESS,
+		LATITUDE,
+		LONGITUDE,
+		ADDRESS,
+		LOCATION,
+		STATUS,
+		REWARD_TOKENS AS rewardTokens,
+		REG_DATE AS regDate
+		FROM QUESTS
+		WHERE
+		USER_ID = #{userId}
+		ORDER BY REG_DATE DESC
+	</select>
 
 	<select id="getQuestTasks" resultType="com.qly.dto.QuestTaskDto">
-  SELECT
-    TASK_ID AS taskId,
-    QUEST_ID AS questId,
-    DESCRIPTION,
-    IS_CHECKED AS isChecked
-  FROM QUEST_TASK
-  WHERE QUEST_ID = #{questId}
+		SELECT
+		TASK_ID AS taskId,
+		QUEST_ID AS questId,
+		DESCRIPTION,
+		IS_CHECKED AS isChecked
+		FROM QUEST_TASK
+		WHERE QUEST_ID = #{questId}
+	</select>
+
+
+	<update id="resetAllTaskChecks">
+		UPDATE QUEST_TASK
+		SET IS_CHECKED = '0'
+		WHERE QUEST_ID =
+		#{questId}
+	</update>
+
+	<update id="setCheckedTasks">
+		UPDATE QUEST_TASK
+		SET IS_CHECKED = '1'
+		WHERE TASK_ID IN
+		<foreach collection="taskIds" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</update>
+
+
+	<update id="reduceTokensBy100" parameterType="int">
+		UPDATE QUESTS
+		SET
+		REWARD_TOKENS = REWARD_TOKENS - 100
+		WHERE QUEST_ID = #{questId}
+	</update>
+
+
+	<!-- 진행 상황 전용 퀘스트 태스크 조회 -->
+	<select id="jongilJJangyoonjaeJJang"
+		resultType="com.qly.dto.QuestTaskDto">
+		SELECT
+		TASK_ID AS taskId,
+		QUEST_ID AS questId,
+		DESCRIPTION,
+		IS_CHECKED AS isChecked
+		FROM QUEST_TASK
+		WHERE QUEST_ID = #{questId}
+	</select>
+
+<!-- QuestMapper.xml -->
+<select id="getQuestsByApplicantUserId" parameterType="int" resultType="com.qly.dto.QuestDto">
+    SELECT
+        Q.QUEST_ID     AS questId,
+        Q.TITLE        AS title,
+        Q.PHOTO_PATH   AS photoPath,
+        Q.ADDRESS      AS address,
+        Q.START_DATE   AS startDate,
+        Q.END_DATE     AS endDate,
+        Q.STATUS       AS status,
+        Q.REWARD_TOKENS AS rewardTokens
+    FROM QUESTS Q
+    JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
+    WHERE QA.USER_ID = #{userId}
 </select>
-
-
-<update id="resetAllTaskChecks">
-    UPDATE QUEST_TASK
-    SET IS_CHECKED = '0'
-    WHERE QUEST_ID = #{questId}
-</update>
-
-<update id="setCheckedTasks">
-    UPDATE QUEST_TASK
-    SET IS_CHECKED = '1'
-    WHERE TASK_ID IN
-    <foreach collection="taskIds" item="id" open="(" separator="," close=")">
-        #{id}
-    </foreach>
-</update>
-
-
-<update id="reduceTokensBy100" parameterType="int">
-    UPDATE QUESTS
-    SET REWARD_TOKENS = REWARD_TOKENS - 100
-    WHERE QUEST_ID = #{questId}
-</update>
-
-
 
 
 
