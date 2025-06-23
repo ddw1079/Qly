@@ -46,7 +46,6 @@ public class QuestServiceImpl implements QuestService {
 		return quest.getQuestId();
 	}
 
-
 	@Override
 	public void applyQuest(QuestDto quest) {
 		questMapper.insertQuestApplication(quest);
@@ -58,6 +57,12 @@ public class QuestServiceImpl implements QuestService {
 		List<QuestTaskDto> tasks = questTaskMapper.getTasksByQuestId(questId); // QUEST_TASK 議고쉶 異붽�
 		quest.setTasks(tasks); // QuestDto �븞�뿉 �꽭�똿
 		return quest;
+	}
+
+
+	@Override
+	public void updateTokens(int userId, int totalTokens) {
+		questMapper.updateUserTokens(userId, totalTokens);
 	}
 
 	@Override // 박윤재

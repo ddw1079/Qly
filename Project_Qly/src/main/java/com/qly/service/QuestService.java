@@ -15,6 +15,10 @@ public interface QuestService {
 
 	QuestDto getQuestById(int questId);
 
+
+	void updateTokens(int userId, int newTokens);
+
+
 	List<QuestDto> getMyQuestList(int userId);
 	
 	List<QuestTaskDto> getQuestTasks(int questId);
@@ -26,4 +30,5 @@ public interface QuestService {
 	
 	
 	
+
 }

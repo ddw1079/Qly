@@ -261,11 +261,26 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus
 						장소</label> <input type="text" name="location" placeholder="상세주소"
 						style="width: 250px;" />
 				</div>
-				<div class="form-group inline">
+				<!-- <div class="form-group inline">
 					<label>의뢰 가격 (코인)</label> <input type="number" name="rewardTokens"
 						min="0" placeholder="예: 100" style="width: 120px;" />
 					<button type="button" class="charge-btn">충전</button>
+				</div> -->
+				<div class="form-group inline">
+					<label>의뢰 가격 (코인)</label> <input type="number" name="rewardTokens"
+						id="rewardTokens" min="0" placeholder="예: 100"
+						style="width: 120px;" oninput="checkTokens()" />
+					<button type="button" class="charge-btn">충전</button>
+
+					<!-- 현재 코인 -->
+					<span style="margin-left: 12px;">보유 코인: <span
+						id="currentTokens">${sessionScope.loginUser.totalTokens}</span>
+					</span>
 				</div>
+
+				<p id="tokenWarning"
+					style="color: red; font-weight: bold; margin-top: -14px; margin-bottom: 18px; display: none;">
+					코인이 부족합니다.</p>
 				<div class="box-footer">
 					<button type="submit" class="submit-btn">등록</button>
 				</div>
@@ -277,6 +292,20 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus
 			let div = document.createElement("div");
 			div.innerHTML = '<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" style="width:88%;font-size:18px;padding:10px 14px;border-radius:5px;" /> <button type="button" class="delete-btn add-btn" style="padding:8px 14px;font-size:15px;" onclick="this.parentNode.remove();">삭제</button>';
 			document.getElementById("taskList").appendChild(div);
+		}
+
+		function checkTokens() {
+			const rewardInput = document.getElementById("rewardTokens");
+			const currentTokens = parseInt(document
+					.getElementById("currentTokens").innerText);
+			const warningText = document.getElementById("tokenWarning");
+
+			if (rewardInput.value
+					&& parseInt(rewardInput.value) > currentTokens) {
+				warningText.style.display = 'block';
+			} else {
+				warningText.style.display = 'none';
+			}
 		}
 	</script>
 </body>

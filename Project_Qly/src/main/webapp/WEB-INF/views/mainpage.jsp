@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <jsp:include page="/template/menubar.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -100,10 +101,10 @@ body {
 }
 
 .map-box {
-  flex: 1;
-  background-color: rgba(73, 132, 126, 0.15);  /* 흐리게 적용 */
-  padding: 10px;
-  border-radius: 8px;
+	flex: 1;
+	background-color: rgba(73, 132, 126, 0.15); /* 흐리게 적용 */
+	padding: 10px;
+	border-radius: 8px;
 }
 
 .region-section {
@@ -177,6 +178,12 @@ body {
 </style>
 </head>
 <body>
+
+	<c:if test="${not empty error}">
+		<script>
+		alert("${error}");
+	</script>
+	</c:if>
 	<!-- ✅ 히어로 배너 전체 -->
 	<div style="background-color: #e6f4f2; padding: 60px 0;">
 		<div
