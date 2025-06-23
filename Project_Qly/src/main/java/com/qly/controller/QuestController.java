@@ -242,7 +242,6 @@ public class QuestController {
 		return "quest/QuestAllList";
 	}
 
-
 	 @RequestMapping("/Qly_insert.do")
 	 public String insertUser1(UserDto dto) throws Exception {
 	     // 1. 입력된 평문 비밀번호 가져오기

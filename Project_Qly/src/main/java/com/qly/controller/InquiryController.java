@@ -1,3 +1,4 @@
+
 package com.qly.controller;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class InquiryController {
 		List<InquiryDto> inquiries = (user != null)
 				? inquiryService.getInquiriesByUserId(user.getUserId())
 				: inquiryService.getAllInquiries();
-
+System.out.println(inquiries);
 		model.addAttribute("inquiryList", inquiries);
 		return "Inquirypage/InquiryMain";
 	}
