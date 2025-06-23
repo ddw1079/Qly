@@ -42,6 +42,8 @@ public interface QuestMapper {
 	void setCheckedTasks(@Param("taskIds") List<Integer> taskIds);
 	
 	void reduceTokensBy100(@Param("questId") int questId);
+	
+	List<QuestDto> heagualList(@Param("userId") int userId);
 
 	
 

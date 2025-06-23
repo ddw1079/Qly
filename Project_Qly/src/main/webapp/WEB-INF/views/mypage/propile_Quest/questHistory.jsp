@@ -76,7 +76,8 @@
         <p class="mb-2">${q.content}</p>
 
         <!-- 체크 저장 폼 -->
-        <form id="checkForm-${q.questId}" action="/Project_Qly/mypage/insertcheck.do" method="post">
+      <form id="checkForm-${q.questId}" action="${pageContext.request.contextPath}/mypage/insertcheck.do" method="post">
+
           <input type="hidden" name="questId" value="${q.questId}" />
 
           <c:set var="tasks" value="${taskMap[q.questId]}" />
@@ -104,7 +105,7 @@
               <div class="form-check">
                 <input class="form-check-input task task-${q.questId}" type="checkbox"
                        id="task${q.questId}_${loop.index}" name="checkedTasks"
-                       value="${t.taskId}" ${t.isChecked eq '1' ? 'checked' : ''} />
+                       value="${t.taskId}" ${t.isChecked eq '1' ? 'checked' : ''} /> <!-- 	DB에서 체크된 상태이면 화면에서도 체크 표시되도록 함 -->
                 <label class="form-check-label" for="task${q.questId}_${loop.index}">
                   ${t.description}
                 </label>
@@ -146,23 +147,23 @@
 <script>
   $(document).ready(function () {
     $("[class*='task-']").on("change", function () {
-      const classList = $(this).attr("class").split(" ");
-      const taskClass = classList.find(c => c.startsWith("task-"));
-      const questId = taskClass.split("-")[1];
+      const classList = $(this).attr("class").split(" ");//이벤트가 발생한 체크박스의 class 목록을 배열로 나눔.
+      const taskClass = classList.find(c => c.startsWith("task-")); // task task-${q.questId} 처럼 생긴 class 중에서 task-로 시작하는 걸 찾아서 questId만 추출함.
+      const questId = taskClass.split("-")[1]; //taskid를 짤라서 그 id의 퀘스트아이디를 가져오는것
 
-      const checkboxes = $(".task-" + questId);
-      const total = checkboxes.length;
-      const checked = checkboxes.filter(":checked").length;
+      const checkboxes = $(".task-" + questId); // 같은 퀘스트 id가진걸 전무 가져와서
+      const total = checkboxes.length; // 토탈에다 넣음
+      const checked = checkboxes.filter(":checked").length;//전체 개수(total)와 체크된 개수(checked)를 바탕으로 진행률 percent를 계산함
       const percent = total > 0 ? Math.round((checked / total) * 100) : 0;
 
       $("#progress-bar-" + questId).css("width", percent + "%")
         .removeClass("bg-warning bg-success")
-        .addClass(percent === 100 ? "bg-success" : "bg-warning");
+        .addClass(percent === 100 ? "bg-success" : "bg-warning"); // bg-success 이면 바 녹색 아니면 노랑색
 
       $("#progress-text-" + questId).text("진행률: " + percent + "%");
 
       const coinBtn = $(".coin-btn[data-questid='" + questId + "']");
-      coinBtn.prop("disabled", percent !== 100);
+      coinBtn.prop("disabled", percent !== 100); // 코인버튼 활성화
     });
   });
 </script>

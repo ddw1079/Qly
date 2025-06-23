@@ -30,7 +30,7 @@ public class MypageController {
     @Autowired
     private QuestService questService;
 
-    @RequestMapping("/mypage/user.do")
+    @RequestMapping("/user.do")
     public String goUserLayout(HttpSession session, Model model) {
         // 로그인된 사용자의 세션에서 정보 확인
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
@@ -38,13 +38,7 @@ public class MypageController {
             return "redirect:/login/loginForm";  // 로그인 안되어 있으면 로그인 페이지로 이동
         }
 
-        // 사용자 ID로 DB에서 추가 정보 조회 가능 (주석처리됨)
-        /*
-        UserDto userInfo = qlyService.getUserById(loginUser.getUserId());
-        model.addAttribute("userInfo", userInfo);  // JSP에 사용자 정보 전달
-        */
-
-        // 마이페이지 레이아웃으로 이동
+        // 마이페이지 레이아웃 화면으로 이동
         return "/mypage/propile_Quest/user_layout";
     }
 
@@ -61,6 +55,22 @@ public class MypageController {
         model.addAttribute("questList", questList);
 
         String pageParam = "mypage/propile_Quest/questCard.jsp";
+        request.setAttribute("pageParam", pageParam);
+
+        return "/mypage/propile_Quest/user_layout";
+    }
+    
+    @RequestMapping("/heagualquestcard.do")
+    public String heagualquestCard(HttpServletRequest request, Model model, HttpSession session) {
+    	 UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+    	 int userId = loginUser.getUserId();
+    	 List<QuestDto> completedQuests = questService.heagualList(userId);
+    	    model.addAttribute("completedQuests", completedQuests);
+    	    for (QuestDto q : completedQuests) {
+    	        System.out.println(q.getTitle() + " / " + q.getCategory() + " / " + q.getRegDate());
+    	    }
+
+        String pageParam = "mypage/propile_Quest/heagual_questCard.jsp";
         request.setAttribute("pageParam", pageParam);
 
         return "/mypage/propile_Quest/user_layout";
@@ -99,7 +109,7 @@ public class MypageController {
         @RequestParam(value = "checkedTasks", required = false) List<Integer> checkedTasks,
         HttpSession session
     ) {
-        // 체크된 항목이 null일 수 있으므로 빈 리스트로 초기화
+        // 체크된 할 일이 null일 수 있으므로 빈 리스트로 초기화
         if (checkedTasks == null) {
             checkedTasks = new ArrayList<>();
         }
@@ -115,7 +125,7 @@ public class MypageController {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         if (loginUser == null) return "redirect:/login/loginForm";
 
-        // 보상 토큰 차감 처리 (ex. 100코인)
+        // 보상 토큰 차감 처리 (ex. 100토큰)
         questService.deductRewardTokens(questId);
 
         return "redirect:/mypage/questhistory.do";

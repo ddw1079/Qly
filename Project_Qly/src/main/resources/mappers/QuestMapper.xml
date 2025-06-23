@@ -134,11 +134,12 @@
     TITLE,
     CATEGORY,
     CONTENT,
-    PHOTO_PATH,
+    PHOTO_PATH AS photoPath,
     PROGRESS,
     LATITUDE,
     LONGITUDE,
     ADDRESS,
+    CREATED_AT AS createdAt,
     LOCATION,
     STATUS,
     REWARD_TOKENS AS rewardTokens,
@@ -180,6 +181,18 @@
     SET REWARD_TOKENS = REWARD_TOKENS - 100
     WHERE QUEST_ID = #{questId}
 </update>
+
+<select id="heagualList" parameterType="int" resultType="com.qly.dto.QuestDto">
+    SELECT TITLE, CATEGORY, REG_DATE
+    FROM QUESTS
+    WHERE QUEST_ID IN (
+        SELECT QUEST_ID
+        FROM QUEST_APPLICATION
+        WHERE USER_ID = #{userId}
+        AND STATUS = '완료'
+    )
+</select>
+
 
 
 
