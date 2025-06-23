@@ -109,8 +109,8 @@
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.21</version>
 		</dependency>
 
 		<!-- Logging -->

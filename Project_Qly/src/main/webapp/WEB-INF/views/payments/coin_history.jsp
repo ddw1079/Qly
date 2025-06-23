@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -24,6 +24,7 @@
     <jsp:include page="../template/coin_charge.jsp" />
 </div>
 <div class="container my-5">
+	<div>
     <h2 class="mb-4">코인 정보</h2>
     <div class="card p-3">
         <div class="mb-4 row">
@@ -110,6 +111,18 @@
             </div>
         </div>
     </div>
+    <c:if test="${not empty chargeMessage }">
+    	<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+		  <div class="toast-header">
+		    <!-- <img src="..." class="rounded me-2" alt="..."> -->
+		    <strong class="me-auto">결제 완료 알림!</strong>
+		    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+		  </div>
+		  <div class="toast-body">
+		    ${chargeMessage}
+		  </div>
+		</div>
+    </c:if>
 
 </div>
 <!-- table 태그 전체에 Datatable 을 달아준다. -->

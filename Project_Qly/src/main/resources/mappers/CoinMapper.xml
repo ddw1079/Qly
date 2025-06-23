@@ -5,36 +5,22 @@
 
 <mapper namespace="com.qly.mapper.CoinMapper">
 
-	<!-- PAYMENTS 테이블: Merge(조건 확인 Update/Insert) -->
-	<update id="updateInsertPayment">
-		MERGE INTO PAYMENTS p
-		USING DUAL
-		ON (p.USER_ID = #{userId})
-		WHEN MATCHED THEN
-			UPDATE SET
-				p.CURRENT_BALANCE = p.CURRENT_BALANCE + #{coinAmount},
-				p.TOTAL_CHARGED = p.TOTAL_CHARGED + #{coinAmount},
-				p.LAST_CHARGE_DATE = SYSDATE
-		WHEN NOT MATCHED THEN
-			INSERT (PAYMENT_ID, USER_ID, CURRENT_BALANCE, TOTAL_CHARGED, LAST_CHARGE_DATE)
-			VALUES (PAYMENTS_SEQ.NEXTVAL, #{userId}, #{coinAmount}, #{coinAmount}, SYSDATE)
-	</update>
 
 	<!-- 현재 코인 잔액 -->
 	<select id="getCurrentCoin" resultType="int">
-		SELECT CURRENT_BALANCE FROM PAYMENTS WHERE USER_ID = #{userId}
+		SELECT TOTAL_TOKENS FROM USERS WHERE USER_ID = #{userId}
 	</select>
 
 	<!-- COIN_HISTORY -->
 	<insert id="insertCoinHistory">
 		INSERT INTO COIN_HISTORY (HISTORY_ID, USER_ID, TRANSACTION_DATE, AMOUNT, REMAIN_COIN, TYPE, QUEST_ID)
-		VALUES (COIN_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{amount}, #{remain}, #{type}, #{questId})
+		VALUES (COIN_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{coinAmount}, #{remain}, #{reason}, #{questId})
 	</insert>
 
 	<!-- PAYMENT_HISTORY -->
 	<insert id="insertPaymentHistory">
 		INSERT INTO PAYMENT_HISTORY (PAYMENT_HISTORY_ID, USER_ID, PAYMENT_DATE, AMOUNT, REMAIN_COIN, TYPE, STATUS)
-		VALUES (PAYMENT_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{amount}, #{remain}, #{type}, '성공')
+		VALUES (PAYMENT_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{coinAmount}, #{remain}, #{reason}, '성공')
 	</insert>
 
 		<!-- === COIN_HISTORY === -->
@@ -62,6 +48,20 @@
 		FROM PAYMENT_HISTORY
 		WHERE USER_ID = #{userId}
 	</select>
+
+	<!-- 유저의 코인 개수 변경. 이걸 실행하면 CoinHistoryAspect 가 실행되어야 함. -->
+	<update id="updateUserCoinCount">
+		UPDATE USERS
+		SET TOTAL_TOKENS = TOTAL_TOKENS + #{coinAmount}
+		WHERE USER_ID = #{userId}
+	</update>
+
+	<!-- 결제로 인한 유저의 코인 개수 변경. 이걸 실행하면 PaymentHistoryAspect 가 실행되어야 함. -->
+	<update id="updateUserCoinCountWithPayment">
+		UPDATE USERS
+		SET TOTAL_TOKENS = TOTAL_TOKENS + #{coinAmount}
+		WHERE USER_ID = #{userId}
+	</update>
 
 </mapper>
 

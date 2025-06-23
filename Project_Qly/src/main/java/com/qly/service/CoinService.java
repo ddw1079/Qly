@@ -2,54 +2,25 @@ package com.qly.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qly.dto.CoinChargeDto;
-import com.qly.mapper.CoinMapper;
 import com.qly.vo.CoinHistoryVo;
 import com.qly.vo.PaymentHistoryVo;
 
-@Service
-public class CoinService {
-
-    @Autowired
-    private CoinMapper coinMapper;
-    
-	@Transactional
-	public void processCharge(int i, CoinChargeDto req) {
-		int coinAmount = req.getCoinAmount();
-		int amountWon = req.getPaid_amount();
-
-		// 1. PAYMENTS 테이블 업데이트 또는 생성
-		coinMapper.updateInsertPayment(i, coinAmount);
-
-		// 2. COIN_HISTORY 삽입
-		Integer currentCoin = coinMapper.getCurrentCoin(i);
-		coinMapper.insertCoinHistory(i, coinAmount, currentCoin, "충전", 0);
-
-		// 3. PAYMENT_HISTORY 삽입
-		coinMapper.insertPaymentHistory(i, amountWon, currentCoin, "충전");
-	}
-
+public interface CoinService {
     // 전체 결제 히스토리 조회
-    public List<PaymentHistoryVo> getAllPaymentHistories() {
-        return coinMapper.findAllPaymentHistories();
-    }
-
+    public List<PaymentHistoryVo> getAllPaymentHistories();
     // 특정 유저의 결제 히스토리 조회
-    public List<PaymentHistoryVo> getPaymentHistoriesByUserId(int userId) {
-        return coinMapper.findPaymentHistoriesByUserId(userId);
-    }
-
+    public List<PaymentHistoryVo> getPaymentHistoriesByUserId(int userId);
     // 전체 코인 히스토리 조회
-    public List<CoinHistoryVo> getAllCoinHistories() {
-        return coinMapper.findAllCoinHistories();
-    }
-
+    public List<CoinHistoryVo> getAllCoinHistories();
     // 특정 유저의 코인 히스토리 조회
-    public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId) {
-        return coinMapper.findCoinHistoriesByUserId(userId);
-    }
+    public List<CoinHistoryVo> getCoinHistoriesByUserId(int userId);
+    // 현재 코인 조회
+    public int getCurrentCoinById(int userId);  
+
+    public int adjustUserCoin(int userId, int coinAmount, String reason, int questId);
+    public int adjustUserCoinByPayment(int userId, int coinAmount, String reason);
+    public void adjustTransitCoinBetweenUsersByQuest(int coinAmount, int startUID, String reason, int questId, int destUID);
+
+    public void insertCoinHistory(int userId, int coinAmount, int remain, String type, int questId);
+    public void insertPaymentHistory(int userId, int coinAmount, int remain, String type);
 }

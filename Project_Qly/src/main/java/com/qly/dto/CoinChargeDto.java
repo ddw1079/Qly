@@ -1,40 +1,50 @@
 package com.qly.dto;
 
 public class CoinChargeDto {
-	private String imp_uid;
-	private String merchant_uid;
-	private int paid_amount;
-	private int coinAmount;
-	private String paymentMethod;
-	
-	public String getImp_uid() {
-		return imp_uid;
+    
+	private int userId;
+    private int coinAmount;         // 충전할 코인 수량    
+    private String remain;			// 남은 코인 수
+    private String reason;          // 예: "kakao_success"
+    private int questId;			// 퀘스트 id
+    
+    public int getCoinAmount() {
+        return coinAmount;
+    }
+
+    public void setCoinAmount(int coinAmount) {
+        this.coinAmount = coinAmount;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setImp_uid(String imp_uid) {
-		this.imp_uid = imp_uid;
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-	public String getMerchant_uid() {
-		return merchant_uid;
+
+	public String getRemain() {
+		return remain;
 	}
-	public void setMerchant_uid(String merchant_uid) {
-		this.merchant_uid = merchant_uid;
+
+	public void setRemain(String remain) {
+		this.remain = remain;
 	}
-	public int getPaid_amount() {
-		return paid_amount;
+
+	public int getQuestId() {
+		return questId;
 	}
-	public void setPaid_amount(int paid_amount) {
-		this.paid_amount = paid_amount;
-	}
-	public int getCoinAmount() {
-		return coinAmount;
-	}
-	public void setCoinAmount(int coinAmount) {
-		this.coinAmount = coinAmount;
-	}
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
+
+	public void setQuestId(int questId) {
+		this.questId = questId;
 	}
 }
