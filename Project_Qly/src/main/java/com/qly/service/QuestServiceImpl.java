@@ -97,4 +97,11 @@ public class QuestServiceImpl implements QuestService {
 		return questMapper.getQuestsByApplicantUserId(userId);
 	}
 	
+
+	
+	@Override
+	public List<QuestDto> heagualList(int userId){
+		return  questMapper.heagualList(userId);
+	}
+
 }

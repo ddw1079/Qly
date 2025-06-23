@@ -157,6 +157,7 @@
 
 
 
+
 	<select id="getMyQuestList" resultType="com.qly.dto.QuestDto">
 		SELECT
 		QUEST_ID AS
@@ -181,6 +182,8 @@
 		ORDER BY REG_DATE DESC
 	</select>
 
+
+
 	<select id="getQuestTasks" resultType="com.qly.dto.QuestTaskDto">
 		SELECT
 		TASK_ID AS taskId,
@@ -192,12 +195,6 @@
 	</select>
 
 
-	<update id="resetAllTaskChecks">
-		UPDATE QUEST_TASK
-		SET IS_CHECKED = '0'
-		WHERE QUEST_ID =
-		#{questId}
-	</update>
 
 	<update id="setCheckedTasks">
 		UPDATE QUEST_TASK
@@ -208,6 +205,7 @@
 			#{id}
 		</foreach>
 	</update>
+	
 
 
 	<update id="reduceTokensBy100" parameterType="int">
@@ -245,6 +243,32 @@
     JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
     WHERE QA.USER_ID = #{userId}
 </select>
+
+
+
+
+<update id="resetAllTaskChecks">
+    UPDATE QUEST_TASK
+    SET IS_CHECKED = '0'
+    WHERE QUEST_ID = #{questId}
+</update>
+
+
+
+
+
+
+<select id="heagualList" parameterType="int" resultType="com.qly.dto.QuestDto">
+    SELECT TITLE, CATEGORY, REG_DATE
+    FROM QUESTS
+    WHERE QUEST_ID IN (
+        SELECT QUEST_ID
+        FROM QUEST_APPLICATION
+        WHERE USER_ID = #{userId}
+        AND STATUS = '완료'
+    )
+</select>
+
 
 
 

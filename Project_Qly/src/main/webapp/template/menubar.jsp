@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="/template/coin_charge.jsp" />
+<jsp:include page="/WEB-INF/views/template/coin_charge.jsp" />
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -203,7 +203,7 @@
 								<c:otherwise>
 									<button class="btn w-100 mt-1"
 										style="background-color: #2c3e50; color: white;"
-										onclick="location.href='<c:url value="/mypage/mypage/user.do" />'">마이페이지</button>
+										onclick="location.href='<c:url value="/mypage/user.do" />'">마이페이지</button>
 
 								</c:otherwise>
 							</c:choose>

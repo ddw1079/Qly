@@ -91,70 +91,62 @@ if (currentPage == null)
 		<!-- 개인 정보 -->
 		<li onclick="toggleSubmenu('profileMenu')">개인 정보
 			<ul id="profileMenu"
-				class="submenu <%=(currentPage.startsWith("mypage/contents/personal_info")
-		|| currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : ""%>">
+				class="submenu <%= (currentPage.startsWith("mypage/contents/personal_info") || currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : "" %>">
 				<li
-					class="<%=currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : ""%>"
-					onclick="location.href='/Project_Qly/mypage/mypage/user.do'">정보
+					class="<%= currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/user.do'">정보
 					조회</li>
 				<li
-					class="<%=currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : ""%>"
-					onclick="location.href='/Project_Qly/mypage/sujeug.do'">정보 수정
-				</li>
+					class="<%= currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/sujeug.do'">정보
+					수정</li>
 			</ul>
 		</li>
 
 		<!-- 내 퀘스트 -->
 		<li onclick="toggleSubmenu('questMenu')">내 퀘스트
 			<ul id="questMenu"
-				class="submenu <%=currentPage.contains("propile_Quest") ? "show" : ""%>">
-				<%
-				if ("의뢰인".equals(userType)) {
-				%>
+				class="submenu <%= currentPage.contains("propile_Quest") ? "show" : "" %>">
+				<% if ("의뢰인".equals(userType)) { %>
 				<li
-					class="<%=currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : ""%>"
-					onclick="location.href='/Project_Qly/mypage/questcard.do'">퀘스트
+					class="<%= currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/questcard.do'">퀘스트
 					목록</li>
 				<li
-					class="<%=currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : ""%>"
-					onclick="location.href='/Project_Qly/mypage/questhistory.do'">진행
+					class="<%= currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/questhistory.do'">진행
 					상황</li>
-				<%
-				} else {
-				%>
+				<% } else { %>
 				<li
-					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
-					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/propile_Quest/heagual_questCard.jsp')">해결
+					class="<%= currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/heagualquestcard.do'">해결
 					내역</li>
-				<!-- 여기를 scriptlet 밖으로 -->
 				<li
-					class="${currentPage eq 'mypage/propile_Quest/heagual_questHistory.jsp' ? 'active' : ''}"
-					
-					onclick="location.href='${pageContext.request.contextPath}/mypage/questprogress.do'">
-					퀘스트 신청 목록</li>
-
-
-				<%
-				}
-				%>
-
+					class="<%= currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : "" %>"
+					onclick="location.href='<%= request.getContextPath() %>/mypage/questprogress.do'">퀘스트
+					신청 목록</li>
+				<% } %>
 			</ul>
 		</li>
 
-		<!-- 코인 보기 -->
-		<li onclick="toggleSubmenu('coinMenu')">코인 보기
-			<ul id="coinMenu"
-				class="submenu <%=currentPage.contains("mypage/coin") ? "show" : ""%>">
-				<li
-					class="<%=currentPage.equals("mypage/coin/charge.jsp") ? "active" : ""%>"
-					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/charge.jsp')">코인
-					히스토리</li>
-				<li
-					class="<%=currentPage.equals("mypage/coin/refund.jsp") ? "active" : ""%>"
-					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/refund.jsp')">코인
-					환불</li>
-			</ul>
-		</li>
+
+	</ul>
+	</li>
+
+	<!-- 코인 보기 -->
+	<li onclick="toggleSubmenu('coinMenu')">코인 보기
+		<ul id="coinMenu"
+			class="submenu <%=currentPage.contains("mypage/coin") ? "show" : ""%>">
+			<li
+				class="<%=currentPage.equals("mypage/coin/charge.jsp") ? "active" : ""%>"
+				onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/charge.jsp')">코인
+				히스토리</li>
+			<li
+				class="<%=currentPage.equals("mypage/coin/refund.jsp") ? "active" : ""%>"
+				onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/refund.jsp')">코인
+				환불</li>
+		</ul>
+	</li>
 	</ul>
 
 	<!-- 회원탈퇴 버튼 -->

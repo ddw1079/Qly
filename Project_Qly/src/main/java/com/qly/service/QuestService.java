@@ -33,7 +33,11 @@ public interface QuestService {
 
 	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId);
 	
+
 	List<QuestDto> getQuestsByApplicantUserId(int userId);
+
+	List<QuestDto> heagualList(int userId);
+
 	
 	
 
