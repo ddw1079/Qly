@@ -46,7 +46,6 @@ public class QuestServiceImpl implements QuestService {
 		return quest.getQuestId();
 	}
 
-
 	@Override
 	public void applyQuest(QuestDto quest) {
 		questMapper.insertQuestApplication(quest);
@@ -60,5 +59,9 @@ public class QuestServiceImpl implements QuestService {
 		return quest;
 	}
 
+	@Override
+	public void updateTokens(int userId, int totalTokens) {
+		questMapper.updateUserTokens(userId, totalTokens);
+	}
 
 }

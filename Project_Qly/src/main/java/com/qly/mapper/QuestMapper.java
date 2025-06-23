@@ -2,6 +2,8 @@ package com.qly.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
@@ -30,5 +32,7 @@ public interface QuestMapper {
 	QuestDto selectQuestById(int questId);
 
 	QuestDto QuestById(int questId);
+	
+	void updateUserTokens(@Param("userId") int userId, @Param("totalTokens") int totalTokens);
 
 }

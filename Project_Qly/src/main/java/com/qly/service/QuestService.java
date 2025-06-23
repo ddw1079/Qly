@@ -14,4 +14,6 @@ public interface QuestService {
 
 	QuestDto getQuestById(int questId);
 
+	void updateTokens(int userId, int newTokens);
+
 }

@@ -120,9 +120,9 @@
 <body>
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
-  
+
 	/* int userid = loginUser.getUserId();
-    // int userid = loginUser.getUserId();
+	// int userid = loginUser.getUserId();
 	int userId = loginUser != null ? loginUser.getUserId() : 0;
 
 	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
@@ -210,7 +210,7 @@
 							<!-- 조건이 참일 때 실행 -->
 							<button class="btn w-100 mt-1"
 								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-								onclick="location.href='/login/loginForm'">>로그인</button>
+								onclick="location.href='<c:url value="/login/loginForm" />'">로그인</button>
 							<button class="btn w-100 mt-1"
 								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
 								onclick="location.href='../qly_User.jsp?page=../qly_User.jsp'">회원가입</button>
@@ -232,7 +232,7 @@
 							</c:choose>
 							<button class="btn w-100 mt-1"
 								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-								onclick="location.href='/login/logout.do'">로그아웃</button>
+								onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 						</c:otherwise>
 					</c:choose>
 				</div>

@@ -16,16 +16,25 @@
 		CATEGORY,
 		PHOTO_PATH AS photoPath,
 		STATUS,
-		REG_DATE,
+		REG_DATE as regDate,
 		(SELECT
 		COUNT(*)
 		FROM
 		QUEST_APPLICATION qa
-		WHERE qa.QUEST_ID = q.QUEST_ID) AS
+		WHERE qa.QUEST_ID = q.QUEST_ID)
+		AS
 		applicantCount
 		FROM QUESTS q
 		ORDER BY REG_DATE DESC
 	</select>
+
+
+	<update id="updateUserTokens">
+		UPDATE USERS
+		SET TOTAL_TOKENS = #{totalTokens}
+		WHERE
+		USER_ID = #{userId}
+	</update>
 
 
 	<insert id="insertQuest" parameterType="com.qly.dto.QuestDto">
@@ -105,33 +114,36 @@
 
 
 
-<insert id="insertUser" parameterType="com.qly.dto.UserDto">
-  INSERT INTO USERS (
-    USER_ID, USERNAME, PASSWORD, PHONE, EMAIL, ADDRESS, USER_TYPE, TOTAL_TOKENS, JOIN_DATE
-  ) VALUES (
-    #{userId, jdbcType=INTEGER},
-    #{username, jdbcType=VARCHAR},
-    #{password, jdbcType=VARCHAR},
-    #{phone, jdbcType=VARCHAR},
-    #{email, jdbcType=VARCHAR},
-    #{address, jdbcType=VARCHAR},
-    #{userType, jdbcType=VARCHAR},
-    #{totalTokens, jdbcType=INTEGER},
-    SYSDATE
-  )
-</insert>
+	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
+		INSERT INTO USERS (
+		USER_ID, USERNAME, PASSWORD, PHONE, EMAIL, ADDRESS, USER_TYPE, TOTAL_TOKENS,
+		JOIN_DATE
+		) VALUES (
+		#{userId, jdbcType=INTEGER},
+		#{username, jdbcType=VARCHAR},
+		#{password, jdbcType=VARCHAR},
+		#{phone, jdbcType=VARCHAR},
+		#{email, jdbcType=VARCHAR},
+		#{address, jdbcType=VARCHAR},
+		#{userType, jdbcType=VARCHAR},
+		#{totalTokens, jdbcType=INTEGER},
+		SYSDATE
+		)
+	</insert>
 
 
 
 
 	<select id="QuestTaskDto" resultType="com.qly.dto.QuestTaskDto">
-		SELECT * FROM QUEST_TASK WHERE QUEST_ID = #{questId}
+		SELECT * FROM QUEST_TASK
+		WHERE QUEST_ID = #{questId}
 	</select>
 
 	<select id="getQuestUserId" resultType="com.qly.dto.QuestDto">
 		SELECT *
 		FROM QUESTS
-		WHERE USER_ID = #{userId}
+		WHERE
+		USER_ID = #{userId}
 		ORDER BY CREATED_AT DESC
 	</select>
 
