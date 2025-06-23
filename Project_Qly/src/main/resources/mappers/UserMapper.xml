@@ -6,23 +6,18 @@
 <mapper namespace="com.qly.mapper.UserMapper">
 
   <!-- 로그인 -->
- <select id="login" resultType="com.qly.dto.UserDto">
-    SELECT
-     user_id AS userId,
-      username,
-      phone AS phone,
-      email AS email,
-      address AS address,
-       user_type AS userType,
-  total_tokens AS totalTokens    
-    FROM
-      users
-    WHERE
-      username = #{username}
-      AND password = #{password}
-      
-  </select>
-  
- 
+<select id="login" resultType="com.qly.dto.UserDto">
+  SELECT
+    user_id AS userId,
+    username,
+    password,  
+    phone AS phone,
+    email AS email,
+    address AS address,
+    user_type AS userType,
+    total_tokens AS totalTokens
+  FROM users
+  WHERE username = #{username}
+</select>
 
 </mapper>

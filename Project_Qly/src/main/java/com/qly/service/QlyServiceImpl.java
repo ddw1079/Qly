@@ -1,23 +1,18 @@
 package com.qly.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.qly.dto.QuestTaskDto;
-import com.qly.dto.UserDto;
-import com.qly.mapper.QuestMapper;
-import com.qly.mapper.UserMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service("qlyService")
 public class QlyServiceImpl implements QlyService {
-    
+
     @Autowired
     private QuestMapper questMapper;
-    
+
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; 
 
     @Override
     public void insertUser(UserDto dto) throws Exception {
@@ -26,7 +21,15 @@ public class QlyServiceImpl implements QlyService {
 
     @Override
     public UserDto login(String username, String password) {
-        return userMapper.login(username, password);
+        UserDto user = userMapper.login(username);  // username으로만 조회
+        if (user == null) return null;
+
+        //  BCrypt로 비밀번호 비교
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return user; // 로그인 성공
+        }
+
+        return null; // 로그인 실패
     }
 
     @Override
@@ -43,6 +46,7 @@ public class QlyServiceImpl implements QlyService {
     public UserDto getUserById(int userId) {
         return userMapper.selectUserById(userId);
     }
-    
+}
+
     
 }

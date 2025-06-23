@@ -209,6 +209,14 @@
   		  <artifactId>spring-security-crypto</artifactId>
   	 	 <version>4.2.3.RELEASE</version> 
 		</dependency>
+		
+		<!--비밀번호와 입력값을 비교-->
+		<dependency>
+  		  <groupId>org.mindrot</groupId>     
+   		 <artifactId>jbcrypt</artifactId>   
+   		 <version>0.4</version>             
+		</dependency>
+
 	
 
 		<!-- Test -->
