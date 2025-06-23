@@ -1,14 +1,21 @@
 package com.qly.controller;
 
-import com.qly.dto.UserDto;
-import com.qly.dto.admin_QuestDto;
-import com.qly.service.AdminService;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import com.qly.dto.InquiryDto;
+import com.qly.dto.UserDto;
+import com.qly.dto.admin_QuestDto;
+import com.qly.service.AdminService;
+import com.qly.service.InquiryService;
 
 @Controller
 @RequestMapping("/admin")
@@ -16,6 +23,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    
+	@Autowired
+	private InquiryService inquiryService;
 
     // 📌 기본 레이아웃 (기본 페이지: 회원 목록)
     @RequestMapping("/layout.do")
@@ -85,8 +95,31 @@ public class AdminController {
     // ✅ 사용자 문의 관리 페이지
     @RequestMapping("/questionList.do")
     public String showQuestionList(Model model) {
-        // 추후: model.addAttribute("questions", adminService.getAllQuestions());
         model.addAttribute("page", "admin_question.jsp");
-        return "admin/admin_layout";
+        return "forward:/admin/list.do";
     }
+
+
+    
+	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
+	public String listInquiries(Model model, HttpSession session) {
+		
+		List<InquiryDto> inquiries = inquiryService.getAllInquiries();
+        System.out.println("[]"+inquiries);
+		 model.addAttribute("inquiryList", inquiries);
+		 model.addAttribute("page", "admin_question.jsp");
+		 
+		return "admin/admin_layout";
+	}
+    
+    //관리자 답변 입력
+    @RequestMapping(value = "/insertqustion.do", method = RequestMethod.POST)
+    public String insertQustion(InquiryDto dto, Model model) {
+    	
+    	
+    	 inquiryService.insertQustion(dto);
+         model.addAttribute("page", "admin_question.jsp");
+    	return "admin/admin_layout";
+    }
+    
 }

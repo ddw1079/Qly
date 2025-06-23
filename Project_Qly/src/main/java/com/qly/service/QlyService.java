@@ -14,4 +14,6 @@ public interface QlyService {
 	List<QuestTaskDto> getTasksQuestId(int questid);
 	List<QuestTaskDto> getQuestUserId(int userid);
 
+	UserDto getUserById(int userId);
+
 }

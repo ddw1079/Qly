@@ -33,26 +33,23 @@ public class InquiryController {
 	// ✅ 문의 등록 처리 (POST)
 	@RequestMapping(value = "/inquiry2.do", method = RequestMethod.POST)
 	public String submitInquiry(@ModelAttribute InquiryDto dto, HttpSession session,
-			RedirectAttributes redirectAttributes) {
-		UserDto user = (UserDto) session.getAttribute("loginUser");
-		if (user == null) {
-			return "redirect:/login";
-		}
+	                            RedirectAttributes redirectAttributes) {
+	    UserDto user = (UserDto) session.getAttribute("loginUser");
+	    if (user == null) {
+	        return "redirect:/login";
+	    }
 
-		dto.setUserId(user.getUserId());
-		dto.setAnswerStatus("미답변");
+	    dto.setUserId(user.getUserId());
+	    dto.setAnswerStatus("미답변"); // 무조건 기본값
+	    dto.setAnswerContent(dto.getContent());
 
-		System.out.println("📌 로그인 유저 ID (세션): " + user.getUserId());
-		System.out.println("📌 문의에 설정된 USER_ID: " + dto.getUserId());
 
-		if (dto.getAnswerContent() == null || dto.getAnswerContent().trim().isEmpty()) {
-			dto.setAnswerContent(dto.getContent());
-		}
-
-		inquiryService.saveInquiry(dto);
-		redirectAttributes.addFlashAttribute("message", "문의가 성공적으로 등록되었습니다.");
-		return "redirect:/inquiry/list.do";
+	    inquiryService.saveInquiry(dto);
+	    redirectAttributes.addFlashAttribute("message", "문의가 성공적으로 등록되었습니다.");
+	    return "redirect:/inquiry/list.do";
 	}
+
+
 
 	// ✅ 문의 목록 조회 (GET)
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
@@ -68,9 +65,11 @@ public class InquiryController {
 
 	// ✅ 문의 상세 보기 (GET)
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String viewInquiry(@PathVariable("id") int questionId, Model model) {
+	public String viewInquiry(@PathVariable("id") String questionId, Model model) {
 		InquiryDto inquiry = inquiryService.getInquiryById(questionId);
+		System.out.println(inquiry);
 		model.addAttribute("inquiry", inquiry);
+		
 		return "Inquirypage/inquiryDetail";
 	}
 	

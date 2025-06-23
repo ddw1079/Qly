@@ -1,6 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%@ include file="/template/menubar.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/template/menubar.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,12 +10,10 @@
 <meta charset="UTF-8">
 <title>고객센터</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 	background-color: #f8fdfa;
-	margin: 0;
 	padding-bottom: 100px;
 }
 .cs-container {
@@ -100,10 +100,15 @@ textarea {
 	<div class="tab-buttons">
 		<button id="tab-notice" class="active" onclick="showTab('notice')">공지사항</button>
 		<button id="tab-faq" onclick="showTab('faq')">자주 묻는 질문</button>
-		<button id="tab-inquiry" onclick="showTab('inquiry')">1:1 문의</button>
-		<button id="tab-my" onclick="showTab('my')">내 문의 보기</button>
-	</div>
+		<button id="tab-inquiry" onclick="showTab('inquiry')">1:1 문의</button>		
+<a href="${pageContext.request.contextPath}/inquiry/list.do#my" onclick="showTab('my')">
+  <button type="button" id="tab-my">내 문의 보기</button>
+</a>
 
+
+		
+	</div>
+	
 	<!-- ✅ 공지사항 -->
 	<div id="notice" class="tab-content active">
 		<table class="table table-hover bg-white">
@@ -177,7 +182,12 @@ textarea {
 		<table class="table table-bordered table-hover bg-white">
 			<thead class="table-light">
 				<tr>
-					<th>번호</th><th>문의 유형</th><th>제목</th><th>등록일</th><th>상태</th><th>상세</th>
+					<th>번호</th>
+					<th>문의 유형</th>
+					<th>제목</th>
+					<th>등록일</th>
+					<th>상태</th>
+					<th>상세</th>
 				</tr>
 			</thead>
 			<tbody id="inquiryCardContainer">
@@ -191,16 +201,19 @@ textarea {
 								<td>${inq.createdDate}</td>
 								<td>
 									<c:choose>
-										<c:when test="${inq.answerStatus eq '답변완료'}">
-											<span class="badge bg-success">답변 완료</span>
-										</c:when>
-										<c:otherwise>
-											<span class="badge bg-warning text-dark">미답변</span>
-										</c:otherwise>
-									</c:choose>
+	<c:when test="${fn:trim(inq.answerStatus) eq '답변완료'}">
+		<span class="badge bg-success">답변 완료</span>
+	</c:when>
+	<c:otherwise>
+		<span class="badge bg-warning text-dark">미답변</span>
+	</c:otherwise>
+</c:choose>
+									
 								</td>
 								<td>
-									<a href="${pageContext.request.contextPath}/inquiry/detail.do?id=${inq.questionId}" class="btn btn-sm btn-outline-primary">조회</a>
+									<a href="${pageContext.request.contextPath}/inquiry/${inq.questionId}" 
+   class="btn btn-sm btn-outline-primary">조회</a>
+
 								</td>
 							</tr>
 						</c:forEach>
@@ -212,17 +225,25 @@ textarea {
 			</tbody>
 		</table>
 	</div>
-</div>
+</div> <!-- ✅ 잘못된 div 닫기 문제 수정 -->
 
-<!-- ✅ 탭 전환 스크립트 -->
 <script>
 function showTab(tabId) {
-	document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
-	document.getElementById("tab-" + tabId).classList.add("active");
+  document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
+  const tabBtn = document.getElementById("tab-" + tabId);
+  if (tabBtn) tabBtn.classList.add("active");
 
-	document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-	document.getElementById(tabId).classList.add("active");
+  document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+  const tabContent = document.getElementById(tabId);
+  if (tabContent) tabContent.classList.add("active");
 }
+
+// 새로고침 시 #my 같은 해시값에 따라 탭 자동 선택
+window.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.substring(1); // 예: #my → "my"
+  if (hash) showTab(hash);
+});
 </script>
+
 </body>
 </html>
