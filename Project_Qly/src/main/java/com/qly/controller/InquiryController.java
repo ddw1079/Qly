@@ -41,6 +41,8 @@ public class InquiryController {
 
 	    dto.setUserId(user.getUserId());
 	    dto.setAnswerStatus("미답변"); // 무조건 기본값
+	    dto.setAnswerContent(dto.getContent());
+
 
 	    inquiryService.saveInquiry(dto);
 	    redirectAttributes.addFlashAttribute("message", "문의가 성공적으로 등록되었습니다.");
@@ -63,9 +65,11 @@ public class InquiryController {
 
 	// ✅ 문의 상세 보기 (GET)
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String viewInquiry(@PathVariable("id") int questionId, Model model) {
+	public String viewInquiry(@PathVariable("id") String questionId, Model model) {
 		InquiryDto inquiry = inquiryService.getInquiryById(questionId);
+		System.out.println(inquiry);
 		model.addAttribute("inquiry", inquiry);
+		
 		return "Inquirypage/inquiryDetail";
 	}
 	

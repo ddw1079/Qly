@@ -3,7 +3,7 @@ package com.qly.dto;
 import java.util.Date;
 
 public class InquiryDto {
-	private int questionId;     // QUESTION_ID
+	private String questionId;     // QUESTION_ID
     private String title;            // TITLE
     private String content;          // 사용자 입력 문의 내용
     private int userId;           // USER_ID
@@ -33,11 +33,13 @@ public class InquiryDto {
 
 	public InquiryDto() {}
 
-	public int getQuestionId() {
+
+
+	public String getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
 

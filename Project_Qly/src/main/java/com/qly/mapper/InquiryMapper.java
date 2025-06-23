@@ -2,7 +2,6 @@ package com.qly.mapper;
 
 import com.qly.dto.InquiryDto;
 import com.qly.dto.UserDto;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,10 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface InquiryMapper {
-    void insertInquiry(InquiryDto dto);                     // 1:1 占쏙옙占쏙옙 占쏙옙占�
-    List<InquiryDto> selectAll();                           // 占쏙옙체 占쏙옙占쏙옙 占쏙옙회 (占쏙옙占쏙옙占쌘울옙)
-    InquiryDto selectById(int questionId);               // 占쏙옙占쏙옙 占쏙옙 占쏙옙회
-    List<InquiryDto> selectByUserId(int userId);            // 占쏙옙占쏙옙占� ID占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙회
-    void insertQustion(InquiryDto dto);
-    
+    void insertInquiry(InquiryDto dto);                     // 1:1 문의 등록
+    List<InquiryDto> selectAll();                           // 전체 문의 목록 조회 (관리자용)
+    InquiryDto selectById(String questionId);               // 문의 상세 조회
+    List<InquiryDto> selectByUserId(int userId);            // 사용자 ID로 해당 사용자 문의 조회
+    void insertQustion(InquiryDto dto);                     // 관리자 답변 등록
 }

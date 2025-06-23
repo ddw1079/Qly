@@ -100,8 +100,13 @@ textarea {
 	<div class="tab-buttons">
 		<button id="tab-notice" class="active" onclick="showTab('notice')">공지사항</button>
 		<button id="tab-faq" onclick="showTab('faq')">자주 묻는 질문</button>
-		<button id="tab-inquiry" onclick="showTab('inquiry')">1:1 문의</button>
-		<button id="tab-my" onclick="showTab('my')">내 문의 보기</button>
+		<button id="tab-inquiry" onclick="showTab('inquiry')">1:1 문의</button>		
+<a href="${pageContext.request.contextPath}/inquiry/list.do#my" onclick="showTab('my')">
+  <button type="button" id="tab-my">내 문의 보기</button>
+</a>
+
+
+		
 	</div>
 	
 	<!-- ✅ 공지사항 -->
@@ -137,7 +142,7 @@ textarea {
 	<!-- ✅ 1:1 문의 작성 -->
 	<div id="inquiry" class="tab-content">
 		<form action="${pageContext.request.contextPath}/inquiry/inquiry2.do" method="post">
-			<input type="hidden" name="userId" value="<%=userid%>" />
+			<input type="hidden" name="userId" value="<%=userId%>" />
 			<input type="hidden" name="userType" value="<%=userType%>" />
 			<div class="form-group">
 				<label for="type">문의 유형</label>
@@ -224,12 +229,21 @@ textarea {
 
 <script>
 function showTab(tabId) {
-	document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
-	document.getElementById("tab-" + tabId).classList.add("active");
+  document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
+  const tabBtn = document.getElementById("tab-" + tabId);
+  if (tabBtn) tabBtn.classList.add("active");
 
-	document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-	document.getElementById(tabId).classList.add("active");
+  document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+  const tabContent = document.getElementById(tabId);
+  if (tabContent) tabContent.classList.add("active");
 }
+
+// 새로고침 시 #my 같은 해시값에 따라 탭 자동 선택
+window.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash.substring(1); // 예: #my → "my"
+  if (hash) showTab(hash);
+});
 </script>
+
 </body>
 </html>
