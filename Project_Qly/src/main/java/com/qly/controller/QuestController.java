@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
@@ -41,16 +42,29 @@ public class QuestController {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-	@RequestMapping(value = "/list.do")
+    @RequestMapping(value = "/list.do")
 	public String questList(Model model) {
 		List<QuestDto> questList = questService.getAllQuests();
 		model.addAttribute("questList", questList);
+
 		return "quest/QuestAllList";
 	}
 
 	// 등록
 	@RequestMapping("/registerForm.do")
-	public String showQuestRegisterForm() {
+	public String showQuestRegisterForm(HttpSession session, RedirectAttributes redirectAttr) {
+
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+
+		if (loginUser == null) {
+			return "redirect:/user/login.do";
+		}
+
+		if ("해결사".equals(loginUser.getUserType())) {
+			redirectAttr.addFlashAttribute("error", "의뢰자만 등록 가능합니다.");
+			return "redirect:/mainpage";
+		}
+
 		return "quest/QuestRegistration";
 	}
 
@@ -85,23 +99,6 @@ public class QuestController {
 		System.out.println(userId);
 		System.out.println("로그인 유저 확인: " + loginUser);
 		System.out.println("userId: " + loginUser.getUserId());
-
-		// int userId = 12; // 임시
-
-		/*
-		 * // 2. 파일 업로드 처리 String photoPath = null; String uploadDir = null;
-		 * 
-		 * if (photo != null && !photo.isEmpty()) { // 외부 경로로 지정 (E:\images) uploadDir =
-		 * "C:\\images\\";
-		 * 
-		 * File dir = new File(uploadDir); if (!dir.exists()) dir.mkdirs();
-		 * 
-		 * String fileName = UUID.randomUUID().toString() + "_" +
-		 * photo.getOriginalFilename(); File dest = new File(dir, fileName);
-		 * photo.transferTo(dest);
-		 * 
-		 * // 웹에서 접근할 상대 경로 (DB에 저장되는 값) photoPath = "/images/" + fileName; }
-		 */
 
 		// 2. 이미지 업로드 처리 (Cloudinary 사용)
 		String photoPath = null;
@@ -153,6 +150,24 @@ public class QuestController {
 		quest.setEndDate(endDate);
 		quest.setContent(content);
 
+		// 🔸 현재 유저의 토큰 확인
+		int currentTokens = loginUser.getTotalTokens();
+
+		// 🔸 보유 코인보다 많으면 차단
+		if (rewardTokens > currentTokens) {
+			System.out.println("코인이 부족합니다.");
+			request.setAttribute("error", "코인이 부족합니다.");
+			return "quest/insertForm"; // 또는 오류 페이지
+		}
+
+		// 🔸 토큰 차감
+		int newTokens = currentTokens - rewardTokens;
+		questService.updateTokens(userId, newTokens); // 실제 DB 업데이트
+
+		// 🔸 세션도 반영
+		loginUser.setTotalTokens(newTokens);
+		session.setAttribute("loginUser", loginUser);
+
 		// 필요한 필드 추가로 세팅
 		int questId = questService.insertQuest(quest, taskList);
 
@@ -181,42 +196,21 @@ public class QuestController {
 		return "quest/QuestParticular";
 	}
 
-	/*
-	 * @RequestMapping("/application.do") public String
-	 * applyQuest(@RequestParam("questId") int questId, @RequestParam("day") String
-	 * day,
-	 * 
-	 * @RequestParam("time") String time, HttpSession session) throws Exception {
-	 * 
-	 * 
-	 * UserDto loginUser = (UserDto) session.getAttribute("loginUser"); if
-	 * (loginUser == null) return "redirect:/user/login.do";
-	 * 
-	 * System.out.println("👉 로그인한 유저 userId: " + loginUser.getUserId());
-	 * 
-	 * String datetimeStr = day + " " + time; SimpleDateFormat sdf = new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date appliedAt =
-	 * sdf.parse(datetimeStr);
-	 * 
-	 * QuestDto dto = new QuestDto(); dto.setQuestId(questId);
-	 * dto.setUserId(loginUser.getUserId()); dto.setStatus("대기");
-	 * dto.setAppliedAt(appliedAt);
-	 * 
-	 * System.out.println("✅ QuestApplication 신청 정보: questId=" + dto.getQuestId() +
-	 * ", userId=" + dto.getUserId() + ", status=" + dto.getStatus() +
-	 * ", appliedAt=" + appliedAt);
-	 * 
-	 * questService.applyQuest(dto); return "mainpage"; }
-	 */
-
 	@RequestMapping("/application.do")
 	public String applyQuest(@RequestParam("questId") int questId, @RequestParam("day") String day,
-			@RequestParam("time") String time, HttpSession session, Model model) throws Exception {
+			@RequestParam("time") String time, HttpSession session, Model model, RedirectAttributes redirectAttr)
+			throws Exception {
 
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null) {
 			System.out.println("로그인 정보 없음");
 			return "redirect:/user/login.do";
+		}
+
+		if (!"해결사".equals(loginUser.getUserType())) {
+			redirectAttr.addFlashAttribute("error", "해결사만 퀘스트를 신청할 수 있습니다.");
+			redirectAttr.addAttribute("questId", questId);
+			return "redirect:/quest/particularForm.do";
 		}
 
 		System.out.println("userId: " + loginUser.getUserId());
@@ -247,14 +241,6 @@ public class QuestController {
 	public String showQuestListPage() {
 		return "quest/QuestAllList";
 	}
-
-
-	/*
-	 * @RequestMapping("/Qly_insert.do") public String insertUser(UserDto dto)
-	 * throws Exception { qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
-	 * return "quest/QuestAllList"; }
-	 */
-
 
 	 @RequestMapping("/Qly_insert.do")
 	 public String insertUser1(UserDto dto) throws Exception {

@@ -27,11 +27,11 @@ public class QuestServiceImpl implements QuestService {
 	@Transactional
 	@Override
 	public int insertQuest(QuestDto quest, String[] taskList) {
-		// 1. 퀘스트 등록
-		questMapper.insertQuest(quest); // questId가 생성됨 (keyProperty)
+		// 1. �섏뒪�듃 �벑濡�
+		questMapper.insertQuest(quest); // questId媛� �깮�꽦�맖 (keyProperty)
 		System.out.println("questId AFTER insert = " + quest.getQuestId());
 
-		// 2. 의뢰내용(할 일) 여러개 등록
+		// 2. �쓽猶곕궡�슜(�븷 �씪) �뿬�윭媛� �벑濡�
 		if (taskList != null) {
 			for (String desc : taskList) {
 				if (desc != null && !desc.trim().isEmpty()) {
@@ -46,7 +46,6 @@ public class QuestServiceImpl implements QuestService {
 		return quest.getQuestId();
 	}
 
-
 	@Override
 	public void applyQuest(QuestDto quest) {
 		questMapper.insertQuestApplication(quest);
@@ -54,11 +53,39 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public QuestDto getQuestById(int questId) {
-		QuestDto quest = questMapper.selectQuestById(questId); // QUESTS만 조회함
-		List<QuestTaskDto> tasks = questTaskMapper.getTasksByQuestId(questId); // QUEST_TASK 조회 추가
-		quest.setTasks(tasks); // QuestDto 안에 세팅
+		QuestDto quest = questMapper.selectQuestById(questId); // QUESTS留� 議고쉶�븿
+		List<QuestTaskDto> tasks = questTaskMapper.getTasksByQuestId(questId); // QUEST_TASK 議고쉶 異붽�
+		quest.setTasks(tasks); // QuestDto �븞�뿉 �꽭�똿
 		return quest;
 	}
+
+
+	@Override
+	public void updateTokens(int userId, int totalTokens) {
+		questMapper.updateUserTokens(userId, totalTokens);
+	}
+
+	@Override // 박윤재
+	public List<QuestDto> getMyQuestList(int userId) {
+		return questMapper.getMyQuestList(userId);
+	}
+	@Override  // 박윤재
+	public List<QuestTaskDto> getQuestTasks(int questId){
+		return questMapper.getQuestTasks(questId);
+	}
+	
+	@Override
+	public void updateTaskChecks(int questId, List<Integer> checkedTaskIds) {
+		questMapper.resetAllTaskChecks(questId); // 먼저 전부 0으로 초기화
+	    if (!checkedTaskIds.isEmpty()) {
+	    	questMapper.setCheckedTasks(checkedTaskIds); // 선택된 ID만 1로 변경
+	    }
+	}
+	
+	@Override
+    public void deductRewardTokens(int questId) {
+        questMapper.reduceTokensBy100(questId);
+    }
 
 
 }

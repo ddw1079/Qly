@@ -83,6 +83,14 @@ label {
 
 	<div class="container">
 		<h2 class="text-center mb-4">퀘스트 신청</h2>
+
+		<c:if test="${not empty error}">
+			<script>
+				alert("${error}");
+			</script>
+		</c:if>
+
+
 		<form action="${pageContext.request.contextPath}/quest/application.do"
 			method="post">
 			<%-- <input type="hidden" name="questId" value="${quest.questId}"> --%>
@@ -96,7 +104,7 @@ label {
 							<p>${quest.title}</p>
 							<hr>
 
-							<c:if test="${not empty quest.photoPath}">
+							<%-- <c:if test="${not empty quest.photoPath}">
 								<img src="${quest.photoPath}" alt="퀘스트 이미지"
 									class="img-fluid mb-3" style="max-height: 300px;">
 							</c:if>
@@ -106,7 +114,26 @@ label {
 								<c:forEach var="task" items="${quest.tasks}">
 									<li>${task.description}</li>
 								</c:forEach>
-							</ul>
+							</ul> --%>
+
+							<c:if test="${not empty quest.photoPath}">
+								<div class="text-center mb-3">
+									<img src="${quest.photoPath}" alt="퀘스트 이미지" class="img-fluid"
+										style="max-height: 300px;">
+								</div>
+							</c:if>
+							<hr>
+							<!-- 줄바꿈 효과 확실하게 유지 -->
+							<div class="mt-3">
+								<label>해야 할 일</label>
+								<ul class="mb-3">
+									<c:forEach var="task" items="${quest.tasks}">
+										<li>${task.description}</li>
+									</c:forEach>
+								</ul>
+							</div>
+
+
 							<hr>
 							<label>보상</label>
 							<p class="text-primary fw-bold">${quest.rewardTokens}코인</p>

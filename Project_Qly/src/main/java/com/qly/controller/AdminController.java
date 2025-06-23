@@ -114,10 +114,11 @@ public class AdminController {
     
     //관리자 답변 입력
     @RequestMapping(value = "/insertqustion.do", method = RequestMethod.POST)
-    public String insertQustion(InquiryDto dto) {
+    public String insertQustion(InquiryDto dto, Model model) {
     	
     	
     	 inquiryService.insertQustion(dto);
+         model.addAttribute("page", "admin_question.jsp");
     	return "admin/admin_layout";
     }
     

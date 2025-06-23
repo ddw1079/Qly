@@ -10,6 +10,9 @@
     SELECT
      user_id AS userId,
       username,
+      phone AS phone,
+      email AS email,
+      address AS address,
        user_type AS userType,
   total_tokens AS totalTokens    
     FROM
@@ -19,5 +22,7 @@
       AND password = #{password}
       
   </select>
+  
+ 
 
 </mapper>
