@@ -24,7 +24,7 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public InquiryDto getInquiryById(int questionId) {
+	public InquiryDto getInquiryById(String questionId) {
 		return inquiryMapper.selectById(questionId);
 	}
 

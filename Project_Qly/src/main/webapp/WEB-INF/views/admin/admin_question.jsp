@@ -126,6 +126,7 @@ body {
 </div>
 
 <!-- 문의 내역 테이블 -->
+<!-- 문의 내역 테이블 -->
 <div class="card p-4 mb-4">
 <h5 class="section-title">문의 내역</h5>
 <table id="questionTable" class="display" style="width: 100%;">
@@ -136,7 +137,7 @@ body {
 			<th>작성자</th>
 			<th>등록일</th>
 			<th>답변 상태</th>
-			<th>관리</th>
+			<th>관리</th> <!-- 여기에 적용됨 -->
 		</tr>
 	</thead>
 	<tbody>
@@ -156,21 +157,30 @@ body {
 						</c:otherwise>
 					</c:choose>
 				</td>
+
+				<!-- ✅ 수정된 부분 시작 -->
 				<td>
-					<c:choose>
-						<c:when test="${fn:trim(inq.answerStatus) eq '답변완료'}">
-							<a href="${pageContext.request.contextPath}/admin/inquiry/view.do?id=${inq.questionId}" class="btn btn-sm btn-outline-secondary">보기</a>
-						</c:when>
-						<c:otherwise>
-							<button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#answerModal" data-id="${inq.questionId}">답변</button>
-						</c:otherwise>
-					</c:choose>
+				  <button
+				    class="btn btn-sm btn-outline-primary"
+				    data-bs-toggle="modal"
+				    data-bs-target="#answerModal"
+				    data-id="${inq.questionId}"
+				    <c:if test="${fn:trim(inq.answerStatus) eq '답변완료'}">disabled</c:if>>
+				    답변
+				  </button>
+
+				  <a href="${pageContext.request.contextPath}/inquiry/${inq.questionId}"
+				     class="btn btn-sm btn-outline-secondary ms-1">
+				    보기
+				  </a>
 				</td>
+				<!-- ✅ 수정된 부분 끝 -->
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
 </div>
+
 
 <!-- FAQ -->
 <div class="card p-4 mb-4">

@@ -73,7 +73,7 @@ body {
 
 	<!-- 문의 내용 -->
 	<div class="detail-content">
-		${inquiry.content}
+		${inquiry.answerContent}
 	</div>
 
 	<!-- 관리자 답변 -->

@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>퀘스트 목록</title>
 
   <!-- CSS & JS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
 
@@ -32,6 +34,7 @@
       padding: 20px;
       border-radius: 1rem;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
     }
 
     .status-dot {
@@ -40,6 +43,7 @@
       border-radius: 50%;
       display: inline-block;
       margin-right: 6px;
+      vertical-align: middle;
     }
 
     .dot-waiting { background-color: #9e9e9e; }
@@ -80,7 +84,6 @@
 %>
 
 <div class="container-fluid mt-4">
-  <!-- 상단 -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="fw-bold">퀘스트 목록</h4>
     <div class="d-flex align-items-center gap-3">
@@ -89,7 +92,7 @@
         (<%= loginUser != null ? loginUser.getUserType() : "비회원" %> 모드)
       </span>
       <button class="btn btn-dark btn-sm" onclick="location.href='/login/logout.do'">로그아웃</button>
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="프로필" width="40" style="border-radius: 50%;">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="프로필" width="40" style="border-radius: 50%;" />
     </div>
   </div>
 
@@ -106,37 +109,40 @@
       <div class="calendar-box mb-4">
         <h5 class="fw-bold mb-3">🗓️ 캘린더</h5>
         <div id="calendar"></div>
-        <hr>
+        <hr />
         <button class="btn btn-secondary w-100 mt-3" onclick="showAllQuests()">전체 보기</button>
       </div>
     </div>
 
     <!-- 우측: 퀘스트 카드 -->
     <div class="col-md-8">
-      <!-- 날짜별 퀘스트 카드 (data-date 포함) -->
-      <div class="quest-card mb-4" data-date="2025-06-12">
-        <div class="mb-2 text-muted small">[카테고리] 생활 수리</div>
-        <div class="mb-2 fw-semibold"><span class="status-dot dot-waiting"></span> 에어컨이 안 나와요</div>
-        <div class="mb-1 text-muted">신청자: 2명</div>
-        <div class="mb-3 text-muted">등록일: 2025-06-12</div>
-        <div class="text-end"><button class="btn btn-outline-success btn-sm">상세보기</button></div>
-      </div>
+      <c:forEach var="quest" items="${questList}">
+        <c:set var="statusClass" value="dot-complete" />
+       <c:choose>
+  <c:when test="${quest.status == '대기'}">
+    <c:set var="statusClass" value="dot-waiting" />
+  </c:when>
+  <c:when test="${quest.status == '진행'}">
+    <c:set var="statusClass" value="dot-progress" />
+  </c:when>
+  <c:when test="${quest.status == '완료'}">
+    <c:set var="statusClass" value="dot-complete" />
+  </c:when>
+</c:choose>
 
-      <div class="quest-card mb-4" data-date="2025-06-10">
-        <div class="mb-2 text-muted small">[카테고리] 컴퓨터</div>
-        <div class="mb-2 fw-semibold"><span class="status-dot dot-progress"></span> 포맷 도와주세요</div>
-        <div class="mb-1 text-muted">신청자: 1명</div>
-        <div class="mb-3 text-muted">등록일: 2025-06-10</div>
-        <div class="text-end"><button class="btn btn-outline-success btn-sm">상세보기</button></div>
-      </div>
 
-      <div class="quest-card mb-4" data-date="2025-06-05">
-        <div class="mb-2 text-muted small">[카테고리] 청소</div>
-        <div class="mb-2 fw-semibold"><span class="status-dot dot-complete"></span> 원룸 청소 부탁해요</div>
-        <div class="mb-1 text-muted">신청자: 4명</div>
-        <div class="mb-3 text-muted">등록일: 2025-06-05</div>
-        <div class="text-end"><button class="btn btn-outline-success btn-sm">상세보기</button></div>
-      </div>
+        <div class="quest-card" data-date="<fmt:formatDate value='${quest.createdAt}' pattern='yyyy-MM-dd' />">
+          <div class="mb-2 text-muted small">[카테고리] ${quest.category}</div>
+          <div class="mb-2 fw-semibold">
+            <span class="status-dot ${statusClass}"></span> ${quest.title}
+          </div>
+          <div class="mb-1 text-muted">신청자: ${quest.applicantCount}명</div>
+          <div class="mb-3 text-muted">등록일: <fmt:formatDate value="${quest.createdAt}" pattern="yyyy-MM-dd" /></div>
+          <div class="text-end">
+            <button class="btn btn-outline-success btn-sm">상세보기</button>
+          </div>
+        </div>
+      </c:forEach>
     </div>
   </div>
 </div>
@@ -149,6 +155,7 @@
       locale: 'ko',
       height: 400,
       events: [
+        // 실제 데이터로 교체 필요
         { title: '', start: '2025-06-12', color: '#9e9e9e' },
         { title: '', start: '2025-06-10', color: '#ffc107' },
         { title: '', start: '2025-06-05', color: '#4caf50' }
@@ -174,5 +181,6 @@
     });
   }
 </script>
+
 </body>
 </html>

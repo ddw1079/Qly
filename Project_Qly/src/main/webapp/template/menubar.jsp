@@ -116,6 +116,11 @@
 <body>
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+
+
+	/* int userid = loginUser.getUserId();
+	// int userid = loginUser.getUserId();
+
 	int userId = loginUser != null ? loginUser.getUserId() : 0;
 	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
 	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
@@ -179,7 +184,9 @@
 					<c:choose>
 						<c:when test="${empty loginUser}">
 							<button class="btn w-100 mt-1"
-								style="background-color: #2c3e50; color: white;"
+
+								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+
 								onclick="location.href='<c:url value="/login/loginForm" />'">로그인</button>
 							<button class="btn w-100 mt-1"
 								style="background-color: #2c3e50; color: white;"
@@ -196,12 +203,14 @@
 								<c:otherwise>
 									<button class="btn w-100 mt-1"
 										style="background-color: #2c3e50; color: white;"
-										onclick="location.href='<c:url value="/mypage/user?page=mypage/contents/personal_info.jsp" />'">마이페이지</button>
+										onclick="location.href='<c:url value="/mypage/user.do" />'">마이페이지</button>
 
 								</c:otherwise>
 							</c:choose>
 							<button class="btn w-100 mt-1"
-								style="background-color: #2c3e50; color: white;"
+
+								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+
 								onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 						</c:otherwise>
 					</c:choose>
