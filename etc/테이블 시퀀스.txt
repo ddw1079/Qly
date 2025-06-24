@@ -1,0 +1,29 @@
+DROP SEQUENCE QUEST_TASK_SEQ;
+DROP SEQUENCE QUEST_APPLICATION_SEQ;
+DROP SEQUENCE QUESTS_SEQ;
+DROP SEQUENCE USERS_SEQ;
+
+CREATE SEQUENCE QUESTS_SEQ
+    START WITH 2       -- 시작 숫자
+    INCREMENT BY 1     -- 증가값
+    NOCACHE            -- 캐싱 안 함 (테스트용, 실제 환경에선 CACHE 20 등 추천)
+    NOCYCLE;           -- 최대값 도달 시 다시 시작하지 않음
+
+
+CREATE SEQUENCE QUEST_TASK_SEQ
+    START WITH 2       -- 시작 숫자
+    INCREMENT BY 1     -- 증가값
+    NOCACHE            -- 캐싱 안 함 (테스트용, 실제 환경에선 CACHE 20 등 추천)
+    NOCYCLE;           -- 최대값 도달 시 다시 시작하지 않음
+
+CREATE SEQUENCE QUEST_APPLICATION_SEQ
+    START WITH 2       -- 시작 숫자
+    INCREMENT BY 1     -- 증가값
+    NOCACHE            -- 캐싱 안 함 (테스트용, 실제 환경에선 CACHE 20 등 추천)
+    NOCYCLE;           -- 최대값 도달 시 다시 시작하지 않음
+
+CREATE SEQUENCE USERS_SEQ
+    START WITH 1        -- 시작 숫자
+    INCREMENT BY 1     -- 증가값
+    NOCACHE            -- 캐싱 안 함 (테스트용, 실제 환경에선 CACHE 20 등 추천)
+    NOCYCLE; 
