@@ -24,7 +24,8 @@
 	<!-- ✅ 3. 기본 Spring MVC 설정 -->
 	<mvc:annotation-driven />
 
-	<mvc:resources mapping="/images/**" location="file:///E:/images/" />
+	<mvc:resources mapping="/images/**"
+		location="file:///E:/images/" />
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
@@ -32,7 +33,14 @@
 
 	<!-- aop Annotation 을 사용하려면 필요함 -->
 	<!-- AOP 기능 활성화 -->
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- ✅ JSON 응답을 위한 ViewResolver 설정 -->
+	<bean
+		class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	<bean id="jsonView"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+
 
 
 </beans>

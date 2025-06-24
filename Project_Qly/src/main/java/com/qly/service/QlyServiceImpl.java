@@ -12,37 +12,41 @@ import com.qly.mapper.UserMapper;
 
 @Service("qlyService")
 public class QlyServiceImpl implements QlyService {
-    
-    @Autowired
-    private QuestMapper questMapper;
-    
-    @Autowired
-    private UserMapper userMapper;
 
-    @Override
-    public void insertUser(UserDto dto) throws Exception {
-        questMapper.insertUser(dto);
-    }
+	@Autowired
+	private QuestMapper questMapper;
 
-    @Override
-    public UserDto login(String username, String password) {
-        return userMapper.login(username, password);
-    }
+	@Autowired
+	private UserMapper userMapper;
 
-    @Override
-    public List<QuestTaskDto> getTasksQuestId(int questid) {
-        return questMapper.getTasksQuestId(questid);
-    }
+	@Override
+	public void insertUser(UserDto dto) throws Exception {
+		questMapper.insertUser(dto);
+	}
 
-    @Override
-    public List<QuestTaskDto> getQuestUserId(int userId) {
-        return questMapper.getQuestUserId(userId);
-    }
+	@Override
+	public UserDto getUserByUsername(String username) {
+		return questMapper.getUserByUsername(username); 
+	}
 
-    @Override
-    public UserDto getUserById(int userId) {
-        return userMapper.selectUserById(userId);
-    }
-    
-    
+	@Override
+	public UserDto login(String username) {
+		return userMapper.login(username);
+	}
+
+	@Override
+	public List<QuestTaskDto> getTasksQuestId(int questid) {
+		return questMapper.getTasksQuestId(questid);
+	}
+
+	@Override
+	public List<QuestTaskDto> getQuestUserId(int userId) {
+		return questMapper.getQuestUserId(userId);
+	}
+
+	/*
+	 * @Override public UserDto getUserById(int userId) { return
+	 * userMapper.selectUserById(userId); }
+	 */
+
 }
