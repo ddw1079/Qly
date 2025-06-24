@@ -293,6 +293,48 @@
 	</select>
 
 
-
-
+	<!-- 메인페이지 Mapper -->
+	<select id="getLatest5Quests" resultType="com.qly.dto.QuestDto">
+		SELECT *
+		FROM (
+			SELECT
+				Q.QUEST_ID AS questId,
+				Q.CREATED_AT AS createdAt,
+				Q.CATEGORY AS category,
+				Q.TITLE AS title,
+				Q.REWARD_TOKENS  AS rewardTokens,
+				U.USERNAME AS username
+			FROM
+				QUESTS Q
+			JOIN
+				USERS U ON Q.USER_ID = U.USER_ID
+			ORDER BY
+				Q.CREATED_AT DESC
+		)
+		WHERE ROWNUM <![CDATA[ <= ]]> 5
+	</select>
+	
+	<select id="getRandom3Quests" resultType="com.qly.dto.QuestDto">
+		SELECT *
+			FROM (
+			  SELECT
+			    Q.QUEST_ID AS questId,
+			    Q.TITLE AS title,
+			    Q.CATEGORY AS category,
+			    Q.REWARD_TOKENS AS rewardTokens,
+			    Q.CREATED_AT AS createdAt,
+			    Q.STATUS AS status,
+			    U.USERNAME AS username
+			  FROM
+			    QUESTS Q
+			  JOIN
+			    USERS U ON Q.USER_ID = U.USER_ID
+			  WHERE
+			    Q.STATUS = '대기'
+			  ORDER BY
+			    DBMS_RANDOM.VALUE
+			)
+			WHERE ROWNUM <![CDATA[ <= ]]> 3
+	</select>
+	
 </mapper>

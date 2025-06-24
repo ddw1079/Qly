@@ -50,4 +50,7 @@ public interface QuestMapper {
 
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
 
+	// 메인페이지에서 사용할 Mapper 메소드
+	List<QuestDto> getLatest5Quests();
+	List<QuestDto> getRandom3Quests();
 }

@@ -104,4 +104,12 @@ public class QuestServiceImpl implements QuestService {
 		return  questMapper.heagualList(userId);
 	}
 
+	@Override
+	public List<QuestDto> getLatest5Quests() {
+		return questMapper.getLatest5Quests();
+	}	
+	@Override
+	public List<QuestDto> getRandom3Quests() {
+		return questMapper.getRandom3Quests();
+	}	
 }

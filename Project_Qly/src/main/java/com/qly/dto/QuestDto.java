@@ -6,6 +6,7 @@ import java.util.List;
 public class QuestDto {
 	private int questId;
 	private int userId;
+	private String username;
 	private String title;
 	private String category;
 	private String content; // 필요하면 유지
@@ -25,7 +26,7 @@ public class QuestDto {
     private Date createdAt;
     private int viewCount;
     private int applicationId;
-	private Date appliedAt;;
+	private Date appliedAt;
     
 	public int getApplicationId() {
 		return applicationId;
@@ -201,6 +202,14 @@ public class QuestDto {
 
 	public void setTasks(List<QuestTaskDto> tasks) {
 		this.tasks = tasks;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
