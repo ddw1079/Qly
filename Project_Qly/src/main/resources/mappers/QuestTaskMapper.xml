@@ -26,5 +26,12 @@
 		QUEST_TASK
 		WHERE QUEST_ID = #{questId}
 	</select>
+	
+	<update id="updateTaskCheckStatus"> 
+  UPDATE QUEST_TASK
+  SET IS_CHECKED = #{isChecked}
+  WHERE TASK_ID = #{taskId}
+</update>
+	
 
 </mapper>

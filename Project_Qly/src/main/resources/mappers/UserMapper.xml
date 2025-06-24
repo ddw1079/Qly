@@ -23,6 +23,12 @@
       
   </select>
   
+<update id="addTokensUser">
+  UPDATE USERS
+  SET total_tokens = total_tokens + #{amount}
+  WHERE user_id = #{userId}
+</update>
+
  
 
 </mapper>

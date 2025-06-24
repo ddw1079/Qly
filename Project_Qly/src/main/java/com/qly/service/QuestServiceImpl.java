@@ -103,5 +103,31 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> heagualList(int userId){
 		return  questMapper.heagualList(userId);
 	}
+	@Override
+	public void updateQuestStatus(int questId) {
+		questMapper.updateQuestStatus(questId, "완료");
+	}
+	@Override
+	public int getRewardTokensByQuestId(int questId) {
+		return questMapper.getRewardTokensByQuestId(questId);
+	}
+	
+	@Override
+	public void markRewardGiven(int questId, int userId) {
+	    questMapper.markRewardGiven(questId, userId);
+	}
+	
+	@Override
+	public boolean isRewardGiven(int questId, int userId) {
+	    return questMapper.isRewardGiven(questId, userId) > 0;
+	}
+	
+	@Override
+	public void updateTaskCheckStatus(int taskId, boolean isChecked) {
+	    questTaskMapper.updateTaskCheckStatus(taskId, isChecked ? "1" : "0");
+	}
+
+
+
 
 }

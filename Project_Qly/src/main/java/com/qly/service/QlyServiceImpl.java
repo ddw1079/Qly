@@ -43,6 +43,9 @@ public class QlyServiceImpl implements QlyService {
     public UserDto getUserById(int userId) {
         return userMapper.selectUserById(userId);
     }
-    
+    @Override
+    public void addTokensUser(int userId, int rewardTokens) {
+    	userMapper.addTokensUser(userId,rewardTokens);
+    }
     
 }
