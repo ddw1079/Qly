@@ -7,11 +7,9 @@
 <meta charset="UTF-8">
 <title>퀘스트 진행 상황 - 해결사</title>
 
-<!-- Bootstrap CSS -->
+<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
@@ -33,10 +31,11 @@
 			<h3 class="fw-bold">퀘스트 진행 상황</h3>
 		</div>
 
-		<form method="post">
+		<form action="${pageContext.request.contextPath}/mypage/giveReward.do" method="post">
 			<input type="hidden" name="questId" value="${quest.questId}">
+
 			<div class="row">
-				<!-- 왼쪽: 퀘스트 카드 -->
+				<!-- 퀘스트 카드 -->
 				<div class="col-md-8 mb-4">
 					<div class="card shadow">
 						<div class="card-header fw-bold fs-5">${quest.title}</div>
@@ -44,7 +43,7 @@
 						<div class="card-body">
 							<p class="card-text fs-5">사진</p>
 
-							<!-- 진행률 바 -->
+							<!-- 진행률 -->
 							<div class="mb-3">
 								<label class="form-label fw-bold">전체 진행도 ${progressMap[quest.questId]}%</label>
 								<div class="progress">
@@ -72,7 +71,7 @@
 					</div>
 				</div>
 
-				<!-- 오른쪽: 위치 + 보상 -->
+				<!-- 위치 및 보상 -->
 				<div class="col-md-4">
 					<div class="card mb-3">
 						<div class="card-body">
@@ -90,22 +89,41 @@
 					<div class="card">
 						<div class="card-body text-center">
 							<p class="mb-1 fw-bold">보상</p>
-							<h5 class="text-primary">${quest.rewardTokens}</h5>
-							<button type="button" class="btn btn-success mt-2"
-								data-bs-toggle="modal" data-bs-target="#rewardModal-${quest.questId}">보상 받기</button>
+							<h5 class="text-primary">${quest.rewardTokens} Qubit</h5>
+
+							<!-- 버튼 조건부 제어 (수정됨) -->
+							<c:choose>
+								<c:when test="${quest.status eq '완료' and (rewardGivenMap[quest.questId] == false or rewardGivenMap[quest.questId] == null)}">
+									<button type="submit"
+										class="btn btn-success mt-2 w-100 fw-bold"
+										data-bs-toggle="modal"
+										data-bs-target="#rewardModal-${quest.questId}">
+										보상 받기
+									</button>
+								</c:when>
+								<c:otherwise>
+									<button type="button"
+										class="btn btn-secondary mt-2 w-100 fw-bold"
+										disabled>
+										지급 완료
+									</button>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
 
-		<!-- 보상 모달 -->
+		<!-- 모달 -->
 		<div class="modal fade" id="rewardModal-${quest.questId}" tabindex="-1"
 			aria-labelledby="rewardModalLabel-${quest.questId}" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content text-center">
 					<div class="modal-header border-0">
-						<h5 class="modal-title w-100 fw-bold text-uppercase" id="rewardModalLabel-${quest.questId}">Quest Clear! Reward Delivered!</h5>
+						<h5 class="modal-title w-100 fw-bold text-uppercase" id="rewardModalLabel-${quest.questId}">
+							Quest Clear! Reward Delivered!
+						</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
 					</div>
 					<div class="modal-body">
@@ -117,7 +135,7 @@
 							[<fmt:formatDate value="${quest.endDate}" pattern="MM.dd" />] ${quest.rewardTokens} 큐빗
 						</p>
 						<div class="text-muted small mt-3">
-							⚠ 보상은 개인 내 [코인 보기 ▶ 보유 코인]으로 지급되며 최대 10분까지 소요될 수 있습니다.
+							⚠ 보상은 [내 코인 보기 ▶ 보유 코인]에 지급되며 최대 10분까지 소요될 수 있습니다.
 						</div>
 					</div>
 					<div class="modal-footer border-0">

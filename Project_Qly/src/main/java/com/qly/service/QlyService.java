@@ -17,6 +17,9 @@ public interface QlyService {
 
 	List<QuestTaskDto> getQuestUserId(int userid);
 
-	// UserDto getUserById(int userId);
+	UserDto getUserById(int userId);
+	
+	void addTokensUser(int userId, int rewardTokens);
+
 
 }

@@ -36,11 +36,8 @@ public class QuestController {
 
 	@Autowired
 	private QlyService qlyService;
-	
-	
 
-
-    @RequestMapping(value = "/list.do")
+	@RequestMapping(value = "/list.do")
 	public String questList(Model model) {
 		List<QuestDto> questList = questService.getAllQuests();
 		model.addAttribute("questList", questList);
@@ -174,7 +171,8 @@ public class QuestController {
 		// 7. 결과 페이지로 이동
 		// return "redirect:/quest/list.do?questId=" + questId;
 		// return "redirect:/quest/particularForm.do?questId=" + questId;
-		return "mainpage";
+		return "redirect:/mainpage.jsp";
+
 	}
 
 	@RequestMapping("/particularForm.do")
@@ -192,6 +190,52 @@ public class QuestController {
 		model.addAttribute("quest", quest);
 
 		return "quest/QuestParticular";
+	}
+
+	@RequestMapping("/userparticularForm.do")
+	public String usershowQuestparticularForm(@RequestParam("questId") int questId, HttpSession session, Model model) {
+		QuestDto quest = questService.getQuestById(questId);
+		List<QuestDto> applicants = questService.getApplicantsByQuestId(questId);
+
+		model.addAttribute("quest", quest);
+		model.addAttribute("applicants", applicants);
+
+		return "mypage/propile_Quest/userParticular";
+
+	}
+
+	@RequestMapping(value = "/assignSolver.do")
+	public String assignSolver(@RequestParam("questId") int questId, @RequestParam("userId") int userId,
+			RedirectAttributes redirect) {
+		System.out.println("선택된 해결사 ID: " + userId);
+		questService.assignSolver(questId, userId);
+		redirect.addAttribute("questId", questId);
+		return "redirect:/mypage/questcard.do";
+	}
+
+	@RequestMapping("/progressList.do")
+	public String showProgressList(HttpSession session, Model model, HttpServletRequest request) {
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/user/loginForm.do";
+		}
+
+		int userId = loginUser.getUserId();
+
+		// 1. 진행중인 퀘스트 목록 가져오기
+		List<QuestDto> progressQuests = questService.getApplicantsByQuestId(userId);
+
+		// 2. 퀘스트별 작업 목록 Map으로 가져오기 (questId -> task 리스트)
+		Map<Integer, List<QuestTaskDto>> taskMap = questService.getTasksForQuests(progressQuests);
+
+		// 3. 모델에 담기
+		model.addAttribute("questlist", progressQuests);
+		model.addAttribute("taskMap", taskMap);
+		
+		String pageParam = "mypage/propile_Quest/questHistory.jsp";
+		request.setAttribute("pageParam", pageParam);
+
+		return "redirect:/mypage/questHistory.do";
 	}
 
 	@RequestMapping("/application.do")
@@ -240,14 +284,11 @@ public class QuestController {
 		return "quest/QuestAllList";
 	}
 
-
 	// @RequestMapping("/Qly_insert.do")
 	// public String insertUser(UserDto dto) throws Exception {
-	// 	qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
-	// 	return "quest/QuestAllList";
+	// qlyService.insertUser(dto); // 서비스 → DAO → MyBatis 호출
+	// return "quest/QuestAllList";
 	// }
-
-	
 
 	@RequestMapping("/quest_history.do")
 	public String questHistory(@RequestParam("userId") int userId, Model model) {

@@ -91,14 +91,15 @@ if (currentPage == null)
 		<!-- 개인 정보 -->
 		<li onclick="toggleSubmenu('profileMenu')">개인 정보
 			<ul id="profileMenu"
-				class="submenu <%= (currentPage.startsWith("mypage/contents/personal_info") || currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : "" %>">
+				class="submenu <%=(currentPage.startsWith("mypage/contents/personal_info")
+		|| currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : ""%>">
 				<li
-					class="<%= currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/user.do'">정보
+					class="<%=currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/user.do'">정보
 					조회</li>
 				<li
-					class="<%= currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/sujeug.do'">정보
+					class="<%=currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/sujeug.do'">정보
 					수정</li>
 			</ul>
 		</li>
@@ -106,26 +107,36 @@ if (currentPage == null)
 		<!-- 내 퀘스트 -->
 		<li onclick="toggleSubmenu('questMenu')">내 퀘스트
 			<ul id="questMenu"
-				class="submenu <%= currentPage.contains("propile_Quest") ? "show" : "" %>">
-				<% if ("의뢰인".equals(userType)) { %>
+				class="submenu <%=currentPage.contains("propile_Quest") ? "show" : ""%>">
+				<%
+				if ("의뢰인".equals(userType)) {
+				%>
 				<li
-					class="<%= currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/questcard.do'">퀘스트
+					class="<%=currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/questcard.do'">퀘스트
 					목록</li>
 				<li
-					class="<%= currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/questhistory.do'">진행
+					class="<%=currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">진행
 					상황</li>
-				<% } else { %>
 				<li
-					class="<%= currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/heagualquestcard.do'">해결
+					class="<%=currentPage.equals("mypage/propile_Quest/UserParticular.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">완료된
+					퀘스트</li>
+				<%
+				} else {
+				%>
+				<li
+					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결
 					내역</li>
 				<li
-					class="<%= currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : "" %>"
-					onclick="location.href='<%= request.getContextPath() %>/mypage/questprogress.do'">퀘스트
+					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/questprogress.do'">퀘스트
 					신청 목록</li>
-				<% } %>
+				<%
+				}
+				%>
 			</ul>
 		</li>
 
