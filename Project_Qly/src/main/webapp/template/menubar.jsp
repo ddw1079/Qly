@@ -118,7 +118,7 @@
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 
 
-	/* int userid = loginUser.getUserId();
+	/* int userid = loginUser.getUserId();*/
 	// int userid = loginUser.getUserId();
 
 	int userId = loginUser != null ? loginUser.getUserId() : 0;

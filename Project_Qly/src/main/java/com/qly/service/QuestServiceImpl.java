@@ -59,7 +59,6 @@ public class QuestServiceImpl implements QuestService {
 		return quest;
 	}
 
-
 	@Override
 	public void updateTokens(int userId, int totalTokens) {
 		questMapper.updateUserTokens(userId, totalTokens);
@@ -69,28 +68,40 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> getMyQuestList(int userId) {
 		return questMapper.getMyQuestList(userId);
 	}
-	@Override  // 박윤재
-	public List<QuestTaskDto> getQuestTasks(int questId){
+
+	@Override // 박윤재
+	public List<QuestTaskDto> getQuestTasks(int questId) {
 		return questMapper.getQuestTasks(questId);
 	}
-	
+
 	@Override
 	public void updateTaskChecks(int questId, List<Integer> checkedTaskIds) {
 		questMapper.resetAllTaskChecks(questId); // 먼저 전부 0으로 초기화
-	    if (!checkedTaskIds.isEmpty()) {
-	    	questMapper.setCheckedTasks(checkedTaskIds); // 선택된 ID만 1로 변경
-	    }
+		if (!checkedTaskIds.isEmpty()) {
+			questMapper.setCheckedTasks(checkedTaskIds); // 선택된 ID만 1로 변경
+		}
+	}
+
+	@Override
+	public void deductRewardTokens(int questId) {
+		questMapper.reduceTokensBy100(questId);
+	}
+
+
+	@Override
+	public List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId){
+		return questMapper.jongilJJangyoonjaeJJang(questId);
+	}
+	@Override
+	public List<QuestDto> getQuestsByApplicantUserId(int userId){
+		return questMapper.getQuestsByApplicantUserId(userId);
 	}
 	
-	@Override
-    public void deductRewardTokens(int questId) {
-        questMapper.reduceTokensBy100(questId);
-    }
+
 	
 	@Override
 	public List<QuestDto> heagualList(int userId){
 		return  questMapper.heagualList(userId);
 	}
-
 
 }

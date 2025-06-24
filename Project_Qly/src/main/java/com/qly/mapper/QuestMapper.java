@@ -10,13 +10,11 @@ import com.qly.dto.UserDto;
 
 public interface QuestMapper {
 
-
 	List<QuestDto> getAllQuests();
 
 	void insertQuest(QuestDto quest);
 
 	void insertQuestTask(QuestTaskDto task);
-
 
 	List<QuestDto> searchQuests(String keyword);
 
@@ -26,27 +24,30 @@ public interface QuestMapper {
 
 	List<QuestTaskDto> getQuestUserId(int userId);
 
-
 	void insertQuestApplication(QuestDto quest);
 
 	QuestDto selectQuestById(int questId);
 
 	QuestDto QuestById(int questId);
-	
 
 	void updateUserTokens(@Param("userId") int userId, @Param("totalTokens") int totalTokens);
 
 	List<QuestDto> getMyQuestList(int userId);
-	
+
 	List<QuestTaskDto> getQuestTasks(int questId);
-	
+
 	void resetAllTaskChecks(@Param("questId") int questId);
 
 	void setCheckedTasks(@Param("taskIds") List<Integer> taskIds);
-	
+
 	void reduceTokensBy100(@Param("questId") int questId);
 	
 	List<QuestDto> heagualList(@Param("userId") int userId);
+
+	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId); 
+	
+	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
+	
 
 	
 

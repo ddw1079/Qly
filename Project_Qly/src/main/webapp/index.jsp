@@ -10,7 +10,6 @@
 <title>Insert title here</title>
 </head>
 
-
 <body>
 	<script>
     
@@ -21,6 +20,6 @@
 </body>
 </html>
 
-
+	
 
 
