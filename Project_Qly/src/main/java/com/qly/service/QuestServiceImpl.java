@@ -123,7 +123,6 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> getQuestsByApplicantUserId(int userId) {
 		return questMapper.getQuestsByApplicantUserId(userId);
 	}
-
 	@Override
 	public List<QuestDto> heagualList(int userId) {
 		return questMapper.heagualList(userId);
@@ -136,7 +135,6 @@ public class QuestServiceImpl implements QuestService {
 	public int getRewardTokensByQuestId(int questId) {
 		return questMapper.getRewardTokensByQuestId(questId);
 	}
-	
 	@Override
 	public void markRewardGiven(int questId, int userId) {
 	    questMapper.markRewardGiven(questId, userId);
@@ -152,7 +150,17 @@ public class QuestServiceImpl implements QuestService {
 	    questTaskMapper.updateTaskCheckStatus(taskId, isChecked ? "1" : "0");
 	}
 
-
-
-
+	// 메인페이지에서 사용할 메소드
+	@Override
+	public List<QuestDto> getLatest5Quests() {
+		return questMapper.getLatest5Quests();
+	}	
+	@Override
+	public List<QuestDto> getRandom3Quests() {
+		return questMapper.getRandom3Quests();
+	}	
+	@Override
+	public List<String> searchCategories(String keyword) {
+        return questMapper.searchCategories(keyword);
+    }
 }

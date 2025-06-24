@@ -56,6 +56,9 @@ public interface QuestService {
 	// List<QuestDto> getInProgressQuestsByUserId(int userId);
 
 	
-	
+	// 메인페이지에서 사용할 메소드
+	List<QuestDto> getLatest5Quests();
+	List<QuestDto> getRandom3Quests();
+	List<String> searchCategories(String keyword);
 
 }

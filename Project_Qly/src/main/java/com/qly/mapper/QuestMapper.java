@@ -51,7 +51,6 @@ public interface QuestMapper {
 	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId);
 
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
-
 	
 	void updateQuestStatus(@Param("questId") int questId, @Param("status") String status);
 	
@@ -70,5 +69,10 @@ public interface QuestMapper {
 	List<QuestTaskDto> getTasksByQuestId(int questId);
 
 	// List<QuestDto> getInProgressQuestsByUserId(int userId);
+
+	// 메인페이지에서 사용할 Mapper 메소드
+	List<QuestDto> getLatest5Quests();
+	List<QuestDto> getRandom3Quests();
+	List<String> searchCategories(String keyword);
 
 }
