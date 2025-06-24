@@ -25,8 +25,18 @@ public class QuestDto {
     private Date createdAt;
     private int viewCount;
     private int applicationId;
-	private Date appliedAt;;
+	private Date appliedAt;
+	private String username;
+	
     
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public int getApplicationId() {
 		return applicationId;
 	}

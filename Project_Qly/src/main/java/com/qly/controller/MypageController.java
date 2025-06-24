@@ -30,7 +30,6 @@ public class MypageController {
 	@Autowired
 	private QuestService questService;
 
-
 	@RequestMapping("/user.do")
 	public String goUserLayout(HttpSession session, Model model) {
 		// 로그인된 사용자의 세션에서 정보 확인
@@ -49,7 +48,6 @@ public class MypageController {
 		return "/mypage/propile_Quest/user_layout";
 	}
 
-
 	@RequestMapping("/sujeug.do")
 	public String suJenug(HttpServletRequest request) {
 		String pageParam = "mypage/contents/edit_personal_info.jsp";
@@ -58,33 +56,34 @@ public class MypageController {
 	}
 
 	@RequestMapping("/questcard.do")
-	public String questCard(HttpServletRequest request, Model model) {
-		List<QuestDto> questList = questService.getAllQuests();
+	public String questCard(HttpServletRequest request, Model model, HttpSession session) {
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		int userId = loginUser.getUserId();
+		// List<QuestDto> questList = questService.getAllQuests();
+		List<QuestDto> questList = questService.getMyQuestList(userId);
 		model.addAttribute("questList", questList);
 
 		String pageParam = "mypage/propile_Quest/questCard.jsp";
 		request.setAttribute("pageParam", pageParam);
 
-
 		return "/mypage/propile_Quest/user_layout";
 	}
 
-    @RequestMapping("/heagualquestcard.do")
-    public String heagualquestCard(HttpServletRequest request, Model model, HttpSession session) {
-    	 UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-    	 int userId = loginUser.getUserId();
-    	 List<QuestDto> completedQuests = questService.heagualList(userId);
-    	    model.addAttribute("completedQuests", completedQuests);
-    	    for (QuestDto q : completedQuests) {
-    	        System.out.println(q.getTitle() + " / " + q.getCategory() + " / " + q.getRegDate());
-    	    }
+	@RequestMapping("/heagualquestcard.do")
+	public String heagualquestCard(HttpServletRequest request, Model model, HttpSession session) {
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		int userId = loginUser.getUserId();
+		List<QuestDto> completedQuests = questService.heagualList(userId);
+		model.addAttribute("completedQuests", completedQuests);
+		for (QuestDto q : completedQuests) {
+			System.out.println(q.getTitle() + " / " + q.getCategory() + " / " + q.getRegDate());
+		}
 
-        String pageParam = "mypage/propile_Quest/heagual_questCard.jsp";
-        request.setAttribute("pageParam", pageParam);
+		String pageParam = "mypage/propile_Quest/heagual_questCard.jsp";
+		request.setAttribute("pageParam", pageParam);
 
-        return "/mypage/propile_Quest/user_layout";
-    }
-
+		return "/mypage/propile_Quest/user_layout";
+	}
 
 	@RequestMapping("/questhistory.do")
 	public String showQuestProgress(Model model, HttpSession session, HttpServletRequest request) {
@@ -113,7 +112,6 @@ public class MypageController {
 		return "/mypage/propile_Quest/user_layout"; // 레이아웃 JSP
 	}
 
-
 	@RequestMapping("/insertcheck.do")
 	public String insertCheck(@RequestParam("questId") int questId,
 			@RequestParam(value = "checkedTasks", required = false) List<Integer> checkedTasks, HttpSession session) {
@@ -121,7 +119,6 @@ public class MypageController {
 		if (checkedTasks == null) {
 			checkedTasks = new ArrayList<>();
 		}
-
 
 		// Task 체크 상태 업데이트
 		questService.updateTaskChecks(questId, checkedTasks);
@@ -134,7 +131,6 @@ public class MypageController {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null)
 			return "redirect:/login/loginForm";
-
 
 		// 보상 토큰 차감 처리 (ex. 100코인)
 		questService.deductRewardTokens(questId);
@@ -213,35 +209,35 @@ public class MypageController {
 
 	@RequestMapping("/questprogress.do")
 	public String showQuestProgressCard(Model model, HttpServletRequest request, HttpSession session) {
-	    UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-	    if (loginUser == null) return "redirect:/user/login.do";
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		if (loginUser == null)
+			return "redirect:/user/login.do";
 
-	    int userId = loginUser.getUserId();
+		int userId = loginUser.getUserId();
 
-	    List<QuestDto> questList = questService.getQuestsByApplicantUserId(userId);
-	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
-	    Map<Integer, Integer> progressMap = new HashMap<>();
+		List<QuestDto> questList = questService.getQuestsByApplicantUserId(userId);
+		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
+		Map<Integer, Integer> progressMap = new HashMap<>();
 
-	    for (QuestDto q : questList) {
-	        List<QuestTaskDto> taskList = questService.jongilJJangyoonjaeJJang(q.getQuestId());
-	        taskMap.put(q.getQuestId(), taskList);
+		for (QuestDto q : questList) {
+			List<QuestTaskDto> taskList = questService.jongilJJangyoonjaeJJang(q.getQuestId());
+			taskMap.put(q.getQuestId(), taskList);
 
-	        // 진행도 계산
-	        int completed = (int) taskList.stream().filter(t -> "1".equals(t.getIsChecked())).count();
-	        int progress = taskList.isEmpty() ? 0 : (completed * 100) / taskList.size();
-	        progressMap.put(q.getQuestId(), progress);
-	    }
+			// 진행도 계산
+			int completed = (int) taskList.stream().filter(t -> "1".equals(t.getIsChecked())).count();
+			int progress = taskList.isEmpty() ? 0 : (completed * 100) / taskList.size();
+			progressMap.put(q.getQuestId(), progress);
+		}
 
-	    model.addAttribute("questList", questList);
-	    model.addAttribute("taskMap", taskMap);
-	    model.addAttribute("progressMap", progressMap);
+		model.addAttribute("questList", questList);
+		model.addAttribute("taskMap", taskMap);
+		model.addAttribute("progressMap", progressMap);
 
-	    request.setAttribute("pageParam", "mypage/propile_Quest/heagual_questHistory.jsp");
-	    return "/mypage/propile_Quest/user_layout";
+		request.setAttribute("pageParam", "mypage/propile_Quest/heagual_questHistory.jsp");
+		return "/mypage/propile_Quest/user_layout";
 	}
 
-        // 보상 토큰 차감 처리 (ex. 100토큰)
-        // questService.deductRewardTokens(questId);
-
+	// 보상 토큰 차감 처리 (ex. 100토큰)
+	// questService.deductRewardTokens(questId);
 
 }
