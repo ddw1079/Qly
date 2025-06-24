@@ -98,7 +98,7 @@ public class QuestServiceImpl implements QuestService {
 	}
 	
 
-	
+	// 메인페이지에서 사용할 메소드
 	@Override
 	public List<QuestDto> heagualList(int userId){
 		return  questMapper.heagualList(userId);
@@ -112,4 +112,8 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> getRandom3Quests() {
 		return questMapper.getRandom3Quests();
 	}	
+	@Override
+	public List<String> searchCategories(String keyword) {
+        return questMapper.searchCategories(keyword);
+    }
 }

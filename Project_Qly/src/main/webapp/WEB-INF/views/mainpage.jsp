@@ -243,6 +243,37 @@ body {
 			<span class="text-muted"></span>
 		</div>
 	</div>
+	<!-- 검색창 카테고리 나오게 하는 이벤트 js -->
+	<script>
+	document.querySelector('#searchInput').addEventListener('input', function () {
+		const keyword = document.getElementById('searchInput').value;
+
+		fetch("/categories?keyword=" + keyword)
+			.then(res => res.json())
+			.then(data => {
+			const tagContainer = document.getElementById("suggestedTags");
+			tagContainer.innerHTML = "";
+
+			if (data.length === 0) {
+				tagContainer.innerHTML = "<span class='text-muted'>검색 결과가 없습니다</span>";
+				return;
+			}
+
+			data.forEach(category => {
+				  const span = document.createElement("span");
+				  span.className = "badge bg-success me-2";
+				  span.textContent = category;
+
+				  // 클릭 시 input에 카테고리 값 입력
+				  span.addEventListener("click", function () {
+				    document.getElementById("searchInput").value = category;
+				  });
+
+				  tagContainer.appendChild(span);
+				});
+			});
+		});
+	</script>
 
 	<!-- ✅ 자주 찾는 서비스 아이콘 전체 wrapper -->
 	<div class="service-wrapper-custom">

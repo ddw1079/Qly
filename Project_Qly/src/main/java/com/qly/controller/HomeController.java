@@ -1,11 +1,16 @@
 package com.qly.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qly.dto.QuestDto;
 import com.qly.service.QuestService;
@@ -28,5 +33,12 @@ public class HomeController {
     @RequestMapping("/") // 메인 URL
     public String home() {
         return "redirect:/mainpage";
+    }
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> searchCategories(@RequestParam("keyword") String keyword) throws UnsupportedEncodingException {
+    	
+        return questService.searchCategories(keyword);
     }
 }

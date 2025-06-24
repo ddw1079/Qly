@@ -337,4 +337,11 @@
 			WHERE ROWNUM <![CDATA[ <= ]]> 3
 	</select>
 	
+	<select id="searchCategories" parameterType="string" resultType="string">
+	SELECT DISTINCT CATEGORY
+	FROM QUESTS
+	WHERE CATEGORY IS NOT NULL
+		AND LOWER(CATEGORY) LIKE '%' || LOWER(#{keyword}) || '%'
+	</select>
+		
 </mapper>
