@@ -19,6 +19,8 @@ public interface QuestMapper {
 	List<QuestDto> searchQuests(String keyword);
 
 	void insertUser(UserDto dto);
+	
+	UserDto getUserByUsername(@Param("username") String username);
 
 	List<QuestTaskDto> getTasksQuestId(int questid);
 
@@ -41,15 +43,11 @@ public interface QuestMapper {
 	void setCheckedTasks(@Param("taskIds") List<Integer> taskIds);
 
 	void reduceTokensBy100(@Param("questId") int questId);
-	
+
 	List<QuestDto> heagualList(@Param("userId") int userId);
 
-	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId); 
-	
+	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId);
+
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
-	
-
-	
-
 
 }
