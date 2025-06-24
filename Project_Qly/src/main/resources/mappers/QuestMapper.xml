@@ -114,7 +114,66 @@
 		WHERE QUEST_ID = #{questId}
 	</select>
 
+	<select id="userselectQuestById" parameterType="int"
+		resultType="com.qly.dto.QuestDto">
+		SELECT
+		QUEST_ID AS questId,
+		TITLE AS title,
+		ADDRESS AS
+		address,
+		REWARD_TOKENS AS rewardTokens,
+		PHOTO_PATH AS photoPath
+		FROM
+		QUESTS
+		WHERE QUEST_ID = #{questId}
+	</select>
 
+	<select id="selectApplicantsByQuestId" parameterType="int"
+		resultType="com.qly.dto.QuestDto">
+		SELECT
+		qa.APPLICATION_ID AS applicationId,
+		qa.QUEST_ID AS
+		questId,
+		qa.USER_ID
+		AS userId,
+		u.USERNAME AS username,
+		qa.APPLIED_AT AS
+		appliedAt,
+		q.ADDRESS
+		AS address,
+		q.LOCATION AS location
+		FROM
+		QUEST_APPLICATION qa
+		JOIN QUESTS q ON qa.QUEST_ID = q.QUEST_ID
+		JOIN
+		USERS u ON qa.USER_ID = u.USER_ID
+		WHERE qa.QUEST_ID = #{questId}
+	</select>
+
+
+	<update id="assignSolver">
+		UPDATE QUESTS
+		SET STATUS = '진행중',
+		PROGRESS = 1,
+		USER_ID
+		= #{userId}
+		WHERE QUEST_ID = #{questId}
+	</update>
+
+	<select id="getInProgressQuestsByUserId"
+		resultType="com.qly.dto.QuestDto">
+		SELECT *
+		FROM QUESTS
+		WHERE STATUS = '진행중' AND USER_ID = #{userId}
+		ORDER BY REG_DATE DESC
+	</select>
+
+
+
+	<!-- <select id="userselectQuestById" parameterType="int" resultType="com.qly.dto.QuestDto"> 
+		SELECT qa.APPLICATION_ID AS applicationId, qa.APPLIED_AT AS appliedAt, qa.STATUS 
+		AS status, u.USERNAME, u.USER_ID AS userId FROM QUEST_APPLICATION qa JOIN 
+		USERS u ON qa.USER_ID = u.USER_ID WHERE qa.QUEST_ID = #{questId} </select> -->
 
 
 	<insert id="insertUser" parameterType="com.qly.dto.UserDto">
@@ -144,11 +203,13 @@
 		SELECT
 		USER_ID AS userId,
 		USERNAME AS username,
-		PASSWORD AS password,
+		PASSWORD AS
+		password,
 		PHONE AS phone,
 		EMAIL AS email,
 		ADDRESS AS address,
-		USER_TYPE AS userType,
+		USER_TYPE AS
+		userType,
 		TOTAL_TOKENS AS totalTokens,
 		JOIN_DATE AS joinDate
 		FROM USERS
@@ -173,29 +234,43 @@
 
 
 
+	<!-- <select id="getMyQuestList" resultType="com.qly.dto.QuestDto"> SELECT 
+		QUEST_ID AS questId, USER_ID AS userId, TITLE, CATEGORY, CONTENT, PHOTO_PATH 
+		as photoPath, PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION, STATUS, REWARD_TOKENS 
+		AS rewardTokens, REG_DATE AS regDate FROM QUESTS WHERE USER_ID = #{userId} 
+		ORDER BY REG_DATE DESC </select> -->
 	<select id="getMyQuestList" resultType="com.qly.dto.QuestDto">
 		SELECT
-		QUEST_ID AS
+		q.QUEST_ID AS
 		questId,
-		USER_ID AS userId,
-		TITLE,
-		CATEGORY,
-		CONTENT,
-		PHOTO_PATH as
-		photoPath,
-		PROGRESS,
-		LATITUDE,
-		LONGITUDE,
-		ADDRESS,
-		LOCATION,
-		STATUS,
-		REWARD_TOKENS AS rewardTokens,
-		REG_DATE AS regDate
-		FROM QUESTS
-		WHERE
-		USER_ID = #{userId}
-		ORDER BY REG_DATE DESC
+		q.USER_ID AS userId,
+		q.TITLE,
+		q.CATEGORY,
+		q.CONTENT,
+		q.PHOTO_PATH
+		AS photoPath,
+		q.PROGRESS,
+		q.LATITUDE,
+		q.LONGITUDE,
+		q.ADDRESS,
+		q.LOCATION,
+		q.STATUS,
+		q.REWARD_TOKENS AS
+		rewardTokens,
+		q.REG_DATE AS regDate,
+		(
+		SELECT
+		COUNT(*)
+		FROM QUEST_APPLICATION qa
+		WHERE qa.QUEST_ID = q.QUEST_ID
+		) AS
+		applicantCount
+		FROM QUESTS q
+		WHERE q.USER_ID = #{userId}
+		ORDER BY
+		q.REG_DATE DESC
 	</select>
+
 
 
 
@@ -292,6 +367,29 @@
 		)
 	</select>
 
+	<update id="updateQuestStatus">
+		UPDATE QUESTS
+		SET STATUS = #{status}
+		WHERE QUEST_ID = #{questId}
+	</update>
+
+	<!-- rewardTokens 조회 -->
+	<select id="getRewardTokensByQuestId" resultType="int">
+	SELECT reward_tokens FROM QUESTS WHERE quest_id = #{questId}
+	</select>
+
+	<update id="markRewardGiven">
+		UPDATE QUEST_APPLICATION
+		SET REWARD_GIVEN = 'Y'
+		WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+	</update>
+
+
+	<select id="isRewardGiven" resultType="int">
+	SELECT COUNT(*) FROM QUEST_APPLICATION
+	WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+		AND REWARD_GIVEN = 'Y'
+	</select>
 
 	<!-- 메인페이지 Mapper -->
 	<select id="getLatest5Quests" resultType="com.qly.dto.QuestDto">
@@ -343,5 +441,4 @@
 	WHERE CATEGORY IS NOT NULL
 		AND LOWER(CATEGORY) LIKE '%' || LOWER(#{keyword}) || '%'
 	</select>
-		
 </mapper>

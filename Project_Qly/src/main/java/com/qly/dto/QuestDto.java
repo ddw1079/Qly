@@ -27,7 +27,16 @@ public class QuestDto {
     private int viewCount;
     private int applicationId;
 	private Date appliedAt;
+	
     
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public int getApplicationId() {
 		return applicationId;
 	}
@@ -202,14 +211,6 @@ public class QuestDto {
 
 	public void setTasks(List<QuestTaskDto> tasks) {
 		this.tasks = tasks;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 }

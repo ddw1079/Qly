@@ -1,6 +1,8 @@
 package com.qly.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,31 @@ public class QuestServiceImpl implements QuestService {
 	@Override
 	public List<QuestDto> getAllQuests() {
 		return questMapper.getAllQuests();
+	}
+
+	@Override
+	public List<QuestDto> getApplicantsByQuestId(int questId) {
+		return questMapper.selectApplicantsByQuestId(questId);
+	}
+
+	@Override
+	public void assignSolver(int questId, int userId) {
+		questMapper.assignSolver(questId, userId);
+	}
+
+	/*
+	 * @Override public List<QuestDto> getInProgressQuestsByUserId(int userId) {
+	 * return questMapper.getInProgressQuestsByUserId(userId); }
+	 */
+
+	@Override
+	public Map<Integer, List<QuestTaskDto>> getTasksForQuests(List<QuestDto> questList) {
+		Map<Integer, List<QuestTaskDto>> map = new HashMap<>();
+		for (QuestDto q : questList) {
+			List<QuestTaskDto> tasks = questMapper.getTasksByQuestId(q.getQuestId());
+			map.put(q.getQuestId(), tasks);
+		}
+		return map;
 	}
 
 	@Transactional
@@ -87,23 +114,43 @@ public class QuestServiceImpl implements QuestService {
 		questMapper.reduceTokensBy100(questId);
 	}
 
-
 	@Override
-	public List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId){
+	public List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId) {
 		return questMapper.jongilJJangyoonjaeJJang(questId);
 	}
+
 	@Override
-	public List<QuestDto> getQuestsByApplicantUserId(int userId){
+	public List<QuestDto> getQuestsByApplicantUserId(int userId) {
 		return questMapper.getQuestsByApplicantUserId(userId);
 	}
-	
-
-	// 메인페이지에서 사용할 메소드
 	@Override
-	public List<QuestDto> heagualList(int userId){
-		return  questMapper.heagualList(userId);
+	public List<QuestDto> heagualList(int userId) {
+		return questMapper.heagualList(userId);
+	}
+	@Override
+	public void updateQuestStatus(int questId) {
+		questMapper.updateQuestStatus(questId, "완료");
+	}
+	@Override
+	public int getRewardTokensByQuestId(int questId) {
+		return questMapper.getRewardTokensByQuestId(questId);
+	}
+	@Override
+	public void markRewardGiven(int questId, int userId) {
+	    questMapper.markRewardGiven(questId, userId);
+	}
+	
+	@Override
+	public boolean isRewardGiven(int questId, int userId) {
+	    return questMapper.isRewardGiven(questId, userId) > 0;
+	}
+	
+	@Override
+	public void updateTaskCheckStatus(int taskId, boolean isChecked) {
+	    questTaskMapper.updateTaskCheckStatus(taskId, isChecked ? "1" : "0");
 	}
 
+	// 메인페이지에서 사용할 메소드
 	@Override
 	public List<QuestDto> getLatest5Quests() {
 		return questMapper.getLatest5Quests();

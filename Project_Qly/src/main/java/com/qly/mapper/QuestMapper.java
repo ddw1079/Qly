@@ -19,7 +19,7 @@ public interface QuestMapper {
 	List<QuestDto> searchQuests(String keyword);
 
 	void insertUser(UserDto dto);
-	
+
 	UserDto getUserByUsername(@Param("username") String username);
 
 	List<QuestTaskDto> getTasksQuestId(int questid);
@@ -29,6 +29,8 @@ public interface QuestMapper {
 	void insertQuestApplication(QuestDto quest);
 
 	QuestDto selectQuestById(int questId);
+
+	QuestDto userselectQuestById(int questId);
 
 	QuestDto QuestById(int questId);
 
@@ -50,8 +52,31 @@ public interface QuestMapper {
 
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
 
-	// 메인페이지에서 사용할 Mapper 메소드
+<<<<<<< HEAD
+
+=======
+	
+	void updateQuestStatus(@Param("questId") int questId, @Param("status") String status);
+	
+	int getRewardTokensByQuestId(@Param("questId") int questId);
+
+	void markRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
+	
+	int isRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
+
+	
+
+	List<QuestDto> selectApplicantsByQuestId(int questId);
+
+	void assignSolver(@Param("questId") int questId, @Param("userId") int userId);
+
+	List<QuestTaskDto> getTasksByQuestId(int questId);
+
+	// List<QuestDto> getInProgressQuestsByUserId(int userId);
+
+		// 메인페이지에서 사용할 Mapper 메소드
 	List<QuestDto> getLatest5Quests();
 	List<QuestDto> getRandom3Quests();
 	List<String> searchCategories(String keyword);
+>>>>>>> main
 }
