@@ -10,6 +10,16 @@
 	</settings>
 
 	<typeAliases>
+		<typeAlias alias="questdto" type="com.qly.dto.QuestDto" />
+		<typeAlias alias="questtaskdto"
+			type="com.qly.dto.QuestTaskDto" />
+		<typeAlias alias="userdto" type="com.qly.dto.UserDto" />
+		<typeAlias alias="auserdto"
+			type="com.qly.dto.admin_QuestDto" />
+			
+			
+			<typeAlias alias="inquirydto"
+			type="com.qly.dto.InquiryDto" />
 	<package name="com.qly.dto" />
 </typeAliases>
 
