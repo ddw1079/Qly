@@ -52,6 +52,17 @@ public interface QuestMapper {
 
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
 
+	
+	void updateQuestStatus(@Param("questId") int questId, @Param("status") String status);
+	
+	int getRewardTokensByQuestId(@Param("questId") int questId);
+
+	void markRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
+	
+	int isRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
+
+	
+
 	List<QuestDto> selectApplicantsByQuestId(int questId);
 
 	void assignSolver(@Param("questId") int questId, @Param("userId") int userId);

@@ -214,7 +214,7 @@ public class QuestController {
 	}
 
 	@RequestMapping("/progressList.do")
-	public String showProgressList(HttpSession session, Model model) {
+	public String showProgressList(HttpSession session, Model model, HttpServletRequest request) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null) {
 			return "redirect:/user/loginForm.do";
@@ -231,8 +231,11 @@ public class QuestController {
 		// 3. 모델에 담기
 		model.addAttribute("questlist", progressQuests);
 		model.addAttribute("taskMap", taskMap);
+		
+		String pageParam = "mypage/propile_Quest/questHistory.jsp";
+		request.setAttribute("pageParam", pageParam);
 
-		return "mypage/quest_progress"; // 체크리스트 있는 JSP
+		return "redirect:/mypage/questHistory.do";
 	}
 
 	@RequestMapping("/application.do")

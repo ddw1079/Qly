@@ -33,6 +33,19 @@ public interface QuestService {
 	List<QuestDto> getQuestsByApplicantUserId(int userId);
 
 	List<QuestDto> heagualList(int userId);
+	
+	void updateQuestStatus(int questId);
+	
+	int getRewardTokensByQuestId(int questId); // QUESTS에서 rewardTokens 조회
+	
+	void markRewardGiven(int questId, int userId); //상태 표시 해결퀘스트히스토리
+	
+	boolean isRewardGiven(int questId, int userId); // 보상지급여부
+	
+	void updateTaskCheckStatus(int taskId, boolean isChecked); // ajex 체크박스
+
+
+
 
 	List<QuestDto> getApplicantsByQuestId(int questId);
 

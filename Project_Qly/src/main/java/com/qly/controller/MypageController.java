@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
@@ -114,17 +117,35 @@ public class MypageController {
 
 	@RequestMapping("/insertcheck.do")
 	public String insertCheck(@RequestParam("questId") int questId,
-			@RequestParam(value = "checkedTasks", required = false) List<Integer> checkedTasks, HttpSession session) {
-		// 체크된 항목이 null일 수 있으므로 빈 리스트로 초기화
-		if (checkedTasks == null) {
-			checkedTasks = new ArrayList<>();
-		}
+	        @RequestParam(value = "checkedTasks", required = false) List<Integer> checkedTasks,
+	        HttpSession session) {
 
-		// Task 체크 상태 업데이트
-		questService.updateTaskChecks(questId, checkedTasks);
+	    if (checkedTasks == null) {
+	        checkedTasks = new ArrayList<>();
+	    }
 
-		return "redirect:/mypage/questhistory.do"; // 다시 퀘스트 진행 화면으로 이동
+	    // 1. 체크 상태 업데이트
+	    questService.updateTaskChecks(questId, checkedTasks);
+
+
+	    // 2. 퀘스트 상태 '완료'로 변경 추가
+	    questService.updateQuestStatus(questId);
+
+	    // 3. 리다이렉트
+	    return "redirect:/mypage/questhistory.do";
 	}
+	
+	@RequestMapping(value = "/checkUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateTaskCheck(
+	    @RequestParam("taskId") int taskId,
+	    @RequestParam("isChecked") boolean isChecked
+	) {
+	    questService.updateTaskCheckStatus(taskId, isChecked);
+	    return "success";
+	}
+
+
 
 	@RequestMapping("/coinpayment.do")
 	public String processCoinPayment(@RequestParam("questId") int questId, HttpSession session) {
@@ -206,38 +227,82 @@ public class MypageController {
 //		System.out.println(questId);
 //		return "redirect:/mypage/questprogress.do";
 //	}
+    
 
+	// 예시: 진행상황 리스트 로드하는 컨트롤러
 	@RequestMapping("/questprogress.do")
-	public String showQuestProgressCard(Model model, HttpServletRequest request, HttpSession session) {
-		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-		if (loginUser == null)
-			return "redirect:/user/login.do";
+	public String showQuestProgress(HttpSession session, Model model, HttpServletRequest request) {
+	    UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+	    int userId = loginUser.getUserId();
 
-		int userId = loginUser.getUserId();
+	    List<QuestDto> questList = questService.getQuestsByApplicantUserId(userId); // 내가 신청한 퀘스트
 
-		List<QuestDto> questList = questService.getQuestsByApplicantUserId(userId);
-		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
-		Map<Integer, Integer> progressMap = new HashMap<>();
+	    Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
+	    Map<Integer, Integer> progressMap = new HashMap<>();
+	    Map<Integer, Boolean> rewardGivenMap = new HashMap<>();
 
-		for (QuestDto q : questList) {
-			List<QuestTaskDto> taskList = questService.jongilJJangyoonjaeJJang(q.getQuestId());
-			taskMap.put(q.getQuestId(), taskList);
+	    for (QuestDto quest : questList) {
+	        int questId = quest.getQuestId();
 
-			// 진행도 계산
-			int completed = (int) taskList.stream().filter(t -> "1".equals(t.getIsChecked())).count();
-			int progress = taskList.isEmpty() ? 0 : (completed * 100) / taskList.size();
-			progressMap.put(q.getQuestId(), progress);
-		}
+	        // 할 일 목록
+	        List<QuestTaskDto> tasks = questService.getQuestTasks(questId);
+	        taskMap.put(questId, tasks);
 
-		model.addAttribute("questList", questList);
-		model.addAttribute("taskMap", taskMap);
-		model.addAttribute("progressMap", progressMap);
+	        // 진행률 계산
+	        long total = tasks.size();
+	        long completed = tasks.stream().filter(t -> "1".equals(t.getIsChecked())).count();
+	        int progress = (total == 0) ? 0 : (int) ((completed * 100) / total);
+	        progressMap.put(questId, progress);
 
-		request.setAttribute("pageParam", "mypage/propile_Quest/heagual_questHistory.jsp");
+	        // REWARD_GIVEN 여부 확인
+	        boolean isGiven = questService.isRewardGiven(questId, userId);  // ← 이 메서드가 반드시 필요!
+	        rewardGivenMap.put(questId, isGiven);
+	    }
+
+	    model.addAttribute("questList", questList);
+	    model.addAttribute("taskMap", taskMap);
+	    model.addAttribute("progressMap", progressMap);
+	    model.addAttribute("rewardGivenMap", rewardGivenMap);
+	    
+	    request.setAttribute("pageParam", "mypage/propile_Quest/heagual_questHistory.jsp");
 		return "/mypage/propile_Quest/user_layout";
+
 	}
 
-	// 보상 토큰 차감 처리 (ex. 100토큰)
-	// questService.deductRewardTokens(questId);
+
+        // 보상 토큰 차감 처리 (ex. 100토큰)
+        // questService.deductRewardTokens(questId);
+	
+	@RequestMapping("/giveReward.do")
+	public String giveReward(
+	    @RequestParam("questId") int questId,
+	    HttpSession session,
+	    RedirectAttributes redirectAttributes
+	) {
+	    UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+	    if (loginUser == null) return "redirect:/loginForm.do";
+
+	    int userId = loginUser.getUserId();
+
+	    // 1. questId로 rewardToken 조회
+	    int reward = questService.getRewardTokensByQuestId(questId);
+
+	    // 2. 유저 total_tokens에 reward 더하기
+	    qlyService.addTokensUser(userId, reward);
+
+	    // ✅ 3. 보상 지급 여부 테이블에 표시 (REWARD_GIVEN = 'Y')
+	    questService.markRewardGiven(questId, userId);
+
+	    // 4. 세션 정보 갱신
+	    loginUser.setTotalTokens(loginUser.getTotalTokens() + reward);
+	    session.setAttribute("loginUser", loginUser);
+
+	    // 5. 지급 완료 표시용 redirect
+	    redirectAttributes.addFlashAttribute("rewardGivenQuestId", questId);
+
+	    return "redirect:/mypage/questprogress.do";
+	}
+
+
 
 }

@@ -368,6 +368,28 @@
 	</select>
 
 
+<update id="updateQuestStatus">
+    UPDATE QUESTS
+    SET STATUS = #{status}
+    WHERE QUEST_ID = #{questId}
+</update>
 
+<!-- rewardTokens 조회 -->
+<select id="getRewardTokensByQuestId" resultType="int">
+  SELECT reward_tokens FROM QUESTS WHERE quest_id = #{questId}
+</select>
+
+<update id="markRewardGiven">
+    UPDATE QUEST_APPLICATION
+    SET REWARD_GIVEN = 'Y'
+    WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+</update>
+
+
+<select id="isRewardGiven" resultType="int">
+  SELECT COUNT(*) FROM QUEST_APPLICATION
+  WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+    AND REWARD_GIVEN = 'Y'
+</select>
 
 </mapper>
