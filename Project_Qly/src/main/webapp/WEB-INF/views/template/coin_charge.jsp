@@ -9,6 +9,12 @@
 <%-- 세션의 유저 데이터를 사용하기 위한 구문 --%>
 <% 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser"); %>
 <div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
+<script>
+const modal = document.getElementById("chargeCoinModal");
+modal.addEventListener("hidden.bs.modal", () => {
+    document.getElementById("chargeCoinForm").reset();
+});
+</script>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <%-- controller 유저 데이터 확인용--%>
@@ -32,8 +38,20 @@
                     <div class="mb-3">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="coinAmount">충전할 코인 수</label>
-                            <input type="number" class="form-control" id="coinAmount" name="coinAmount" min="0" value="0" required>
+                            <input type="number" class="form-control" id="coinAmount" name="coinAmount" 
+                            oninput="updateTotal()" min="0" value="0" autocomplete="off" required />
                             <span class="input-group-text">코인</span>
+                            <script>
+                            
+                            window.addEventListener("pageshow", function(event) {
+                            	  if (event.persisted) {
+                            	    // 캐시된 페이지가 뒤로가기로 다시 로드된 경우
+                            	    document.getElementById("chargeCoinForm").reset();
+                            	    document.getElementById("totalAmount").textContent = "0원";
+                            	    document.getElementById("submitBtn").disabled = true;
+                            	  }
+                           	});
+                            </script>
                         </div>
 
                         <div class="mt-2 d-flex justify-content-between">
@@ -43,13 +61,6 @@
                             <button type="button" class="btn btn-outline-success" onclick="increaseCoin(100000)">+10만</button>
                             <button type="button" class="btn btn-outline-success" onclick="increaseCoin(1000000)">+100만</button>
                         </div>
-                        <script>
-                        function increaseCoin(amount) {
-                            let coinInput = document.getElementById("coinAmount");
-                            let currentValue = parseInt(coinInput.value) || 0;
-                            coinInput.value = currentValue + amount;
-                        }
-                        </script>
                     </div>
                     <div class="mb-3">
                         <label for="paymentMethod" class="form-label">결제 방법</label>
@@ -112,7 +123,7 @@
             </form>
             <script>
             document.getElementById("chargeCoinForm").addEventListener("submit", (event) => {
-            	
+            	event.preventDefault(); // 기본 form 제출 막기
                 const coinAmount = document.getElementById("coinAmount").value;
                 const paymentMethod = document.getElementById("paymentMethod").value;
                 const reason = "퀘스트 코인 충전 - " + paymentMethod + " - ${coinAmount}코인";
@@ -157,6 +168,7 @@
                 IMP.request_pay(requestData, function(response) {
                     if (response.success) {
                         // 결제 성공
+                        document.getElementById("chargeCoinForm").submit(); // 수동 제출
                         alert('결제가 완료되었습니다. 결제 금액: ' + response.paid_amount + '원');
                     } else {
                         // 결제 실패
