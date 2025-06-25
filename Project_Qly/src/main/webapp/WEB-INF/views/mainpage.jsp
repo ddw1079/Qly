@@ -194,41 +194,45 @@
 
 
 	<!-- ✅ LATEST QUEST 게시판 형식 -->
-	<div class="quest-section" style="width: 1000px; margin: 40px auto;">
-		<h3 class="section-title text-center">당신의 도움을 필요로 하는 최신 퀘스트들...</h3>
-		<table
-			class="table table-hover table-bordered text-center align-middle">
-			<thead class="table-light">
-				<tr>
-					<th>등록일</th>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>퀘스트 보상</th>
-					<th>작성자</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="quest" items="${latest5Quests}">
-					<tr>
-						<td><fmt:formatDate value="${quest.createdAt}"  pattern="yyyy-MM-dd" /></td>
-						<td>${quest.category}</td>
-						<td class="text-start">
-							<a href="<c:url value='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}' />">
-							${quest.title}</a>
-							</td>
-						<td>${quest.rewardTokens} Coin</td>
-						<td>${quest.username}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	<div class="quest-section">
+	  <h3 class="section-title text-center">
+	    당신의 도움을 필요로 하는 최신 퀘스트들...
+	  </h3>
+	  
+	  <div class="table-wrapper">
+	    <table class="table table-hover table-bordered text-center align-middle">
+	      <thead class="table-light">
+	        <tr>
+	          <th>등록일</th>
+	          <th>카테고리</th>
+	          <th>제목</th>
+	          <th>퀘스트 보상</th>
+	          <th>작성자</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <c:forEach var="quest" items="${latest5Quests}">
+	          <tr>
+	            <td><fmt:formatDate value="${quest.createdAt}" pattern="yyyy-MM-dd" /></td>
+	            <td>${quest.category}</td>
+	            <td class="text-start">
+	              <a href="<c:url value='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}' />">
+	                ${quest.title}
+	              </a>
+	            </td>
+	            <td>${quest.rewardTokens} Coin</td>
+	            <td>${quest.username}</td>
+	          </tr>
+	        </c:forEach>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
-
 
 	<!-- ✅ 지도 위 텍스트 -->
 	<!-- 위치 퀘스트 멘트 박스 -->
-	<div
-		style="background-color: #d0f0ec; width: 1000px; margin: 40px auto 20px; padding: 12px 0; border-radius: 8px;">
+	<div class="w-100"
+		style="background-color: #d0f0ec; padding: 12px 0; border-radius: 8px;">
 		<h3 class="text-center"
 			style="margin: 0; color: #004d40; font-weight: bold;">
 			<img src="https://cdn-icons-png.flaticon.com/512/535/535137.png"
@@ -238,7 +242,7 @@
 	</div>
 
 
-	<div class="map-section-wrapper">
+	<div class="map-section-wrapper mt-2">
 		<div class="map-box">
 			<div id="map" style="width: 100%; height: 400px; border-radius: 8px;"></div>
 		</div>
@@ -281,6 +285,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<div class="event-banner-wrapper">
 		<div class="container" style="max-width: 1000px;">
