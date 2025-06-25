@@ -72,11 +72,23 @@
                         <label for="totalAmount">총 결제 금액</label>
                         <span id="totalAmount" class="fw-bold">0원</span>
                         <script>
+                        function checkFormValidity() {
+                            const coinAmount = parseInt(document.getElementById("coinAmount").value) || 0;
+                            const paymentMethod = document.getElementById("paymentMethod").value;
+                            const submitBtn = document.getElementById("submitBtn");
+
+                            if (coinAmount > 0 && paymentMethod) {
+                                submitBtn.disabled = false;
+                            } else {
+                                submitBtn.disabled = true;
+                            }
+                     	}
                         function increaseCoin(amount) {
                             let coinInput = document.getElementById("coinAmount");
                             let currentValue = parseInt(coinInput.value) || 0;
                             coinInput.value = currentValue + amount;
-                            updateTotal(); // 코인 수 변경 시 총 금액 업데이트
+                            updateTotal();
+                            checkFormValidity();
                         }
                         function updateTotal() {
                             let coinInput = document.getElementById("coinAmount");
@@ -87,13 +99,14 @@
                             totalAmount.textContent = total.toLocaleString() + "원"; // 쉼표 추가하여 금액 표시
                         }
 
-                        // 입력 값이 변경될 때 자동으로 반영되도록 설정
-                        document.getElementById("coinAmount").addEventListener("input", updateTotal);
+                        // 입력값이 바뀔 때마다 체크되도록 연결
+                        document.getElementById("coinAmount").addEventListener("input", checkFormValidity);
+                        document.getElementById("paymentMethod").addEventListener("change", checkFormValidity);
                         </script>
                     </div>
                     <div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-success">충전하기</button>
+                        <button type="submit" id="submitBtn" class="btn btn-success" disabled>충전하기</button>
                     </div>
                 </div>
             </form>
