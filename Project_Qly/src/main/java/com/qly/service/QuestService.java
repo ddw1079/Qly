@@ -61,4 +61,6 @@ public interface QuestService {
 
 	List<QuestDto> getCompletedQuestsByUserId(int userId);
 
+	List<QuestDto> getCompletedQuestsBySolverId(int solverId);
+
 }

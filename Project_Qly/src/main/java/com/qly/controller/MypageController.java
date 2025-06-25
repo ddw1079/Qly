@@ -132,6 +132,20 @@ public class MypageController {
 		return "/mypage/propile_Quest/user_layout";
 	}
 
+	@RequestMapping("/completedSolverQuests.do")
+	public String showCompletedSolverQuests(HttpSession session, Model model, HttpServletRequest request) {
+		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		int solverId = loginUser.getUserId();
+
+		List<QuestDto> completed = questService.getCompletedQuestsBySolverId(solverId);
+		model.addAttribute("completedSolverQuests", completed);
+
+		String pageParam = "mypage/propile_Quest/solver_completed.jsp";
+		request.setAttribute("pageParam", pageParam);
+
+		return "/mypage/propile_Quest/user_layout";
+	}
+
 	@RequestMapping("/insertcheck.do")
 	public String insertCheck(@RequestParam("questId") int questId,
 			@RequestParam(value = "checkedTasks", required = false) List<Integer> checkedTasks, HttpSession session) {

@@ -117,7 +117,6 @@
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 
-
 	/* int userid = loginUser.getUserId();*/
 	// int userid = loginUser.getUserId();
 
@@ -184,9 +183,7 @@
 					<c:choose>
 						<c:when test="${empty loginUser}">
 							<button class="btn w-100 mt-1"
-
 								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-
 								onclick="location.href='<c:url value="/login/loginForm" />'">로그인</button>
 							<button class="btn w-100 mt-1"
 								style="background-color: #2c3e50; color: white;"
@@ -208,9 +205,7 @@
 								</c:otherwise>
 							</c:choose>
 							<button class="btn w-100 mt-1"
-
 								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
-
 								onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 						</c:otherwise>
 					</c:choose>
@@ -230,10 +225,8 @@
 			<div class="submenu-container">
 				<div class="submenu-row">
 					<div class="submenu-cell">
-						<a
-							href="<c:url value='/template/qly_Introduction.jsp' />">QLY란?</a>
-						<a
-							href="<c:url value='/template/qly_Introduction2.jsp' />">회사
+						<a href="<c:url value='/template/qly_Introduction.jsp' />">QLY란?</a>
+						<a href="<c:url value='/template/qly_Introduction2.jsp' />">회사
 							소개</a>
 					</div>
 					<div class="submenu-cell">
@@ -244,7 +237,7 @@
 					<div class="submenu-cell">
 						<a href="<c:url value='/template/coin_charge.jsp' />">QUBIT 충전</a>
 						<a href="#">QUBIT 환급</a> <a
-							href="<c:url value='/template/coin_history.jsp' />">거래내역 확인</a>
+							href="<c:url value='/payments/history.do' />">거래내역 확인</a>
 					</div>
 					<div class="submenu-cell">
 						<a href="<c:url value='/inquiry/form' />">문의사항</a>

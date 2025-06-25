@@ -35,8 +35,10 @@ if (currentPage == null)
 
 <!--  Qly 로고 -->
 <div style="text-align: center; margin-bottom: 10px;">
+<a href="${pageContext.request.contextPath}/mainpage">
 	<img src="https://i.postimg.cc/0j1MDRhn/logo.png" alt="Qly 로고"
 		width="200" style="max-width: 80%;">
+		</a>
 </div>
 
 <style>

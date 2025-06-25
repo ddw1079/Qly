@@ -68,8 +68,10 @@ if (currentPage == null)
 
 <!-- 상단 로고 -->
 <div style="text-align: center; margin-bottom: 10px;">
+<a href="${pageContext.request.contextPath}/mainpage">
 	<img class="w-100" src="https://i.postimg.cc/0j1MDRhn/logo.png"
 		alt="Qly 로고" width="250">
+		</a>
 </div>
 
 <!-- 사용자 정보 -->
@@ -128,12 +130,16 @@ if (currentPage == null)
 				%>
 				<li
 					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
-					onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결
-					내역</li>
+					onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결사
+					퀘스트</li>
 				<li
 					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : ""%>"
 					onclick="location.href='<%=request.getContextPath()%>/mypage/questprogress.do'">퀘스트
-					신청 목록</li>
+					진행 사항</li>
+				<li
+					class="<%=currentPage.equals("mypage/propile_Quest/solver_completed.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/completedSolverQuests.do'">완료된
+					퀘스트</li>
 				<%
 				}
 				%>
