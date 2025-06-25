@@ -111,7 +111,7 @@ modal.addEventListener("hidden.bs.modal", () => {
 			</div>
 
 			<!-- 충전 폼 -->
-			<form id="chargeCoinForm" method="post" action="/payments/success" accept-charset="UTF-8">
+			<form id="chargeCoinForm" method="post" action="${pageContext.request.contextPath}/payments/success" accept-charset="UTF-8">
 				<input type="hidden" id="reason" name="reason" />
 
 				<div class="px-4 pb-4">
