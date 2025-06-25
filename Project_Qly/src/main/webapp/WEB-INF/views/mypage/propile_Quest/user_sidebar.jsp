@@ -128,12 +128,16 @@ if (currentPage == null)
 				%>
 				<li
 					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
-					onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결
-					내역</li>
+					onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결사
+					퀘스트</li>
 				<li
 					class="<%=currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : ""%>"
 					onclick="location.href='<%=request.getContextPath()%>/mypage/questprogress.do'">퀘스트
-					신청 목록</li>
+					진행 사항</li>
+				<li
+					class="<%=currentPage.equals("mypage/propile_Quest/solver_completed.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/completedSolverQuests.do'">완료된
+					퀘스트</li>
 				<%
 				}
 				%>

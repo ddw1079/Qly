@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>완료한 퀘스트</title>
+  <title>해결사 퀘스트</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
@@ -82,7 +82,7 @@
 
 <div class="container-fluid mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="fw-bold">완료한 퀘스트</h4>
+    <h4 class="fw-bold">해결사 퀘스트</h4>
     <div class="d-flex align-items-center gap-3">
       <span class="fw-semibold">
         <%= loginUser != null ? loginUser.getUsername() : "게스트" %>님

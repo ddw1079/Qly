@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:include page="/template/menubar.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -213,7 +214,7 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus
 </head>
 <body>
 	<div class="container">
-		<h2>4. 퀘스트 등록</h2>
+		<h2>퀘스트 등록</h2>
 		<form action="${pageContext.request.contextPath}/quest/insert.do"
 			method="post" enctype="multipart/form-data">
 			<div class="form-title-row">
@@ -231,9 +232,17 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus
 				<div class="flex-row">
 					<div class="left-area flex-col">
 						<label>의뢰내용</label>
+
 						<div id="taskList">
-							<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" />
+							<div>
+								<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요"
+									style="width: 88%; font-size: 18px; padding: 10px 14px; border-radius: 5px;" />
+								<button type="button" class="delete-btn add-btn"
+									style="padding: 8px 14px; font-size: 15px;"
+									onclick="this.parentNode.remove();">삭제</button>
+							</div>
 						</div>
+
 						<button type="button" class="add-btn" onclick="addTask()">의뢰내용
 							추가</button>
 					</div>
