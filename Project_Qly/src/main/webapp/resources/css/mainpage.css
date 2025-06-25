@@ -1,0 +1,428 @@
+@charset "UTF-8";
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f9f9f9;
+	font-family: 'Malgun Gothic', sans-serif;
+	margin-bottom: 120px;
+}
+.hero-banner {
+  background-color: #e6f4f2;
+  padding: 40px 20px;
+}
+
+.hero-content {
+  display: flex;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1.2;
+  min-width: 300px;
+}
+
+.hero-text h2 {
+  font-size: 48px;
+  font-weight: bold;
+  color: #009688;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.hero-text h2 span {
+  color: #41867e;
+}
+
+.hero-text p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.hero-text strong {
+  color: #ff9800;
+}
+
+.hero-button {
+  padding: 12px 28px;
+  background-color: #019267;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.hero-image {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+}
+
+.logo-circle {
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 8px solid #c6ece5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.logo-circle img {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+/* ✅ 반응형 전환 */
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .hero-text h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .hero-button {
+    display: block;
+    margin: 0 auto;
+  }
+}
+.search-bar {
+    width: 1200px;
+    max-width: 100%;
+    margin: 40px auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* 반응형 대응 */
+    gap: 12px;
+    background-color: #e6f4f2;
+    border-radius: 12px;
+    padding: 16px 20px;
+}
+
+.search-bar input.form-control {
+    height: 50px;
+    font-size: 18px;
+    width: 100%;
+    min-width: 240px;
+}
+
+/* 검색 버튼 */
+.search-btn {
+    background-color: #40746e;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 10px 24px;
+    white-space: nowrap;
+    border: none;
+}
+
+/* 반응형: 모바일 대응 */
+@media (max-width: 576px) {
+    .search-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px;
+    }
+
+    .search-btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+
+.section-title {
+	background-color: #49847e;
+	color: white;
+	padding: 10px;
+	font-weight: bold;
+	margin: 40px 0 20px;
+}
+/* 🔸 둥근 박스 wrapper */
+.service-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 1000px;
+	margin: 30px auto;
+	padding: 20px 10px;
+	background-color: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	height: 120px;
+	position: relative;
+	box-sizing: border-box;
+	overflow: visible;
+}
+
+/* 아이콘 5개 정렬 */
+/* ✅ 자주 찾는 서비스 영역 */
+
+/* ✅ 전체 wrapper 박스 */
+.service-wrapper-custom {
+    background-color: #e6f4f2; /* 옅은 민트 */
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin: 40px auto;
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap; /* 반응형: 줄바꿈 허용 */
+    justify-content: center;
+    gap: 28px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03); /* 약간 안쪽 입체감 */
+}
+
+/* ✅ 각 아이콘 박스 */
+.service-box {
+    width: 150px;
+    height: 130px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 15px 10px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #444;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.service-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ 아이콘 이미지 */
+.service-box img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    object-fit: contain;
+}
+
+/* ✅ 반응형: 모바일 화면 대응 */
+@media (max-width: 768px) {
+    .service-wrapper-custom {
+        width: 90%;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .service-box {
+        width: 100px;
+        height: 100px;
+        font-size: 13px;
+    }
+
+    .service-box img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.map-section-wrapper {
+  max-width: 1000px;
+  margin: 40px auto;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap; /* 반응형 전환 */
+}
+
+/* 지도 영역 */
+.map-box {
+  flex: 1;
+  background-color: rgba(73, 132, 126, 0.15);
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+}
+
+/* 오른쪽 사이드 영역 */
+.region-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 280px;
+}
+
+/* 지역 선택 박스 */
+.region-select-box {
+  border: 2px solid #2196F3;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.region-select-box .title {
+  background-color: #49847e;
+  color: white;
+  padding: 8px 12px;
+  font-weight: bold;
+}
+
+.region-select-box .body {
+  padding: 10px;
+}
+
+/* 퀘스트 리스트 박스 */
+#questListBox {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#questListBox h5 {
+  color: #00796b;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#questList {
+  padding-left: 15px;
+  margin: 0;
+  color: gray;
+}
+
+/* 상단 멘트 박스 */
+.map-intro {
+  background-color: #d0f0ec;
+  max-width: 95%;
+  margin: 40px auto 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.map-intro h3 {
+  margin: 0;
+  color: #004d40;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.map-intro h3 img {
+  height: 36px;
+  vertical-align: middle;
+}
+
+/* ✅ 반응형 대응 */
+@media (max-width: 768px) {
+  .map-section-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .map-intro h3 {
+    font-size: 18px;
+    flex-direction: column;
+  }
+
+  .region-section {
+    width: 100%;
+  }
+}
+
+
+.event-banner-wrapper {
+	background-color: #f6fbfd;
+	padding: 40px 0;
+}
+
+.event-card-wrapper {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.event-card {
+	background-color: #eef5fa;
+	border-radius: 16px;
+	padding: 20px;
+	height: 160px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+	transition: 0.3s ease;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative; /* 아이콘 위치 기준 */
+	flex: 1 1 calc(33% - 20px);
+}
+
+.event-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
+	object-fit: contain;
+}
+
+.footer-bar {
+	background: linear-gradient(to right, #eeeeee, #e0f4f2);
+	color: #444;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 18px 40px;
+	font-size: 16px;
+	font-family: 'Noto Sans KR', sans-serif;
+	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+	border-top: 1px solid #ccc;
+}
+
+.footer-bar div {
+	flex: 1;
+	padding: 0 10px;
+	line-height: 1.6;
+}
+
+.footer-bar div:not(:last-child) {
+	border-right: 1px solid #ccc;
+}
