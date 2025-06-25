@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <jsp:include page="/template/menubar.jsp" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -178,14 +179,21 @@ body {
 </style>
 </head>
 <body>
+	<%
+	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+
+	int userId = loginUser != null ? loginUser.getUserId() : 0;
+	String userName = loginUser != null ? loginUser.getUsername() : "게스트";
+	String userType = loginUser != null ? loginUser.getUserType() : "비회원";
+	%>
 
 	<c:if test="${not empty error}">
 		<script>
-		alert("${error}");
-	</script>
+			alert("${error}");
+		</script>
 	</c:if>
 	<!-- ✅ 히어로 배너 전체 -->
-	<div style="background-color: #e6f4f2; padding: 60px 0;">
+	<div class="p-2" style="background-color: #e6f4f2;">
 		<div
 			style="max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 60px;">
 
@@ -221,10 +229,6 @@ body {
 
 		</div>
 	</div>
-
-
-
-
 	<div class="search-bar">
 		<div style="flex-grow: 1;">
 			<input type="text" id="searchInput" class="form-control"
@@ -239,14 +243,70 @@ body {
 			<span class="text-muted"></span>
 		</div>
 	</div>
+	<!-- 검색창 카테고리 나오게 하는 이벤트 js -->
+	<script>
+	document.querySelector('#searchInput').addEventListener('input', function () {
+		const keyword = document.getElementById('searchInput').value;
+
+		fetch("/categories?keyword=" + keyword)
+			.then(res => res.json())
+			.then(data => {
+			const tagContainer = document.getElementById("suggestedTags");
+			tagContainer.innerHTML = "";
+
+			if (data.length === 0) {
+				tagContainer.innerHTML = "<span class='text-muted'>검색 결과가 없습니다</span>";
+				return;
+			}
+
+			data.forEach(category => {
+				  const span = document.createElement("span");
+				  span.className = "badge bg-success me-2";
+				  span.textContent = category;
+
+				  // 클릭 시 input에 카테고리 값 입력
+				  span.addEventListener("click", function () {
+				    document.getElementById("searchInput").value = category;
+				  });
+
+				  tagContainer.appendChild(span);
+				});
+			});
+		});
+	</script>
 
 	<!-- ✅ 자주 찾는 서비스 아이콘 전체 wrapper -->
 	<div class="service-wrapper-custom">
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+					alt="">
+				<div>퀘스트 목록</div>
+			</div>
+		</a>
+		<c:if test="${userType eq '의뢰자'}">
+			<a href="<c:url value='/quest/questRegisterForm.do' />">
+				<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
 				alt="">
-			<div>퀘스트 서비스</div>
-		</div>
+				<div>퀘스트 등록</div>
+				</div>
+			</a>
+		</c:if>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
+				alt="">
+				<div>퀘스트 등록</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055648.png"
+				alt="">
+				<div>퀘스트 찾기</div>
+			</div>
+		</a>
 		<div class="service-box text-center">
 			<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
 				alt="">
@@ -258,69 +318,47 @@ body {
 			<div>퀘스트 도움</div>
 		</div>
 		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-				alt="">
-			<div>퀘스트 지도</div>
-		</div>
-		<div class="service-box text-center">
 			<img src="https://cdn-icons-png.flaticon.com/512/709/709496.png"
 				alt="">
 			<div>마이페이지</div>
 		</div>
+		<%-- <div class="service-box text-center">
+			<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+				alt="">
+			<div>퀘스트 지도</div>
+		</div> --%>
+
 	</div>
 
 
 
-	<!-- ✅ BEST QUEST 게시판 형식 -->
+	<!-- ✅ LATEST QUEST 게시판 형식 -->
 	<div class="quest-section" style="width: 1000px; margin: 40px auto;">
-		<h3 class="section-title text-center">BEST QUEST</h3>
+		<h3 class="section-title text-center">당신의 도움을 필요로 하는 최신 퀘스트들...</h3>
 		<table
 			class="table table-hover table-bordered text-center align-middle">
 			<thead class="table-light">
 				<tr>
-					<th style="width: 60px;">순위</th>
+					<th>등록일</th>
+					<th>카테고리</th>
 					<th>제목</th>
-					<th style="width: 120px;">작성자</th>
-					<th style="width: 150px;">등록일</th>
-					<th style="width: 80px;">조회수</th>
+					<th>퀘스트 보상</th>
+					<th>작성자</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td class="text-start">강남 퀘스트 도와주실 분 구합니다</td>
-					<td>홍길동</td>
-					<td>2025-06-15</td>
-					<td>34</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td class="text-start">홍대 미션 페인트 작업 퀘스트</td>
-					<td>김영희</td>
-					<td>2025-06-14</td>
-					<td>27</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td class="text-start">성수동 페인트 봉사 도우미</td>
-					<td>이준호</td>
-					<td>2025-06-13</td>
-					<td>42</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td class="text-start">이삿짐 운반 도와주실 분</td>
-					<td>박민수</td>
-					<td>2025-06-13</td>
-					<td>19</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td class="text-start">전단지 배포 알바 구합니다</td>
-					<td>최지은</td>
-					<td>2025-06-12</td>
-					<td>56</td>
-				</tr>
+				<c:forEach var="quest" items="${latest5Quests}">
+					<tr>
+						<td><fmt:formatDate value="${quest.createdAt}"  pattern="yyyy-MM-dd" /></td>
+						<td>${quest.category}</td>
+						<td class="text-start">
+							<a href="<c:url value='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}' />">
+							${quest.title}</a>
+							</td>
+						<td>${quest.rewardTokens} Coin</td>
+						<td>${quest.username}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -352,9 +390,9 @@ body {
 				<div style="padding: 10px;">
 					<select id="regionSelect" class="form-select mb-2">
 						<option value="">-- 시/도 선택 --</option>
-						<option value="서울">서울</option>
-						<option value="부산">부산</option>
-						<option value="대구">대구</option>
+						<option value="서울시">서울시</option>
+						<option value="부산시">부산시</option>
+						<option value="대구시">대구시</option>
 					</select> <select id="districtSelect" class="form-select">
 						<option value="">-- 구/군 선택 --</option>
 					</select>
@@ -362,6 +400,12 @@ body {
 			</div>
 			<div id="questListBox"
 				style="padding: 10px; background: #ffffff; border-radius: 8px; border: 1px solid #ccc;">
+				<c:choose>
+				<c:when test="{ not empty }">
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+				</c:choose>
 				<h5 style="color: #00796b; font-weight: bold; margin-bottom: 10px;">📌
 					관련 퀘스트</h5>
 				<ul id="questList" style="padding-left: 15px; margin: 0;">
@@ -379,43 +423,19 @@ body {
 					style="color: #ff9800;">퀘스트</span> 어떠세요?
 			</h3>
 			<div class="event-card-wrapper">
-
-				<!-- 카드 1 -->
+				<c:forEach var="quest2" items="${random3Quests}">
+				<!-- 카드 템플릿 -->
 				<div class="card event-card">
 					<div>
-						<h5 class="card-title">전단지 배포 퀘스트</h5>
-						<p class="card-text">하루 2시간, 동네에 전단지를 배포해보세요!</p>
-						<p class="text-muted">리워드: 3 Qubit</p>
+						<span class="badge badge-pill badge-success">대기중...</span>
+						<h5 class="card-title">${quest2.title }</h5>
+						<p class="card-text">
+						${quest2.content.length() > 30 ? quest2.content.substring(0, 30).concat('...') : quest2.content}
+						</p>
+						<p class="text-muted">리워드: ${quest2.rewardTokens }</p>
 					</div>
-					<img class="card-icon"
-						src="https://cdn-icons-png.flaticon.com/512/3715/3715122.png"
-						alt="배포 아이콘">
 				</div>
-
-				<!-- 카드 2 -->
-				<div class="card event-card">
-					<div>
-						<h5 class="card-title">가구 조립 도움 요청</h5>
-						<p class="card-text">혼자 하기 어려운 조립 작업, 도움을 줄 수 있어요!</p>
-						<p class="text-muted">리워드: 10 Qubit</p>
-					</div>
-					<img class="card-icon"
-						src="https://cdn-icons-png.flaticon.com/512/3121/3121910.png"
-						alt="조립 아이콘">
-				</div>
-
-				<!-- 카드 3 -->
-				<div class="card event-card">
-					<div>
-						<h5 class="card-title">이사짐 운반 도움</h5>
-						<p class="card-text">가까운 거리 짐 운반, 함께 해주실 분을 구합니다.</p>
-						<p class="text-muted">리워드: 15 Qubit + 식사 제공</p>
-					</div>
-					<img class="card-icon"
-						src="https://cdn-icons-png.flaticon.com/512/4385/4385008.png"
-						alt="운반 아이콘">
-				</div>
-
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -470,9 +490,9 @@ body {
       const regionSelect = document.getElementById('regionSelect');
       const districtSelect = document.getElementById('districtSelect');
       const districts = {
-        서울: ['강남구', '마포구', '종로구'],
-        부산: ['해운대구', '수영구'],
-        대구: ['달서구', '중구']
+        서울시: ['강남구', '마포구', '종로구'],
+        부산시: ['해운대구', '수영구'],
+        대구시: ['달서구', '중구']
       };
       regionSelect.addEventListener('change', function () {
         const region = this.value;
@@ -501,6 +521,8 @@ body {
           '대구 중구': ['택배 수령 - 정다은']
         };
         const key = region + ' ' + district;
+        
+        
         if (sampleQuests[key]) {
           sampleQuests[key].forEach(item => {
             const li = document.createElement('li');
@@ -586,6 +608,3 @@ body {
 </body>
 </html>
 
-
-</body>
-</html>

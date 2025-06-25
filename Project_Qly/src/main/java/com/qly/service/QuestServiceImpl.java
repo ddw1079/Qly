@@ -135,7 +135,6 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> getQuestsByApplicantUserId(int userId) {
 		return questMapper.getQuestsByApplicantUserId(userId);
 	}
-
 	@Override
 	public List<QuestDto> heagualList(int userId) {
 		return questMapper.heagualList(userId);
@@ -170,6 +169,7 @@ public class QuestServiceImpl implements QuestService {
 	@Override
 	public List<QuestDto> getLatest5Quests() {
 		return questMapper.getLatest5Quests();
+
 	}
 
 	@Override
@@ -181,4 +181,5 @@ public class QuestServiceImpl implements QuestService {
 	public List<String> searchCategories(String keyword) {
 		return questMapper.searchCategories(keyword);
 	}
+
 }
