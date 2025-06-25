@@ -108,6 +108,11 @@ public class QuestServiceImpl implements QuestService {
 		return questMapper.getCompletedQuestsByUserId(userId);
 	}
 
+	@Override
+	public List<QuestDto> getCompletedQuestsBySolverId(int solverId) {
+		return questMapper.getCompletedQuestsBySolverId(solverId);
+	}
+
 	@Override // 박윤재
 	public List<QuestTaskDto> getQuestTasks(int questId) {
 		return questMapper.getQuestTasks(questId);
@@ -135,6 +140,7 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> getQuestsByApplicantUserId(int userId) {
 		return questMapper.getQuestsByApplicantUserId(userId);
 	}
+
 	@Override
 	public List<QuestDto> heagualList(int userId) {
 		return questMapper.heagualList(userId);

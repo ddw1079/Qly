@@ -101,7 +101,7 @@ body {
 
 		<div class="signup-link">
 			
-			<a href="${pageContext.request.contextPath}/qly_Uesr.jsp">회원가입</a>
+			<a href="${pageContext.request.contextPath}/qly_User.jsp">회원가입</a>
 		</div>
 	</div>
 

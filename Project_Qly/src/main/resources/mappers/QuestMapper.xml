@@ -110,13 +110,11 @@
 		APPLICATION_ID,
 		QUEST_ID,
 		USER_ID,
-		STATUS,
 		APPLIED_AT
 		) VALUES (
 		QUEST_APPLICATION_SEQ.NEXTVAL,
 		#{questId},
 		#{userId},
-		#{status},
 		#{appliedAt}
 		)
 	</insert>
@@ -328,9 +326,22 @@
 		SELECT *
 		FROM QUESTS
 		WHERE USER_ID = #{userId}
-		AND STATUS = '완료'
+		AND STATUS =
+		'완료'
 		ORDER BY REG_DATE DESC
 	</select>
+
+	<select id="getCompletedQuestsBySolverId" parameterType="int"
+		resultMap="QuestResultMap">
+		SELECT Q.*
+		FROM QUESTS Q
+		JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
+		WHERE QA.USER_ID = #{solverId}
+		AND QA.IS_SOLVER = '1'
+		AND Q.STATUS = '완료'
+		ORDER BY Q.REG_DATE DESC
+	</select>
+
 
 
 
@@ -423,7 +434,7 @@
 		FROM QUEST_APPLICATION
 		WHERE USER_ID = #{userId}
 		AND
-		STATUS = '완료'
+		STATUS = '진행중'
 		)
 	</select>
 
@@ -458,50 +469,54 @@
 	<select id="getLatest5Quests" resultType="com.qly.dto.QuestDto">
 		SELECT *
 		FROM (
-			SELECT
-				Q.QUEST_ID AS questId,
-				Q.CREATED_AT AS createdAt,
-				Q.CATEGORY AS category,
-				Q.TITLE AS title,
-				Q.REWARD_TOKENS  AS rewardTokens,
-				U.USERNAME AS username
-			FROM
-				QUESTS Q
-			JOIN
-				USERS U ON Q.USER_ID = U.USER_ID
-			ORDER BY
-				Q.CREATED_AT DESC
+		SELECT
+		Q.QUEST_ID AS questId,
+		Q.CREATED_AT AS createdAt,
+		Q.CATEGORY AS category,
+		Q.TITLE AS title,
+		Q.REWARD_TOKENS AS rewardTokens,
+		U.USERNAME AS username
+		FROM
+		QUESTS Q
+		JOIN
+		USERS U ON Q.USER_ID = U.USER_ID
+		ORDER BY
+		Q.CREATED_AT DESC
 		)
-		WHERE ROWNUM <![CDATA[ <= ]]> 5
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		5
 	</select>
-	
+
 	<select id="getRandom3Quests" resultType="com.qly.dto.QuestDto">
 		SELECT *
-			FROM (
-			  SELECT
-			    Q.QUEST_ID AS questId,
-			    Q.TITLE AS title,
-			    Q.CATEGORY AS category,
-			    Q.REWARD_TOKENS AS rewardTokens,
-			    Q.CREATED_AT AS createdAt,
-			    Q.STATUS AS status,
-			    U.USERNAME AS username
-			  FROM
-			    QUESTS Q
-			  JOIN
-			    USERS U ON Q.USER_ID = U.USER_ID
-			  WHERE
-			    Q.STATUS = '대기'
-			  ORDER BY
-			    DBMS_RANDOM.VALUE
-			)
-			WHERE ROWNUM <![CDATA[ <= ]]> 3
+		FROM (
+		SELECT
+		Q.QUEST_ID AS questId,
+		Q.TITLE AS title,
+		Q.CATEGORY AS category,
+		Q.REWARD_TOKENS AS rewardTokens,
+		Q.CREATED_AT AS createdAt,
+		Q.STATUS AS status,
+		U.USERNAME AS username
+		FROM
+		QUESTS Q
+		JOIN
+		USERS U ON Q.USER_ID = U.USER_ID
+		WHERE
+		Q.STATUS = '대기'
+		ORDER BY
+		DBMS_RANDOM.VALUE
+		)
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		3
 	</select>
-	
-	<select id="searchCategories" parameterType="string" resultType="string">
-	SELECT DISTINCT CATEGORY
-	FROM QUESTS
-	WHERE CATEGORY IS NOT NULL
-		AND LOWER(CATEGORY) LIKE '%' || LOWER(#{keyword}) || '%'
+
+	<select id="searchCategories" parameterType="string"
+		resultType="string">
+		SELECT DISTINCT CATEGORY
+		FROM QUESTS
+		WHERE CATEGORY IS NOT NULL
+		AND LOWER(CATEGORY) LIKE '%' || LOWER(#{keyword})
+		|| '%'
 	</select>
 </mapper>
