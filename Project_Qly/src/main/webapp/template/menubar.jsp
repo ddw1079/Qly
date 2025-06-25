@@ -231,9 +231,9 @@
 				<div class="submenu-row">
 					<div class="submenu-cell">
 						<a
-							href="<c:url value='/mypage/propile_Quest/qly_Introduction.jsp' />">QLY란?</a>
+							href="<c:url value='/template/qly_Introduction.jsp' />">QLY란?</a>
 						<a
-							href="<c:url value='/mypage/propile_Quest/qly_Introduction2.jsp' />">회사
+							href="<c:url value='/template/qly_Introduction2.jsp' />">회사
 							소개</a>
 					</div>
 					<div class="submenu-cell">

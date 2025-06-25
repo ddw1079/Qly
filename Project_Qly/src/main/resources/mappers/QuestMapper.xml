@@ -4,6 +4,27 @@
 
 <mapper namespace="com.qly.mapper.QuestMapper">
 
+	<resultMap id="QuestResultMap" type="com.qly.dto.QuestDto">
+		<id property="questId" column="QUEST_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="category" column="CATEGORY" />
+		<result property="content" column="CONTENT" />
+		<result property="photoPath" column="PHOTO_PATH" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="status" column="STATUS" />
+		<result property="progress" column="PROGRESS" />
+		<result property="address" column="ADDRESS" />
+		<result property="rewardTokens" column="REWARD_TOKENS" />
+		<result property="latitude" column="LATITUDE" />
+		<result property="longitude" column="LONGITUDE" />
+		<result property="location" column="LOCATION" />
+		<result property="createdAt" column="CREATED_AT" />
+		<result property="viewCount" column="VIEW_COUNT" />
+	</resultMap>
+
 	<!-- <select id="getAllQuests" resultType="com.qly.dto.QuestDto"> SELECT 
 		QUEST_ID, TITLE, CATEGORY, PHOTO_PATH, STATUS, REG_DATE, (SELECT COUNT(*) 
 		FROM QUEST_APPLICATION qa WHERE qa.QUEST_ID = q.QUEST_ID) AS applicantCount 
@@ -151,20 +172,36 @@
 	</select>
 
 
-	<update id="assignSolver">
+	<update id="resetSolverFlag">
+		UPDATE QUEST_APPLICATION
+		SET IS_SOLVER = '0'
+		WHERE
+		QUEST_ID = #{questId}
+	</update>
+
+	<update id="setSolver">
+		UPDATE QUEST_APPLICATION
+		SET IS_SOLVER = '1'
+		WHERE
+		QUEST_ID = #{questId}
+		AND USER_ID = #{userId}
+	</update>
+
+	<update id="updateQuestStatusToProgress">
 		UPDATE QUESTS
 		SET STATUS = '진행중',
-		PROGRESS = 1,
-		USER_ID
-		= #{userId}
-		WHERE QUEST_ID = #{questId}
+		PROGRESS = 1
+		WHERE
+		QUEST_ID = #{questId}
 	</update>
+
 
 	<select id="getInProgressQuestsByUserId"
 		resultType="com.qly.dto.QuestDto">
 		SELECT *
 		FROM QUESTS
-		WHERE STATUS = '진행중' AND USER_ID = #{userId}
+		WHERE STATUS = '진행중' AND USER_ID =
+		#{userId}
 		ORDER BY REG_DATE DESC
 	</select>
 
@@ -239,16 +276,31 @@
 		as photoPath, PROGRESS, LATITUDE, LONGITUDE, ADDRESS, LOCATION, STATUS, REWARD_TOKENS 
 		AS rewardTokens, REG_DATE AS regDate FROM QUESTS WHERE USER_ID = #{userId} 
 		ORDER BY REG_DATE DESC </select> -->
-	<select id="getMyQuestList" resultType="com.qly.dto.QuestDto">
-		SELECT
+	<select id="getMyQuestList" resultType="com.qly.dto.QuestDto"> SELECT
 		q.QUEST_ID AS
-		questId,
+		questId, q.USER_ID AS userId, q.TITLE, q.CATEGORY, q.CONTENT,
+		q.PHOTO_PATH AS photoPath, q.PROGRESS, q.LATITUDE, q.LONGITUDE,
+		q.ADDRESS,
+		q.LOCATION, q.STATUS, q.REWARD_TOKENS AS rewardTokens,
+		q.REG_DATE AS regDate,
+		( SELECT COUNT(*) FROM QUEST_APPLICATION qa
+		WHERE qa.QUEST_ID =
+		q.QUEST_ID
+		) AS applicantCount FROM QUESTS q WHERE
+		q.USER_ID = #{userId} ORDER BY
+		q.REG_DATE
+		DESC
+	</select>
+
+	<select id="getMyProgressQuestList"
+		resultType="com.qly.dto.QuestDto">
+		SELECT
+		q.QUEST_ID AS questId,
 		q.USER_ID AS userId,
 		q.TITLE,
 		q.CATEGORY,
 		q.CONTENT,
-		q.PHOTO_PATH
-		AS photoPath,
+		q.PHOTO_PATH AS photoPath,
 		q.PROGRESS,
 		q.LATITUDE,
 		q.LONGITUDE,
@@ -259,18 +311,26 @@
 		rewardTokens,
 		q.REG_DATE AS regDate,
 		(
-		SELECT
-		COUNT(*)
-		FROM QUEST_APPLICATION qa
+		SELECT COUNT(*)
+		FROM
+		QUEST_APPLICATION qa
 		WHERE qa.QUEST_ID = q.QUEST_ID
-		) AS
-		applicantCount
+		) AS applicantCount
 		FROM QUESTS q
 		WHERE q.USER_ID = #{userId}
+		AND q.STATUS = '진행중'
 		ORDER BY
 		q.REG_DATE DESC
 	</select>
 
+	<select id="getCompletedQuestsByUserId"
+		resultMap="QuestResultMap">
+		SELECT *
+		FROM QUESTS
+		WHERE USER_ID = #{userId}
+		AND STATUS = '완료'
+		ORDER BY REG_DATE DESC
+	</select>
 
 
 
@@ -370,20 +430,54 @@
 	<update id="updateQuestStatus">
 		UPDATE QUESTS
 		SET STATUS = #{status}
-		WHERE QUEST_ID = #{questId}
+		WHERE QUEST_ID =
+		#{questId}
 	</update>
 
 	<!-- rewardTokens 조회 -->
 	<select id="getRewardTokensByQuestId" resultType="int">
-	SELECT reward_tokens FROM QUESTS WHERE quest_id = #{questId}
+		SELECT
+		reward_tokens FROM QUESTS WHERE quest_id = #{questId}
 	</select>
 
 	<update id="markRewardGiven">
 		UPDATE QUEST_APPLICATION
 		SET REWARD_GIVEN = 'Y'
-		WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+		WHERE
+		QUEST_ID = #{questId} AND USER_ID = #{userId}
 	</update>
 
+
+	<select id="isRewardGiven" resultType="int">
+		SELECT COUNT(*) FROM
+		QUEST_APPLICATION
+		WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
+		AND REWARD_GIVEN = 'Y'
+	</select>
+
+	<!-- 메인페이지 Mapper -->
+	<select id="getLatest5Quests" resultType="com.qly.dto.QuestDto">
+		SELECT *
+		FROM (
+		SELECT
+		Q.QUEST_ID AS questId,
+		Q.CREATED_AT AS createdAt,
+		Q.CATEGORY AS category,
+		Q.TITLE AS title,
+		Q.REWARD_TOKENS AS
+		rewardTokens,
+		U.USERNAME AS username
+		FROM
+		QUESTS Q
+		JOIN
+		USERS U ON
+		Q.USER_ID = U.USER_ID
+		ORDER BY
+		Q.CREATED_AT DESC
+		)
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		5
+	</select>
 
 	<select id="isRewardGiven" resultType="int">
 	SELECT COUNT(*) FROM QUEST_APPLICATION

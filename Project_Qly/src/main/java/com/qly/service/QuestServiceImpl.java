@@ -33,7 +33,9 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public void assignSolver(int questId, int userId) {
-		questMapper.assignSolver(questId, userId);
+		questMapper.resetSolverFlag(questId); // 모든 신청자 IS_SOLVER = '0'
+		questMapper.setSolver(questId, userId); // 선택된 유저 IS_SOLVER = '1'
+		questMapper.updateQuestStatusToProgress(questId); // 퀘스트 진행중 처리
 	}
 
 	/*
@@ -96,6 +98,16 @@ public class QuestServiceImpl implements QuestService {
 		return questMapper.getMyQuestList(userId);
 	}
 
+	@Override
+	public List<QuestDto> getMyProgressQuestList(int userId) {
+		return questMapper.getMyProgressQuestList(userId);
+	}
+
+	@Override
+	public List<QuestDto> getCompletedQuestsByUserId(int userId) {
+		return questMapper.getCompletedQuestsByUserId(userId);
+	}
+
 	@Override // 박윤재
 	public List<QuestTaskDto> getQuestTasks(int questId) {
 		return questMapper.getQuestTasks(questId);
@@ -127,40 +139,47 @@ public class QuestServiceImpl implements QuestService {
 	public List<QuestDto> heagualList(int userId) {
 		return questMapper.heagualList(userId);
 	}
+
 	@Override
 	public void updateQuestStatus(int questId) {
 		questMapper.updateQuestStatus(questId, "완료");
 	}
+
 	@Override
 	public int getRewardTokensByQuestId(int questId) {
 		return questMapper.getRewardTokensByQuestId(questId);
 	}
+
 	@Override
 	public void markRewardGiven(int questId, int userId) {
-	    questMapper.markRewardGiven(questId, userId);
+		questMapper.markRewardGiven(questId, userId);
 	}
-	
+
 	@Override
 	public boolean isRewardGiven(int questId, int userId) {
-	    return questMapper.isRewardGiven(questId, userId) > 0;
+		return questMapper.isRewardGiven(questId, userId) > 0;
 	}
-	
+
 	@Override
 	public void updateTaskCheckStatus(int taskId, boolean isChecked) {
-	    questTaskMapper.updateTaskCheckStatus(taskId, isChecked ? "1" : "0");
+		questTaskMapper.updateTaskCheckStatus(taskId, isChecked ? "1" : "0");
 	}
 
 	// 메인페이지에서 사용할 메소드
 	@Override
 	public List<QuestDto> getLatest5Quests() {
 		return questMapper.getLatest5Quests();
-	}	
+
+	}
+
 	@Override
 	public List<QuestDto> getRandom3Quests() {
 		return questMapper.getRandom3Quests();
-	}	
+	}
+
 	@Override
 	public List<String> searchCategories(String keyword) {
-        return questMapper.searchCategories(keyword);
-    }
+		return questMapper.searchCategories(keyword);
+	}
+
 }

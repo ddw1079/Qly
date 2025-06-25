@@ -207,10 +207,9 @@ public class QuestController {
 	@RequestMapping(value = "/assignSolver.do")
 	public String assignSolver(@RequestParam("questId") int questId, @RequestParam("userId") int userId,
 			RedirectAttributes redirect) {
-		System.out.println("선택된 해결사 ID: " + userId);
 		questService.assignSolver(questId, userId);
 		redirect.addAttribute("questId", questId);
-		return "redirect:/mypage/questcard.do";
+		return "redirect:/mypage/questhistory.do";
 	}
 
 	@RequestMapping("/progressList.do")
@@ -231,7 +230,7 @@ public class QuestController {
 		// 3. 모델에 담기
 		model.addAttribute("questlist", progressQuests);
 		model.addAttribute("taskMap", taskMap);
-		
+
 		String pageParam = "mypage/propile_Quest/questHistory.jsp";
 		request.setAttribute("pageParam", pageParam);
 
