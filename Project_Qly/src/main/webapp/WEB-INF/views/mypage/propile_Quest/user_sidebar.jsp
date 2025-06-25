@@ -120,8 +120,8 @@ if (currentPage == null)
 					onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">진행
 					상황</li>
 				<li
-					class="<%=currentPage.equals("mypage/propile_Quest/UserParticular.jsp") ? "active" : ""%>"
-					onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">완료된
+					class="<%=currentPage.equals("mypage/propile_Quest/quest_completed.jsp") ? "active" : ""%>"
+					onclick="location.href='<%=request.getContextPath()%>/mypage/questcompleted.do'">완료된
 					퀘스트</li>
 				<%
 				} else {

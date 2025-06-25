@@ -36,9 +36,12 @@ public interface QuestMapper {
 
 	void updateUserTokens(@Param("userId") int userId, @Param("totalTokens") int totalTokens);
 
-	List<QuestDto> getMyQuestList(int userId);
+	/* List<QuestDto> getMyQuestList(int userId); */
+	List<QuestDto> getMyQuestList(@Param("userId") int userId);
 
 	List<QuestTaskDto> getQuestTasks(int questId);
+
+	List<QuestDto> getMyProgressQuestList(@Param("userId") int userId);
 
 	void resetAllTaskChecks(@Param("questId") int questId);
 
@@ -52,23 +55,33 @@ public interface QuestMapper {
 
 	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
 
-	
 	void updateQuestStatus(@Param("questId") int questId, @Param("status") String status);
-	
+
 	int getRewardTokensByQuestId(@Param("questId") int questId);
 
 	void markRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
-	
-	int isRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
 
-	
+	int isRewardGiven(@Param("questId") int questId, @Param("userId") int userId);
 
 	List<QuestDto> selectApplicantsByQuestId(int questId);
 
-	void assignSolver(@Param("questId") int questId, @Param("userId") int userId);
+	void resetSolverFlag(int questId);
+
+	void setSolver(@Param("questId") int questId, @Param("userId") int userId);
+
+	void updateQuestStatusToProgress(int questId);
 
 	List<QuestTaskDto> getTasksByQuestId(int questId);
 
 	// List<QuestDto> getInProgressQuestsByUserId(int userId);
+
+	// 메인페이지에서 사용할 Mapper 메소드
+	List<QuestDto> getLatest5Quests();
+
+	List<QuestDto> getRandom3Quests();
+
+	List<String> searchCategories(String keyword);
+
+	List<QuestDto> getCompletedQuestsByUserId(@Param("userId") int userId);
 
 }
