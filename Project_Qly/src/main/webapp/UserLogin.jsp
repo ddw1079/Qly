@@ -88,8 +88,11 @@ body {
 	<div class="login-box">
 		<!-- 로고 영역 -->
 		<div class="logo">
+		<a href="${pageContext.request.contextPath}/mainpage">
 			<img class="w-100" src="https://i.postimg.cc/Dy7BstrB/logo2.png"
-				alt="Qly 로고" width="250"><br> <br>
+				alt="Qly 로고" width="250">
+				</a>
+				<br> <br>
 		</div>
 
 		
@@ -104,6 +107,7 @@ body {
 			<a href="${pageContext.request.contextPath}/qly_User.jsp">회원가입</a>
 		</div>
 	</div>
+
 
 </body>
 </html>
