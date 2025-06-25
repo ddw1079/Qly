@@ -68,8 +68,10 @@ if (currentPage == null)
 
 <!-- 상단 로고 -->
 <div style="text-align: center; margin-bottom: 10px;">
+<a href="${pageContext.request.contextPath}/mainpage">
 	<img class="w-100" src="https://i.postimg.cc/0j1MDRhn/logo.png"
 		alt="Qly 로고" width="250">
+		</a>
 </div>
 
 <!-- 사용자 정보 -->

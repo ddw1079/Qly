@@ -205,6 +205,7 @@ function checkUsername() {
 						id="qulator" value="해결사"> <label class="form-check-label"
 						for="qulator">Qly (해결사)</label>
 				</div>
+			
 			</div>
 
 			<button id="submitBtn" type="submit" class="btn w-100" disabled
