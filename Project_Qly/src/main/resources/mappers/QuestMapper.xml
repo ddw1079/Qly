@@ -447,41 +447,10 @@
 		QUEST_ID = #{questId} AND USER_ID = #{userId}
 	</update>
 
-
 	<select id="isRewardGiven" resultType="int">
 		SELECT COUNT(*) FROM
 		QUEST_APPLICATION
 		WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
-		AND REWARD_GIVEN = 'Y'
-	</select>
-
-	<!-- 메인페이지 Mapper -->
-	<select id="getLatest5Quests" resultType="com.qly.dto.QuestDto">
-		SELECT *
-		FROM (
-		SELECT
-		Q.QUEST_ID AS questId,
-		Q.CREATED_AT AS createdAt,
-		Q.CATEGORY AS category,
-		Q.TITLE AS title,
-		Q.REWARD_TOKENS AS
-		rewardTokens,
-		U.USERNAME AS username
-		FROM
-		QUESTS Q
-		JOIN
-		USERS U ON
-		Q.USER_ID = U.USER_ID
-		ORDER BY
-		Q.CREATED_AT DESC
-		)
-		WHERE ROWNUM <![CDATA[ <= ]]>
-		5
-	</select>
-
-	<select id="isRewardGiven" resultType="int">
-	SELECT COUNT(*) FROM QUEST_APPLICATION
-	WHERE QUEST_ID = #{questId} AND USER_ID = #{userId}
 		AND REWARD_GIVEN = 'Y'
 	</select>
 

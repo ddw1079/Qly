@@ -63,7 +63,7 @@
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="text-muted fw-light">이용 약관을 확인하였으며 이에 동의합니다.</span>
-                        <a href="/terms" class="text-decoration-none">이용 약관</a>
+                        <a href="javascript:void(0)" onclick="window.open('/template/termsAndConditions.jsp', 'termsPopup', 'width=800,height=600,scrollbars=yes,resizable=yes');" class="text-decoration-none">이용 약관</a>
                     </div>
                 </div>
                 <div class="modal-footer">
