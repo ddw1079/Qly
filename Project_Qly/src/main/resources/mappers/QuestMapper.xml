@@ -124,10 +124,12 @@
 		SELECT
 		QUEST_ID AS questId,
 		TITLE AS title,
-		ADDRESS AS
-		address,
+		ADDRESS AS address,
 		REWARD_TOKENS AS rewardTokens,
-		PHOTO_PATH AS photoPath
+		PHOTO_PATH AS photoPath,
+		START_DATE AS
+		startDate,      <!-- 추가 -->
+		END_DATE AS endDate
 		FROM
 		QUESTS
 		WHERE QUEST_ID = #{questId}
@@ -331,15 +333,19 @@
 		ORDER BY REG_DATE DESC
 	</select>
 
-	<select id="getCompletedQuestsBySolverId" parameterType="int"
+	<select id="getCompletedQuestsBySolverId"
 		resultMap="QuestResultMap">
 		SELECT Q.*
 		FROM QUESTS Q
-		JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
+		JOIN QUEST_APPLICATION QA ON
+		Q.QUEST_ID = QA.QUEST_ID
 		WHERE QA.USER_ID = #{solverId}
-		AND QA.IS_SOLVER = '1'
-		AND Q.STATUS = '완료'
-		ORDER BY Q.REG_DATE DESC
+		AND Q.STATUS =
+		'완료'
+		AND QA.IS_SOLVER = 1
+		AND QA.REWARD_GIVEN = 'Y'
+		ORDER BY Q.REG_DATE
+		DESC
 	</select>
 
 
@@ -389,25 +395,32 @@
 		WHERE QUEST_ID = #{questId}
 	</select>
 
-	<!-- QuestMapper.xml -->
+
+	<!-- <select id="getQuestsByApplicantUserId" parameterType="int" resultType="com.qly.dto.QuestDto"> 
+		SELECT Q.QUEST_ID AS questId, Q.TITLE AS title, Q.PHOTO_PATH AS photoPath, 
+		Q.ADDRESS AS address, Q.START_DATE AS startDate, Q.END_DATE AS endDate, Q.STATUS 
+		AS status, Q.REWARD_TOKENS AS rewardTokens FROM QUESTS Q JOIN QUEST_APPLICATION 
+		QA ON Q.QUEST_ID = QA.QUEST_ID WHERE QA.USER_ID = #{userId} AND QA.IS_SOLVER 
+		= 1 </select> -->
 	<select id="getQuestsByApplicantUserId" parameterType="int"
 		resultType="com.qly.dto.QuestDto">
 		SELECT
 		Q.QUEST_ID AS questId,
 		Q.TITLE AS title,
-		Q.PHOTO_PATH
-		AS photoPath,
+		Q.PHOTO_PATH AS photoPath,
 		Q.ADDRESS AS address,
 		Q.START_DATE AS startDate,
 		Q.END_DATE AS endDate,
 		Q.STATUS AS status,
-		Q.REWARD_TOKENS AS
-		rewardTokens
+		Q.REWARD_TOKENS AS rewardTokens
 		FROM QUESTS Q
-		JOIN QUEST_APPLICATION QA ON Q.QUEST_ID =
-		QA.QUEST_ID
+		JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
 		WHERE QA.USER_ID = #{userId}
+		AND QA.IS_SOLVER = 1
+		AND QA.REWARD_GIVEN != 'Y'
 	</select>
+
+
 
 
 
@@ -420,9 +433,9 @@
 	</update>
 
 
-
-
-
+	<!-- <select id="heagualList" parameterType="int" resultType="com.qly.dto.QuestDto"> 
+		SELECT TITLE, CATEGORY, REG_DATE FROM QUESTS WHERE QUEST_ID IN ( SELECT QUEST_ID 
+		FROM QUEST_APPLICATION WHERE USER_ID = #{userId} AND STATUS = '진행중' ) </select> -->
 
 	<select id="heagualList" parameterType="int"
 		resultType="com.qly.dto.QuestDto">
@@ -435,8 +448,10 @@
 		WHERE USER_ID = #{userId}
 		AND
 		STATUS = '진행중'
+		AND IS_SOLVER = 1
 		)
 	</select>
+
 
 	<update id="updateQuestStatus">
 		UPDATE QUESTS
@@ -474,12 +489,14 @@
 		Q.CREATED_AT AS createdAt,
 		Q.CATEGORY AS category,
 		Q.TITLE AS title,
-		Q.REWARD_TOKENS AS rewardTokens,
+		Q.REWARD_TOKENS AS
+		rewardTokens,
 		U.USERNAME AS username
 		FROM
 		QUESTS Q
 		JOIN
-		USERS U ON Q.USER_ID = U.USER_ID
+		USERS U ON
+		Q.USER_ID = U.USER_ID
 		ORDER BY
 		Q.CREATED_AT DESC
 		)
@@ -493,7 +510,8 @@
 		SELECT
 		Q.QUEST_ID AS questId,
 		Q.TITLE AS title,
-		Q.CATEGORY AS category,
+		Q.CATEGORY
+		AS category,
 		Q.REWARD_TOKENS AS rewardTokens,
 		Q.CREATED_AT AS createdAt,
 		Q.STATUS AS status,
@@ -501,7 +519,8 @@
 		FROM
 		QUESTS Q
 		JOIN
-		USERS U ON Q.USER_ID = U.USER_ID
+		USERS U ON
+		Q.USER_ID = U.USER_ID
 		WHERE
 		Q.STATUS = '대기'
 		ORDER BY
@@ -515,7 +534,8 @@
 		resultType="string">
 		SELECT DISTINCT CATEGORY
 		FROM QUESTS
-		WHERE CATEGORY IS NOT NULL
+		WHERE CATEGORY IS NOT
+		NULL
 		AND LOWER(CATEGORY) LIKE '%' || LOWER(#{keyword})
 		|| '%'
 	</select>

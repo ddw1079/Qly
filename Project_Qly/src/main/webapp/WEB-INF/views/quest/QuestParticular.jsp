@@ -1,6 +1,9 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/template/menubar.jsp" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,15 +68,29 @@ label {
 	max-width: 300px;
 }
 </style>
+<fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd"
+	var="minDateStr" />
+<fmt:formatDate value="${quest.endDate}" pattern="yyyy-MM-dd"
+	var="maxDateStr" />
 
 <script>
 	$(function() {
+		const minDate = new Date("${minDateStr}");
+		const maxDate = new Date("${maxDateStr}");
+
 		$("#selectedDate").datepicker({
 			dateFormat : "yy-mm-dd",
-			minDate : 0
+			minDate : minDate,
+			maxDate : maxDate,
+			beforeShowDay : function(date) {
+				return [ date >= minDate && date <= maxDate ];
+			}
 		});
 	});
 </script>
+
+
+
 </head>
 <body>
 	<%-- 	<p>디버깅: ${quest != null ? '퀘스트 있음' : 'quest가 null이야'}</p>
@@ -129,7 +146,7 @@ label {
 								<ul class="mb-3">
 									<c:forEach var="task" items="${quest.tasks}">
 										<li>${task.description}</li>
-									</c:forEach>
+									</c:forEach>	
 								</ul>
 							</div>
 
@@ -147,7 +164,7 @@ label {
 						<div class="card-header">날짜 및 시간 선택</div>
 						<div class="card-body">
 							<label>날짜 선택</label> <input type="text" id="selectedDate"
-								name="day" class="form-control mb-3" required> <label>주소</label>
+								name="day" class="form-control mb-3" required readonly> <label>주소</label>
 							<input type="text" class="form-control mb-3"
 								value="${quest.address}" readonly> <label>시간 선택</label>
 							<select name="time" class="form-select mb-4" required>

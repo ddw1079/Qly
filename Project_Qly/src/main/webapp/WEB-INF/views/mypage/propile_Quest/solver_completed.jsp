@@ -37,13 +37,13 @@
 		<h3 class="text-center mb-4">완료된 퀘스트</h3>
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
-			<c:forEach var="quest" items="${completedQuests}">
+			<c:forEach var="quest" items="${completedSolverQuests}">
 
 				<%-- 콘솔 로그 출력 --%>
 				<%
 				com.qly.dto.QuestDto q = (com.qly.dto.QuestDto) pageContext.getAttribute("quest");
-				System.out.println("📸 사진: " + q.getPhotoPath());
-				System.out.println("🗓️ 등록일: " + q.getRegDate());
+				System.out.println("사진: " + q.getPhotoPath());
+				System.out.println("등록일: " + q.getRegDate());
 				%>
 
 				<div class="col quest-card">
