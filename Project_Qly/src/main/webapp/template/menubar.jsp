@@ -218,7 +218,9 @@
 			<div class="menu-bar">
 				<div class="menu-item">QLY소개</div>
 				<div class="menu-item">퀘스트</div>
-				<div class="menu-item">코인충전소</div>
+				<c:if test="${not empty loginUser}">
+					<div class="menu-item">코인충전소</div>
+				</c:if>
 				<div class="menu-item">고객센터</div>
 			</div>
 
@@ -230,15 +232,20 @@
 							소개</a>
 					</div>
 					<div class="submenu-cell">
-						<a href="<c:url value='/quest/registerForm.do' />">퀘스트 등록</a> <a
-							href="<c:url value='/quest/particularForm.do' />">퀘스트 신청</a> <a
-							href="<c:url value='/quest/list.do' />">퀘스트 목록</a>
+						<a href="<c:url value='/quest/list.do' />">퀘스트 목록</a>
+						<c:if test="${loginUser.userType eq '의뢰인'}">
+							<a href="<c:url value='/quest/registerForm.do' />">퀘스트 등록</a>
+						</c:if>
+						<c:if test="${loginUser.userType eq '해결사'}">
+							<a href="<c:url value='/quest/particularForm.do' />">퀘스트 수행하기</a>
+						</c:if>
 					</div>
-					<div class="submenu-cell">
-						<a href="<c:url value='/template/coin_charge.jsp' />">QUBIT 충전</a>
-						<a href="#">QUBIT 환급</a> <a
-							href="<c:url value='/payments/history.do' />">거래내역 확인</a>
-					</div>
+					<c:if test="${not empty loginUser}">
+						<div class="submenu-cell">
+							<a href="<c:url value='/payments/history.do' />">거래내역 확인</a>
+							<a href="#" onclick="$('#chargeCoinModal').modal('show'); return false;">코인 충전</a>
+						</div>
+					</c:if>
 					<div class="submenu-cell">
 						<a href="<c:url value='/inquiry/form' />">문의사항</a>
 					</div>
