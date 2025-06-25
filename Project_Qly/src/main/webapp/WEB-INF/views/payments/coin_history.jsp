@@ -123,7 +123,7 @@
 		  </div>
 		</div>
     </c:if>
-
+</div>
 </div>
 <!-- table 태그 전체에 Datatable 을 달아준다. -->
 <script>
