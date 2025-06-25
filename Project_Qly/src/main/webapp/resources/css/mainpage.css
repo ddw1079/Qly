@@ -251,7 +251,10 @@ body {
 .map-section-wrapper {
   display: flex;
   gap: 30px;
-  flex-wrap: wrap; /* 반응형 전환 */
+  flex-wrap: wrap;
+  margin: 40px auto;
+  max-width: 1000px;
+  padding: 0 16px;
 }
 
 /* 지도 영역 */
@@ -295,6 +298,36 @@ body {
 .region-select-box .body {
   padding: 10px;
 }
+
+/* 퀘스트 리스트 박스 */
+#questListBox {
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* ✅ 반응형: 모바일 대응 */
+@media (max-width: 768px) {
+  .map-section-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .region-section,
+  .map-box {
+    width: 100%;
+  }
+
+  .region-section select {
+    font-size: 15px;
+  }
+
+  #questListBox h5 {
+    font-size: 16px;
+  }
+}
+
 
 .quest-section {
   width: 1000px;
