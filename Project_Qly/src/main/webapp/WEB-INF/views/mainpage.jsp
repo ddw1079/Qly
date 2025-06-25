@@ -7,178 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>QLY 메인페이지</title>
-<style>
-body {
-	margin: 0;
-	padding: 0;
-	background-color: #f9f9f9;
-	font-family: 'Malgun Gothic', sans-serif;
-	margin-bottom: 120px;
-}
-
-.search-bar {
-	width: 1200px;
-	margin: 40px auto 20px;
-	display: flex;
-	justify-content: center;
-}
-
-.search-bar input.form-control {
-	height: 50px;
-	font-size: 18px;
-}
-
-.section-title {
-	background-color: #49847e;
-	color: white;
-	padding: 10px;
-	font-weight: bold;
-	margin: 40px 0 20px;
-}
-/* 🔸 둥근 박스 wrapper */
-.service-wrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 1000px;
-	margin: 30px auto;
-	padding: 20px 10px;
-	background-color: #ffffff;
-	border-radius: 20px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-	height: 120px;
-	position: relative;
-	box-sizing: border-box;
-	overflow: visible;
-}
-
-/* 아이콘 5개 정렬 */
-/* ✅ 자주 찾는 서비스 영역 */
-
-/* 전체 wrapper 박스 */
-.service-wrapper-custom {
-	background-color: #e6f4f2; /* 옅은 민트 */
-	border-radius: 20px;
-	padding: 30px 40px;
-	margin: 40px auto;
-	width: 1000px;
-	display: flex;
-	justify-content: space-between;
-	box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03); /* 약간 안쪽 입체감 */
-}
-
-/* 각 아이콘 박스 */
-.service-box {
-	width: 150px;
-	height: 130px;
-	background-color: white;
-	border-radius: 16px;
-	padding: 15px 10px;
-	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06); /* 안쪽으로 쏙 들어간 느낌 */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	transition: 0.3s ease;
-}
-
-.service-box:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* hover 시 위로 뜨는 느낌 */
-}
-
-/* 아이콘 이미지 */
-.service-box img {
-	width: 40px;
-	height: 40px;
-	margin-bottom: 8px;
-}
-
-.map-section-wrapper {
-	max-width: 1000px;
-	margin: 40px auto;
-	display: flex;
-	gap: 30px;
-}
-
-.map-box {
-	flex: 1;
-	background-color: rgba(73, 132, 126, 0.15); /* 흐리게 적용 */
-	padding: 10px;
-	border-radius: 8px;
-}
-
-.region-section {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-}
-
-.event-banner-wrapper {
-	background-color: #f6fbfd;
-	padding: 40px 0;
-}
-
-.event-card-wrapper {
-	display: flex;
-	gap: 20px;
-	flex-wrap: wrap;
-}
-
-.event-card {
-	background-color: #eef5fa;
-	border-radius: 16px;
-	padding: 20px;
-	height: 160px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-	transition: 0.3s ease;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	position: relative; /* 아이콘 위치 기준 */
-	flex: 1 1 calc(33% - 20px);
-}
-
-.event-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.card-icon {
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	bottom: 12px;
-	right: 12px;
-	object-fit: contain;
-}
-
-.footer-bar {
-	background: linear-gradient(to right, #eeeeee, #e0f4f2);
-	color: #444;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	padding: 18px 40px;
-	font-size: 16px;
-	font-family: 'Noto Sans KR', sans-serif;
-	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
-	border-top: 1px solid #ccc;
-}
-
-.footer-bar div {
-	flex: 1;
-	padding: 0 10px;
-	line-height: 1.6;
-}
-
-.footer-bar div:not(:last-child) {
-	border-right: 1px solid #ccc;
-}
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mainpage.css" type="text/css"/>
+<style ></style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<%
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 
@@ -193,55 +25,35 @@ body {
 		</script>
 	</c:if>
 	<!-- ✅ 히어로 배너 전체 -->
-	<div class="p-2" style="background-color: #e6f4f2;">
-		<div
-			style="max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 60px;">
-
-			<!-- ✅ 왼쪽 텍스트 영역 -->
-			<div style="flex: 1.2;">
-				<h2
-					style="font-size: 50px; font-weight: bold; color: #009688; margin-bottom: 24px; line-height: 1.4;">
-					🌱 <span style="color: #41867e;">생활 속 퀘스트</span>에 도전해보세요!
-				</h2>
-				<p
-					style="font-size: 20px; color: #333; margin-bottom: 12px; line-height: 1.6;">
-					지금, 도움이 필요한 일이<br> 가까운 곳에서 기다리고 있어요
-				</p>
-				<p
-					style="font-size: 20px; color: #333; margin-bottom: 24px; line-height: 1.6;">
-					누구나 요청하고 누구나 도와주는<br> 생활 속 퀘스트 플랫폼, <strong
-						style="color: #ff9800;">QLY</strong>
-				</p>
-				<button
-					style="padding: 12px 28px; background-color: #019267; color: white; border: none; border-radius: 30px; font-weight: bold; font-size: 16px;">
-					퀘스트 보러가기</button>
-			</div>
-
-			<!-- ✅ 오른쪽: 원형 로고 -->
-			<div
-				style="flex: 0.8; display: flex; justify-content: center; align-items: center;">
-				<div
-					style="width: 420px; height: 420px; border-radius: 50%; background-color: #ffffff; border: 8px solid #c6ece5; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
-					<img src="https://i.postimg.cc/fLQ19GDs/logo4.png" alt="QLY 로고"
-						style="width: 360px; height: 360px; object-fit: contain;" />
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<div class="search-bar">
-		<div style="flex-grow: 1;">
-			<input type="text" id="searchInput" class="form-control"
-				placeholder="검색어 입력">
-		</div>
-		<button class="btn ms-2"
-			style="background-color: #40746e; color: white; font-weight: bold;">검색</button>
+	<div class="hero-banner">
+	  <div class="hero-content">
+	  	<!-- ✅ 왼쪽 텍스트 영역 -->
+	    <div class="hero-text">
+	      <h2>🌱 <span>생활 속 퀘스트</span>에 도전해보세요!</h2>
+	      <p>지금, 도움이 필요한 일이<br> 가까운 곳에서 기다리고 있어요</p>
+	      <p>누구나 요청하고 누구나 도와주는<br> 생활 속 퀘스트 플랫폼, <strong>QLY</strong></p>
+	      <button class="hero-button">퀘스트 보러가기</button>
+	    </div>
+	    <!-- ✅ 오른쪽: 원형 로고 -->
+	    <div class="hero-image">
+	      <div class="logo-circle">
+	        <img src="https://i.postimg.cc/fLQ19GDs/logo4.png" alt="QLY 로고" />
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
-	<div class="d-flex justify-content-center mt-1">
-		<div style="width: 1000px; text-align: left;" id="suggestedTags">
-			<span class="text-muted"></span>
-		</div>
+	<div class="search-bar d-flex flex-wrap gap-2 justify-content-center align-items-center p-2">
+	  <div class="flex-grow-1" style="min-width: 240px;">
+	    <input type="text" id="searchInput" class="form-control w-100" placeholder="검색어 입력" />
+	  </div>
+	  <button class="btn search-btn">검색</button>
+	</div>
+	
+	<div class="d-flex justify-content-center mt-2 px-3">
+	  <div class="w-100" id="suggestedTags" style="max-width: 1000px;">
+	    <span class="text-muted"></span>
+	  </div>
 	</div>
 	<!-- 검색창 카테고리 나오게 하는 이벤트 js -->
 	<script>
@@ -277,6 +89,8 @@ body {
 
 	<!-- ✅ 자주 찾는 서비스 아이콘 전체 wrapper -->
 	<div class="service-wrapper-custom">
+	<c:choose>
+	<c:when test="${loginUser.userType eq '의뢰인'}">
 		<a href="#">
 			<div class="service-box text-center">
 				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
@@ -284,16 +98,7 @@ body {
 				<div>퀘스트 목록</div>
 			</div>
 		</a>
-		<c:if test="${userType eq '의뢰자'}">
-			<a href="<c:url value='/quest/questRegisterForm.do' />">
-				<div class="service-box text-center">
-				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
-				alt="">
-				<div>퀘스트 등록</div>
-				</div>
-			</a>
-		</c:if>
-		<a href="#">
+		<a href="<c:url value='/quest/questRegisterForm.do' />">
 			<div class="service-box text-center">
 				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
 				alt="">
@@ -302,26 +107,82 @@ body {
 		</a>
 		<a href="#">
 			<div class="service-box text-center">
-				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055648.png"
-				alt="">
-				<div>퀘스트 찾기</div>
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="">
+				<div>마이페이지</div>
 			</div>
 		</a>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/159/159078.png"
+					alt="">
+				<div>코인 충전</div>
+			</div>		
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="">
+				<div>문의하기</div>
+			</div>			
+		</a>
+	</c:when>
+	<c:when test="${loginUser.userType eq '해결사'}">
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+					alt="">
+				<div>퀘스트 목록</div>
+			</div>
+		</a>
+		<a href="<c:url value='/quest/questRegisterForm.do' />">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
 				alt="">
-			<div>서비스 신청</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/159/159078.png"
-				alt="">
-			<div>퀘스트 도움</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/709/709496.png"
-				alt="">
-			<div>마이페이지</div>
-		</div>
+				<div>퀘스트 신청</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="">
+				<div>마이페이지</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/159/159078.png"
+					alt="">
+				<div>코인 충전</div>
+			</div>		
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="">
+				<div>문의하기</div>
+			</div>			
+		</a>
+	</c:when>
+	
+	<c:when test="${loginUser.userType eq '관리자'}">
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+					alt="">
+				<div>퀘스트 목록</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="">
+				<div>관리자 페이지</div>
+			</div>
+		</a>
+	</c:when>
+	</c:choose>
+
 		<%-- <div class="service-box text-center">
 			<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
 				alt="">
@@ -333,41 +194,45 @@ body {
 
 
 	<!-- ✅ LATEST QUEST 게시판 형식 -->
-	<div class="quest-section" style="width: 1000px; margin: 40px auto;">
-		<h3 class="section-title text-center">당신의 도움을 필요로 하는 최신 퀘스트들...</h3>
-		<table
-			class="table table-hover table-bordered text-center align-middle">
-			<thead class="table-light">
-				<tr>
-					<th>등록일</th>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>퀘스트 보상</th>
-					<th>작성자</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="quest" items="${latest5Quests}">
-					<tr>
-						<td><fmt:formatDate value="${quest.createdAt}"  pattern="yyyy-MM-dd" /></td>
-						<td>${quest.category}</td>
-						<td class="text-start">
-							<a href="<c:url value='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}' />">
-							${quest.title}</a>
-							</td>
-						<td>${quest.rewardTokens} Coin</td>
-						<td>${quest.username}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	<div class="quest-section">
+	  <h3 class="section-title text-center">
+	    당신의 도움을 필요로 하는 최신 퀘스트들...
+	  </h3>
+	  
+	  <div class="table-wrapper">
+	    <table class="table table-hover table-bordered text-center align-middle">
+	      <thead class="table-light">
+	        <tr>
+	          <th>등록일</th>
+	          <th>카테고리</th>
+	          <th>제목</th>
+	          <th>퀘스트 보상</th>
+	          <th>작성자</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <c:forEach var="quest" items="${latest5Quests}">
+	          <tr>
+	            <td><fmt:formatDate value="${quest.createdAt}" pattern="yyyy-MM-dd" /></td>
+	            <td>${quest.category}</td>
+	            <td class="text-start">
+	              <a href="<c:url value='${pageContext.request.contextPath}/quest/particularForm.do?questId=${quest.questId}' />">
+	                ${quest.title}
+	              </a>
+	            </td>
+	            <td>${quest.rewardTokens} Coin</td>
+	            <td>${quest.username}</td>
+	          </tr>
+	        </c:forEach>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
-
 
 	<!-- ✅ 지도 위 텍스트 -->
 	<!-- 위치 퀘스트 멘트 박스 -->
-	<div
-		style="background-color: #d0f0ec; width: 1000px; margin: 40px auto 20px; padding: 12px 0; border-radius: 8px;">
+	<div class="w-100"
+		style="background-color: #d0f0ec; padding: 12px 0; border-radius: 8px;">
 		<h3 class="text-center"
 			style="margin: 0; color: #004d40; font-weight: bold;">
 			<img src="https://cdn-icons-png.flaticon.com/512/535/535137.png"
@@ -377,7 +242,7 @@ body {
 	</div>
 
 
-	<div class="map-section-wrapper">
+	<div class="map-section-wrapper mt-2">
 		<div class="map-box">
 			<div id="map" style="width: 100%; height: 400px; border-radius: 8px;"></div>
 		</div>
@@ -388,6 +253,12 @@ body {
 					<strong>지역 선택</strong>
 				</div>
 				<div style="padding: 10px;">
+					<div class="region-select-box">
+					  	<div class="title">지역 선택</div>
+					  	<div class="body">
+						    <!-- select 요소들 -->
+					  	</div>
+					</div>
 					<select id="regionSelect" class="form-select mb-2">
 						<option value="">-- 시/도 선택 --</option>
 						<option value="서울시">서울시</option>
@@ -415,6 +286,7 @@ body {
 		</div>
 	</div>
 
+
 	<div class="event-banner-wrapper">
 		<div class="container" style="max-width: 1000px;">
 			<h3 style="font-weight: bold; font-size: 24px; margin-bottom: 30px;">
@@ -440,7 +312,7 @@ body {
 		</div>
 	</div>
 
-	<div class="footer-bar">
+	<footer class="footer-bar mt-auto">
 		<div>
 			<strong>이용안내</strong><br> 자주 묻는 질문<br> 이용약관<br>
 			개인정보처리방침
@@ -456,7 +328,7 @@ body {
 		<div>
 			<strong>SNS</strong><br> 인스타그램<br> 유튜브<br> 페이스북
 		</div>
-	</div>
+	</footer>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>

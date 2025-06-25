@@ -5,11 +5,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
-<%
-com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
-%>
-
 <style>
 /* 모달 디자인 */
 .modal-content {
@@ -86,8 +81,16 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 }
 </style>
 
+<%-- 세션의 유저 데이터를 사용하기 위한 구문 --%>
+<% 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser"); %>
+<script>
+const modal = document.getElementById("chargeCoinModal");
+modal.addEventListener("hidden.bs.modal", () => {
+    document.getElementById("chargeCoinForm").reset();
+});
+</script>
 <!-- 💰 코인 충전 모달 -->
-<div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
@@ -108,14 +111,15 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 			</div>
 
 			<!-- 충전 폼 -->
-			<form id="chargeCoinForm" method="post" action="/payments/success" accept-charset="UTF-8">
+			<form id="chargeCoinForm" method="post" action="${pageContext.request.contextPath}/payments/success" accept-charset="UTF-8">
 				<input type="hidden" id="reason" name="reason" />
 
 				<div class="px-4 pb-4">
 					<!-- 충전 수 -->
 					<div class="input-group mb-2">
 						<label class="input-group-text">충전 수</label>
-						<input type="number" class="form-control" id="coinAmount" name="coinAmount" min="0" value="0" required>
+						<input type="number" class="form-control" id="coinAmount" name="coinAmount" min="0" value="0"
+                        oninput="updateTotal()" required>
 						<span class="input-group-text">코인</span>
 					</div>
 
@@ -146,13 +150,25 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 					</div>
 
 					<!-- 버튼 -->
-					<button type="submit" class="btn-primary-mint">충전하기</button>
+					<button type="submit" id="submitBtn" class="btn-primary-mint">충전하기</button>
 					<button type="button" class="btn-secondary-mint" data-bs-dismiss="modal">다음에 할게요</button>
 				</div>
 			</form>
 
 			<!-- 💳 결제 스크립트 -->
 			<script>
+                function checkFormValidity() {
+                    const coinAmount = parseInt(document.getElementById("coinAmount").value) || 0;
+                    const paymentMethod = document.getElementById("paymentMethod").value;
+                    const submitBtn = document.getElementById("submitBtn");
+
+                    if (coinAmount > 0 && paymentMethod) {
+                        submitBtn.disabled = false;
+                    } else {
+                        submitBtn.disabled = true;
+                    }
+                }
+
 				function increaseCoin(amount) {
 					const coinInput = document.getElementById("coinAmount");
 					const currentValue = parseInt(coinInput.value) || 0;
@@ -171,6 +187,7 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 				document.getElementById("coinAmount").addEventListener("input", updateTotal);
 
 				document.getElementById("chargeCoinForm").addEventListener("submit", function (event) {
+                    event.preventDefault(); // 기본 form 제출 막기
 					const coinAmount = document.getElementById("coinAmount").value;
 					const paymentMethod = document.getElementById("paymentMethod").value;
 					const totalText = document.getElementById("totalAmount").textContent;
@@ -189,7 +206,9 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 						event.preventDefault();
 						return;
 					}
-
+					
+					document.getElementById("chargeCoinForm").submit(); // 수동 제출
+/*
 					const IMP = window.IMP;
 					IMP.init('imp15327364');
 					IMP.request_pay({
@@ -204,12 +223,15 @@ com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("logi
 						buyer_addr: "${loginUser.address}"
 					}, function (rsp) {
 						if (rsp.success) {
+	                        document.getElementById("chargeCoinForm").submit(); // 수동 제출
 							alert("결제가 완료되었습니다.");
 						} else {
 							alert("결제 실패: " + rsp.error_msg);
 						}
 					});
+*/
 				});
+
 			</script>
 		</div>
 	</div>

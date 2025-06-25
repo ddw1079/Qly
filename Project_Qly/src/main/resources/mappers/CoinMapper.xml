@@ -20,7 +20,7 @@
 	<!-- PAYMENT_HISTORY -->
 	<insert id="insertPaymentHistory">
 		INSERT INTO PAYMENT_HISTORY (PAYMENT_HISTORY_ID, USER_ID, PAYMENT_DATE, AMOUNT, REMAIN_COIN, TYPE, STATUS)
-		VALUES (PAYMENT_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{coinAmount}, #{remain}, #{reason}, '성공')
+		VALUES (PAYMENT_HISTORY_SEQ.NEXTVAL, #{userId}, SYSDATE, #{coinAmount}, #{remain}, #{reason}, '결제 성공')
 	</insert>
 
 		<!-- === COIN_HISTORY === -->

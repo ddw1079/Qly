@@ -52,7 +52,7 @@ public class CoinController {
         // 모델에 결제 히스토리 추가
         model.addAttribute("paymentHistories", paymentHistories);
 
-        return "payments/coin_history";  // 뷰 이름 반환
+        return "/payments/coin_history";  // 뷰 이름 반환
     }
 
 	@RequestMapping(value = "/success", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
