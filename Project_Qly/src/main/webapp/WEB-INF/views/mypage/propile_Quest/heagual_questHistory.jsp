@@ -74,7 +74,7 @@
 				<div class="col-md-4">
 					<div class="card mb-3">
 						<div class="card-body">
-							<h5 class="card-title">위치: ${quest.address}</h5>
+							<h5 class="card-title">위치: ${quest.address}&nbsp;${quest.location}</h5>
 							<div id="map-${quest.questId}" class="map-placeholder"></div>
 							<p class="mt-3" style="font-size: 0.9em;">
 								퀘스트 일정:

@@ -414,7 +414,8 @@
 		Q.STATUS AS status,
 		Q.REWARD_TOKENS AS rewardTokens,  
 		Q.LATITUDE AS latitude,
-		Q.LONGITUDE AS longitude
+		Q.LONGITUDE AS longitude,
+		Q.LOCATION AS location
 	FROM QUESTS Q
 	JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
 	WHERE QA.USER_ID = #{userId}
