@@ -42,13 +42,15 @@
 	    </div>
 	  </div>
 	</div>
+	<form method="get" action="${pageContext.request.contextPath}/quest/list.do">
+		<div class="search-bar d-flex flex-wrap gap-2 justify-content-center align-items-center p-2">
+		<div class="flex-grow-1" style="min-width: 240px;">
+			<input type="text" id="searchInput" class="form-control w-100" placeholder="검색어 입력" />
+		</div>
+		<button type="submit" class="btn search-btn">검색</button>
+		</div>
+	</form>
 
-	<div class="search-bar d-flex flex-wrap gap-2 justify-content-center align-items-center p-2">
-	  <div class="flex-grow-1" style="min-width: 240px;">
-	    <input type="text" id="searchInput" class="form-control w-100" placeholder="검색어 입력" />
-	  </div>
-	  <button class="btn search-btn">검색</button>
-	</div>
 	
 	<div class="d-flex justify-content-center mt-2 px-3">
 	  <div class="w-100" id="suggestedTags" style="max-width: 1000px;">

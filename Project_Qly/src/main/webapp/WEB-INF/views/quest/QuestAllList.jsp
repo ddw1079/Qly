@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		<!-- ✅ 검색창 다시 한 번 아래 배치 -->
 		<div style="text-align: center; margin-bottom: 30px;">
 			<input type="text" id="searchInput2" class="form-control"
+				
+				value="${keyword}"
 				placeholder="🔍 퀘스트 제목, 내용, 카테고리 검색"
 				style="width: 100%; max-width: 480px; margin: 0 auto; height: 46px; padding: 10px 18px; border-radius: 24px; border: 1px solid #00c7ae; box-shadow: 0 6px 12px rgba(0, 199, 174, 0.1);">
 		</div>
