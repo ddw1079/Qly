@@ -1,0 +1,23 @@
+@charset "UTF-8";
+.footer-bar {
+	background: linear-gradient(to right, #eeeeee, #e0f4f2);
+	color: #444;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 18px 40px;
+	font-size: 16px;
+	font-family: 'Noto Sans KR', sans-serif;
+	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+	border-top: 1px solid #ccc;
+}
+
+.footer-bar div {
+	flex: 1;
+	padding: 0 10px;
+	line-height: 1.6;
+}
+
+.footer-bar div:not(:last-child) {
+	border-right: 1px solid #ccc;
+}
