@@ -17,7 +17,7 @@ public interface CoinMapper {
 	                       @Param("coinAmount") int amount,
 	                       @Param("remain") int remain,
 	                       @Param("reason") String reason,
-	                       @Param("questId") int questId);
+	                       @Param("description") String description);
 
 	void insertPaymentHistory(@Param("userId") int userId,
 	                          @Param("coinAmount") int amount,

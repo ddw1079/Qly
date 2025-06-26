@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/template/menubar.jsp" />
 
 <!DOCTYPE html>
@@ -30,197 +31,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
 	rel="stylesheet">
-
-<style>
-/* ─────────── 헤더 제목 ─────────── */
-h2.mb-4 {
-	font-weight: bold;
-	color: #3b5b53;
-	border-left: 6px solid #5cbfa3;
-	padding-left: 12px;
-}
-
-/* ─────────── DataTables 정렬 및 검색 ─────────── */
-.dataTables_wrapper {
-	margin-top: 10px;
-}
-
-.dataTables_filter {
-	margin-bottom: 10px;
-	float: right;
-}
-
-/* ─────────── 카드 레이아웃 ─────────── */
-.container {
-	max-width: 1100px; /* ✅ 원하는 가로폭 지정 */
-	margin: 0 auto; /* ✅ 가운데 정렬 */
-	padding: 0 16px;
-}
-
-.card-section {
-	display: flex;
-	justify-content: space-between;
-	gap: 24px;
-}
-
-.card-box {
-	flex: 1;
-	padding: 24px;
-	border-radius: 12px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.card-box {
-	flex: 1;
-	padding: 24px;
-	border-radius: 16px;
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 220px;
-	position: relative;
-}
-
-.card-title {
-	font-size: 20px;
-	font-weight: bold;
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
-	color: #222;
-}
-
-.card-title i {
-	font-size: 28px;
-	margin-right: 10px;
-	color: #2ecc71;
-}
-
-.card-content {
-	font-size: 15px;
-	color: #444;
-	margin-left: 36px;
-	margin-top: -5px;
-}
-
-.card-button {
-	align-self: flex-end;
-	padding: 12px 28px;
-	font-size: 16px;
-	font-weight: bold;
-	border: none;
-	border-radius: 30px;
-	background-color: #5fc9b8;
-	color: white;
-	transition: 0.3s ease;
-}
-
-.card-button:hover {
-	background-color: #4db6a6;
-}
-
-.card-icon {
-	width: 60px;
-	height: 60px;
-	margin-right: 15px;
-}
-
-/* ─────────── 텍스트 색상 ─────────── */
-.fs-4.fw-bold {
-	color: #40746e;
-}
-
-.text-mint {
-	color: #49a78f !important;
-}
-
-/* ─────────── 버튼 스타일 ─────────── */
-.btn-mint {
-	background-color: #49a78f !important;
-	color: white !important;
-	font-weight: bold;
-	border: none;
-	border-radius: 6px;
-	padding: 6px 12px;
-}
-
-.btn-mint:hover {
-	background-color: #3c927e !important;
-}
-
-.btn-mint-filled {
-	background-color: #49a78f !important;
-	color: white !important;
-	border: 2px solid #49a78f !important;
-	font-weight: bold;
-	border-radius: 6px;
-	padding: 8px 16px;
-	text-align: center;
-	transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-mint-filled:hover {
-	background-color: #3c927e !important;
-	border-color: #3c927e !important;
-}
-
-/* ─────────── 노란 버튼 전용 (연노랑 카드 전용 버튼용) ─────────── */
-.btn-yellow {
-	background-color: #f7c745;
-	color: white;
-	font-weight: bold;
-	border-radius: 30px;
-	padding: 12px 28px;
-	display: inline-block;
-	text-align: center;
-	transition: background-color 0.3s ease;
-	border: none;
-}
-
-.btn-yellow:hover {
-	background-color: #e0ae28;
-}
-
-/* ─────────── 탭 스타일 ─────────── */
-.nav-tabs .nav-link {
-	color: #495057;
-	font-weight: 600;
-	border: none;
-	border-bottom: 3px solid transparent;
-}
-
-.nav-tabs .nav-link.active {
-	color: #40746e;
-	border-bottom: 3px solid #40746e;
-	background-color: #e8f9f4;
-}
-
-.nav-tabs .nav-link:hover {
-	background-color: #f0fdfa;
-}
-
-/* ─────────── 테이블 스타일 ─────────── */
-thead.table-success {
-	background-color: #d6f5e5 !important;
-	color: #2f4f4f;
-}
-
-table tbody tr:hover {
-	background-color: #f3fcf8;
-}
-
-/* ─────────── 토스트 알림 ─────────── */
-.toast {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	background-color: #d1f4e1;
-	color: #1c3e32;
-	border-radius: 8px;
-}
-</style>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/coin_history.css" type="text/css"/>
 
 </head>
 <body>
@@ -271,13 +82,13 @@ table tbody tr:hover {
 								<th>수량</th>
 								<th>거래 유형</th>
 								<th>잔여 코인</th>
-								<th>관련 퀴스트</th>
+								
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="ch1" items="${coinHistories}">
 								<tr>
-									<td>${ch1.transactionDate}</td>
+									<td><fmt:formatDate value="${ch1.transactionDate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
 									<td><c:choose>
 											<c:when test="${ch1.amount > 0}">
 												<span class="text-danger">+</span> ${ch1.amount} 코인</c:when>
@@ -286,7 +97,7 @@ table tbody tr:hover {
 										</c:choose></td>
 									<td>${ch1.type}</td>
 									<td>${ch1.remainCoin}</td>
-									<td><a href="quest/${ch1.questId}">quest Page 링크...</a></td>
+								
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -299,7 +110,7 @@ table tbody tr:hover {
 						<thead class="table-success">
 							<tr>
 								<th>일자</th>
-								<th>결제 방법</th>
+								<th>상세</th>
 								<th>결제 상황</th>
 								<th>결제 금액</th>
 								<th>충전 수량</th>
@@ -309,11 +120,11 @@ table tbody tr:hover {
 						<tbody>
 							<c:forEach var="ch2" items="${paymentHistories}">
 								<tr>
-									<td>${ch2.paymentDate}</td>
-									<td>${ch2.paymentMethod}</td>
+									<td><fmt:formatDate value="${ch2.paymentDate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
+									<td>${ch2.type}</td>
 									<td>${ch2.status}</td>
-									<td class="text-end">${ch2.amount.intValue()}원</td>
-									<td class="text-end">${(ch2.amount * 10).intValue()}코인</td>
+									<td class="text-end">${(ch2.amount * 10).intValue()}원</td>
+									<td class="text-end">${ch2.amount.intValue()}코인</td>
 									<td class="text-end">${ch2.remainCoin}코인</td>
 								</tr>
 							</c:forEach>
@@ -395,12 +206,12 @@ table tbody tr:hover {
 					<div class="d-flex align-items-center mb-3">
 						<i class="bi bi-info-circle-fill fs-4 text-mint me-2"></i>
 						<div>
-							<h6 class="mb-1 fw-bold">FAQ 자주 문득 질문</h6>
+							<h6 class="mb-1 fw-bold">FAQ 자주 묻는 질문</h6>
 							<small class="text-muted">궁금한 내용을 빠른시간에 찾아보세요</small>
 						</div>
 					</div>
 					<a href="${pageContext.request.contextPath}/inquiry/form#faq"
-						class="btn btn-mint-filled w-100 mt-3">자주 문득 질문 보기</a>
+						class="btn btn-mint-filled w-100 mt-3">자주 묻는 질문 보기</a>
 				</div>
 			</div>
 		</div>

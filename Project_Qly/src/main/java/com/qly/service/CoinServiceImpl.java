@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qly.aop.CoinHistoryAspect;
 import com.qly.mapper.CoinMapper;
 import com.qly.vo.CoinHistoryVo;
 import com.qly.vo.PaymentHistoryVo;
@@ -74,12 +75,13 @@ public class CoinServiceImpl implements CoinService{
     @Override
     public int adjustUserCoinByPayment(int userId, int coinAmount, String reason) {
         coinMapper.updateUserCoinCountWithPayment(userId, coinAmount, reason); // 결제용 변경
+        coinMapper.insertCoinHistory(userId, coinAmount, coinMapper.getCurrentCoin(userId), reason, "퀘스트 코인 결제: " + coinAmount + "코인");
         return coinMapper.getCurrentCoin(userId); // 변경된 코인 잔액 반환
     }
     
     @Override
-    public void insertCoinHistory(int userId, int coinAmount, int remain, String type, int questId) {
-    	coinMapper.insertCoinHistory(userId, coinAmount, remain, type, questId);
+    public void insertCoinHistory(int userId, int coinAmount, int remain, String type, String description) {
+    	coinMapper.insertCoinHistory(userId, coinAmount, remain, type, description);
     }
 
     @Override

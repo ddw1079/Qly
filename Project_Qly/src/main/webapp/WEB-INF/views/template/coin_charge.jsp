@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<meta charset="UTF-8">
 <!-- CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
@@ -112,8 +112,6 @@ modal.addEventListener("hidden.bs.modal", () => {
 
 			<!-- 충전 폼 -->
 			<form id="chargeCoinForm" method="post" action="${pageContext.request.contextPath}/payments/success" accept-charset="UTF-8">
-				<input type="hidden" id="reason" name="reason" />
-
 				<div class="px-4 pb-4">
 					<!-- 충전 수 -->
 					<div class="input-group mb-2">
@@ -193,8 +191,8 @@ modal.addEventListener("hidden.bs.modal", () => {
 					const totalText = document.getElementById("totalAmount").textContent;
 					const totalAmount = parseInt(totalText.replace(/[^0-9]/g, ''));
 
-					document.getElementById("reason").value = `퀘스트 코인 충전 - ${coinAmount}코인`;
-
+					// document.getElementById("description").value = `퀘스트 코인 충전 - ${coinAmount}코인`;
+					// console.log(document.getElementById("description").value);
 					if (!paymentMethod || totalAmount <= 0) {
 						alert("충전할 코인 수와 결제 방법을 올바르게 선택해주세요.");
 						event.preventDefault();
@@ -206,7 +204,7 @@ modal.addEventListener("hidden.bs.modal", () => {
 						event.preventDefault();
 						return;
 					}
-					
+					document.charset = "UTF-8";
 					document.getElementById("chargeCoinForm").submit(); // 수동 제출
 /*
 					const IMP = window.IMP;
