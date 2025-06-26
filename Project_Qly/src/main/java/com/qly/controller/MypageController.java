@@ -256,9 +256,11 @@ public class MypageController {
 	@RequestMapping("/questprogress.do")
 	public String showQuestProgress(HttpSession session, Model model, HttpServletRequest request) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+		int solverId = loginUser.getUserId();
 		int userId = loginUser.getUserId();
 
-		List<QuestDto> questList = questService.getQuestsByApplicantUserId(userId); // 내가 신청한 퀘스트
+
+		List<QuestDto> questList = questService.getQuestsByApplicantUserId(solverId); // 내가 신청한 퀘스트
 
 		Map<Integer, List<QuestTaskDto>> taskMap = new HashMap<>();
 		Map<Integer, Integer> progressMap = new HashMap<>();

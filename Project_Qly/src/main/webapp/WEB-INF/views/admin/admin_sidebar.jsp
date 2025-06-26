@@ -98,13 +98,13 @@ if (currentPage == null)
 		style="list-style: none; padding: 0; margin: 0;">
 
 		<li class="${page eq 'admin_memberList.jsp' ? 'active' : ''}"
-			onclick="location.href='/Project_Qly/admin/memberList.do'">회원 관리</li>
+			onclick="location.href='<%= request.getContextPath() %>/admin/memberList.do'">회원 관리</li>
 
 		<li class="${page eq 'admin_questList.jsp' ? 'active' : ''}"
-			onclick="location.href='/Project_Qly/admin/questList.do'">퀘스트 관리</li>
+			onclick="location.href='<%= request.getContextPath() %>/admin/questList.do'">퀘스트 관리</li>
 
 		<li class="${page eq 'admin_coinList.jsp' ? 'active' : ''}"
-			onclick="location.href='/Project_Qly/admin/coinList.do'">코인 관리</li>
+			onclick="location.href='<%= request.getContextPath() %>/admin/coinList.do'">코인 관리</li>
 
 		<li class="${page eq 'admin_question.jsp' ? 'active' : ''}"
 			onclick="location.href='<%= request.getContextPath() %>/admin/questionList.do'">사용자
