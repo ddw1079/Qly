@@ -255,12 +255,12 @@
 					<strong>지역 선택</strong>
 				</div>
 				<div style="padding: 10px;">
-					<div class="region-select-box">
+					<%-- <div class="region-select-box">
 					  	<div class="title">지역 선택</div>
 					  	<div class="body">
 						    <!-- select 요소들 -->
 					  	</div>
-					</div>
+					</div> --%>
 					<select id="regionSelect" class="form-select mb-2">
 						<option value="">-- 시/도 선택 --</option>
 						<option value="서울시">서울시</option>
