@@ -82,13 +82,13 @@
 								<th>수량</th>
 								<th>거래 유형</th>
 								<th>잔여 코인</th>
-								<th>상세</th>
+								
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="ch1" items="${coinHistories}">
 								<tr>
-									<td><fmt:formatDate value="${ch1.transactionDate}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${ch1.transactionDate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
 									<td><c:choose>
 											<c:when test="${ch1.amount > 0}">
 												<span class="text-danger">+</span> ${ch1.amount} 코인</c:when>
@@ -97,7 +97,7 @@
 										</c:choose></td>
 									<td>${ch1.type}</td>
 									<td>${ch1.remainCoin}</td>
-									<td><a href="quest/${ch1.description}"></a></td>
+								
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -120,7 +120,7 @@
 						<tbody>
 							<c:forEach var="ch2" items="${paymentHistories}">
 								<tr>
-									<td><fmt:formatDate value="${ch2.paymentDate}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${ch2.paymentDate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
 									<td>${ch2.type}</td>
 									<td>${ch2.status}</td>
 									<td class="text-end">${(ch2.amount * 10).intValue()}원</td>
