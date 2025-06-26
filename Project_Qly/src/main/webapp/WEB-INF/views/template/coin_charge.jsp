@@ -112,8 +112,6 @@ modal.addEventListener("hidden.bs.modal", () => {
 
 			<!-- 충전 폼 -->
 			<form id="chargeCoinForm" method="post" action="${pageContext.request.contextPath}/payments/success" accept-charset="UTF-8">
-				<input type="hidden" id="description" name="description" />
-
 				<div class="px-4 pb-4">
 					<!-- 충전 수 -->
 					<div class="input-group mb-2">
@@ -193,8 +191,8 @@ modal.addEventListener("hidden.bs.modal", () => {
 					const totalText = document.getElementById("totalAmount").textContent;
 					const totalAmount = parseInt(totalText.replace(/[^0-9]/g, ''));
 
-					document.getElementById("description").value = `퀘스트 코인 충전 - ${coinAmount}코인`;
-					console.log(document.getElementById("description").value);
+					// document.getElementById("description").value = `퀘스트 코인 충전 - ${coinAmount}코인`;
+					// console.log(document.getElementById("description").value);
 					if (!paymentMethod || totalAmount <= 0) {
 						alert("충전할 코인 수와 결제 방법을 올바르게 선택해주세요.");
 						event.preventDefault();

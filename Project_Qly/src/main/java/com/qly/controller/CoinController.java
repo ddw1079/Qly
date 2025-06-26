@@ -56,9 +56,11 @@ public class CoinController {
     }
 
 	@RequestMapping(value = "/success", method = RequestMethod.POST)
-	public String chargeSuccess(int coinAmount, @RequestParam("description") String description, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String chargeSuccess(int coinAmount, HttpSession session, RedirectAttributes redirectAttributes) {
 		System.out.println("coinService class = " + coinService.getClass());
 		System.out.println("coinAmount = " + coinAmount);
+		String description = "퀘스트 코인 충전: " + coinAmount + " 코인";
+		
 		System.out.println("description = " + description);
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		
