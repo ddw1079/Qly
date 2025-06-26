@@ -53,7 +53,7 @@ public interface QuestMapper {
 
 	List<QuestTaskDto> jongilJJangyoonjaeJJang(int questId);
 
-	List<QuestDto> getQuestsByApplicantUserId(@Param("userId") int userId);
+	List<QuestDto> getQuestsByApplicantUserId(@Param("solverId") int solverId);
 
 	void updateQuestStatus(@Param("questId") int questId, @Param("status") String status);
 

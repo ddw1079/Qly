@@ -137,8 +137,8 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
-	public List<QuestDto> getQuestsByApplicantUserId(int userId) {
-		return questMapper.getQuestsByApplicantUserId(userId);
+	public List<QuestDto> getQuestsByApplicantUserId(int solverId) {
+		return questMapper.getQuestsByApplicantUserId(solverId);
 	}
 
 	@Override

@@ -119,7 +119,7 @@ public class AdminController {
     	
     	 inquiryService.insertQustion(dto);
          model.addAttribute("page", "admin_question.jsp");
-    	return "admin/admin_layout";
+    	return "redirect:/admin/list.do";
     }
     
 }

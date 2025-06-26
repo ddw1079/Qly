@@ -375,12 +375,12 @@
 
 
 
-	<update id="reduceTokensBy100" parameterType="int">
+	<!-- <update id="reduceTokensBy100" parameterType="int">
 		UPDATE QUESTS
 		SET
 		REWARD_TOKENS = REWARD_TOKENS - 100
 		WHERE QUEST_ID = #{questId}
-	</update>
+	</update> -->
 
 
 	<!-- 진행 상황 전용 퀘스트 태스크 조회 -->
@@ -418,7 +418,9 @@
 		Q.LOCATION AS location
 	FROM QUESTS Q
 	JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
-	WHERE QA.USER_ID = #{userId}
+	WHERE QA.USER_ID = #{solverId}
+	  AND QA.IS_SOLVER = 1
+	ORDER BY Q.REG_DATE DESC
 </select>
 
 
