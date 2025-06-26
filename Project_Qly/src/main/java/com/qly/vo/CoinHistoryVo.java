@@ -8,7 +8,7 @@ public class CoinHistoryVo {
 	private int amount;
 	private int remainCoin;
 	private String type;
-	private int questId;
+	private String description;
 
 	public int getUserId() {
 		return userId;
@@ -34,17 +34,17 @@ public class CoinHistoryVo {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getQuestId() {
-		return questId;
-	}
-	public void setQuestId(int questId) {
-		this.questId = questId;
-	}
 	public int getRemainCoin() {
 		return remainCoin;
 	}
 	public void setRemainCoin(int remainCoin) {
 		this.remainCoin = remainCoin;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

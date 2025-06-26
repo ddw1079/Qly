@@ -133,11 +133,9 @@ CREATE TABLE COIN_HISTORY (
 
     TYPE           VARCHAR2(100), -- ex: '퀘스트 요청', '보상', '충전'
 
-    QUEST_ID       NUMBER,
+    DESCRIPTION    VARCHAR2(200), -- 거래 설명
 
-    CONSTRAINT FK_COIN_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID),
-
-    CONSTRAINT FK_COIN_QUEST FOREIGN KEY (QUEST_ID) REFERENCES QUESTS(QUEST_ID)
+    CONSTRAINT FK_COIN_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
 
 );
 
@@ -235,3 +233,19 @@ CREATE TABLE QUESTIONS (
 --------------------------------------------------------
 
    CREATE SEQUENCE  "QLY"."USERS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 7 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+
+--------------------------------------------------------
+-- # B. 250626 coin_history 테이블의 QUEST_ID 컬럼을 삭제하고 Description 컬럼을 추가
+--------------------------------------------------------
+-- -- 만약 아래 조회 결과로 FK_COIN_QUEST 가 존재한다면, 해당 FK를 삭제해야 합니다.
+-- SELECT constraint_name 
+-- FROM user_constraints 
+-- WHERE table_name = 'COIN_HISTORY' AND constraint_type = 'R';
+-- ALTER TABLE coin_history
+-- DROP CONSTRAINT FK_COIN_QUEST;  -- 실제 제약조건 이름으로 수정
+-- -- 만약 아래 조회 결과로 coin_history 테이블에 description 컬럼이 없다면, 컬럼을 추가해주세요
+-- SELECT column_name
+-- FROM user_tab_columns
+-- WHERE table_name = 'COIN_HISTORY' AND column_name = 'DESCRIPTION';
+-- ALTER TABLE coin_history
+-- ADD DESCRIPTION VARCHAR2(200);

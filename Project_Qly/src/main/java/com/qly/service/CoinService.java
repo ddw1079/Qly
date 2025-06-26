@@ -21,6 +21,6 @@ public interface CoinService {
     public int adjustUserCoinByPayment(int userId, int coinAmount, String reason);
     public void adjustTransitCoinBetweenUsersByQuest(int coinAmount, int startUID, String reason, int questId, int destUID);
 
-    public void insertCoinHistory(int userId, int coinAmount, int remain, String type, int questId);
+    public void insertCoinHistory(int userId, int coinAmount, int remain, String type, String description);
     public void insertPaymentHistory(int userId, int coinAmount, int remain, String type);
 }

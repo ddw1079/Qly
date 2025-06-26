@@ -55,11 +55,11 @@ public class CoinController {
         return "/payments/coin_history";  // 뷰 이름 반환
     }
 
-	@RequestMapping(value = "/success", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	public String chargeSuccess(int coinAmount, String reason, HttpSession session, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/success", method = RequestMethod.POST)
+	public String chargeSuccess(int coinAmount, @RequestParam("description") String description, HttpSession session, RedirectAttributes redirectAttributes) {
 		System.out.println("coinService class = " + coinService.getClass());
 		System.out.println("coinAmount = " + coinAmount);
-		System.out.println("reason = " + reason);
+		System.out.println("description = " + description);
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		
 		if (loginUser == null) {
@@ -67,7 +67,7 @@ public class CoinController {
             return "redirect:/login/loginForm"; // 로그인 페이지로 리다이렉트
         }
 		System.out.println("loginUser.getUserId() = " + loginUser.getUserId());
-        int currentCoin = coinService.adjustUserCoinByPayment(loginUser.getUserId(), coinAmount, reason);
+        int currentCoin = coinService.adjustUserCoinByPayment(loginUser.getUserId(), coinAmount, description);
 
         System.out.println("결제 완료! 현재 코인: " + currentCoin);
         redirectAttributes.addFlashAttribute("chargeMessage", "충전 완료! 코인 " + coinAmount + "개가 추가되었습니다.");
@@ -85,9 +85,9 @@ public class CoinController {
 		
 	}
 	
-    @RequestMapping(value = "/test-aop")
-    public String test() {
-        coinService.adjustUserCoin(11111, 1234, "테스트 코인 지급", 0);
-        return "OK";
-    }
+    // @RequestMapping(value = "/test-aop")
+    // public String test() {
+    //     coinService.adjustUserCoin(11111, 1234, "테스트 코인 지급", 0);
+    //     return "OK";
+    // }
 }
