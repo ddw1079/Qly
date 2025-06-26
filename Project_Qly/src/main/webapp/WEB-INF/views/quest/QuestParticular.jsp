@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>퀘스트 신청</title>
 
-<!-- Bootstrap 5 -->
+<!-- ✅ Bootstrap & jQuery UI -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -18,56 +18,149 @@
 	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 body {
-	background-color: #f9f9f9;
+	background: linear-gradient(to bottom right, #eafffa, #ffffff);
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 1.1rem;
+	margin-bottom: 100px;
+}
+
+.detail-hero-area {
+	background: linear-gradient(to bottom, #eafffa, #ffffff);
+	padding: 40px 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hero-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	max-width: 1200px;
+	width: 100%;
+	padding: 0 30px;
+}
+
+.hero-text {
+	flex: 1;
+	min-width: 300px;
+	max-width: 600px;
+}
+
+.hero-text h2 {
+	font-size: 2.4rem;
+	font-weight: 800;
+	color: #004d44;
+	margin-bottom: 14px;
+}
+
+.hero-text p {
+	color: #555;
+	margin-bottom: 10px;
 	font-size: 1.1rem;
 }
 
+.hero-image {
+	flex: 1;
+	min-width: 280px;
+	text-align: center;
+}
+
+.hero-image img.hero-illustration {
+	max-width: 100%;
+	height: auto;
+	opacity: 1;
+	filter: none;
+	image-rendering: auto;
+}
+
+/* 민트 그라데이션 텍스트 */
+.mint-gradient-text {
+	background: linear-gradient(to right, #02665b, #004d44, #002d29);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: 800;
+	font-size: 2.2rem;
+	line-height: 1.4;
+	margin-bottom: 10px;
+}
+
+/* Card 영역 */
 .container {
-	max-width: 1000px;
-	margin-top: 50px;
+	max-width: 1100px;
+	margin: 50px auto;
 }
 
 .card {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	border-radius: 15px;
+	background-color: #ffffff;
+	border: 2px solid #00c7ae; /* 선명한 민트 외곽선 */
+	border-radius: 16px;
+	box-shadow: 0 6px 16px rgba(0, 199, 174, 0.1); /* 민트톤 그림자 */
+	transition: all 0.2s ease-in-out;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.card:hover {
+	box-shadow: 0 10px 25px rgba(0, 199, 174, 0.15);
+	transform: scale(1.015);
 }
 
 .card-header {
-	font-size: 1.5rem;
-	font-weight: bold;
-	background-color: #00d1b2;
-	color: white;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	background-color: #e0f9f6;
+	color: #006d63;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border-bottom: 1px solid #cceae4;
+	padding: 16px 20px;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
 }
 
 .card-body {
-	padding: 30px;
+	padding: 25px 30px;
 }
 
 label {
-	font-weight: bold;
-	margin-top: 10px;
+	font-weight: 600;
+	margin-top: 12px;
+	display: block;
+	color: #333;
 }
 
-.submit-btn {
-	background-color: #00d1b2;
-	color: white;
-	font-size: 1.2rem;
-	padding: 10px 30px;
-	border: none;
+input.form-control, select.form-select {
 	border-radius: 10px;
-	margin-top: 20px;
+	border: 1.5px solid #ccc;
+	box-shadow: none;
+	padding: 10px;
+	font-size: 1rem;
 }
 
-#datepicker-inline {
-	font-size: 0.85rem;
-	max-width: 300px;
+input#selectedDate {
+	background-color: #fff;
+}
+
+.btn-mint {
+	background-color: #00c7ae;
+	color: #fff;
+	font-size: 1.05rem;
+	padding: 10px 26px;
+	border: none;
+	border-radius: 25px;
+	transition: all 0.2s ease;
+}
+
+.btn-mint:hover {
+	background-color: #00b39e;
+	transform: scale(1.03);
 }
 </style>
+
 <fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd"
 	var="minDateStr" />
 <fmt:formatDate value="${quest.endDate}" pattern="yyyy-MM-dd"
@@ -88,84 +181,78 @@ label {
 		});
 	});
 </script>
-
-
-
 </head>
+
 <body>
-	<%-- 	<p>디버깅: ${quest != null ? '퀘스트 있음' : 'quest가 null이야'}</p>
-	<p>questId: ${quest.questId}</p>
-	<p>title: ${quest.title}</p> --%>
 
+	<!-- Hero Section -->
+	<div class="detail-hero-area">
+		<div
+			class="hero-inner d-flex justify-content-between align-items-center">
+			<div class="hero-text">
+				<h2 class="mint-gradient-text">퀘스트 상세 보기</h2>
+				<p>도움이 필요한 퀘스트의 정보를 확인하고 신청해주세요.</p>
+				<span class="text-muted d-block mb-2" style="font-size: 0.95rem;">※
+					신청 후 일정은 변경이 어려울 수 있습니다.</span>
+				<ul class="text-muted small">
+					<li>신청 전 퀘스트 내용을 꼼꼼히 확인해 주세요.</li>
+					<li>정해진 시간 외에는 신청이 제한될 수 있습니다.</li>
+					<li>허위 신청 시 패널티가 부과될 수 있습니다.</li>
+				</ul>
+			</div>
+			<div class="hero-image">
+				<img
+					src="https://i.postimg.cc/rsSm0k6s/9430573-4151160-Photoroom.png"
+					alt="퀘스트 히어로 이미지" class="img-fluid hero-illustration blurred-image">
+			</div>
+		</div>
+	</div>
 
+	<!-- Main Form Section -->
 	<div class="container">
-		<h2 class="text-center mb-4">퀘스트 신청</h2>
-
 		<c:if test="${not empty error}">
 			<script>
 				alert("${error}");
 			</script>
 		</c:if>
 
-
 		<form action="${pageContext.request.contextPath}/quest/application.do"
 			method="post">
-			<%-- <input type="hidden" name="questId" value="${quest.questId}"> --%>
 			<input type="hidden" name="questId" value="${quest.questId}">
 			<div class="row">
-				<!-- 왼쪽 카드: 퀘스트 정보 -->
+				<!-- Left: Quest Info -->
 				<div class="col-md-6">
 					<div class="card">
-						<div class="card-header">제목</div>
+						<div class="card-header">퀘스트 정보</div>
 						<div class="card-body">
-							<p>${quest.title}</p>
-							<hr>
-
-							<%-- <c:if test="${not empty quest.photoPath}">
-								<img src="${quest.photoPath}" alt="퀘스트 이미지"
-									class="img-fluid mb-3" style="max-height: 300px;">
+							<h5 class="fw-bold mb-3">${quest.title}</h5>
+							<c:if test="${not empty quest.photoPath}">
+								<div class="text-center mb-3">
+									<img src="${quest.photoPath}" alt="퀘스트 이미지"
+										class="img-fluid rounded" style="max-height: 280px;">
+								</div>
 							</c:if>
-
 							<label>해야 할 일</label>
-							<ul>
+							<ul class="mb-3">
 								<c:forEach var="task" items="${quest.tasks}">
 									<li>${task.description}</li>
 								</c:forEach>
-							</ul> --%>
-
-							<c:if test="${not empty quest.photoPath}">
-								<div class="text-center mb-3">
-									<img src="${quest.photoPath}" alt="퀘스트 이미지" class="img-fluid"
-										style="max-height: 300px;">
-								</div>
-							</c:if>
-							<hr>
-							<!-- 줄바꿈 효과 확실하게 유지 -->
-							<div class="mt-3">
-								<label>해야 할 일</label>
-								<ul class="mb-3">
-									<c:forEach var="task" items="${quest.tasks}">
-										<li>${task.description}</li>
-									</c:forEach>	
-								</ul>
-							</div>
-
-
-							<hr>
+							</ul>
 							<label>보상</label>
 							<p class="text-primary fw-bold">${quest.rewardTokens}코인</p>
 						</div>
 					</div>
 				</div>
 
-				<!-- 오른쪽 카드: 신청 폼 -->
+				<!-- Right: Application Form -->
 				<div class="col-md-6">
 					<div class="card">
-						<div class="card-header">날짜 및 시간 선택</div>
+						<div class="card-header">신청 정보 입력</div>
 						<div class="card-body">
 							<label>날짜 선택</label> <input type="text" id="selectedDate"
-								name="day" class="form-control mb-3" required readonly> <label>주소</label>
-							<input type="text" class="form-control mb-3"
+								name="day" class="form-control mb-3" required readonly>
+
+							<label>주소</label> <input type="text" class="form-control mb-3"
 								value="${quest.address}" readonly> <label>시간 선택</label>
 							<select name="time" class="form-select mb-4" required>
 								<option value="">-- 시간 선택 --</option>
@@ -176,7 +263,7 @@ label {
 							</select>
 
 							<div class="text-end">
-								<button type="submit" class="submit-btn">퀘스트 신청</button>
+								<button type="submit" class="btn btn-mint">퀘스트 신청</button>
 							</div>
 						</div>
 					</div>
@@ -185,7 +272,6 @@ label {
 		</form>
 	</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
