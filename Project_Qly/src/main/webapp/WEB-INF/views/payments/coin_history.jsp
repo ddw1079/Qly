@@ -206,12 +206,12 @@
 					<div class="d-flex align-items-center mb-3">
 						<i class="bi bi-info-circle-fill fs-4 text-mint me-2"></i>
 						<div>
-							<h6 class="mb-1 fw-bold">FAQ 자주 문득 질문</h6>
+							<h6 class="mb-1 fw-bold">FAQ 자주 묻는 질문</h6>
 							<small class="text-muted">궁금한 내용을 빠른시간에 찾아보세요</small>
 						</div>
 					</div>
 					<a href="${pageContext.request.contextPath}/inquiry/form#faq"
-						class="btn btn-mint-filled w-100 mt-3">자주 문득 질문 보기</a>
+						class="btn btn-mint-filled w-100 mt-3">자주 묻는 질문 보기</a>
 				</div>
 			</div>
 		</div>
