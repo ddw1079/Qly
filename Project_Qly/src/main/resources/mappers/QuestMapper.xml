@@ -402,9 +402,9 @@
 		AS status, Q.REWARD_TOKENS AS rewardTokens FROM QUESTS Q JOIN QUEST_APPLICATION 
 		QA ON Q.QUEST_ID = QA.QUEST_ID WHERE QA.USER_ID = #{userId} AND QA.IS_SOLVER 
 		= 1 </select> -->
-	<select id="getQuestsByApplicantUserId" parameterType="int"
+<select id="getQuestsByApplicantUserId" parameterType="int"
 		resultType="com.qly.dto.QuestDto">
-		SELECT
+	SELECT
 		Q.QUEST_ID AS questId,
 		Q.TITLE AS title,
 		Q.PHOTO_PATH AS photoPath,
@@ -412,13 +412,14 @@
 		Q.START_DATE AS startDate,
 		Q.END_DATE AS endDate,
 		Q.STATUS AS status,
-		Q.REWARD_TOKENS AS rewardTokens
-		FROM QUESTS Q
-		JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
-		WHERE QA.USER_ID = #{userId}
-		AND QA.IS_SOLVER = 1
-		AND QA.REWARD_GIVEN != 'Y'
-	</select>
+		Q.REWARD_TOKENS AS rewardTokens,  
+		Q.LATITUDE AS latitude,
+		Q.LONGITUDE AS longitude,
+		Q.LOCATION AS location
+	FROM QUESTS Q
+	JOIN QUEST_APPLICATION QA ON Q.QUEST_ID = QA.QUEST_ID
+	WHERE QA.USER_ID = #{userId}
+</select>
 
 
 

@@ -12,14 +12,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Kakao Map SDK (autoload=false 설정) -->
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffded417f5d8a057e299cf7acb7c310a&autoload=false&libraries=services"></script>
+
 <style>
 .map-placeholder {
 	width: 100%;
-	height: 120px;
-	background-color: #e0e0e0;
-	text-align: center;
-	line-height: 120px;
-	color: #888;
+	height: 200px;
 }
 </style>
 </head>
@@ -75,8 +74,8 @@
 				<div class="col-md-4">
 					<div class="card mb-3">
 						<div class="card-body">
-							<h5 class="card-title">위치: ${quest.address}</h5>
-							<div class="map-placeholder">지도</div>
+							<h5 class="card-title">위치: ${quest.address}&nbsp;${quest.location}</h5>
+							<div id="map-${quest.questId}" class="map-placeholder"></div>
 							<p class="mt-3" style="font-size: 0.9em;">
 								퀘스트 일정:
 								<fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd" /> ~
@@ -91,7 +90,7 @@
 							<p class="mb-1 fw-bold">보상</p>
 							<h5 class="text-primary">${quest.rewardTokens} Qubit</h5>
 
-							<!-- 버튼 조건부 제어 (수정됨) -->
+							<!-- 버튼 조건부 제어 -->
 							<c:choose>
 								<c:when test="${quest.status eq '완료' and (rewardGivenMap[quest.questId] == false or rewardGivenMap[quest.questId] == null)}">
 									<button type="submit"
@@ -115,7 +114,7 @@
 			</div>
 		</form>
 
-		<!-- 모달 -->
+		<!-- 보상 모달 -->
 		<div class="modal fade" id="rewardModal-${quest.questId}" tabindex="-1"
 			aria-labelledby="rewardModalLabel-${quest.questId}" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -146,5 +145,32 @@
 		</div>
 	</div>
 </c:forEach>
+
+<!-- Kakao 지도 생성 -->
+<script>
+kakao.maps.load(function () {
+  <c:forEach var="quest" items="${questList}">
+    (function() {
+      const lat = parseFloat("${quest.latitude}");
+      const lng = parseFloat("${quest.longitude}");
+      const mapId = "map-${quest.questId}";
+
+      if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+        const container = document.getElementById(mapId);
+        const map = new kakao.maps.Map(container, {
+          center: new kakao.maps.LatLng(lat, lng),
+          level: 3
+        });
+        new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(lat, lng),
+          title: "${quest.title}"
+        });
+      }
+    })();
+  </c:forEach>
+});
+</script>
+
 </body>
 </html>
