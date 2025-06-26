@@ -1,47 +1,271 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:include page="/template/menubar.jsp" />
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Qly 소개</title>
+<title>QLY 팀 소개</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-  .intro-wrapper {
-    margin-top: 100px; /* 원하는 만큼 조절 가능: 100px 정도 추천 */
-  }
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+.container-fixed {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.hero-section {
+	background: #e6fffb;
+	padding: 100px 0 40px;
+	text-align: center;
+}
+
+.hero-section h1 {
+	font-size: 2.6rem;
+	font-weight: bold;
+	color: #00a88b;
+}
+
+.hero-section p {
+	font-size: 1.1rem;
+	margin-top: 20px;
+	color: #555;
+}
+
+.team-section {
+	padding: 60px 0;
+	background-color: #fff;
+}
+.team-leader {
+  background: #f8fefe;
+  padding: 40px;
+  width: 900px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  border-radius: 40px;
+  box-shadow: 0 4px 12px rgba(0, 168, 139, 0.15);
+}
+.team-leader img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 4px solid #00c9a7;
+}
+.team-leader h5 {
+  font-size: 1.5rem;
+}
+.team-member {
+	background: #f8fefe;
+	padding: 30px;
+	width: 600px;
+	box-shadow: 0 4px 12px rgba(0, 168, 139, 0.15);
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.team-member img {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border: 4px solid #00c9a7;
+}
+
+.badge-bubble {
+	display: inline-block;
+	background: #00c9a7;
+	color: white;
+	font-weight: bold;
+	padding: 6px 12px;
+	border-radius: 30px;
+	font-size: 0.9rem;
+	margin-bottom: 8px;
+}
+
+.team-member h5 {
+	margin: 0;
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.team-member p {
+	font-size: 0.95rem;
+	color: #555;
+}
+
+.team-member.left {
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 40px;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+}
+
+.team-member.right {
+	flex-direction: row-reverse;
+	border-top-left-radius: 40px;
+	border-bottom-left-radius: 40px;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.wave-divider {
+	margin-top: -50px;
+}
+
+.footer-section {
+	background: linear-gradient(to right, #00c9a7, #00a88b);
+	color: white;
+	padding: 80px 0;
+	text-align: center;
+}
+
+.footer-section h2 {
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.footer-section p {
+	font-size: 1.1rem;
+	margin-top: 20px;
+	opacity: 0.9;
+}
 </style>
 </head>
 <body>
-<center>
-<div class="intro-wrapper">
-  <div>
-    <img class="w-100" src="https://i.postimg.cc/Dy7BstrB/logo2.png" 
-         alt="Qly 로고" width="250"><br><br>
-  </div>
-  <h2>
-      QLy는 “일상을 가볍게” 만들기 위해 시작된 팀입니다.<br>
-      우리는 늘 시간에 쫓기고, 해야 할 일은 계속 쌓이는 현대인의 현실 속에서<br>
-      “이 일, 누가 좀 대신 해줬으면 좋겠다”는 간절한 바람에서 출발했습니다.<br>
-      QLy는 단순한 메모 앱도, 일회성 심부름 플랫폼도 아닙니다.<br>
-      우리의 목표는 사용자 개개인의 일상 속 ‘귀찮음’을 줄이는 것,<br>
-      다시 말해, 일과 생각을 정리하고, 대신 처리할 수 있는 구조를 제공하는 것입니다.<br>
-      사용자는 QLy를 통해 크고 작은 문제를 의뢰할 수 있으며,<br>
-      우리는 그 요청들을 분석하고, 빠르게 대응하거나 연결하고,<br>
-      때로는 유사한 문제를 겪는 다른 사용자들과 연결해 새로운 해결을 만들어냅니다.<br>
-      기술은 사람의 시간을 아껴야 한다고 믿습니다.<br>
-      그래서 우리는 단순한 기능 개발을 넘어,<br>
-      사람의 행동을 이해하고, 문제 해결을 위한 흐름을 설계하는 데 집중합니다.<br>
-      아직은 작은 팀이고, 시작도 작았습니다.<br>
-      하지만 우리는 ‘시간을 아껴주는 서비스’ 라는 큰 가치를 중심에 두고,<br>
-      사용자에게 진짜 도움이 되는 플랫폼을 만들기 위해 한 걸음씩 나아가고 있습니다.<br>
-      일상 속 문제를 가볍게,<br>
-      복잡한 세상과 당신 사이를 쉽게.<br>
-      그것이 우리가 QLy를 만들고 운영하는 이유입니다.<br>
-      
 
-    <span style="color: #00A86B; font-weight: bold;">QLY</span> — '의뢰’ 한 번이면, 일상이 훨씬 가벼워집니다.
-  </h2>
-</div>
-</center>
+	<!-- ✅ 히어로 배너 -->
+	<section class="hero-section">
+		<div class="container-fixed">
+			<h1>OUR TEAM</h1>
+			<p>
+				QLY는 “누구나 요청하고, 누구나 도와주는” 생활 퀘스트 플랫폼입니다.<br> 다양한 전문성과 따뜻한 협업을
+				통해, 더 나은 일상을 함께 만듭니다.
+			</p>
+		</div>
+	</section>
+
+<!-- ✅ 팀장 영역 -->
+<section class="team-section">
+  <div class="container-fixed">
+    <div class="d-flex justify-content-center mb-5">
+      <div class="team-leader">
+        <img src="https://i.postimg.cc/9fZSgvgP/Kakao-Talk-20250626-171806231.jpg" alt="팀장">
+        <div>
+          <div class="badge-bubble">팀장</div>
+          <h5>김희상</h5>
+          <p>
+            <strong>Product Manager</strong><br>
+            사용자 중심의 전략 기획과 로드맵 설계를 담당합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+	<!-- ✅ 팀원 지그재그 -->
+	<section class="team-section">
+		<div class="container-fixed">
+
+			<!-- 팀원 1 -->
+			<div class="d-flex justify-content-start mb-5">
+				<div class="team-member left">
+					<img src="https://i.postimg.cc/XYDsLGw7/user2.png"
+						alt="UX Designer">
+					<div>
+						<div class="badge-bubble">UX 설계</div>
+						<h5>조형진</h5>
+						<p>
+							<strong>UX Designer</strong><br> 문제 해결 중심의 UX 설계와 사용자 흐름
+							최적화를 맡습니다.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 팀원 2 -->
+			<div class="d-flex justify-content-end mb-5">
+				<div class="team-member right">
+					<img src="https://i.postimg.cc/sg2b6Z8j/user3.png"
+						alt="Frontend Engineer">
+					<div>
+						<div class="badge-bubble">프론트엔드</div>
+						<h5>정종일</h5>
+						<p>
+							<strong>Frontend Engineer</strong><br> React 기반 인터페이스 구현과
+							사용자 경험 개선을 담당합니다.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 팀원 3 -->
+			<div class="d-flex justify-content-start mb-5">
+				<div class="team-member left">
+					<img src="https://i.postimg.cc/4xNgRMHk/user4.png"
+						alt="Backend Engineer">
+					<div>
+						<div class="badge-bubble">백엔드</div>
+						<h5>박윤재</h5>
+						<p>
+							<strong>Backend Engineer</strong><br> API 설계 및 서버 로직 구현, 데이터
+							흐름 관리를 담당합니다.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 팀원 4 -->
+			<div class="d-flex justify-content-end mb-5">
+				<div class="team-member right">
+					<img src="https://i.postimg.cc/dtdr1qVs/user5.png"
+						alt="Marketing & Strategy">
+					<div>
+						<div class="badge-bubble">마케팅</div>
+						<h5>김성진</h5>
+						<p>
+							<strong>Marketing & Strategy</strong><br> 콘텐츠 기획과 서비스 브랜딩,
+							커뮤니케이션 전략을 이끕니다.
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<!-- ✅ 물결형 분할 -->
+	<div class="wave-divider">
+		<svg viewBox="0 0 1440 150" preserveAspectRatio="none"
+			style="display: block; width: 100%; height: 100px;">
+      <path fill="#00c9a7" fill-opacity="1"
+				d="M0,64L60,58.7C120,53,240,43,360,53.3C480,64,600,96,720,112C840,128,960,128,1080,117.3C1200,107,1320,85,1380,74.7L1440,64L1440,160L1380,160C1320,160,1200,160,1080,160C960,160,840,160,720,160C600,160,480,160,360,160C240,160,120,160,60,160L0,160Z">
+      </path>
+    </svg>
+	</div>
+
+	<!-- ✅ 브랜드 철학 -->
+	<section class="footer-section">
+		<div class="container-fixed">
+			<h2>우리가 만드는 가치</h2>
+			<p>모두의 일상 속, 요청과 도움이 자연스럽게 오가는 세상을 함께 만듭니다.</p>
+		</div>
+	</section>
+
 </body>
 </html>
