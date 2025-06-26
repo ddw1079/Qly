@@ -1,0 +1,237 @@
+-- # 1. 기본 유저 및 권한 관련 테이블
+
+
+CREATE TABLE USERS (
+
+    USER_ID        NUMBER PRIMARY KEY,
+
+    USERNAME       VARCHAR2(50) NOT NULL,
+
+    PASSWORD       VARCHAR2(100),
+
+    PHONE          VARCHAR2(20),
+
+    EMAIL          VARCHAR2(100),
+
+    ADDRESS        VARCHAR2(200),
+
+    JOIN_DATE      DATE DEFAULT SYSDATE,
+
+    USER_TYPE      VARCHAR2(20),
+
+    TOTAL_TOKENS   NUMBER DEFAULT 0,
+
+    LAST_LOGIN     DATE,
+
+    LAST_ACTIVE    DATE
+
+);
+
+
+
+-- # 2. 퀘스트 관련 테이블
+
+
+CREATE TABLE QUESTS (
+
+    QUEST_ID        NUMBER PRIMARY KEY,
+
+    USER_ID         NUMBER,
+
+    TITLE           VARCHAR2(200) NOT NULL,
+
+    CATEGORY        VARCHAR2(100),
+
+    CONTENT         CLOB,
+
+    PHOTO_PATH      VARCHAR2(200),
+
+    STATUS          VARCHAR2(20) CHECK (STATUS IN ('대기', '진행중', '완료')),
+
+    PROGRESS        NUMBER(3),
+
+    LATITUDE        NUMBER(9,6),
+
+    LONGITUDE       NUMBER(9,6),
+
+    ADDRESS         VARCHAR2(200),
+
+    LOCATION        VARCHAR2(100),
+
+    START_DATE      DATE,
+
+    END_DATE        DATE,
+
+    CREATED_AT      DATE DEFAULT SYSDATE,
+
+    VIEW_COUNT      NUMBER DEFAULT 0,
+
+    REWARD_TOKENS   NUMBER DEFAULT 0,
+
+    REG_DATE        DATE DEFAULT SYSDATE,
+
+    CONSTRAINT FK_QUEST_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
+
+);
+
+
+-- # 3. 퀘스트 할 일 Task 목록
+
+
+CREATE TABLE QUEST_TASK (
+
+    TASK_ID      NUMBER PRIMARY KEY,
+
+    QUEST_ID     NUMBER,
+
+    DESCRIPTION  CLOB,
+
+    IS_CHECKED   CHAR(1) CHECK (IS_CHECKED IN ('0', '1')),
+
+    CONSTRAINT FK_TASK_QUEST FOREIGN KEY (QUEST_ID) REFERENCES QUESTS(QUEST_ID)
+
+);
+
+
+
+-- # 4. 퀘스트 신청 / 진행 테이블
+
+
+CREATE TABLE QUEST_APPLICATION (
+
+    APPLICATION_ID  NUMBER PRIMARY KEY,
+
+    QUEST_ID        NUMBER,
+
+    USER_ID         NUMBER,
+
+    APPLIED_AT      DATE DEFAULT SYSDATE,
+    
+    REWARD_GIVEN CHAR(1) DEFAULT 'N',  --  QUEST_APPLICATION테이블의 새로운컬럼입니다 보상받았는지 여부판단할려고 만들었어요
+
+    CONSTRAINT FK_APP_QUEST FOREIGN KEY (QUEST_ID) REFERENCES QUESTS(QUEST_ID),
+
+    CONSTRAINT FK_APP_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
+
+);
+
+
+-- # 5. 코인 내역 테이블
+
+CREATE TABLE COIN_HISTORY (
+
+
+    HISTORY_ID     NUMBER PRIMARY KEY,
+
+    USER_ID        NUMBER,
+
+    TRANSACTION_DATE DATE DEFAULT SYSDATE,
+
+    AMOUNT         NUMBER, -- 양수/음수
+
+    REMAIN_COIN    NUMBER, -- 현재 잔액
+
+    TYPE           VARCHAR2(100), -- ex: '퀘스트 요청', '보상', '충전'
+
+    QUEST_ID       NUMBER,
+
+    CONSTRAINT FK_COIN_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID),
+
+    CONSTRAINT FK_COIN_QUEST FOREIGN KEY (QUEST_ID) REFERENCES QUESTS(QUEST_ID)
+
+);
+
+
+-- # 6  결제 기록 테이블
+
+
+CREATE TABLE PAYMENT_HISTORY (
+
+    PAYMENT_HISTORY_ID NUMBER PRIMARY KEY,
+
+    USER_ID            NUMBER,
+
+    PAYMENT_DATE       DATE DEFAULT SYSDATE,
+
+    AMOUNT             NUMBER,
+
+    REMAIN_COIN        NUMBER, -- 현재 잔액
+
+    TYPE               VARCHAR2(100), -- ex: '충전', '출금'
+
+    STATUS             VARCHAR2(50) DEFAULT '성공',
+
+    BANK_NAME          VARCHAR2(100),  -- 은행명 
+
+    ACCOUNT_NUMBER     VARCHAR2(100),  -- 계좌번호 
+
+    CONSTRAINT FK_PAYMENT_HISTORY_USER FOREIGN KEY (USER_ID) REFERENCES
+
+    USERS(USER_ID)
+
+);
+
+
+
+
+-- # 7. 사용자 문의 테이블
+
+
+CREATE TABLE QUESTIONS (
+
+    QUESTION_ID    VARCHAR2(20) PRIMARY KEY,
+
+    TYPE           VARCHAR2(50) NOT NULL,
+
+    TITLE          VARCHAR2(200) NOT NULL,
+
+    USER_ID        NUMBER NOT NULL,
+
+    CREATED_DATE   DATE DEFAULT SYSDATE,
+
+    ANSWER_STATUS  VARCHAR2(20) CHECK (ANSWER_STATUS IN ('미답변', '답변완료')),
+
+    ANSWER_CONTENT CLOB,
+
+    QUESTION_CONTENT CLOB,
+
+    CONSTRAINT FK_QUESTION_USER FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID)
+
+);
+
+-- # A. 각 테이블에 대한 Sequence 생성
+--------------------------------------------------------
+--  DDL for Sequence COIN_HISTORY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."COIN_HISTORY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence PAYMENT_HISTORY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."PAYMENT_HISTORY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 101 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence QUEST_APPLICATION_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."QUEST_APPLICATION_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence QUEST_TASK_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."QUEST_TASK_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 20 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence QUESTS_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."QUESTS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 8 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence USER_ID_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."USER_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence USERS_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "QLY"."USERS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 7 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
