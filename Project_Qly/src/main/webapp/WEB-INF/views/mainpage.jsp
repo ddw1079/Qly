@@ -313,24 +313,7 @@
 			</div>
 		</div>
 	</div>
-
-	<footer class="footer-bar mt-auto">
-		<div>
-			<strong>이용안내</strong><br> 자주 묻는 질문<br> 이용약관<br>
-			개인정보처리방침
-		</div>
-		<div>
-			<strong>이용 혜택</strong><br> 광고 없이 깔끔한 이용<br> 팝업 없음 / 무료 이용<br>
-			커뮤니티 바로가기
-		</div>
-		<div>
-			<strong>회사 정보</strong><br> 주소: 서울시 어딘가<br> FAX:
-			02-1234-5678<br> EMAIL: contact@qly.com
-		</div>
-		<div>
-			<strong>SNS</strong><br> 인스타그램<br> 유튜브<br> 페이스북
-		</div>
-	</footer>
+	<jsp:include page="/template/footer.jsp" />
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
