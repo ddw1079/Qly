@@ -38,10 +38,12 @@ public class QuestController {
 	private QlyService qlyService;
 
 	@RequestMapping(value = "/list.do")
-	public String questList(Model model) {
+	public String questList(Model model, @RequestParam(required = false) String keyword) {
 		List<QuestDto> questList = questService.getAllQuests();
+		
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("questList", questList);
-
+		
 		return "quest/QuestAllList";
 	}
 

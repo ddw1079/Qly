@@ -42,13 +42,15 @@
 	    </div>
 	  </div>
 	</div>
+	<form method="get" action="${pageContext.request.contextPath}/quest/list.do">
+		<div class="search-bar d-flex flex-wrap gap-2 justify-content-center align-items-center p-2">
+		<div class="flex-grow-1" style="min-width: 240px;">
+			<input type="text" id="searchInput" class="form-control w-100" placeholder="검색어 입력" />
+		</div>
+		<button type="submit" class="btn search-btn">검색</button>
+		</div>
+	</form>
 
-	<div class="search-bar d-flex flex-wrap gap-2 justify-content-center align-items-center p-2">
-	  <div class="flex-grow-1" style="min-width: 240px;">
-	    <input type="text" id="searchInput" class="form-control w-100" placeholder="검색어 입력" />
-	  </div>
-	  <button class="btn search-btn">검색</button>
-	</div>
 	
 	<div class="d-flex justify-content-center mt-2 px-3">
 	  <div class="w-100" id="suggestedTags" style="max-width: 1000px;">
@@ -253,12 +255,12 @@
 					<strong>지역 선택</strong>
 				</div>
 				<div style="padding: 10px;">
-					<div class="region-select-box">
+					<%-- <div class="region-select-box">
 					  	<div class="title">지역 선택</div>
 					  	<div class="body">
 						    <!-- select 요소들 -->
 					  	</div>
-					</div>
+					</div> --%>
 					<select id="regionSelect" class="form-select mb-2">
 						<option value="">-- 시/도 선택 --</option>
 						<option value="서울시">서울시</option>
