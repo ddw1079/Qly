@@ -7,28 +7,28 @@
 
     <!-- 잔액 정보 조회 -->
     <select id="getExchangeInfo" resultType="com.qly.dto.ExchangeDto" parameterType="int">
-        SELECT
+<!--         SELECT
             USER_ID AS userId,
             CURRENT_BALANCE AS currentBalance,
             TOTAL_CHARGED AS totalCharged,
             TOTAL_WITHDRAWN AS totalWithdrawn
         FROM PAYMENTS
-        WHERE USER_ID = #{userId}
+        WHERE USER_ID = #{userId} -->
     </select>
 
     <!-- 잔액 차감 -->
-    <update id="withdrawAmount" parameterType="map">
-        UPDATE PAYMENTS
+     <update id="withdrawAmount" parameterType="map">
+<!--        UPDATE PAYMENTS
         SET 
             CURRENT_BALANCE = CURRENT_BALANCE - #{amount},
             TOTAL_WITHDRAWN = TOTAL_WITHDRAWN + #{amount},
             LAST_WITHDRAW_DATE = SYSDATE
-        WHERE USER_ID = #{userId}
+        WHERE USER_ID = #{userId} -->
     </update>
 
     <!-- 출금 기록 삽입 -->
     <insert id="insertWithdrawHistory" parameterType="map">
-        INSERT INTO PAYMENT_HISTORY (
+<!--         INSERT INTO PAYMENT_HISTORY (
             PAYMENT_HISTORY_ID,
             USER_ID,
             PAYMENT_DATE,
@@ -44,7 +44,7 @@
             #{remain},
             #{type},
             '성공'
-        )
+        ) -->
     </insert>
 
     <!-- 사용자 비밀번호 조회 -->

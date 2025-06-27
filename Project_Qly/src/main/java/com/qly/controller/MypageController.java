@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.qly.dto.ExchangeDto;
 import com.qly.dto.QuestDto;
 import com.qly.dto.QuestTaskDto;
 import com.qly.dto.UserDto;
+import com.qly.service.ExchangeService;
 import com.qly.service.QlyService;
 import com.qly.service.QuestService;
 
@@ -325,9 +327,15 @@ public class MypageController {
 		return "redirect:/mypage/questprogress.do";
 	}
 	
+    
 	@RequestMapping("/coinExchange.do")
-	public String coinExchange(HttpSession session,
-			RedirectAttributes redirectAttributes,HttpServletRequest request) {
+	public String coinExchange(HttpSession session, HttpServletRequest request, Model model) {
+		
+        UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return "redirect:/login/loginForm";
+        }
 		
 		request.setAttribute("pageParam", "mypage/contents/exchangemain.jsp");
 		return "/mypage/propile_Quest/user_layout";
