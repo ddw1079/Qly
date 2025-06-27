@@ -239,7 +239,7 @@ body {
 									<button type="submit" id="coin-btn-${q.questId}"
 										class="btn ${q.status eq '완료' ? 'btn-secondary' : 'btn-success'} btn-sm"
 										${percent ne 100 or q.status eq '완료' ? 'disabled' : ''}>
-										${q.status eq '완료' ? '지급 완료' : '코인 지급'}</button>
+										${q.status eq '완료' ? '퀘스트 완료 전' : '퀘스트 완료! 코인 받기'}</button>
 								</div>
 							</form>
 
