@@ -174,7 +174,7 @@
     </div>
 
    <div class="status-link">
-  <a href="../coinpage/coin_history.jsp">최근 출금 상태 보기 ></a>
+  <a href="<c:url value='/payments/history.do' />">최근 출금 상태 보기 ></a>
 </div>
 
 
