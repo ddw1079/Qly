@@ -220,8 +220,8 @@ modal.addEventListener("hidden.bs.modal", () => {
 						return;
 					}
 					document.charset = "UTF-8";
-					document.getElementById("chargeCoinForm").submit(); // 수동 제출
-/*
+					// document.getElementById("chargeCoinForm").submit(); // 수동 제출
+					
 					const IMP = window.IMP;
 					IMP.init('imp15327364');
 					IMP.request_pay({
@@ -242,7 +242,6 @@ modal.addEventListener("hidden.bs.modal", () => {
 							alert("결제 실패: " + rsp.error_msg);
 						}
 					});
-*/
 				});
 
 			</script>
