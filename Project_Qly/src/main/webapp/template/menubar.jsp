@@ -184,15 +184,34 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test="${empty loginUser}">
-					<a href="<c:url value='/login/loginForm' />">로그인</a>
-					<a href="<c:url value='/qly_User.jsp' />">회원가입</a>
-				</c:when>
-				<c:otherwise>
-					<a href="<c:url value='/mypage/user.do' />">마이페이지</a>
-					<a href="<c:url value='/login/logout.do' />">로그아웃</a>
-				</c:otherwise>
-			</c:choose>
+						<c:when test="${empty loginUser}">
+							<button class="btn w-100 mt-1"
+								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+								onclick="location.href='<c:url value="/login/loginForm" />'">로그인</button>
+							<button class="btn w-100 mt-1"
+								style="background-color: #2c3e50; color: white;"
+								onclick="location.href='<c:url value="/qly_User.jsp?page=qly_User.jsp" />'">회원가입</button>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${loginUser.userType eq '관리자'}">
+									<button class="btn w-100 mt-1"
+										style="background-color: #2c3e50; color: white;"
+										onclick="location.href='<c:url value="/admin/memberList.do" />'">관리자
+										페이지</button>
+								</c:when>
+								<c:otherwise>
+									<button class="btn w-100 mt-1"
+										style="background-color: #2c3e50; color: white;"
+										onclick="location.href='<c:url value="/mypage/user.do" />'">마이페이지</button>
+
+								</c:otherwise>
+							</c:choose>
+							<button class="btn w-100 mt-1"
+								style="background-color: #2c3e50; color: white; font-weight: bold; font-size: 14px; border-radius: 8px;"
+								onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
 		</div>
 	</div>
 </div>
