@@ -104,9 +104,7 @@
     <button id="tab-notice" onclick="showTab('notice')">공지사항</button>
     <button id="tab-faq" onclick="showTab('faq')">자주 묻는 질문</button>
     <button id="tab-inquiry" onclick="showTab('inquiry')">1:1 문의</button>
-    <a href="${pageContext.request.contextPath}/inquiry/list.do#my">
-  <button id="tab-my">내 문의 보기</button>
-</a>
+    <button id="tab-my" onclick="showTab('my')">내 문의 보기</button>
   </div>
 
   <!-- ✅ 공지사항 -->
@@ -215,21 +213,17 @@
 <!-- ✅ 탭 동작 스크립트 -->
 <script>
 function showTab(tabId) {
-  // 버튼 클래스 처리
   document.querySelectorAll(".tab-buttons button").forEach(btn => btn.classList.remove("active"));
   const tabBtn = document.getElementById("tab-" + tabId);
   if (tabBtn) tabBtn.classList.add("active");
 
-  // 콘텐츠 토글 처리
   document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
   const tabContent = document.getElementById(tabId);
   if (tabContent) tabContent.classList.add("active");
 
-  // 주소 해시 변경
   history.replaceState(null, null, "#" + tabId);
 }
 
-// 페이지 로드시 탭 활성화
 window.addEventListener("DOMContentLoaded", function () {
   const hash = window.location.hash.substring(1);
   if (hash) {
