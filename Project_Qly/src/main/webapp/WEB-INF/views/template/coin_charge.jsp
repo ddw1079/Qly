@@ -1,9 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
 <!-- CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
 /* 모달 디자인 */
@@ -82,7 +86,9 @@
 </style>
 
 <%-- 세션의 유저 데이터를 사용하기 위한 구문 --%>
-<% 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser"); %>
+<%
+com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+%>
 <script>
 const modal = document.getElementById("chargeCoinModal");
 modal.addEventListener("hidden.bs.modal", () => {
@@ -90,14 +96,14 @@ modal.addEventListener("hidden.bs.modal", () => {
 });
 </script>
 <!-- 💰 코인 충전 모달 -->
-<div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" aria-labelledby="chargeCoinModalLabel" aria-hidden="true">
+<div class="modal fade" id="chargeCoinModal" data-bs-backdrop="static"
+	tabindex="-1" aria-hidden="true" aria-labelledby="chargeCoinModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
 			<!-- 상단 제목 -->
-			<div class="coin-header-top">
-			 QLY 코인 충전
-			</div>
+			<div class="coin-header-top">QLY 코인 충전</div>
 
 			<!-- 인사말 + 설명 -->
 			<div class="coin-header">
@@ -111,26 +117,33 @@ modal.addEventListener("hidden.bs.modal", () => {
 			</div>
 
 			<!-- 충전 폼 -->
-			<form id="chargeCoinForm" method="post" action="${pageContext.request.contextPath}/payments/success" accept-charset="UTF-8">
+			<form id="chargeCoinForm" method="post"
+				action="${pageContext.request.contextPath}/payments/success"
+				accept-charset="UTF-8">
 				<div class="px-4 pb-4">
 					<!-- 충전 수 -->
 					<div class="input-group mb-2">
-						<label class="input-group-text">충전 수</label>
-						<input type="number" class="form-control" id="coinAmount" name="coinAmount" min="0" value="0"
-                        oninput="updateTotal()" required>
-						<span class="input-group-text">코인</span>
+						<label class="input-group-text">충전 수</label> <input type="number"
+							class="form-control" id="coinAmount" name="coinAmount" min="0"
+							value="0" oninput="updateTotal()" required> <span
+							class="input-group-text">코인</span>
 					</div>
 
 					<!-- 빠른 선택 버튼 -->
 					<div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
-						<button type="button" class="btn btn-outline-success" onclick="increaseCoin(1000)">+1천</button>
-						<button type="button" class="btn btn-outline-success" onclick="increaseCoin(5000)">+5천</button>
-						<button type="button" class="btn btn-outline-success" onclick="increaseCoin(10000)">+1만</button>
-						<button type="button" class="btn btn-outline-success" onclick="increaseCoin(100000)">+10만</button>
+						<button type="button" class="btn btn-outline-success"
+							onclick="increaseCoin(1000)">+1천</button>
+						<button type="button" class="btn btn-outline-success"
+							onclick="increaseCoin(5000)">+5천</button>
+						<button type="button" class="btn btn-outline-success"
+							onclick="increaseCoin(10000)">+1만</button>
+						<button type="button" class="btn btn-outline-success"
+							onclick="increaseCoin(100000)">+10만</button>
 					</div>
 
 					<!-- 결제 방식 -->
-					<select class="form-select mb-3" id="paymentMethod" name="paymentMethod" required>
+					<select class="form-select mb-3" id="paymentMethod"
+						name="paymentMethod" required>
 						<option value="">결제 방법 선택</option>
 						<option value="kakaopay">카카오페이</option>
 						<option value="tosspay">토스페이</option>
@@ -138,8 +151,9 @@ modal.addEventListener("hidden.bs.modal", () => {
 
 					<!-- 약관 -->
 					<div class="mb-2 d-flex justify-content-between align-items-center">
-						<small class="text-muted">이용 약관에 동의합니다</small>
-						<a href="/template/termsAndConditions.jsp" target="_blank" class="text-decoration-none">약관 보기</a>
+						<small class="text-muted">이용 약관에 동의합니다</small> <a
+							href="/template/termsAndConditions.jsp" target="_blank"
+							class="text-decoration-none">약관 보기</a>
 					</div>
 
 					<!-- 총 결제 금액 -->
@@ -149,7 +163,8 @@ modal.addEventListener("hidden.bs.modal", () => {
 
 					<!-- 버튼 -->
 					<button type="submit" id="submitBtn" class="btn-primary-mint">충전하기</button>
-					<button type="button" class="btn-secondary-mint" data-bs-dismiss="modal">다음에 할게요</button>
+					<button type="button" class="btn-secondary-mint"
+						data-bs-dismiss="modal">다음에 할게요</button>
 				</div>
 			</form>
 
