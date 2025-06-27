@@ -29,6 +29,43 @@ body {
 	font-family: 'Segoe UI', sans-serif;
 }
 
+.section-container {
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+	margin-bottom: 40px;
+	padding-left: 20px;
+	position: relative;
+}
+
+.section-container::before {
+	content: "";
+	width: 5px;
+	height: 100%;
+	background-color: #28c2a0; /* 민트색 세로선 */
+	border-radius: 10px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.section-title {
+	text-align: left;
+}
+
+.section-title h3 {
+	color: #004d43;
+	font-weight: 900;
+	font-size: 1.8rem;
+	margin-bottom: 6px;
+}
+
+.section-title .subtitle {
+	color: #00796b;
+	font-size: 0.95rem;
+	margin-bottom: 0;
+}
+
 .calendar-box {
 	background-color: #ffffff;
 	border-radius: 12px;
@@ -99,17 +136,12 @@ body {
 	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
 	%>
 
-	<div class="container-fluid mt-4">
-		<div class="d-flex justify-content-between align-items-center mb-3">
-			<h4 class="fw-bold">퀘스트 목록</h4>
-			<div class="d-flex align-items-center gap-3">
-				<span class="fw-semibold"> <%=loginUser != null ? loginUser.getUsername() : "게스트"%>님
-					(<%=loginUser != null ? loginUser.getUserType() : "비회원"%> 모드)
-				</span>
-				<button class="btn btn-dark btn-sm"
-					 onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
-				<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-					alt="프로필" width="40" style="border-radius: 50%;" />
+	<div class="content-wrapper">
+
+		<div class="section-container">
+			<div class="section-title">
+				<h3>나의 퀘스트 목록</h3>
+				<p class="subtitle">내 퀘스트 리스트를 확인하세요</p>
 			</div>
 		</div>
 
@@ -173,7 +205,8 @@ body {
 							<button class="btn btn-outline-success btn-sm"
 								<%-- onclick="location.href='${pageContext.request.contextPath}/quest/userparticularForm.do?questId=${quest.questId}'">
 								상세보기</button> --%>
-								onclick="location.href='${pageContext.request.contextPath}/quest/userparticularForm.do?questId=${quest.questId}'">상세 보기</button>
+								onclick="location.href='${pageContext.request.contextPath}/quest/userparticularForm.do?questId=${quest.questId}'">상세
+								보기</button>
 						</div>
 
 					</div>
@@ -216,6 +249,5 @@ body {
     });
   }
 </script>
-
 </body>
 </html>

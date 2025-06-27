@@ -56,14 +56,6 @@ h3 {
 	<!-- 상단 -->
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<h4 class="fw-bold">개인정보 수정</h4>
-		<div class="d-flex align-items-center gap-3">
-			<span class="fw-semibold"><%= loginUser != null ? loginUser.getUsername() : "게스트" %>님
-				(<%= loginUser != null ? loginUser.getUserType() : "비회원" %> 모드)
-			</span>
-			<button class="btn btn-dark btn-sm" onclick="location.href='/login/logout.do'">로그아웃</button>
-			<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-				alt="프로필" width="40" style="border-radius: 50%;">
-		</div>
 	</div>
 
 	<!-- 프로필 + 수정 폼 -->
