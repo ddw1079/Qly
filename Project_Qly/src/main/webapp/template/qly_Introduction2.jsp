@@ -266,6 +266,7 @@ body {
 			<p>모두의 일상 속, 요청과 도움이 자연스럽게 오가는 세상을 함께 만듭니다.</p>
 		</div>
 	</section>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

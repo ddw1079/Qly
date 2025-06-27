@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/template/menubar.jsp" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -59,12 +60,20 @@ body {
 }
 
 .hero-img {
-	position: relative;
-	width: 440px;
-	height: 440px;
+	width: 360px;
+	height: 360px;
+	border-radius: 50%;
+	background: linear-gradient(145deg, #6bc1c1, #89d5e0);
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	box-shadow: 0 8px 24px rgba(107, 193, 193, 0.25);
+}
+
+.hero-img img {
+	width: 80%;
+	height: auto;
+	border-radius: 50%;
 }
 
 .logo-gradient-glow {
@@ -89,13 +98,6 @@ body {
 	z-index: 1;
 	position: relative;
 	box-shadow: 0 0 12px rgba(0, 168, 139, 0.1);
-}
-
-.hero-img img {
-	width: 400px; /* 가로 크기만 지정 */
-	height: auto; /* 세로는 비율 유지 */
-	object-fit: contain; /* 이미지 비율을 유지하며 박스에 맞춤 */
-	z-index: 2;
 }
 
 .mint {
@@ -691,7 +693,17 @@ body {
   });
 </script>
 
-
+	<c:if test="${not empty loginAlert}">
+		<script>
+        alert("${loginAlert}");
+    </script>
+	</c:if>
+	
+	<c:if test="${not empty error}">
+		<script>
+        alert("${error}");
+    </script>
+	</c:if>
 </body>
 </html>
 

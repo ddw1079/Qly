@@ -40,21 +40,28 @@ public class QuestController {
 	@RequestMapping(value = "/list.do")
 	public String questList(Model model, @RequestParam(required = false) String keyword) {
 		List<QuestDto> questList = questService.getAllQuests();
-		
+
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("questList", questList);
-		
+
 		return "quest/QuestAllList";
 	}
 
 	// 등록
 	@RequestMapping("/registerForm.do")
-	public String showQuestRegisterForm(HttpSession session, RedirectAttributes redirectAttr) {
-
+	public String showQuestRegisterForm(HttpSession session, HttpServletRequest request,
+			RedirectAttributes redirectAttr) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 
 		if (loginUser == null) {
-			return "redirect:/user/login.do";
+			String referer = request.getHeader("Referer");
+			if (referer != null && referer.contains("/mainpage")) {
+				// 메인페이지에서 온 경우: 경고창 없이 리다이렉트
+				return "redirect:/mainpage";
+			}
+			// 그 외 페이지에서 온 경우: 경고창 띄우기
+			redirectAttr.addFlashAttribute("loginAlert", "로그인 후 이용 가능합니다.");
+			return "redirect:/mainpage";
 		}
 
 		if ("해결사".equals(loginUser.getUserType())) {
