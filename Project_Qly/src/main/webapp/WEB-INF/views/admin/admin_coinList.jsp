@@ -71,7 +71,7 @@ DataTables 기반 테이블	회원별 Qubit 보유, 충전/환급 내역 표시 
 	<h3>코인 관리 페이지</h3>
 	<div style="display: flex; align-items: center; gap: 10px;">
 		<span style="font-weight: 500;">admin님 (관리자 모드)</span>
-		<button class="btn btn-dark btn-sm">로그아웃</button>
+		<button class="btn btn-dark btn-sm" onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 		<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
 			alt="프로필" width="50">
 	</div>

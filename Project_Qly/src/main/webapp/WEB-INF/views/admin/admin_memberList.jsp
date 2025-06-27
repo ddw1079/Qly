@@ -75,7 +75,7 @@ body {
 		<h3>회원 관리 페이지</h3>
 		<div class="d-flex align-items-center gap-2">
 			<span class="fw-medium">admin님 (관리자 모드)</span>
-			<button class="btn btn-dark btn-sm">로그아웃</button>
+			<button class="btn btn-dark btn-sm" onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 			<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
 				alt="프로필" width="50">
 		</div>

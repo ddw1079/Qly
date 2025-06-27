@@ -8,7 +8,13 @@
 <title><title>\u퀘스트 히스토리</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffded417f5d8a057e299cf7acb7c310a&autoload=false&libraries=services"></script>
+
 <style>
+.map-placeholder {
+	width: 100%;
+	height: 200px;
+}
 body {
 	background-color: #f1f2f6;
 	font-family: 'Segoe UI', sans-serif;
@@ -133,8 +139,8 @@ h3.title {
 						</button>
 					</div>
 				</form>
-
-				<div class="map-placeholder mt-2">위치: ${q.address} (${q.latitude}, ${q.longitude})</div>
+                 <h5 class="card-title">위치: ${q.address}&nbsp;${q.location}</h5>
+				<div id="map-${q.questId}" class="map-placeholder"></div>
 			</div>
 		</div>
 	</c:forEach>
@@ -188,6 +194,30 @@ $(document).ready(function () {
       coinBtn.prop("disabled", true);
     }
   });
+});
+</script>
+<script>
+kakao.maps.load(function () {
+  <c:forEach var="quest" items="${questList}">
+    (function() {
+      const lat = parseFloat("${quest.latitude}");
+      const lng = parseFloat("${quest.longitude}");
+      const mapId = "map-${quest.questId}";
+
+      if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+        const container = document.getElementById(mapId);
+        const map = new kakao.maps.Map(container, {
+          center: new kakao.maps.LatLng(lat, lng),
+          level: 3
+        });
+        new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(lat, lng),
+          title: "${quest.title}"
+        });
+      }
+    })();
+  </c:forEach>
 });
 </script>
 

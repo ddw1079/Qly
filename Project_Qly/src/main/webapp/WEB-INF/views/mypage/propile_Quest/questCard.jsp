@@ -107,7 +107,7 @@ body {
 					(<%=loginUser != null ? loginUser.getUserType() : "비회원"%> 모드)
 				</span>
 				<button class="btn btn-dark btn-sm"
-					onclick="location.href='/login/logout.do'">로그아웃</button>
+					 onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 				<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
 					alt="프로필" width="40" style="border-radius: 50%;" />
 			</div>
