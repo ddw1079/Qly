@@ -38,6 +38,7 @@
 		CATEGORY,
 		PHOTO_PATH AS photoPath,
 		STATUS,
+		CONTENT AS content,
 		REG_DATE AS
 		regDate,
 		(SELECT
@@ -125,6 +126,7 @@
 		QUEST_ID AS questId,
 		TITLE AS title,
 		ADDRESS AS address,
+		LOCATION as location,
 		REWARD_TOKENS AS rewardTokens,
 		PHOTO_PATH AS photoPath,
 		START_DATE AS
