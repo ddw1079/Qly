@@ -299,7 +299,7 @@ body {
 						<p style="font-size: 14px; color: #666;">
 							작은 일이든 큰 일이든<br>간편하게 요청해보세요.
 						</p>
-						<a href="#"
+						<a href="${pageContext.request.contextPath}/quest/registerForm.do"
 							style="display: inline-block; padding: 10px 18px; background-color: #00796b; color: white; border-radius: 30px; font-weight: bold; font-size: 14px; text-decoration: none; transition: background-color 0.3s ease;"
 							onmouseover="this.style.backgroundColor='#005a4f'"
 							onmouseout="this.style.backgroundColor='#00796b'"> 지금 요청하기 →
@@ -313,7 +313,7 @@ body {
 						<p style="font-size: 14px; color: #666;">
 							내 재능을 필요한 곳에<br>바로 연결하세요.
 						</p>
-						<a href="#"
+						<a href="${pageContext.request.contextPath}/quest/list.do"
 							style="display: inline-block; padding: 10px 18px; background-color: #00796b; color: white; border-radius: 30px; font-weight: bold; font-size: 14px; text-decoration: none; transition: background-color 0.3s ease;"
 							onmouseover="this.style.backgroundColor='#005a4f'"
 							onmouseout="this.style.backgroundColor='#00796b'"> 도와주기 시작하기
@@ -698,7 +698,7 @@ body {
         alert("${loginAlert}");
     </script>
 	</c:if>
-	
+
 	<c:if test="${not empty error}">
 		<script>
         alert("${error}");
