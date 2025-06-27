@@ -279,7 +279,7 @@ input:focus, textarea:focus {
 						<label class="section-label">의뢰내용</label>
 						<div id="taskList">
 							<div class="task-item">
-								<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" />
+								<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" required />
 								<button type="button" class="icon-btn" onclick="addTask()">
 									<i class="fas fa-plus"></i>
 								</button>
@@ -294,7 +294,7 @@ input:focus, textarea:focus {
 						<div class="upload-box">사진 파일을 넣어주세요</div>
 						<div class="file-input-box">
 							<input type="file" name="photo" id="photo" class="file-hidden"
-								onchange="previewFileName(this)"> <label for="photo"
+								onchange="previewFileName(this)" required> <label for="photo"
 								class="file-btn">파일 선택</label> <span id="fileName">선택된 파일
 								없음</span>
 						</div>
@@ -303,31 +303,31 @@ input:focus, textarea:focus {
 
 				<div class="form-group">
 					<label class="section-label">추가 요청사항</label>
-					<textarea name="content" placeholder="추가 요청사항을 적으세요!!!" rows="5"></textarea>
+					<textarea name="content" placeholder="추가 요청사항을 적으세요!!!" rows="5" required></textarea>
 				</div>
 
 				<div class="form-group"
 					style="display: flex; gap: 12px; align-items: center;">
 					<label class="section-label">의뢰 기간</label> <input type="date"
-						name="startDate" required style="width: 180px;" /> <span>~</span>
-					<input type="date" name="endDate" required style="width: 180px;" />
+						name="startDate" required style="width: 180px;" required/> <span>~</span>
+					<input type="date" name="endDate" required style="width: 180px;" required/>
 				</div>
 
 				<div class="form-group" style="display: flex; gap: 20px;">
 					<div style="flex: 1;">
 						<label class="section-label">의뢰 장소</label> <input type="text"
-							name="address" placeholder="구, 군, 시 입력" />
+							name="address" placeholder="구, 군, 시 입력" required/>
 					</div>
 					<div style="flex: 1;">
 						<label class="section-label">상세 장소</label> <input type="text"
-							name="location" placeholder="상세주소" />
+							name="location" placeholder="상세주소" required/>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="section-label">의뢰 가격 (코인)</label>
 					<div class="token-flex">
-						<input type="number" name="rewardTokens" placeholder="예: 100" />
+						<input type="number" name="rewardTokens" placeholder="예: 100" required />
 						<button type="button" class="charge-btn"
 							onclick="showChargeModal()">충전</button>
 						<div class="token-box">

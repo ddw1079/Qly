@@ -70,6 +70,9 @@ public class CoinController {
         }
 		System.out.println("loginUser.getUserId() = " + loginUser.getUserId());
         int currentCoin = coinService.adjustUserCoinByPayment(loginUser.getUserId(), coinAmount, description);
+        
+        loginUser.setTotalTokens(currentCoin);  // 총 토큰을 현재 코인으로 업데이트
+        session.setAttribute("loginUser", loginUser);
 
         System.out.println("결제 완료! 현재 코인: " + currentCoin);
         redirectAttributes.addFlashAttribute("chargeMessage", "충전 완료! 코인 " + coinAmount + "개가 추가되었습니다.");
