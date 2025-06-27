@@ -94,7 +94,9 @@
 <body>
   <div class="withdrawal-container">
     <h2>코인 출금</h2>
-
+	<%
+	com.qly.dto.UserDto loginUser = (com.qly.dto.UserDto) session.getAttribute("loginUser");
+	%>
     <%
       int currentBalance = request.getAttribute("exchange") != null ?
           ((com.qly.dto.ExchangeDto) request.getAttribute("exchange")).getCurrentBalance() : 0;
@@ -103,8 +105,8 @@
     <div class="section">
       <label>잔액</label>
       <div class="balance">
-        <strong id="coin-balance"><%= String.format("%,d", currentBalance) %> 코인</strong>
-        <span id="won-balance">(<%= String.format("%,d", currentBalance * 10) %>원)</span>
+        <strong id="coin-balance"><%=loginUser.getTotalTokens()%></strong>
+        <span id="won-balance">(<%= loginUser.getTotalTokens() * 10 %>원)</span>
       </div>
     </div>
 

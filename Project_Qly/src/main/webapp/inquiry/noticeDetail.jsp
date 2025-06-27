@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="mt-4">
-        <a href="InquiryMain.jsp" class="btn btn-outline-secondary">← 목록으로</a>
+        <a href="${pageContext.request.contextPath}/inquiry/list.do" class="btn btn-outline-secondary">← 목록으로</a>
     </div>
 </div>
 </body>

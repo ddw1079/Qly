@@ -324,5 +324,14 @@ public class MypageController {
 
 		return "redirect:/mypage/questprogress.do";
 	}
+	
+	@RequestMapping("/coinExchange.do")
+	public String coinExchange(HttpSession session,
+			RedirectAttributes redirectAttributes,HttpServletRequest request) {
+		
+		request.setAttribute("pageParam", "mypage/contents/exchangemain.jsp");
+		return "/mypage/propile_Quest/user_layout";
+		
+	}
 
 }
