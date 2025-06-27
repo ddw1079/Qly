@@ -304,8 +304,8 @@
 		q.PROGRESS,
 		q.LATITUDE,
 		q.LONGITUDE,
-		q.ADDRESS,
-		q.LOCATION,
+		q.ADDRESS AS address,
+		q.LOCATION AS location,
 		q.STATUS,
 		q.REWARD_TOKENS AS
 		rewardTokens,

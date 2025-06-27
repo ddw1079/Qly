@@ -96,7 +96,7 @@ body {
 	<h2>사용자 문의 관리</h2>
 	<div class="d-flex align-items-center gap-2">
 		<span>admin님 (관리자 모드)</span>
-		<button class="btn btn-dark btn-sm">로그아웃</button>
+		<button class="btn btn-dark btn-sm" onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 		<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="프로필" width="50">
 	</div>
 </div>
@@ -125,7 +125,7 @@ body {
 	</div>
 </div>
 
-<!-- 문의 내역 테이블 -->
+
 <!-- 문의 내역 테이블 -->
 <div class="card p-4 mb-4">
 <h5 class="section-title">문의 내역</h5>
@@ -158,7 +158,7 @@ body {
 					</c:choose>
 				</td>
 
-				<!-- ✅ 수정된 부분 시작 -->
+				<!-- ✅ 관리자 버튼 활성화 비활성화 부분-->
 				<td>
 				  <button
 				    class="btn btn-sm btn-outline-primary"
@@ -174,7 +174,7 @@ body {
 				    보기
 				  </a>
 				</td>
-				<!-- ✅ 수정된 부분 끝 -->
+				<!-- ✅  끝 -->
 			</tr>
 		</c:forEach>
 	</tbody>

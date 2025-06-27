@@ -81,7 +81,7 @@ body {
 		<h3>퀘스트 관리 페이지</h3>
 		<div style="display: flex; align-items: center; gap: 10px;">
 			<span style="font-weight: 500;">admin님 (관리자 모드)</span>
-			<button class="btn btn-dark btn-sm">로그아웃</button>
+			<button class="btn btn-dark btn-sm" onclick="location.href='<c:url value="/login/logout.do" />'">로그아웃</button>
 			<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
 				alt="관리자 프리플" width="50">
 		</div>
