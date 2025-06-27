@@ -16,83 +16,96 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-/* 생략 없이 전체 유지 */
-.user-panel {
-	background-color: #f9fefc;
-	padding: 12px 20px;
-	border-bottom: 1px solid #dee2e6;
+<
+style> /* ✅ 새 디자인 스타일 추가 */ .user-panel {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(6px);
+	border-bottom: 1px solid #dbe9e7;
+	padding: 12px 32px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .coin-box-lg {
-	padding: 10px 16px;
-	border: 2px solid #41867e;
-	background-color: white;
-	color: #41867e;
-	font-weight: bold;
-	border-radius: 8px;
-	font-size: 16px;
-	white-space: nowrap;
+	background-color: #f2fdfa;
+	color: #20645c;
+	border: 1px solid #bce0db;
+	padding: 8px 14px;
+	font-size: 14px;
+	border-radius: 20px;
 }
 
 .profile-pic {
-	width: 65px;
-	height: 65px;
-	border-radius: 50%;
+	width: 60px;
+	height: 60px;
 	object-fit: cover;
-	border: 2px solid #41867e;
+	border-radius: 50%;
+	border: 2px solid #70b6ad;
 }
 
 .menu-bar {
 	display: flex;
-	background-color: #6db1a9;
-	margin: 0;
-	padding: 0;
+	justify-content: center;
+	background-color: white;
+	border-bottom: 1px solid #e0e0e0;
+	position: sticky;
+	top: 120px;
+	z-index: 999;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
 }
 
 .menu-item {
 	flex: 1;
 	text-align: center;
-	padding: 15px 0;
-	font-weight: bold;
-	font-size: 24px;
-	color: white;
-	cursor: pointer;
-	transition: background-color 0.2s;
+	padding: 16px 0;
+	font-weight: 600;
+	font-size: 18px;
+	color: #255852;
+	border-bottom: 2px solid transparent;
+	transition: all 0.3s;
 }
 
 .menu-item:hover {
-	background-color: #559e96;
+	color: #1d5c52;
+	border-bottom: 2px solid #1d5c52;
+	background-color: #f4fbf9;
 }
 
 .submenu-container {
+	background-color: #fdfefe;
+	border-top: 1px solid #e6f0ee;
+	border-bottom: 1px solid #e6f0ee;
 	display: none;
-	background-color: #fff;
-	border-top: 1px solid #dee2e6;
-	border-bottom: 1px solid #dee2e6;
-	width: 100%;
-	margin: 0;
-	padding: 0;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
 }
 
 .submenu-row {
 	display: flex;
-	margin: 0;
+	text-align: center;
 }
 
 .submenu-cell {
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 0 !important;
+	margin: 0 !important;
 	border-left: 1px solid #dee2e6;
 	border-right: 1px solid #dee2e6;
-	text-align: center;
-	padding: 10px 0;
 }
 
 .submenu-cell a {
-	display: block;
+	width: 100%;
+	padding: 8px 0;
+	margin: 0;
+	text-align: center;
+	font-weight: 500;
 	color: #000;
 	text-decoration: none;
-	padding: 6px 0;
-	font-weight: 500;
 }
 
 .submenu-cell a:hover {
@@ -103,14 +116,8 @@
 .menu-wrapper:hover .submenu-container, .submenu-container:hover {
 	display: block;
 }
-
-.container-fluid, .menu-wrapper, .menu-bar, .submenu-container {
-	padding-left: 0 !important;
-	padding-right: 0 !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-}
 </style>
+
 </head>
 
 <body>
@@ -245,8 +252,10 @@
 					</div>
 					<c:if test="${not empty loginUser}">
 						<div class="submenu-cell">
-							<a href="<c:url value='/payments/history.do' />">거래내역 확인</a>
-							<a href="#" onclick="$('#chargeCoinModal').modal('show'); return false;">코인 충전</a>
+							<a href="<c:url value='/payments/history.do' />">거래내역 확인</a> <a
+								href="#"
+								onclick="$('#chargeCoinModal').modal('show'); return false;">코인
+								충전</a>
 						</div>
 					</c:if>
 					<div class="submenu-cell">
