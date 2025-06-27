@@ -175,6 +175,14 @@
 		</div>
 
 		<div class="auth-buttons">
+
+			<c:if test="${not empty loginUser}">
+				<!-- 사용자 이름 + 모드 박스 -->
+				<div
+					style="border: 2px solid #6bc1c1; border-radius: 30px; padding: 6px 16px; font-size: 15px; font-weight: 700; color: #00796b; background-color: #e0fdfa; white-space: nowrap; transition: all 0.3s ease;">
+					${loginUser.username} 님 (${loginUser.userType} 모드)</div>
+			</c:if>
+
 			<c:choose>
 				<c:when test="${empty loginUser}">
 					<a href="<c:url value='/login/loginForm' />">로그인</a>
