@@ -14,6 +14,101 @@ body {
 	margin-bottom: 120px;
 }
 
+.hero-section {
+	background: linear-gradient(to bottom right, #e6fffb, #f4ffff);
+	padding: 100px 0;
+}
+
+.hero-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.hero-text {
+	text-align: left;
+}
+
+.hero-title-dark {
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 1.5;
+	color: #00322f; /* 배경 대비를 위한 기본 텍스트 색 */
+	margin-bottom: 20px;
+}
+
+.darker-mint {
+	background: linear-gradient(to right, #00574B, #002E28);
+	/* 더 어두운 민트 그라데이션 */
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: 900;
+}
+
+.hero-sub-left {
+	font-size: 16px;
+	color: #444;
+	line-height: 1.8;
+	white-space: pre-line;
+}
+
+.mint-dark {
+	color: #008f7a;
+	font-weight: 600;
+}
+
+.hero-img {
+	position: relative;
+	width: 440px;
+	height: 440px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.logo-gradient-glow {
+	position: absolute;
+	width: 600px;
+	height: 600px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(0, 255, 230, 0.4) 0%,
+		rgba(0, 255, 230, 0.1) 50%, rgba(255, 255, 255, 0) 80%);
+	z-index: 0;
+}
+
+.logo-white-circle {
+	width: 380px;
+	height: 380px;
+	border-radius: 50%;
+	background: #ffffff;
+	border: 5px solid #00d4b4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	position: relative;
+	box-shadow: 0 0 12px rgba(0, 168, 139, 0.1);
+}
+
+.hero-img img {
+	width: 400px;
+	height: auto; /* 세로는 비율 유지 */
+	object-fit: contain; /* 이미지 비율을 유지하며 박스에 맞춤 */
+	z-index: 2;
+}
+
+.mint {
+	color: #28c2a0; /* 민트 색상 */
+	font-weight: 600;
+}
+
+.mint-bold {
+	color: #28c2a0;
+	font-weight: 800;
+	font-size: 110%;
+}
+
 .search-bar {
 	width: 1200px;
 	margin: 40px auto 20px;
@@ -86,10 +181,48 @@ body {
 }
 
 /* 아이콘 이미지 */
+.service-row-wrapper {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 30px;
+	margin: 40px auto;
+	padding: 20px;
+	max-width: 1100px;
+	background-color: #eafaf7;
+	border-radius: 20px;
+}
+
+.service-box {
+	width: 120px;
+	height: 130px;
+	background-color: #fff;
+	border-radius: 16px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	transition: transform 0.2s ease;
+}
+
 .service-box img {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	margin-bottom: 8px;
+}
+
+.service-box div {
+	font-size: 14px;
+	font-weight: bold;
+	color: #00796b;
+}
+
+.service-box:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .map-section-wrapper {
@@ -100,10 +233,10 @@ body {
 }
 
 .map-box {
-  flex: 1;
-  background-color: rgba(73, 132, 126, 0.15);  /* 흐리게 적용 */
-  padding: 10px;
-  border-radius: 8px;
+	flex: 1;
+	background-color: rgba(73, 132, 126, 0.15); /* 흐리게 적용 */
+	padding: 10px;
+	border-radius: 8px;
 }
 
 .region-section {
@@ -178,48 +311,64 @@ body {
 </head>
 <body>
 	<!-- ✅ 히어로 배너 전체 -->
-	<div style="background-color: #e6f4f2; padding: 60px 0;">
+	<!-- ✅ 슬로건 영역 (좌측 정렬 + 서브텍스트 배치) -->
+	<section class="hero-section"
+		style="background: #f4ffff; padding: 100px 40px;">
 		<div
-			style="max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 60px;">
+			style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
 
-			<!-- ✅ 왼쪽 텍스트 영역 -->
-			<div style="flex: 1.2;">
-				<h2
-					style="font-size: 50px; font-weight: bold; color: #009688; margin-bottom: 24px; line-height: 1.4;">
-					🌱 <span style="color: #41867e;">생활 속 퀘스트</span>에 도전해보세요!
-				</h2>
-				<p
-					style="font-size: 20px; color: #333; margin-bottom: 12px; line-height: 1.6;">
-					지금, 도움이 필요한 일이<br> 가까운 곳에서 기다리고 있어요
-				</p>
-				<p
-					style="font-size: 20px; color: #333; margin-bottom: 24px; line-height: 1.6;">
-					누구나 요청하고 누구나 도와주는<br> 생활 속 퀘스트 플랫폼, <strong
-						style="color: #ff9800;">QLY</strong>
-				</p>
-				<button
-					style="padding: 12px 28px; background-color: #019267; color: white; border: none; border-radius: 30px; font-weight: bold; font-size: 16px;">
-					퀘스트 보러가기</button>
+			<!-- 텍스트 영역 -->
+			<div class="hero-text" style="max-width: 600px;">
+				<h1
+					style="font-size: 52px; font-weight: 900; margin-bottom: 16px; line-height: 1.4;">
+					<span
+						style="background: linear-gradient(to right, #00473e, #00796b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+						누구나 요청하고,<br>누구나 도와주는
+					</span><br> <span style="color: #004d43;">생활 퀘스트 플랫폼 QLY</span>
+				</h1>
+
+				<div style="margin-top: 40px; display: flex; gap: 60px;">
+					<!-- 왼쪽 서브 -->
+					<div>
+						<p style="font-size: 18px; font-weight: 700; color: #004d43;">I'm
+							a Client</p>
+						<p style="font-size: 14px; color: #666;">
+							작은 일이든 큰 일이든<br>간편하게 요청해보세요.
+						</p>
+						<a href="#"
+							style="display: inline-block; padding: 10px 18px; background-color: #00796b; color: white; border-radius: 30px; font-weight: bold; font-size: 14px; text-decoration: none; transition: background-color 0.3s ease;"
+							onmouseover="this.style.backgroundColor='#005a4f'"
+							onmouseout="this.style.backgroundColor='#00796b'"> 지금 요청하기 →
+						</a>
+					</div>
+
+					<!-- 오른쪽 서브 -->
+					<div>
+						<p style="font-size: 18px; font-weight: 700; color: #004d43;">I'm
+							a Helper</p>
+						<p style="font-size: 14px; color: #666;">
+							내 재능을 필요한 곳에<br>바로 연결하세요.
+						</p>
+						<a href="#"
+							style="display: inline-block; padding: 10px 18px; background-color: #00796b; color: white; border-radius: 30px; font-weight: bold; font-size: 14px; text-decoration: none; transition: background-color 0.3s ease;"
+							onmouseover="this.style.backgroundColor='#005a4f'"
+							onmouseout="this.style.backgroundColor='#00796b'"> 도와주기 시작하기
+							→ </a>
+					</div>
+				</div>
 			</div>
 
-			<!-- ✅ 오른쪽: 원형 로고 -->
-			<div
-				style="flex: 0.8; display: flex; justify-content: center; align-items: center;">
-				<div
-					style="width: 420px; height: 420px; border-radius: 50%; background-color: #ffffff; border: 8px solid #c6ece5; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
-					<img src="https://i.postimg.cc/fLQ19GDs/logo4.png" alt="QLY 로고"
-						style="width: 360px; height: 360px; object-fit: contain;" />
+			<!-- 오른쪽 로고 -->
+			<div class="hero-img">
+				<div class="logo-gradient-glow"></div>
+				<div class="logo-white-circle">
+					<img src="https://i.postimg.cc/Dy7BstrB/logo2.png" alt="QLY 로고"
+						style="width: 280px;">
 				</div>
 			</div>
 
 		</div>
-	</div>
-
-	</div>
-	</div>
-
-	</div>
-	</div>
+	</section>
 
 
 
@@ -238,33 +387,39 @@ body {
 		</div>
 	</div>
 
-	<!-- ✅ 자주 찾는 서비스 아이콘 전체 wrapper -->
-	<div class="service-wrapper-custom">
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
-				alt="">
-			<div>퀘스트 서비스</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
-				alt="">
-			<div>서비스 신청</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/159/159078.png"
-				alt="">
-			<div>퀘스트 도움</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-				alt="">
-			<div>퀘스트 지도</div>
-		</div>
-		<div class="service-box text-center">
-			<img src="https://cdn-icons-png.flaticon.com/512/709/709496.png"
-				alt="">
-			<div>마이페이지</div>
-		</div>
+	<!-- ✅ 자주 찾는 서비스 아이콘 영역 -->
+	<div class="service-row-wrapper">
+		<a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+					alt="퀘스트 목록">
+				<div>퀘스트 목록</div>
+			</div>
+		</a> <a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/1055/1055647.png"
+					alt="퀘스트 등록">
+				<div>퀘스트 등록</div>
+			</div>
+		</a> <a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="마이페이지">
+				<div>마이페이지</div>
+			</div>
+		</a> <a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/159/159078.png"
+					alt="코인 충전">
+				<div>코인 충전</div>
+			</div>
+		</a> <a href="#">
+			<div class="service-box text-center">
+				<img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
+					alt="문의하기">
+				<div>문의하기</div>
+			</div>
+		</a>
 	</div>
 
 
