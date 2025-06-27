@@ -178,16 +178,17 @@ public class QuestController {
 	}
 
 	@RequestMapping("/particularForm.do")
-	public String showQuestparticularForm(@RequestParam("questId") int questId, HttpSession session, Model model) {
+	public String showQuestparticularForm(@RequestParam("questId") int questId,RedirectAttributes rttr, HttpSession session, Model model) {
 		System.out.println("전달받은 questId = " + questId);
 
 		QuestDto quest = questService.getQuestById(questId);
 		System.out.println("photoPath: " + quest.getPhotoPath());
 
-		/*
-		 * if (quest == null) { System.out.println("❗ 해당 퀘스트 없음"); return
-		 * "redirect:/quest/list.do"; }
-		 */
+		 UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+			if (loginUser == null) {
+				rttr.addFlashAttribute("error", "로그인 후 이용 가능합니다.");
+				return "redirect:/login/loginForm"; // 로그인 안되어 있으면 로그인 페이지로 이동
+			}
 
 		model.addAttribute("quest", quest);
 

@@ -279,7 +279,8 @@ input:focus, textarea:focus {
 						<label class="section-label">의뢰내용</label>
 						<div id="taskList">
 							<div class="task-item">
-								<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" required />
+								<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요"
+									required />
 								<button type="button" class="icon-btn" onclick="addTask()">
 									<i class="fas fa-plus"></i>
 								</button>
@@ -294,40 +295,43 @@ input:focus, textarea:focus {
 						<div class="upload-box">사진 파일을 넣어주세요</div>
 						<div class="file-input-box">
 							<input type="file" name="photo" id="photo" class="file-hidden"
-								onchange="previewFileName(this)" required> <label for="photo"
-								class="file-btn">파일 선택</label> <span id="fileName">선택된 파일
-								없음</span>
+								onchange="previewFileName(this)" required> <label
+								for="photo" class="file-btn">파일 선택</label> <span id="fileName">선택된
+								파일 없음</span>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="section-label">추가 요청사항</label>
-					<textarea name="content" placeholder="추가 요청사항을 적으세요!!!" rows="5" required></textarea>
+					<textarea name="content" placeholder="추가 요청사항을 적으세요!!!" rows="5"
+						required></textarea>
 				</div>
 
 				<div class="form-group"
 					style="display: flex; gap: 12px; align-items: center;">
 					<label class="section-label">의뢰 기간</label> <input type="date"
-						name="startDate" required style="width: 180px;" required/> <span>~</span>
-					<input type="date" name="endDate" required style="width: 180px;" required/>
+						name="startDate" required style="width: 180px;" required /> <span>~</span>
+					<input type="date" name="endDate" required style="width: 180px;"
+						required />
 				</div>
 
 				<div class="form-group" style="display: flex; gap: 20px;">
 					<div style="flex: 1;">
 						<label class="section-label">의뢰 장소</label> <input type="text"
-							name="address" placeholder="구, 군, 시 입력" required/>
+							name="address" placeholder="구, 군, 시 입력" required />
 					</div>
 					<div style="flex: 1;">
 						<label class="section-label">상세 장소</label> <input type="text"
-							name="location" placeholder="상세주소" required/>
+							name="location" placeholder="상세주소" required />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="section-label">의뢰 가격 (코인)</label>
 					<div class="token-flex">
-						<input type="number" name="rewardTokens" placeholder="예: 100" required />
+						<input type="number" name="rewardTokens" placeholder="예: 100"
+							required />
 						<button type="button" class="charge-btn"
 							onclick="showChargeModal()">충전</button>
 						<div class="token-box">
@@ -346,35 +350,75 @@ input:focus, textarea:focus {
 	</div>
 
 	<script>
-	function addTask() {
-		const taskList = document.getElementById("taskList");
-		const newTask = document.createElement("div");
-		newTask.className = "task-item";
-		newTask.innerHTML = `
-			<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" />
-			<button type="button" class="icon-btn" onclick="addTask()"><i class="fas fa-plus"></i></button>
-			<button type="button" class="icon-btn" onclick="removeTask(this)"><i class="fas fa-minus"></i></button>`;
-		taskList.appendChild(newTask);
-	}
+function addTask() {
+	const taskList = document.getElementById("taskList");
+	const newTask = document.createElement("div");
+	newTask.className = "task-item";
+	newTask.innerHTML = `
+		<input type="text" name="taskList" placeholder="의뢰 내용을 입력하세요" />
+		<button type="button" class="icon-btn" onclick="addTask()"><i class="fas fa-plus"></i></button>
+		<button type="button" class="icon-btn" onclick="removeTask(this)"><i class="fas fa-minus"></i></button>`;
+	taskList.appendChild(newTask);
+}
 
-	function removeTask(btn) {
-		const taskList = document.getElementById("taskList");
-		if (taskList.children.length > 1) {
-			btn.parentElement.remove();
-		} else {
-			alert("최소 1개의 의뢰내용은 필요합니다.");
-		}
+function removeTask(btn) {
+	const taskList = document.getElementById("taskList");
+	if (taskList.children.length > 1) {
+		btn.parentElement.remove();
+	} else {
+		alert("최소 1개의 의뢰내용은 필요합니다.");
 	}
+}
 
-	function previewFileName(input) {
-		const fileName = input.files[0]?.name || '선택된 파일 없음';
-		document.getElementById("fileName").textContent = fileName;
-	}
+function previewFileName(input) {
+	const fileName = input.files[0]?.name || '선택된 파일 없음';
+	document.getElementById("fileName").textContent = fileName;
+}
 
-	function showChargeModal() {
-		const modal = new bootstrap.Modal(document.getElementById('chargeCoinModal'));
-		modal.show();
+function showChargeModal() {
+	const modal = new bootstrap.Modal(document.getElementById('chargeCoinModal'));
+	modal.show();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+	const startInput = document.querySelector('input[name="startDate"]');
+	const endInput = document.querySelector('input[name="endDate"]');
+	const today = new Date().toISOString().split("T")[0];
+	startInput.setAttribute("min", today);
+
+	startInput.addEventListener("change", function () {
+		endInput.value = "";
+		endInput.setAttribute("min", this.value);
+	});
+
+	// 모든 input/textarea에 유효성 메시지
+	const requiredInputs = document.querySelectorAll("input[required], textarea[required]");
+	requiredInputs.forEach(function(input) {
+		input.addEventListener("invalid", function() {
+			if (!input.value) {
+				input.setCustomValidity("적으세요!");
+			}
+		});
+		input.addEventListener("input", function() {
+			input.setCustomValidity("");
+		});
+	});
+
+	const fileInput = document.querySelector('input[type="file"][required]');
+	if (fileInput) {
+		fileInput.addEventListener("invalid", function () {
+			if (!fileInput.value) {
+				fileInput.setCustomValidity("파일을 선택하세요!");
+			}
+		});
+		fileInput.addEventListener("change", function () {
+			fileInput.setCustomValidity("");
+		});
 	}
-	</script>
+});
+</script>
+
+
+
 </body>
 </html>

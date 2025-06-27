@@ -161,7 +161,7 @@ input#selectedDate {
 }
 </style>
 
-<fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd"
+<%-- <fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd"
 	var="minDateStr" />
 <fmt:formatDate value="${quest.endDate}" pattern="yyyy-MM-dd"
 	var="maxDateStr" />
@@ -180,7 +180,30 @@ input#selectedDate {
 			}
 		});
 	});
+</script> --%>
+
+<fmt:formatDate value="${quest.startDate}" pattern="yyyy-MM-dd"
+	var="minDateStr" />
+<fmt:formatDate value="${quest.endDate}" pattern="yyyy-MM-dd"
+	var="maxDateStr" />
+
+<script>
+	$(function() {
+		const minDate = new Date("${minDateStr}".replaceAll("-", "/"));
+		const maxDate = new Date("${maxDateStr}".replaceAll("-", "/"));
+
+		$("#selectedDate").datepicker({
+			dateFormat : "yy-mm-dd",
+			minDate : minDate,
+			maxDate : maxDate,
+			beforeShowDay : function(date) {
+				return [ date >= minDate && date <= maxDate ];
+			}
+		});
+	});
 </script>
+
+
 </head>
 
 <body>
@@ -253,7 +276,7 @@ input#selectedDate {
 								name="day" class="form-control mb-3" required readonly>
 
 							<label>주소</label> <input type="text" class="form-control mb-3"
-								value="${quest.address}" readonly> <label>시간 선택</label>
+								value="${quest.address} ${quest.location}" readonly> <label>시간 선택</label>
 							<select name="time" class="form-select mb-4" required>
 								<option value="">-- 시간 선택 --</option>
 								<c:forEach var="hour" begin="9" end="18">
