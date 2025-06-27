@@ -128,8 +128,8 @@ if (currentPage == null) currentPage = "";
 			<ul id="coinMenu" class="submenu <%= currentPage.contains("mypage/coin") ? "show" : "" %>">
 				<li class="<%=currentPage.equals("mypage/coin/charge.jsp") ? "active" : ""%>"
 					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/charge.jsp')">코인 히스토리</li>
-				<li class="<%=currentPage.equals("mypage/coin/refund.jsp") ? "active" : ""%>"
-					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/refund.jsp')">코인 환불</li>
+				<li class="<%=currentPage.equals("mypage/contents/exchangemain.jsp") ? "active" : ""%>"
+					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/coinExchange.do')">코인 환전</li>
 			</ul>
 		</li>
 
