@@ -11,7 +11,6 @@
   request.setAttribute("pageParam", pageParam);
 %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -36,9 +35,14 @@
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f1f2f6;
   }
+  .nav-fixed {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
   .layout-wrapper {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 88px); /* 상단 메뉴바 높이 제외 */
   }
   .sidebar {
     width: 15%;
@@ -58,6 +62,11 @@
 </head>
 
 <body>
+  <!-- ✅ 상단 네비게이션 고정 메뉴바 -->
+  <div class="nav-fixed">
+    <%@ include file="/template/menubar.jsp" %>
+  </div>
+
   <div class="layout-wrapper">
     <!-- 좌측 사이드바 -->
     <div class="sidebar">

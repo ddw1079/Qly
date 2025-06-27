@@ -13,148 +13,157 @@ if (currentPage == null) currentPage = "";
 %>
 
 <style>
-/* 리스트 스타일 제거 및 기본 설정 */
+.sidebar-container {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+.user-badge {
+  background-color: #f0faf9;
+  color: #004d43;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.user-badge span.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #28c2a0;
+  border-radius: 50%;
+  margin-left: 8px;
+}
 .sidebar-menu,
 .sidebar-menu ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-
 .sidebar-menu > li {
-	padding: 12px 24px;
-	cursor: pointer;
-	border-radius: 8px;
-	transition: background-color 0.2s ease;
-	font-size: 18px;
-	position: relative;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+  font-size: 17px;
+  font-weight: 600;
+  color: #004d43;
+  margin-bottom: 8px;
 }
-
 .sidebar-menu > li:hover {
-	background-color: #e8f9f7;
+  background-color: #e0f7f4;
 }
-
 .submenu {
-	display: none;
-	padding-left: 1.5rem;
-	margin-top: 5px;
-	margin-bottom: 10px;
+  display: none;
+  padding-left: 1.5rem;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
-
 .submenu.show {
-	display: block;
+  display: block;
 }
-
 .submenu li {
-	font-size: 16px;
-	padding: 6px 12px;
-	cursor: pointer;
-	border-radius: 6px;
-	transition: all 0.15s ease;
-	user-select: none;
+  font-size: 15px;
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #555;
 }
-
 .submenu li.active {
-	font-weight: bold;
-	background-color: #d4f3ef;
+  font-weight: bold;
+  background-color: #d4f3ef;
+  color: #004d43;
 }
-
 .submenu li:hover {
-	background-color: #f0fbfa;
-	font-weight: 600;
-	color: #00897b;
+  background-color: #f0fbfa;
+  font-weight: 600;
+  color: #00796b;
+}
+.logout-btn {
+  width: 100%;
+  margin-top: 24px;
+  font-weight: bold;
+  border-radius: 30px;
 }
 </style>
 
-<!-- 상단 로고 -->
-<div style="text-align: center; margin-bottom: 10px;">
-	<a href="${pageContext.request.contextPath}/mainpage">
-		<img class="w-100" src="https://i.postimg.cc/0j1MDRhn/logo.png"
-			alt="Qly 로고" width="250">
-	</a>
-</div>
 
-<!-- 사용자 정보 -->
-<div style="text-align: center; margin-bottom: 20px;">
-	<div style="display: inline-block; background-color: rgba(255, 255, 255, 0.9); color: #2f3542; padding: 8px 16px; border-radius: 30px; font-size: 14px; font-weight: bold; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
-		<%=userName%>님 (<%=userType%> 모드)
-		<span style="display: inline-block; width: 10px; height: 10px; background-color: #2ecc71; border-radius: 50%; margin-left: 8px;" title="활동 중"></span>
-	</div>
-</div>
+<div class="sidebar-container">
+  <!-- 사용자 정보 -->
+  <div class="user-badge">
+    <%=userName%>님 (<%=userType%> 모드)
+    <span class="status-dot" title="활동 중"></span>
+  </div>
 
-<!-- 메뉴 -->
-<div style="background: white; color: #2f3542; border-radius: 12px; padding: 10px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-	<ul class="sidebar-menu">
+  <!-- 메뉴 -->
+  <ul class="sidebar-menu">
 
-		<!-- 개인 정보 -->
-		<li onclick="toggleSubmenu('profileMenu')">개인 정보
-			<ul id="profileMenu" class="submenu <%= (currentPage.startsWith("mypage/contents/personal_info") || currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : "" %>">
-				<li class="<%=currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : ""%>"
-					onclick="location.href='<%=request.getContextPath()%>/mypage/user.do'">정보 조회</li>
-				<li class="<%=currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : ""%>"
-					onclick="location.href='<%=request.getContextPath()%>/mypage/sujeug.do'">정보 수정</li>
-			</ul>
-		</li>
+    <!-- 개인 정보 -->
+    <li onclick="toggleSubmenu('profileMenu')">개인 정보
+      <ul id="profileMenu" class="submenu <%= (currentPage.startsWith("mypage/contents/personal_info") || currentPage.startsWith("mypage/contents/edit_personal_info")) ? "show" : "" %>">
+        <li class="<%=currentPage.equals("mypage/contents/personal_info.jsp") ? "active" : ""%>"
+            onclick="location.href='<%=request.getContextPath()%>/mypage/user.do'">정보 조회</li>
+        <li class="<%=currentPage.equals("mypage/contents/edit_personal_info.jsp") ? "active" : ""%>"
+            onclick="location.href='<%=request.getContextPath()%>/mypage/sujeug.do'">정보 수정</li>
+      </ul>
+    </li>
 
-		<!-- 내 퀘스트 -->
-		<li onclick="toggleSubmenu('questMenu')">내 퀘스트
-			<ul id="questMenu" class="submenu <%= currentPage.contains("propile_Quest") ? "show" : "" %>">
-				<%
-				if ("의뢰인".equals(userType)) {
-				%>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/questcard.do'">퀘스트 목록</li>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">진행 상황</li>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/quest_completed.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/questcompleted.do'">완료된 퀘스트</li>
-				<%
-				} else {
-				%>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결사 퀘스트</li>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/questprogress.do'">퀘스트 진행 사항</li>
-					<li class="<%=currentPage.equals("mypage/propile_Quest/solver_completed.jsp") ? "active" : ""%>"
-						onclick="location.href='<%=request.getContextPath()%>/mypage/completedSolverQuests.do'">완료된 퀘스트</li>
-				<%
-				}
-				%>
-			</ul>
-		</li>
+    <!-- 내 퀘스트 -->
+    <li onclick="toggleSubmenu('questMenu')">내 퀘스트
+      <ul id="questMenu" class="submenu <%= currentPage.contains("propile_Quest") ? "show" : "" %>">
+        <% if ("의뢰인".equals(userType)) { %>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/questCard.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/questcard.do'">퀘스트 목록</li>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/questHistory.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/questhistory.do'">진행 상황</li>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/quest_completed.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/questcompleted.do'">완료된 퀘스트</li>
+        <% } else { %>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/heagual_questCard.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/heagualquestcard.do'">해결사 퀘스트</li>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/heagual_questHistory.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/questprogress.do'">퀘스트 진행 사항</li>
+          <li class="<%=currentPage.equals("mypage/propile_Quest/solver_completed.jsp") ? "active" : ""%>"
+              onclick="location.href='<%=request.getContextPath()%>/mypage/completedSolverQuests.do'">완료된 퀘스트</li>
+        <% } %>
+      </ul>
+    </li>
 
-		<!-- 코인 보기 -->
-		<li onclick="toggleSubmenu('coinMenu')">코인 보기
-			<ul id="coinMenu" class="submenu <%= currentPage.contains("mypage/coin") ? "show" : "" %>">
-				<li class="<%=currentPage.equals("mypage/coin/charge.jsp") ? "active" : ""%>"
-					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/charge.jsp')">코인 히스토리</li>
-				<li class="<%=currentPage.equals("mypage/contents/exchangemain.jsp") ? "active" : ""%>"
+    <!-- 코인 보기 -->
+    <li onclick="toggleSubmenu('coinMenu')">코인 보기
+      <ul id="coinMenu" class="submenu <%= currentPage.contains("mypage/coin") ? "show" : "" %>">
+        <li class="<%=currentPage.equals("mypage/coin/charge.jsp") ? "active" : ""%>"
+            onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/user?page=mypage/coin/charge.jsp')">코인 히스토리</li>
+        <li class="<%=currentPage.equals("mypage/contents/exchangemain.jsp") ? "active" : ""%>"
 					onclick="selectMenu(this, '<%=request.getContextPath()%>/mypage/coinExchange.do')">코인 환전</li>
-			</ul>
-		</li>
+      </ul>
+    </li>
+  </ul>
 
-	</ul>
-
-	<!-- 회원탈퇴 버튼 -->
-	<div style="text-align: center; margin-top: 20px;">
-		<button class="btn btn-dark logout-btn">회원탈퇴</button>
-	</div>
+  <!-- 회원탈퇴 버튼 -->
+  <div>
+    <button class="btn btn-outline-danger logout-btn">회원탈퇴</button>
+  </div>
 </div>
 
 <script>
 function toggleSubmenu(id) {
-	const menu = document.getElementById(id);
-	const allMenus = document.querySelectorAll('.submenu');
-	allMenus.forEach(m => {
-		if (m !== menu) m.classList.remove('show');
-	});
-	menu.classList.toggle('show');
+  const menu = document.getElementById(id);
+  const allMenus = document.querySelectorAll('.submenu');
+  allMenus.forEach(m => {
+    if (m !== menu) m.classList.remove('show');
+  });
+  menu.classList.toggle('show');
 }
-
 function selectMenu(clickedItem, targetUrl) {
-	const allItems = document.querySelectorAll('.submenu li');
-	allItems.forEach(item => item.classList.remove('active'));
-	clickedItem.classList.add('active');
-	location.href = targetUrl;
+  const allItems = document.querySelectorAll('.submenu li');
+  allItems.forEach(item => item.classList.remove('active'));
+  clickedItem.classList.add('active');
+  location.href = targetUrl;
 }
 </script>
