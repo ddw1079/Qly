@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>퀴스트 목록</title>
+<title>퀘스트 목록</title>
 
 <!-- ✅ Bootstrap & jQuery -->
 <link
@@ -120,3 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			</c:forEach>
 		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

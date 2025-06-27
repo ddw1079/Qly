@@ -1,4 +1,3 @@
-<!-- QLY 리디자인 버전: 로고 그래픽 강조 + 섹션 분할 라운드 물결형 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,11 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>QLY - 누구나 요청하고 누구나 도와주는</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 body {
@@ -72,8 +68,7 @@ body {
 	width: 600px;
 	height: 600px;
 	border-radius: 50%;
-	background: radial-gradient(circle, rgba(0, 255, 230, 0.4) 0%,
-		rgba(0, 255, 230, 0.1) 50%, rgba(255, 255, 255, 0) 80%);
+	background: radial-gradient(circle, rgba(0, 255, 230, 0.4) 0%, rgba(0, 255, 230, 0.1) 50%, rgba(255, 255, 255, 0) 80%);
 	z-index: 0;
 }
 
@@ -173,71 +168,72 @@ body {
 </head>
 <body>
 
-	<!-- ✅ 히어로 영역 -->
-	<section class="hero-section">
-		<div class="container-fixed hero-inner">
-			<div class="hero-text">
-				<h1>
-					누구나 요청하고,<br>누구나 도와주는<br>생활 퀘스트 플랫폼 QLY
-				</h1>
-				<p>복잡한 일상 속 사소한 요청까지도 QLY가 해결을 도와드립니다.</p>
-			</div>
-			<div class="hero-img">
-				<div class="logo-gradient-glow"></div>
-				<div class="logo-white-circle">
-					<img src="https://i.postimg.cc/Dy7BstrB/logo2.png" alt="QLY 로고">
-				</div>
+<!-- ✅ 히어로 영역 -->
+<section class="hero-section">
+	<div class="container-fixed hero-inner">
+		<div class="hero-text">
+			<h1>
+				누구나 요청하고,<br>누구나 도와주는<br>생활 퀘스트 플랫폼 QLY
+			</h1>
+			<p>복잡한 일상 속 사소한 요청까지도 QLY가 해결을 도와드립니다.</p>
+		</div>
+		<div class="hero-img">
+			<div class="logo-gradient-glow"></div>
+			<div class="logo-white-circle">
+				<img src="https://i.postimg.cc/Dy7BstrB/logo2.png" alt="QLY 로고">
 			</div>
 		</div>
-	</section>
-
-	<!-- ✅ 기능 설명 -->
-	<section class="container-fixed">
-		<div class="section-title-wrap">
-			<h2 class="section-title">QLY에서 가능한 모든 것</h2>
-		</div>
-		<div class="feature-section">
-			<div class="feature-box">
-				<h5>간단한 요청 등록</h5>
-				<p>번거로운 작업을 쉽게 등록하고 도움을 받을 수 있어요.</p>
-			</div>
-			<div class="feature-box">
-				<h5>신뢰 기반 매칭</h5>
-				<p>평점과 후기 기반으로 신뢰할 수 있는 프로를 매칭해요.</p>
-			</div>
-			<div class="feature-box">
-				<h5>보상과 만족</h5>
-				<p>큐빗 시스템으로 명확한 보상이 보장됩니다.</p>
-			</div>
-		</div>
-	</section>
-	<!-- ✅ 소개 섹션 -->
-	<section style="text-align: center; margin: 80px 0 40px;">
-		<h2 style="font-size: 2rem; font-weight: bold; color: #00a88b;">
-			함께 만들어가는 일상의 연결</h2>
-		<p style="font-size: 1.1rem; color: #555; margin-top: 16px;">소소한
-			요청부터 진심어린 도움까지, QLY는 모두가 함께하는 연결의 시작입니다.</p>
-	</section>
-
-
-	<!-- ✅ 물결형 분할 SVG -->
-	<div style="margin-top: -50px; position: relative; z-index: 1;">
-		<svg viewBox="0 0 1440 150" preserveAspectRatio="none"
-			style="display: block; width: 100%; height: 100px;">
-    <path fill="#00c9a7" fill-opacity="1"
-				d="M0,64L60,58.7C120,53,240,43,360,53.3C480,64,600,96,720,112C840,128,960,128,1080,117.3C1200,107,1320,85,1380,74.7L1440,64L1440,160L1380,160C1320,160,1200,160,1080,160C960,160,840,160,720,160C600,160,480,160,360,160C240,160,120,160,60,160L0,160Z"></path>
-  </svg>
 	</div>
+</section>
 
-	<!-- ✅ 브랜드 철학 -->
-	<section class="footer-section">
-		<div class="container-fixed">
-			<h2>우리의 철학</h2>
-			<p>
-				도움이 필요한 이와 돕고자 하는 이가 자연스럽게 연결되어<br>누구도 소외되지 않는 세상을 만듭니다.
-			</p>
+<!-- ✅ 기능 설명 -->
+<section class="container-fixed">
+	<div class="section-title-wrap">
+		<h2 class="section-title">QLY에서 가능한 모든 것</h2>
+	</div>
+	<div class="feature-section">
+		<div class="feature-box">
+			<h5>간단한 요청 등록</h5>
+			<p>번거로운 작업을 쉽게 등록하고 도움을 받을 수 있어요.</p>
 		</div>
-	</section>
+		<div class="feature-box">
+			<h5>신뢰 기반 매칭</h5>
+			<p>평점과 후기 기반으로 신뢰할 수 있는 프로를 매칭해요.</p>
+		</div>
+		<div class="feature-box">
+			<h5>보상과 만족</h5>
+			<p>큐빗 시스템으로 명확한 보상이 보장됩니다.</p>
+		</div>
+	</div>
+</section>
+<!-- ✅ 소개 섹션 -->
+<section style="text-align: center; margin: 80px 0 40px;">
+	<h2 style="font-size: 2rem; font-weight: bold; color: #00a88b;">
+		함께 만들어가는 일상의 연결</h2>
+	<p style="font-size: 1.1rem; color: #555; margin-top: 16px;">
+		소소한 요청부터 진심어린 도움까지, QLY는 모두가 함께하는 연결의 시작입니다.
+	</p>
+</section>
+
+<!-- ✅ 물결형 분할 SVG -->
+<div style="margin-top: -50px; position: relative; z-index: 1;">
+	<svg viewBox="0 0 1440 150" preserveAspectRatio="none" style="display: block; width: 100%; height: 100px;">
+		<path fill="#00c9a7" fill-opacity="1"
+			d="M0,64L60,58.7C120,53,240,43,360,53.3C480,64,600,96,720,112C840,128,960,128,1080,117.3C1200,107,1320,85,1380,74.7L1440,64L1440,160L1380,160C1320,160,1200,160,1080,160C960,160,840,160,720,160C600,160,480,160,360,160C240,160,120,160,60,160L0,160Z"></path>
+	</svg>
+</div>
+
+<!-- ✅ 브랜드 철학 -->
+<section class="footer-section">
+	<div class="container-fixed">
+		<h2>우리의 철학</h2>
+		<p>
+			도움이 필요한 이와 돕고자 하는 이가 자연스럽게 연결되어<br>
+			누구도 소외되지 않는 세상을 만듭니다.
+		</p>
+	</div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
