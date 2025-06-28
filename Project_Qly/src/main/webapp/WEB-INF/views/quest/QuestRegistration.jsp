@@ -291,15 +291,35 @@ input:focus, textarea:focus {
 							</div>
 						</div>
 					</div>
-					<div class="right-area">
+					<!-- <div class="right-area">
 						<div class="upload-box">사진 파일을 넣어주세요</div>
 						<div class="file-input-box">
 							<input type="file" name="photo" id="photo" class="file-hidden"
-								onchange="previewFileName(this)" required> <label
+								onchange="previewFileName(this)" required>
+							<input type="file" name="photo" id="photo" class="file-hidden"
+								onchange="previewImage(this)" required> <label
+								for="photo" class="file-btn">파일 선택</label> <span id="fileName">선택된
+								파일 없음</span>
+						</div>
+						<img id="imagePreview" src="" alt="이미지 미리보기"
+							style="display: none; max-width: 250px; border-radius: 8px; margin-top: 12px;">
+					</div> -->
+					<div class="right-area">
+						<div class="upload-box">
+							<span id="uploadText">사진 파일을 넣어주세요</span> <img id="imagePreview"
+								src="" alt="이미지 미리보기"
+								style="display: none; max-width: 100%; max-height: 100%; border-radius: 8px;">
+						</div>
+
+						<div class="file-input-box">
+							<input type="file" name="photo" id="photo" class="file-hidden"
+								onchange="previewImage(this)" required> <label
 								for="photo" class="file-btn">파일 선택</label> <span id="fileName">선택된
 								파일 없음</span>
 						</div>
 					</div>
+
+
 				</div>
 
 				<div class="form-group">
@@ -311,7 +331,7 @@ input:focus, textarea:focus {
 				<div class="form-group"
 					style="display: flex; gap: 12px; align-items: center;">
 					<label class="section-label">의뢰 기간</label> <input type="date"
-						name="startDate" required style="width: 180px;" required /> <span>~</span>
+						name="startDate" required style="width: 180px;" /> <span>~</span>
 					<input type="date" name="endDate" required style="width: 180px;"
 						required />
 				</div>
@@ -370,10 +390,10 @@ function removeTask(btn) {
 	}
 }
 
-function previewFileName(input) {
+/* function previewFileName(input) {
 	const fileName = input.files[0]?.name || '선택된 파일 없음';
 	document.getElementById("fileName").textContent = fileName;
-}
+} */
 
 function showChargeModal() {
 	const modal = new bootstrap.Modal(document.getElementById('chargeCoinModal'));
@@ -416,6 +436,29 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 });
+
+function previewImage(input) {
+	const file = input.files[0];
+	const fileName = file?.name || "선택된 파일 없음";
+	document.getElementById("fileName").textContent = fileName;
+
+	if (file && file.type.startsWith("image/")) {
+		const reader = new FileReader();
+
+		reader.onload = function(e) {
+			const img = document.getElementById("imagePreview");
+			const text = document.getElementById("uploadText");
+			img.src = e.target.result;
+			img.style.display = "block";
+			if (text) text.style.display = "none";
+		};
+
+		reader.readAsDataURL(file);
+	} else {
+		alert("이미지 파일만 선택 가능합니다.");
+	}
+}
+
 </script>
 
 
