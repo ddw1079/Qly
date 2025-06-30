@@ -112,14 +112,14 @@ body {
 			</a>
 		</div>
 
-		<h2>Login</h2>
+		<h2>Sign in</h2>
 
 		<form action="${pageContext.request.contextPath}/login/login.do"
 			method="POST">
 			<input type="text" name="username" placeholder="User Name" required>
 			<input type="password" name="password" placeholder="Password"
 				required>
-			<button type="submit">Login</button>
+			<button type="submit">Sign in</button>
 		</form>
 
 		<div class="signup-link">

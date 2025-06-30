@@ -151,7 +151,7 @@ function checkUsername() {
 <body>
 <div class="container-box">
 	<img src="https://i.postimg.cc/Dy7BstrB/logo2.png" alt="Qly 로고">
-	<h2 style="color:#104b47; font-weight:700; margin-bottom:20px;">Sign in</h2>
+	<h2 style="color:#104b47; font-weight:700; margin-bottom:20px;">Sign up</h2>
 	<form action="${pageContext.request.contextPath}/login/Qly_insert.do" method="post">
 		<div class="mb-3 input-group">
 			<span class="input-group-text" style="width: 100px;">ID</span>
@@ -201,7 +201,7 @@ function checkUsername() {
 			</div>
 		</div>
 
-		<button id="submitBtn" type="submit" class="btn-submit" disabled>회원가입</button>
+		<button id="submitBtn" type="submit" class="btn-submit" disabled>Sign up</button>
 	</form>
 </div>
 </body>
