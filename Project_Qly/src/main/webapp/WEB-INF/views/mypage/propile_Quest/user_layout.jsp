@@ -44,13 +44,17 @@
     display: flex;
     height: calc(100vh - 88px); /* 상단 메뉴바 높이 제외 */
   }
-  .sidebar {
-    width: 15%;
-    min-width: 200px;
-    background-color: #9cc9c4;
-    color: white;
-    padding: 20px;
-  }
+.sidebar {
+  width: 15%;
+  min-width: 200px;
+  background: linear-gradient(180deg, #e0f7f4 0%, #c6ebe6 100%);
+  color: #004d43;
+  padding: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
+}
+
   .main-content {
     flex-grow: 1;
     min-height: 0;
