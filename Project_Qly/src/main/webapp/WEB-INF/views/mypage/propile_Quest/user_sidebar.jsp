@@ -13,11 +13,30 @@ if (currentPage == null) currentPage = "";
 %>
 
 <style>
+
 .sidebar-container {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.75); /* 반투명 */
+  backdrop-filter: blur(10px);          /* 배경 흐림 효과 */
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+.logout-btn {
+  width: 100%;
+  margin-top: 24px;
+  font-weight: bold;
+  border-radius: 30px;
+  background-color: #f3f3f3;
+  color: #555;
+  border: none;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease;
+}
+.logout-btn:hover {
+  background-color: #e0e0e0;
+  color: #000;
 }
 .user-badge {
   background-color: #f0faf9;
@@ -84,12 +103,7 @@ if (currentPage == null) currentPage = "";
   font-weight: 600;
   color: #00796b;
 }
-.logout-btn {
-  width: 100%;
-  margin-top: 24px;
-  font-weight: bold;
-  border-radius: 30px;
-}
+
 </style>
 
 

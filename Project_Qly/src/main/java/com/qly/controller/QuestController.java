@@ -36,6 +36,11 @@ public class QuestController {
 
 	@Autowired
 	private QlyService qlyService;
+	
+	@RequestMapping("/mainpage.do")
+	public String showMainPage() {
+	    return "mainpage";  // → /WEB-INF/views/mainpage.jsp 를 의미
+	}
 
 	@RequestMapping(value = "/list.do")
 	public String questList(Model model, @RequestParam(required = false) String keyword) {
@@ -180,7 +185,7 @@ public class QuestController {
 		// 7. 결과 페이지로 이동
 		// return "redirect:/quest/list.do?questId=" + questId;
 		// return "redirect:/quest/particularForm.do?questId=" + questId;
-		return "redirect:/mainpage.jsp";
+		return "redirect:/mainpage.do";
 
 	}
 
@@ -203,14 +208,17 @@ public class QuestController {
 	}
 
 	@RequestMapping("/userparticularForm.do")
-	public String usershowQuestparticularForm(@RequestParam("questId") int questId, HttpSession session, Model model) {
+	public String usershowQuestparticularForm(@RequestParam("questId") int questId, HttpSession session, Model model,HttpServletRequest request) {
 		QuestDto quest = questService.getQuestById(questId);
 		List<QuestDto> applicants = questService.getApplicantsByQuestId(questId);
 
 		model.addAttribute("quest", quest);
 		model.addAttribute("applicants", applicants);
+		
+		String pageParam = "mypage/propile_Quest/userParticular.jsp";
+		request.setAttribute("pageParam", pageParam);
 
-		return "mypage/propile_Quest/userParticular";
+		return "mypage/propile_Quest/user_layout";
 
 	}
 
@@ -226,6 +234,7 @@ public class QuestController {
 	public String showProgressList(HttpSession session, Model model, HttpServletRequest request) {
 		UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 		if (loginUser == null) {
+			
 			return "redirect:/user/loginForm.do";
 		}
 

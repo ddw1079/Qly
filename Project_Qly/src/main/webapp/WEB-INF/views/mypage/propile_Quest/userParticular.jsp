@@ -3,169 +3,194 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+<!-- 좌측 고정 사이드바 -->
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>해결사선택</title>
+<title>해결사 선택</title>
 
-<!-- Bootstrap 5 -->
+<!-- Bootstrap & jQuery -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
 <style>
 body {
-	background-color: #f9f9f9;
-	font-size: 1.1rem;
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f6f9f8;
+	margin: 0;
+	color: #333;
 }
 
-.container {
-	max-width: 1000px;
-	margin-top: 50px;
+.main-layout {
+	display: flex;
 }
 
-.card {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	border-radius: 15px;
+.content-area {
+	flex-grow: 1;
+	padding: 60px 50px;
 }
 
-.card-header {
-	font-size: 1.5rem;
-	font-weight: bold;
-	background-color: #00d1b2;
-	color: white;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+.page-title {
+	font-size: 26px;
+	font-weight: 700;
+	margin-bottom: 30px;
+	color: #004d43;
 }
 
-.card-body {
-	padding: 30px;
+.quest-card {
+	background: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+	padding: 30px 28px;
+	margin-bottom: 40px;
 }
 
-label {
-	font-weight: bold;
-	margin-top: 10px;
+.quest-header {
+	font-size: 20px;
+	font-weight: 600;
+	color: #00b09b;
+	margin-bottom: 10px;
+}
+
+.quest-section {
+	margin-bottom: 20px;
+}
+
+.quest-section label {
+	font-weight: 600;
+	color: #00796b;
+	margin-bottom: 5px;
+	display: block;
+}
+
+.quest-image {
+	max-height: 250px;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.list-group-item {
+	border: none;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.form-check-label strong {
+	font-size: 16px;
+	color: #004d43;
 }
 
 .submit-btn {
-	background-color: #00d1b2;
-	color: white;
-	font-size: 1.2rem;
-	padding: 10px 30px;
+	background-color: #00b09b;
+	color: #fff;
+	padding: 10px 25px;
+	font-size: 16px;
 	border: none;
-	border-radius: 10px;
-	margin-top: 20px;
+	border-radius: 12px;
+	transition: background-color 0.2s ease;
 }
 
-#datepicker-inline {
-	font-size: 0.85rem;
-	max-width: 300px;
+.submit-btn:hover {
+	background-color: #009688;
+}
+
+.text-muted {
+	color: #888 !important;
 }
 </style>
-
-<script>
-	$(function() {
-		$("#selectedDate").datepicker({
-			dateFormat : "yy-mm-dd",
-			minDate : 0
-		});
-	});
-</script>
 </head>
+
 <body>
-	<%-- 	<p>디버깅: ${quest != null ? '퀘스트 있음' : 'quest가 null이야'}</p>
-	<p>questId: ${quest.questId}</p>
-	<p>title: ${quest.title}</p> --%>
+	<div class="main-layout">
+		<!-- 사이드바는 include로 포함됨 -->
 
+		<div class="content-area">
+			<h2 class="page-title">해결사 선택</h2>
 
-	<!-- 🔴 바깥 form 제거됨 -->
-	<div class="container">
-		<h2 class="text-center mb-4">해결사 선택</h2>
+			<c:if test="${not empty error}">
+				<script>
+					alert("${error}");
+				</script>
+			</c:if>
 
-		<c:if test="${not empty error}">
-			<script>
-				alert("${error}");
-			</script>
-		</c:if>
+			<div class="row">
+				<!-- 왼쪽: 퀘스트 정보 -->
+				<div class="col-md-6">
+					<div class="quest-card">
+						<div class="quest-header">퀘스트 정보</div>
+						<div class="quest-section">
+							<label>제목</label>
+							<p>${quest.title}</p>
+						</div>
 
-		<div class="row">
-			<!-- 왼쪽 카드: 퀘스트 정보 -->
-			<div class="col-md-6">
-				<div class="card">
-					<div class="card-header">제목</div>
-					<div class="card-body">
-						<p>${quest.title}</p>
-						<hr>
 						<c:if test="${not empty quest.photoPath}">
-							<div class="text-center mb-3">
-								<img src="${quest.photoPath}" alt="퀘스트 이미지" class="img-fluid"
-									style="max-height: 300px;">
+							<div class="quest-section text-center">
+								<img src="${quest.photoPath}" alt="퀘스트 이미지"
+									class="img-fluid quest-image">
 							</div>
 						</c:if>
 
-						<div class="mt-3">
+						<div class="quest-section">
 							<label>해야 할 일</label>
-							<ul class="mb-3">
+							<ul>
 								<c:forEach var="task" items="${quest.tasks}">
 									<li>${task.description}</li>
 								</c:forEach>
 							</ul>
 						</div>
 
-						<hr>
-						<label>보상</label>
-						<p class="text-primary fw-bold">${quest.rewardTokens}코인</p>
+						<div class="quest-section">
+							<label>보상</label>
+							<p class="text-primary fw-bold">${quest.rewardTokens}코인</p>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- 오른쪽 카드: 신청자 리스트 -->
-			<div class="col-md-6">
-				<div class="card">
-					<div class="card-header">신청자 목록</div>
-					<div class="card-body">
-						<c:choose>
-							<c:when test="${empty applicants}">
-								<p class="text-muted">아직 신청한 사람이 없습니다.</p>
-							</c:when>
-							<c:otherwise>
-								<form method="post"
-									action="${pageContext.request.contextPath}/quest/assignSolver.do">
-									<input type="hidden" name="questId" value="${quest.questId}" />
-									<ul class="list-group">
-										<c:forEach var="a" items="${applicants}">
-											<li class="list-group-item">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="userId"
-														value="${a.userId}" id="user${a.userId}" /> <label
-														class="form-check-label" for="user${a.userId}"> <strong>${a.username}</strong><br>
-														신청일: <fmt:formatDate value="${a.appliedAt}"
-															pattern="yyyy-MM-dd HH:mm" /><br> 주소: ${a.address}
-														/ 장소: ${a.location}
-													</label>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-
-									<div class="text-end mt-4">
-										<button type="submit" class="submit-btn">해결사 선택</button>
-									</div>
-								</form>
-							</c:otherwise>
-						</c:choose>
+				<!-- 오른쪽: 신청자 목록 -->
+				<div class="col-md-6">
+					<div class="quest-card">
+						<div class="quest-header">신청자 목록</div>
+						<div class="quest-section">
+							<c:choose>
+								<c:when test="${empty applicants}">
+									<p class="text-muted">아직 신청한 사람이 없습니다.</p>
+								</c:when>
+								<c:otherwise>
+									<form method="post"
+										action="${pageContext.request.contextPath}/quest/assignSolver.do">
+										<input type="hidden" name="questId" value="${quest.questId}" />
+										<ul class="list-group">
+											<c:forEach var="a" items="${applicants}">
+												<li class="list-group-item">
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="userId"
+															value="${a.userId}" id="user${a.userId}" /> <label
+															class="form-check-label" for="user${a.userId}"> <strong>${a.username}</strong><br>
+															신청일: <fmt:formatDate value="${a.appliedAt}"
+																pattern="yyyy-MM-dd HH:mm" /><br> 주소: ${a.address}
+															/ 장소: ${a.location}
+														</label>
+													</div>
+												</li>
+											</c:forEach>
+										</ul>
+										<div class="text-end mt-4">
+											<button type="submit" class="submit-btn">해결사 선택</button>
+										</div>
+									</form>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-
+	<!-- Bootstrap JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
