@@ -186,7 +186,9 @@
     const input = document.getElementById("withdraw-amount");
     const netAmountEl = document.getElementById("net-amount");
     const COIN_TO_WON = 10;
-    const myCoin = <%= currentBalance %>;
+    <%-- const myCoin = <%= currentBalance %>; --%>
+    const myCoin = <%= loginUser.getTotalTokens() %>;
+
 
     function addAmount(value) {
       const current = parseInt(input.value || 0);
