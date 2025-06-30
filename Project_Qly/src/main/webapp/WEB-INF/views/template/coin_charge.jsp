@@ -152,7 +152,7 @@ modal.addEventListener("hidden.bs.modal", () => {
 					<!-- 약관 -->
 					<div class="mb-2 d-flex justify-content-between align-items-center">
 						<small class="text-muted">이용 약관에 동의합니다</small> <a
-							href="/template/termsAndConditions.jsp" target="_blank"
+							href="${pageContext.request.contextPath}/template/termsAndConditions.jsp" target="_blank"
 							class="text-decoration-none">약관 보기</a>
 					</div>
 
